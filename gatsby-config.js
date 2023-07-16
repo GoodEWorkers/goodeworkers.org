@@ -4,7 +4,7 @@
 module.exports = {
   siteMetadata: {
     title: `GoodEWorkers`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://goodeworkers.org`
   },
   plugins: ["gatsby-plugin-image", "gatsby-plugin-sitemap", "gatsby-plugin-sharp", "gatsby-transformer-sharp", {
     resolve: 'gatsby-source-filesystem',
