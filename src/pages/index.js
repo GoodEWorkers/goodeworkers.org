@@ -5,7 +5,7 @@ import * as React from "react"
 const h1Styles = {
   textAlign: "center",
   fontFamily: "Inter",
-  fontSize: "74px",
+  fontSize: "3rem",
   fontStyle: "normal",
   fontWeight: "500",
 }
@@ -13,6 +13,7 @@ const h1Styles = {
 const GoodStyle = {
   "color": "#FDC959",
   "fontWeight": "500",
+
 }
 const EStyle = {
   "color": "#FD5E09",
@@ -34,10 +35,12 @@ const bigYelloCTA = {
   color: "black",
   fontFamily: "ClashDisplay-Bold",
   padding: "30px",
-  fontSize: "40px",
-  margin: "100px",
+  fontSize: "2rem",
   textDecoration:"none",
   borderRadius: "243px",
+}
+const CTAContainer = {
+  margin:"10vh",
 }
 
 const IndexPage = () => {
@@ -45,8 +48,7 @@ const IndexPage = () => {
     <main style={allCenteredDiv}>
       <div >
         <h1 style={h1Styles}>
-          Welcome to&nbsp;
-            <span className={"clash-medium"} style={GoodStyle}>Good</span>
+          Welcome to <span className={"clash-medium"} style={GoodStyle}>Good</span>
             <span className={"clash-medium"} style={EStyle}>e</span>
             <span className={"clash-medium"} style={WorkersStyle}>Workers</span>
         </h1>
@@ -54,7 +56,7 @@ const IndexPage = () => {
           We are still working on this page...
         </p>
         <br/>
-        <p>
+        <p style={CTAContainer}>
           <a style={bigYelloCTA} href="mailto:goodeworkers@proton.me">e-mail</a>
         </p>
       </div>
@@ -64,4 +66,11 @@ const IndexPage = () => {
 
 export default IndexPage
 
-export const Head = () => <title>GoodEWorkers</title>
+export const Head = () => (
+  <>
+   <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1" />
+  <title>GoodEWorkers</title>
+  </>
+  )
