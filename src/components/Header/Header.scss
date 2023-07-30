@@ -1,0 +1,109 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
+header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: $white;
+  box-sizing: border-box;
+  padding: 0 35px;
+  background-color: transparent;
+  z-index: 2;
+  height: 70px;
+  >a {
+    z-index: 1;
+    img {
+      width: 110px;
+    }
+  }
+  input {
+    opacity: 0;
+    z-index: 1;
+    position: absolute;
+    top: auto;
+    right: 23px;
+    width: 36px;
+    height: 36px;
+  }
+  nav {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    background-color: $coal;
+    width: 100%;
+    height: 100%;
+    > * {
+      margin: 20px;
+    }
+  }
+  #menuToggle:checked ~ nav {
+    display: flex;
+  }
+  .burgerMenu {
+    z-index: 1;
+  }
+  .burgerMenu span,
+  .burgerMenu span::before,
+  .burgerMenu span::after {
+    display: block;
+    background-color: $pumpkin;
+    height: 1px;
+    width: 20px;
+    border-radius: 3px;
+    position: relative;
+    transition: transform 200ms ease-in-out;
+  }
+  .burgerMenu span::before,
+  .burgerMenu span::after {
+    content: '';
+    position: absolute;
+    transform-origin: left;
+  }
+  .burgerMenu span::before {
+    bottom: 12px;
+    background-color: $amber;
+  }
+  .burgerMenu span::after {
+    top: 12px;
+    background-color: $lilac;
+  }
+  #menuToggle:checked ~ .burgerMenu span {
+    background-color: transparent;
+  }
+  #menuToggle:checked ~ .burgerMenu span::before {
+    transform: rotate(45deg) translateY(2px) translateX(3px);
+    width: 25px;
+  }
+  #menuToggle:checked ~ .burgerMenu span::after {
+    transform: rotate(-45deg) translateY(-1.5px) translateX(2.5px);
+    width: 25px;
+  }
+
+  @include respond-to('large') {
+    max-width: 900px;
+    margin: 0 auto;
+    input, .burgerMenu {
+      display: none;
+    }
+    nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+      width: auto;
+      height: auto;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  }
+}
