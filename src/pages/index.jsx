@@ -7,21 +7,33 @@ import Favicon from '../images/favicon.png';
 function IndexPage() {
   return (
     <main className="index">
+      {/* Navbar */}
       <Navbar />
-      <section>
-        <div>
-          <h1>
-            Welcome to GoodeWorkers
-          </h1>
-          <p>
-            We are still working on this page...
-          </p>
+
+      {/* Header */}
+      <header>
+        <h1>
+          Bievenue chez
+          &nbsp;
+          <span>Good</span>
+          &nbsp;
+          <span>e</span>
+          <span>Workers</span>
+          &nbsp;
+          le réseau qui aide les
+          &nbsp;
+          <span>associations</span>
+        </h1>
+        <p>
+          Vous êtes président ou chargé de développement d’une association
+          et vous ne savez pas comment structurer votre présence en ligne ?
           <br />
-          <p>
-            <a href="mailto:goodeworkers@proton.me">e-mail</a>
-          </p>
-        </div>
-      </section>
+          <span>Good eWorkers </span>
+          vous aide à développer votre visibilité sur internet.
+        </p>
+      </header>
+
+      {/* Footer */}
       <Footer />
     </main>
   );

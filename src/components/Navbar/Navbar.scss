@@ -91,7 +91,7 @@
   }
 
   @include respond-to('large') {
-    max-width: 900px;
+    max-width: 1130px;
     margin: 0 auto;
     input, .burgerMenu {
       display: none;
@@ -102,8 +102,10 @@
       justify-content: right;
       width: auto;
       height: auto;
-      max-width: 900px;
-      margin: 0 auto;
+      position: static;
+      top: auto;
+      left: auto;
+      right: auto;
     }
   }
 }
