@@ -8,39 +8,33 @@ export default function Button(props) {
     href,
     onClick,
     target,
-    icon,
     text,
+    largerText,
   } = props;
 
-  if (href) {
-    return (
-      <a
-        type="button"
-        className={`button ${className}`}
-        onClick={onClick}
-        href={href}
-        target={target}
-      >
-        {icon}
-        <span>{text}</span>
-      </a>
-    );
-  }
-
-  return (
-    <button
+  return href ? (
+    <a
       type="button"
       className={`button ${className}`}
       onClick={onClick}
+      href={href}
+      target={target}
     >
-      {icon}
       <span>{text}</span>
+    </a>
+  ) : (
+    <button
+      type="submit"
+      className={`button ${className}`}
+      onClick={onClick}
+    >
+      {text}
+      <span>{largerText}</span>
     </button>
   );
 }
 
 Button.defaultProps = {
-  icon: null,
   className: null,
   href: null,
   onClick: null,
@@ -49,7 +43,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  icon: PropTypes.element,
+  largerText: PropTypes.string.isRequired,
   className: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,

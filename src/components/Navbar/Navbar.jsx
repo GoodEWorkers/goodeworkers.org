@@ -1,17 +1,37 @@
 import React from 'react';
-import './Header.scss';
+import './Navbar.scss';
 import Logo from '../../images/logo.png';
 import Button from '../Button/Button';
 
-export default function Header() {
+export default function Navbar() {
   const navigationButtons = [
-    { text: 'Le projet', href: '/' },
-    { text: 'Qui sommes-nous?', href: '/' },
-    { text: 'FAQ', href: '/' },
-    { text: 'Contact', className: 'actived', href: '/' },
+    {
+      text: 'Le projet',
+      href: '/',
+      target: '_blank',
+      className: 'navButton',
+    },
+    {
+      text: 'Qui sommes-nous?',
+      href: '/',
+      target: '_blank',
+      className: 'navButton',
+    },
+    {
+      text: 'FAQ',
+      href: '/',
+      target: '_blank',
+      className: 'navButton',
+    },
+    {
+      text: 'Contact',
+      href: '/',
+      target: '_blank',
+      className: 'navButton actived',
+    },
   ];
   return (
-    <header>
+    <div id="navbarContainer">
       <a href="/">
         <img src={Logo} alt="Good eWorkers logo" />
       </a>
@@ -25,10 +45,11 @@ export default function Header() {
             key={button.text}
             text={button.text}
             href={button.href}
+            target={button.target}
             className={button.className}
           />
         ))}
       </nav>
-    </header>
+    </div>
   );
 }

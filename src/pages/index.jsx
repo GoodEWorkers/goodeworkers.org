@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/index.scss';
-import Header from '../components/Header/Header';
+import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
 import Favicon from '../images/favicon.png';
 
 function IndexPage() {
   return (
     <main className="index">
-      <Header />
+      <Navbar />
       <section>
         <div>
           <h1>
@@ -21,6 +22,7 @@ function IndexPage() {
           </p>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }
