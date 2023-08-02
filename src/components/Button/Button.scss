@@ -42,7 +42,7 @@
   }
 }
 
-.contactButton {
+.biggerButton {
   width: 306.891px;
   height: 92.851px;
   flex-shrink: 0;
@@ -51,28 +51,31 @@
   font-size: 14px;
   font-weight: 500;
   border: none;
-  margin: 6px 0;
   > span {
     display: block;
-    font-family: 'Clash Display';
+    font-family: 'ClashDisplay-Bold';
     font-size: 36px;
     font-weight: 700;
   }
-  &.amber {
-    background-color: $amber;
-    color: $coal;
+  @mixin get-btn-style($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
     &::after {
-      background-color: lighten($amber, 15);
+      background-color: lighten($bg-color, 5);
       border-radius: 221.592px;
     }
   }
-  &.pumpkin {
-    background-color: $pumpkin;
-    color: $white;
-    &::after {
-      background-color: darken($pumpkin, 5);
-      border-radius: 221.592px;
-    }
+  &.amber-coal {
+    @include get-btn-style($amber, $coal);
+  }
+  &.amber-ink {
+    @include get-btn-style($amber, $ink);
+  }
+  &.pumpkin-white {
+    @include get-btn-style($pumpkin, $white);
+  }
+  &.lilac-ink {
+    @include get-btn-style($lilac, $ink);
   }
   @include respond-to('large') {
     width: 336.539px;

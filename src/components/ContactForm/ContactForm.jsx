@@ -32,18 +32,18 @@ export default function ContactForm() {
     setClickedButton(buttonName);
   }
 
-  const contactButtons = [
+  const biggerButtons = [
     {
       text: 'Message à',
       largerText: 'envoyer',
       onClick: () => handleButtonClick('Message à envoyer'),
-      className: 'contactButton amber',
+      className: 'biggerButton amber-coal',
     },
     {
       text: 'Nous',
       largerText: 'rejoindre',
       onClick: () => handleButtonClick('Nous rejoindre'),
-      className: 'contactButton pumpkin',
+      className: 'biggerButton pumpkin-white',
     },
   ];
 
@@ -74,8 +74,8 @@ export default function ContactForm() {
           required
         />
       </div>
-      <div className="contactButtons">
-        {contactButtons.map((button) => (
+      <div className="biggerButtons">
+        {biggerButtons.map((button) => (
           <Button
             key={button.largerText}
             text={button.text}

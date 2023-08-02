@@ -1,0 +1,37 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
+.card {
+  width: calc(100%/2 - 3px);
+  height: 141px;
+  background-color: $pearly;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 10px;
+  &.pumpkin {
+    background-color: $pumpkin;
+    >p {
+      color: $snow;
+    }
+  }
+  >p {
+    color: $coal;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  @include respond-to('medium') {
+    width: calc(100%/3 - 4px);
+  }
+  @include respond-to('large') {
+    max-width: 162px;
+    height: 162px;
+  }
+}

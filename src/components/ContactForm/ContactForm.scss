@@ -21,22 +21,25 @@ form {
       margin-bottom: 50px;
     }
   }
+  .biggerButton {
+    margin: 6px 0;
+  }
 
   @include respond-to('medium') {
-    .contactButton {
+    .biggerButton {
       margin-right: 20px;
     }
   }
 
   @include respond-to('large') {
     flex-direction: row;
-    .contactButton {
+    .biggerButton {
       margin-right: 20px;
     }
   }
 
   @include respond-to('extra-large') {
-    .contactButtons {
+    .biggerButtons {
       display: flex;
       flex-direction: row;
       justify-content: left;
@@ -44,7 +47,7 @@ form {
       box-sizing: border-box;
       margin-left: 92px;
       margin-bottom: 45px;
-      .contactButton {
+      >.biggerButton {
         margin-right: 20px;
       }
     }
