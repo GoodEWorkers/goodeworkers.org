@@ -5,6 +5,8 @@ export default function ContactForm() {
   return (
     <form name="contact" method="POST" data-netlify="true">
       <div className="formInputs">
+        <input type="hidden" name="form-name" value="contact" />
+
         <input
           type="text"
           name="name"
