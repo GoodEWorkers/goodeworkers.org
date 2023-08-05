@@ -17,7 +17,10 @@ module.exports = {
   siteMetadata: {
     title: 'GoodEworkers: Promote remote work in nonprofits',
     siteUrl: 'https://goodeworkers.org',
-    siteMetaDescription: "GoodEworkers is a network that helps nonprofits find remote workers and mentors them on how to work from home. We also help nonprofits structure themselves to be more remote-friendly. Whether you're a nonprofit looking to hire remote workers or a remote worker looking to find a meaningful cause to work for, GoodEworkers can help."
+    siteMetaDescription: "GoodEworkers is a network that helps nonprofits find remote workers and mentors them on how to work from home. We also help nonprofits structure themselves to be more remote-friendly. Whether you're a nonprofit looking to hire remote workers or a remote worker looking to find a meaningful cause to work for, GoodEworkers can help.",
+  },
+  flags: {
+    DEV_SSR: true,
   },
   plugins: [
     'gatsby-plugin-image',

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/index.scss';
-import { graphql, navigate, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
@@ -37,13 +37,11 @@ function IndexPage() {
     {
       text: 'I am a',
       largerText: 'nonprofit',
-      onClick: navigate('#contact'),
       className: 'biggerButton amber-ink',
     },
     {
       text: 'I want to',
       largerText: 'help',
-      onClick: navigate('#contact'),
       className: 'biggerButton lilac-ink',
     },
   ];
