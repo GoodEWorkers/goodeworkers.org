@@ -13,7 +13,7 @@ div.homeContainer {
       color: $ashgray;
       text-align: center;
       font-family: Inter;
-      font-size: 34px;
+      font-size: 2.4em;
       font-style: normal;
       font-weight: 500;
       line-height: 37.579px;
@@ -37,18 +37,22 @@ div.homeContainer {
         position: relative;
         margin-left:10px;
         margin-right:10px;
+
         &:before{
-          content: " ";
+          content: "";
           position:absolute;
           margin-bottom: 0.2em;
-          left:-12px;
-          bottom: -5px;
-          border:1px solid $pumpkin;
+          top: 55%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100%;
+          height: 66%;
+          z-index:-1;
+          outline: 1px solid $pumpkin;
+          outline-radius:50px;
           border-radius:50px;
           padding-left: 12px;
-          padding-right: 12px;
-          width: 100%;
-          height: 0.8em;
+          padding-right: 8px;
         }
       }
     }
