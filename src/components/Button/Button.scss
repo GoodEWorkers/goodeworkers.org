@@ -1,0 +1,70 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
+.button {
+  font-family: Inter;
+  font-style: normal;
+  line-height: normal;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 250ms;
+  }
+  &:hover, &:active {
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+
+.biggerButton {
+  padding: 20px 80px;
+
+  flex-shrink: 0;
+  border-radius: 100px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  min-width:50%;
+  text-decoration: none;
+  span {
+    display: block;
+    font-family: 'ClashDisplay-Bold', fantasy;
+    font-size: 36px;
+    font-weight: 700;
+  }
+  @mixin get-btn-style($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
+    &::after {
+      background-color: lighten($bg-color, 10);
+      border-radius: 100px;
+    }
+  }
+  &.amber-coal {
+    @include get-btn-style($amber, $coal);
+  }
+  &.amber-ink {
+    @include get-btn-style($amber, $ink);
+  }
+  &.pumpkin-white {
+    @include get-btn-style($pumpkin, $white);
+  }
+  &.lilac-ink {
+    @include get-btn-style($lilac, $ink);
+  }
+  @include respond-to('medium') {
+    min-width:10%;
+  }
+}

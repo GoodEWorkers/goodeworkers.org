@@ -1,0 +1,28 @@
+//==========================================
+//  Breakpoints Mixins
+//==========================================
+
+$breakpoints: (
+  'small': (min-width: 576px),
+  'medium': (min-width: 768px),
+  'large': (min-width: 992px),
+  'extra-large': (min-width: 1200px),
+);
+
+@mixin respond-to($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(type-of($raw-query)=='string',
+        unquote($raw-query),
+        inspect($raw-query));
+
+    @media #{$query} {
+      @content;
+    }
+  }
+
+  @else {
+    @error 'No value found for `#{$breakpoint}`. ';
+  }
+}

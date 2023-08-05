@@ -1,0 +1,218 @@
+@import './global.scss';
+
+div.homeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 70px;
+  header {
+    margin: 41px 37px 0 37px;
+    >h1 {
+      color: $ashgray;
+      text-align: center;
+      font-family: Inter;
+      font-size: 34px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 37.579px;
+      margin: 0;
+      span {
+        font-family: 'ClashDisplay-Medium';
+      }
+      span:first-of-type {
+        color: $amber;
+      }
+      span:nth-of-type(2) {
+        color: $pumpkin;
+        font-family: 'ClashDisplay-Semibold';
+      }
+      span:nth-of-type(3) {
+        color: $lilac;
+      }
+      span:nth-of-type(4) {
+        font-family: Inter;
+        font-weight: 700;
+        position: relative;
+        margin-left:10px;
+        margin-right:10px;
+        &:before{
+          content: " ";
+          position:absolute;
+          margin-bottom: 0.2em;
+          left:-12px;
+          bottom: -5px;
+          border:1px solid $pumpkin;
+          border-radius:50px;
+          padding-left: 12px;
+          padding-right: 12px;
+          width: 100%;
+          height: 0.8em;
+        }
+      }
+    }
+    >p {
+      color: $ashgray;
+      text-align: center;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      margin: 36px auto;
+      >span {
+        font-weight: 700;
+      }
+    }
+
+    @include respond-to('large') {
+      max-width: 1188.456px;
+      >h1 {
+        font-size: 74px;
+        line-height: 83px;
+        span:nth-of-type(4) {
+          &::after {
+            border: 2px solid $pumpkin;
+            top: 20px;
+            left: -16px;
+            right: 0;
+            bottom: 0;
+            width: 440px;
+            height: 60px;
+          }
+        }
+      }
+      >p {
+        font-size: 16px;
+        max-width: 680px;
+        margin: 50px auto;
+      }
+    }
+  }
+
+  main {
+    padding: 0 15px;
+    margin-bottom: 50px;
+  }
+
+  #hero {
+    background-color: $snow;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 155px;
+    position: relative;
+    padding-top: 68px;
+    padding-bottom: 25px;
+    .heroContent {
+      >h2 {
+        color: $coal;
+        font-family: 'ClashDisplay-Medium';
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        box-sizing: border-box;
+        margin: 0 20px 0 20px;
+        text-align: left;
+        span:first-of-type {
+          font-family: 'ClashDisplay-Semibold';
+        }
+        span:nth-of-type(2) {
+          font-family: Inter;
+          font-weight: 500;
+        }
+        span:nth-of-type(3) {
+          font-family: Inter;
+          font-weight: 700;
+        }
+      }
+      >p {
+        color: $coal;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        margin-top: 30px;
+        text-align: left;
+        margin: 30px 20px 30px 20px;
+        >span {
+          font-weight: 700;
+        }
+      }
+    }
+    .heroCards {
+      margin: 0 20px;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 25px;
+    }
+    .heroButtons {
+      position: absolute;
+      top: -145px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      >.button {
+        margin-bottom: 6px;
+      }
+    }
+    @include respond-to('medium') {
+      margin-top: 85px;
+      .heroButtons {
+        top: -52px;
+        left: 0px;
+        width: 100%;
+        flex-direction: row;
+        >.button {
+          margin-bottom: 0;
+          margin-right: 50px;
+        }
+        >.button:last-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+    @include respond-to('large') {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .heroContent {
+        >h2 {
+          font-size: 54px;
+        }
+        >p {
+          font-size: 16px;
+        }
+      }
+      .heroContent {
+        width: 50%;
+        max-width: 708.438px;
+        margin-left: 4%;
+      }
+      .heroCards {
+        width: 50%;
+        max-width: 660px;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-top: 82px;
+        margin-right: 4%;
+      }
+    }
+  }
+
+  #advantages,
+  #team,
+  #partners {
+    border: 2px solid $amber;
+    padding: 50px;
+    margin: 50px 0;
+  }
+}

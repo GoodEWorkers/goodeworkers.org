@@ -1,0 +1,15 @@
+//==========================================
+//  Global Styles
+//==========================================
+
+@import './colors.scss';
+@import './fonts.scss';
+@import './mixins.scss';
+
+body {
+  font-family: 'ClashDisplay-Regular', 'Arial', 'Impact', 'sans-serif';
+  margin: 0;
+  padding: 0;
+  background: $coal;
+  color: $pearly;
+}
