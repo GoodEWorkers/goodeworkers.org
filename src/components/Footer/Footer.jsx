@@ -4,21 +4,19 @@ import ContactForm from '../ContactForm/ContactForm';
 
 export default function Footer() {
   return (
-    <footer>
+    <footer id="contact">
       <div className="footerContainer">
         <div className="formContainer">
-          <p>Contactez-nous !</p>
+          <p>Contact-us !</p>
           <p>
             hello
             <span className="toWrap">@goodeworkers</span>
-            <span className="toWrap">.com</span>
+            <span className="toWrap">.org</span>
           </p>
+          <ContactForm />
         </div>
-        <ContactForm />
         <ul>
-          <li><a href="#mentions-legales">Mentions légales</a></li>
-          <li><a href="#condition-generales">Condition générales</a></li>
-          <li><a href="#rdgb">RDGB</a></li>
+          <li>GoodEWorkers © 2023</li>
         </ul>
       </div>
     </footer>

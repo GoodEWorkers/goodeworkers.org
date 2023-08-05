@@ -4,8 +4,9 @@
 form {
   display: flex;
   flex-direction: column;
+  margin-right:5%;
   .formInputs {
-    >input {
+    input, textarea {
       color: $coal;
       font-family: Inter;
       font-size: 14px;
@@ -21,35 +22,39 @@ form {
       margin-bottom: 50px;
     }
   }
-  .biggerButton {
-    margin: 6px 0;
-  }
 
-  @include respond-to('medium') {
-    .biggerButton {
-      margin-right: 20px;
+  .biggerButtons {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+
+    input {
+      padding: 20px 80px;
+      border-radius: 100px;
+      font-family: 'ClashDisplay-Bold', fantasy;
+      font-size: 36px;
+      font-weight: 700;
+      background: $pumpkin;
+      border: none;
+
+      &:hover, &:active {
+        background-color: lighten($pumpkin, 20);
+        transition: ease-in-out 0.3s;
+      }
+    }
+
+    @include respond-to('large') {
+      justify-content: end;
+      margin-left: 5%;
+      margin-bottom: 10%;
     }
   }
+
 
   @include respond-to('large') {
     flex-direction: row;
-    .biggerButton {
-      margin-right: 20px;
-    }
-  }
-
-  @include respond-to('extra-large') {
-    .biggerButtons {
-      display: flex;
-      flex-direction: row;
-      justify-content: left;
-      align-items: flex-end;
-      box-sizing: border-box;
-      margin-left: 92px;
-      margin-bottom: 45px;
-      >.biggerButton {
-        margin-right: 20px;
-      }
-    }
+    margin-right:auto;
   }
 }

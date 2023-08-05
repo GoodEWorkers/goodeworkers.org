@@ -1,5 +1,7 @@
 import React from 'react';
 import '../styles/index.scss';
+import { graphql, navigate, useStaticQuery } from 'gatsby';
+
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 import Favicon from '../images/favicon.png';
@@ -10,38 +12,38 @@ function IndexPage() {
   const cardsData = [
     {
       icon: 'Webnet',
-      title: 'Création de site internet',
+      title: 'Website creation',
     },
     {
       icon: 'Chat',
-      title: 'Rédaction de contenu',
+      title: 'Content marketing',
     },
     {
       icon: 'Magnify',
-      title: 'Optimisation SEO',
+      title: 'SEO Optimization',
     },
     {
       icon: 'Hexagone',
-      title: 'Audit et recommandations',
+      title: 'Audits and advice',
     },
     {
       icon: 'Heart',
-      title: 'Et bien plus...',
+      title: 'And more...',
       className: 'pumpkin',
     },
   ];
 
   const heroButtons = [
     {
-      text: 'Je suis une',
-      largerText: 'entreprise',
-      onClick: '/',
+      text: 'I am a',
+      largerText: 'nonprofit',
+      onClick: navigate('#contact'),
       className: 'biggerButton amber-ink',
     },
     {
-      text: 'Je suis une',
-      largerText: 'association',
-      onClick: '/',
+      text: 'I want to',
+      largerText: 'help',
+      onClick: navigate('#contact'),
       className: 'biggerButton lilac-ink',
     },
   ];
@@ -54,20 +56,28 @@ function IndexPage() {
       {/* Header */}
       <header>
         <h1>
-          Bievenue chez
-          <span> Good</span>
-          <span> e</span>
-          <span>Workers </span>
-          le réseau qui aide les
-          &nbsp;
-          <span>associations</span>
+
+          <span>Good</span>
+          <span>e</span>
+          <span>Workers</span>
+          <br />
+          Helping
+          {' '}
+          <span>nonprofits</span>
+          {' '}
+          go remote
         </h1>
         <p>
-          Vous êtes président ou chargé de développement d’une association
-          et vous ne savez pas comment structurer votre présence en ligne ?
-          <br />
-          <span>Good eWorkers </span>
-          vous aide à développer votre visibilité sur internet.
+          As a non-profit we believe that everyone has the power to make a
+          difference in the world,
+          and we want to make it easier for people to do that from the comfort
+          of their own homes.
+        </p>
+        <p>
+          <strong>
+            If you&apos;re a nonprofit, we can help you with web development,
+            content marketing, design, or animation.
+          </strong>
         </p>
       </header>
 
@@ -79,19 +89,20 @@ function IndexPage() {
           <div className="heroContent">
             <h2>
               Good
-              <span> e</span>
+              <span>e</span>
               Workers
-              <span>, </span>
-              l’association au service de la
-              <span> visibilité numérique des associations</span>
+              can help you
+              {' '}
+              <b>go digital</b>
+
             </h2>
             <p>
-              Good eWorkers est une association loi 1901 dont les membres se mettent au service
-              d’autres associations.
+
               <span>
-                &nbsp;Le but : vous aider à être &#40;mieux&#41; visible sur
-                internet et vous fournir l’ensemble des outils digitaux dont vous avez besoin à un
-                prix réduit au strict minimum.
+                We provide a variety of services, including website development, content marketing,
+                and social media management.
+                We also offer a free consultation to help you understand your
+                needs and how we can help you achieve your goals.
               </span>
             </p>
           </div>
@@ -112,27 +123,11 @@ function IndexPage() {
                 text={button.text}
                 largerText={button.largerText}
                 className={button.className}
-                onClick={button.onClick}
+                href="#contact"
               />
             ))}
           </div>
         </section>
-
-        {/* Advantages Section */}
-        <section id="advantages">
-          advantages
-        </section>
-
-        {/* Team Section */}
-        <section id="team">
-          team
-        </section>
-
-        {/* Partners Section */}
-        <section id="partners">
-          partners
-        </section>
-
       </main>
 
       {/* Footer */}
@@ -144,11 +139,20 @@ function IndexPage() {
 export default IndexPage;
 
 export function Head() {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          siteMetaDescription
+        }
+      }
+    }
+  `);
   return (
     <>
-      <html lang="fr" />
       <title>
-        GoodEWorkers - L’association au service de la visibilité numérique des associations
+        {data.site.siteMetadata.title}
       </title>
       <meta
         name="viewport"
@@ -156,10 +160,9 @@ export function Head() {
       />
       <meta
         name="description"
-        content="Good eWorkers est une association loi 1901 dont les membres se mettent au service d’autres associations.
-                Le but : vous aider à être (mieux) visible sur internet, et vous fournir l’ensemble des outils digitaux
-                dont vous avez besoin à un prix réduit au strict minimum."
+        content={data.site.siteMetadata.siteMetaDescription}
       />
+      <meta name="keywords" content="remote work, nonprofits, mentor, social enterprise" />
       <meta name="robots" content="index, follow" />
       <link rel="icon" href={Favicon} />
     </>

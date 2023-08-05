@@ -1,33 +1,13 @@
 import React from 'react';
 import './Navbar.scss';
 import Logo from '../../images/logo.png';
-import Button from '../Button/Button';
 
 export default function Navbar() {
-  const navigationButtons = [
-    {
-      text: 'Le projet',
-      href: '/',
-      target: '_blank',
-      className: 'navButton',
-    },
-    {
-      text: 'Qui sommes-nous?',
-      href: '/',
-      target: '_blank',
-      className: 'navButton',
-    },
-    {
-      text: 'FAQ',
-      href: '/',
-      target: '_blank',
-      className: 'navButton',
-    },
+  const navigationLinks = [
     {
       text: 'Contact',
-      href: '/',
-      target: '_blank',
-      className: 'navButton actived',
+      className: 'navButton',
+      goto: '/#contact',
     },
   ];
   return (
@@ -40,14 +20,14 @@ export default function Navbar() {
         <span>{}</span>
       </label>
       <nav>
-        {navigationButtons.map((button) => (
-          <Button
-            key={button.text}
-            text={button.text}
-            href={button.href}
-            target={button.target}
-            className={button.className}
-          />
+        {navigationLinks.map((link) => (
+          <a
+            key={link.goto}
+            className={link.className}
+            href={link.goto}
+          >
+            {link.text}
+          </a>
         ))}
       </nav>
     </div>

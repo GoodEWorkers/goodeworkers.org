@@ -26,34 +26,21 @@
   }
 }
 
-.navButton {
-  color: $pearly;
-  font-size: 16px;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 2px 10px;
-  border: 2px solid transparent;
-  &:hover, &:active, &.actived {
-    &::after {
-      border: 2px solid $pumpkin;
-      border-radius: 50px;
-      opacity: 1;
-    }
-  }
-}
 
 .biggerButton {
-  width: 306.891px;
-  height: 92.851px;
+  padding: 20px 80px;
+
   flex-shrink: 0;
-  border-radius: 221.592px;
+  border-radius: 100px;
   text-align: center;
   font-size: 14px;
   font-weight: 500;
   border: none;
-  > span {
+  min-width:50%;
+  text-decoration: none;
+  span {
     display: block;
-    font-family: 'ClashDisplay-Bold';
+    font-family: 'ClashDisplay-Bold', fantasy;
     font-size: 36px;
     font-weight: 700;
   }
@@ -61,8 +48,8 @@
     background-color: $bg-color;
     color: $text-color;
     &::after {
-      background-color: lighten($bg-color, 5);
-      border-radius: 221.592px;
+      background-color: lighten($bg-color, 10);
+      border-radius: 100px;
     }
   }
   &.amber-coal {
@@ -77,9 +64,7 @@
   &.lilac-ink {
     @include get-btn-style($lilac, $ink);
   }
-  @include respond-to('large') {
-    width: 336.539px;
-    height: 101.821px;
-    border-radius: 243px;
+  @include respond-to('medium') {
+    min-width:10%;
   }
 }

@@ -6,46 +6,36 @@ export default function Button(props) {
   const {
     className,
     href,
-    onClick,
     target,
     text,
     largerText,
   } = props;
 
-  return href ? (
+  return (
     <a
       type="button"
       className={`button ${className}`}
-      onClick={onClick}
       href={href}
       target={target}
     >
-      <span>{text}</span>
-    </a>
-  ) : (
-    <button
-      type="submit"
-      className={`button ${className}`}
-      onClick={onClick}
-    >
       {text}
-      <span>{largerText}</span>
-    </button>
+      {largerText ? (<span>{largerText}</span>) : ''}
+    </a>
+
   );
 }
 
 Button.defaultProps = {
   className: null,
   href: null,
-  onClick: null,
   target: null,
+  largerText: null,
 };
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  largerText: PropTypes.string.isRequired,
+  largerText: PropTypes.string,
   className: PropTypes.string,
   href: PropTypes.string,
-  onClick: PropTypes.func,
   target: PropTypes.string,
 };
