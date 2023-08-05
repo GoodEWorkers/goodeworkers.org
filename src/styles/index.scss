@@ -1,4 +1,29 @@
 @import './global.scss';
+.encircled {
+  display:inline-block;
+  font-family: Inter, monospace;
+  font-weight: 700;
+  position: relative;
+  margin-left:10px;
+  margin-right:10px;
+
+  &:before{
+    content: " ";
+    position:absolute;
+    margin-bottom: 0.2em;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-width:100%;
+    height: 66%;
+    z-index:-1;
+    outline: 1px solid $pumpkin;
+    border-radius:50px;
+    padding-left: 12px;
+    padding-right: 8px;
+  }
+}
 
 div.homeContainer {
   display: flex;
@@ -31,30 +56,10 @@ div.homeContainer {
       span:nth-of-type(3) {
         color: $lilac;
       }
-      span:nth-of-type(4) {
-        font-family: Inter;
-        font-weight: 700;
-        position: relative;
-        margin-left:10px;
-        margin-right:10px;
-
-        &:before{
-          content: "";
-          position:absolute;
-          margin-bottom: 0.2em;
-          top: 55%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 100%;
-          height: 66%;
-          z-index:-1;
-          outline: 1px solid $pumpkin;
-          outline-radius:50px;
-          border-radius:50px;
-          padding-left: 12px;
-          padding-right: 8px;
-        }
+      span:nth-of-type(4){
+        font-family: Inter, monospace;
       }
+
     }
     >p {
       color: $ashgray;

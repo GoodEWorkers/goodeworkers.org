@@ -61,7 +61,7 @@ function IndexPage() {
           <br />
           Helping
           {' '}
-          <span>nonprofits</span>
+          <span className="encircled">nonprofits</span>
           {' '}
           go remote
         </h1>
