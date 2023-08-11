@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="formContainer">
           <p>Contact-us !</p>
           <p>
-            goodeworkers@proton.me
+            hello@goodeworkers.org
           </p>
           <ContactForm />
         </div>
