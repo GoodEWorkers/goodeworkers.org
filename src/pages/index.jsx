@@ -54,16 +54,17 @@ function IndexPage() {
       {/* Header */}
       <header>
         <h1>
-
-          <span>Good</span>
-          <span>e</span>
-          <span>Workers</span>
-          <br />
-          Helping
+          <strong>
+            <span className="color-amber">Good</span>
+            <span className="color-pumpkin cash-semi-bold">e</span>
+            <span className="color-lilac">Workers</span>
+          </strong>
+          {' '}
+          <span>Helping</span>
           {' '}
           <span className="encircled">nonprofits</span>
           {' '}
-          go remote
+          <span>go&nbsp;remote</span>
         </h1>
         <p>
           As a non-profit we believe that everyone has the power to make a
@@ -154,7 +155,7 @@ export function Head() {
       </title>
       <meta
         name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
       />
       <meta
         name="description"
