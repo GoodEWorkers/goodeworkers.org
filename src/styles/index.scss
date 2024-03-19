@@ -1,6 +1,5 @@
 @import './global.scss';
 
-
 div.homeContainer {
   display: flex;
   flex-direction: column;
@@ -185,6 +184,218 @@ div.homeContainer {
         margin-top: 82px;
         margin-right: 4%;
       }
+    }
+  }
+  #why {
+    font-family: Inter;
+    padding-bottom: 20px;
+    .whyContent {
+      margin: 40px 0 0;
+      >h2 {
+        margin: 40px 0 0;
+        padding: 0;
+        color: $pearly;
+        box-sizing: border-box;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-align: center;
+        >br {
+          display: block;
+        }
+        .encircled {
+          position: relative;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        .encircled::after {
+          position: absolute;
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          top: 5px;
+          right: -90px;
+          width: 120px;
+          height: 72px;
+          content: ' ';
+          background: url('../images/why_arrow.svg');
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
+        }
+      }
+      >p {
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 14px;
+        margin: 30px auto 0;
+        max-width: 350px;
+        padding: 0 20px;
+        >br {
+          display: none;
+        }
+      }
+    }
+    .whyCards {
+      padding: 0 20px;
+      box-sizing: border-box;
+      display: flex;
+      margin: 43px auto 0;
+      flex-flow: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      .whyCard{
+        display: flex;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 350px;
+        border-radius: 20px;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 48px;
+        aspect-ratio: 1;
+        .title {
+          font-weight: bold;
+          font-size: 16px;
+          white-space: pre-line;
+          margin: 17px 0 0;
+        }
+        .text {
+          font-size: 14px;
+          font-weight: 500;
+          margin: 13px 0 0;
+        }
+      }
+    }
+    @include respond-to('small') {
+      .whyContent {
+        >h2 {
+          font-size: 36px;
+          margin: 60px 0 0;
+          .encircled::after {
+            top: 10px;
+            right: -110px;
+            width: 142px;
+            height: 85px;
+          }
+          >br {
+            display: block;
+          }
+        }
+        >p {
+          font-size: 14px;
+          margin: 40px auto 0;
+          max-width: 600px;
+          >br {
+            display: none;
+          }
+        }
+      }
+      .whyCards{
+        padding: 0 0px;
+        .whyCard{
+          padding: 0 24px;
+          max-width: 320px;
+          flex: 0 0 calc(50% - 10px);
+        }
+        
+      }
+    }@include respond-to('medium') {
+      .whyContent {
+        >h2 {
+          margin: 80px 0 0;
+          font-size: 44px;
+          .encircled::after {
+            top: 10px;
+            right: -135px;
+            width: 175px;
+            height: 105px;
+          }
+        }
+        >p {
+          margin: 55px auto 0;
+          max-width: 700px;
+          font-size: 16px;
+        }
+      }
+      .whyCards{
+        gap: 20px;
+        .whyCard{
+          max-width: 320px;
+          .title {
+            margin: 24px 0 0;
+          }
+          .text {
+            font-size: 16px;
+            margin: 20px 0 0;
+          }
+        }
+      }
+    }
+    @include respond-to('large') {
+      .whyContent {
+        >h2 {
+          margin: 110px 0 0;
+          font-size: 54px;
+          .encircled::after {
+            top: 0px;
+            right: -195px;
+            width: 250px;
+            height: 150px;
+          }
+          >br {
+            display: block;
+          }
+        }
+        >p {
+          margin: 65px auto 0;
+          max-width: 720px;
+          >br {
+            display: block;
+          }
+        }
+      }
+      .whyCards{
+        margin: 65px auto 0;
+        .whyCard{
+          max-width: 365px;
+        }
+      }
+    }
+    @include respond-to('extra-large') {
+      .whyContent {
+        >h2 {
+          .encircled::after {
+            top: 0px;
+            right: -195px;
+            width: 250px;
+            height: 150px;
+          }
+          >br {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to('small') {
+    #why {
+      padding-bottom: 40px;
+    }
+  }
+  @include respond-to('medium') {
+    #why {
+      padding-bottom: 60px;
+    }
+  }
+
+  @include respond-to('large') {
+    #why {
+      padding-bottom: 80px;
     }
   }
 

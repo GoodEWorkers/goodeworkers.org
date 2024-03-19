@@ -7,6 +7,9 @@ import Footer from '../components/Footer/Footer';
 import Favicon from '../images/favicon.png';
 import Button from '../components/Button/Button';
 import Card from '../components/Card/Card';
+import Map from '../assets/icons/map.svg';
+import Dollar from '../assets/icons/dollar.svg';
+import Calendar from '../assets/icons/calendar.svg';
 
 function IndexPage() {
   const cardsData = [
@@ -43,6 +46,27 @@ function IndexPage() {
       text: 'I want to',
       largerText: 'help',
       className: 'biggerButton lilac-ink',
+    },
+  ];
+
+  const whyCardsData = [
+    {
+      icon: <Map height="24px" />,
+      classNames: 'bg-amber color-coal',
+      title: 'No geographical \nrestrictions',
+      text: 'We are not a local association, we welcome all volunteers from around the globe.',
+    },
+    {
+      icon: <Calendar height="24px" />,
+      classNames: 'bg-pumpkin color-snow',
+      title: 'A streamlined \norganization',
+      text: 'We excel in the art of telecommuting, working asynchronously, with all tasks predefined to enhance efficiency for all stakeholders.',
+    },
+    {
+      icon: <Dollar height="24px" />,
+      classNames: 'bg-lilac color-coal',
+      title: 'Reduced \ncost',
+      text: 'With no physical premises or offices, our infrastructure costs are significantly minimized, benefiting everyone.',
     },
   ];
 
@@ -124,6 +148,40 @@ function IndexPage() {
                 className={button.className}
                 href="#contact"
               />
+            ))}
+          </div>
+        </section>
+
+        {/* Why Section */}
+        <section id="why">
+          <div className="whyContent">
+            <h2 className="">
+              Making distance an
+              {' '}
+              <br />
+              <span className="encircled">advantage</span>
+            </h2>
+            <p className="">
+              <b>
+                Throughout the duration of your project, you will have a dedicated
+                interlocutor
+              </b>
+              {' '}
+              with whom you will regularly communicate via phone, email, video
+              conferencing, or chat.
+              {' '}
+              <br />
+              This way, you will be kept informed of progress
+              and any potential setbacks.
+            </p>
+          </div>
+          <div className="whyCards">
+            {whyCardsData.map((whyCard) => (
+              <div key={whyCard.title} className={`whyCard ${whyCard.classNames}`}>
+                {whyCard.icon}
+                <p className="title">{whyCard.title}</p>
+                <p className="text">{whyCard.text}</p>
+              </div>
             ))}
           </div>
         </section>
