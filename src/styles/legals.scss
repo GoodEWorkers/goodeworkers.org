@@ -52,9 +52,10 @@
   }
   @include respond-to('extra-large') {
     main {
-      margin: 80px 20px 20px;
+      margin: 80px 35px 20px;
       border-radius: 30px;
       padding: 80px 15px 100px;
+      min-height: 120vh;
       .inner-container {
         >h1 {
           font-size: 54px;
