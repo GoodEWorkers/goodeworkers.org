@@ -1,0 +1,69 @@
+@import './global.scss';
+
+.container {
+  background-color: $coal;
+  box-sizing: border-box;
+  main {
+    box-sizing: border-box;
+    color: $snow;
+    background-color: $black-light;
+    margin: 80px 20px 20px;
+    border-radius: 15px;
+    padding: 30px 15px 100px;
+    text-align: left;
+    font-family: Inter;
+    .inner-container {
+      max-width: 768px;
+      margin: 0 auto;
+      >h1 {
+        padding: 0;
+        margin: 0;
+        font-size: 30px;
+        font-weight: bold;
+        line-height: normal;
+        box-sizing: border-box;
+        text-align: left;
+        letter-spacing: -0.05rem; // personal pref, can be removed
+      }
+      .content {
+        margin-top: 20px;
+        box-sizing: border-box;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: pre-line;
+      }
+    }
+  }
+  @include respond-to('medium') {
+    main {
+      margin: 80px 20px 20px;
+      border-radius: 30px;
+      padding: 50px 15px 100px;
+      .inner-container {
+        >h1 {
+          font-size: 36px;
+        }
+        .content {
+          margin-top: 30px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  @include respond-to('extra-large') {
+    main {
+      margin: 80px 20px 20px;
+      border-radius: 30px;
+      padding: 80px 15px 100px;
+      .inner-container {
+        >h1 {
+          font-size: 54px;
+        }
+        .content {
+          margin-top: 40px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
