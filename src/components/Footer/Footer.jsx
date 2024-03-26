@@ -14,8 +14,9 @@ export default function Footer() {
           </p>
           <ContactForm />
         </div>
-        <ul>
-          <li>GoodEWorkers © 2023</li>
+        <ul className="footerEnd">
+          <li className="copy">GoodEWorkers © 2023</li>
+          <li><a href="/legals">Legal Disclaimers</a></li>
         </ul>
       </div>
     </footer>
