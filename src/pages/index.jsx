@@ -60,7 +60,7 @@ function IndexPage() {
       icon: <Calendar height="24px" />,
       classNames: 'bg-pumpkin color-snow',
       title: 'A streamlined \norganization',
-      text: 'We excel in the art of telecommuting, working asynchronously, with all tasks predefined to enhance efficiency for all stakeholders.',
+      text: 'We excel in the art of remote work, working asynchronously, with all tasks predefined to enhance efficiency for all stakeholders.',
     },
     {
       icon: <Dollar height="24px" />,
