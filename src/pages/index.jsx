@@ -10,6 +10,8 @@ import Card from '../components/Card/Card';
 import Map from '../assets/icons/map.svg';
 import Dollar from '../assets/icons/dollar.svg';
 import Calendar from '../assets/icons/calendar.svg';
+import Gatsby from '../assets/icons/gatsby.svg';
+import Lili from '../assets/icons/lili.svg';
 
 function IndexPage() {
   const cardsData = [
@@ -67,6 +69,33 @@ function IndexPage() {
       classNames: 'bg-lilac color-coal',
       title: 'Reduced \ncost',
       text: 'With no physical premises or offices, our infrastructure costs are significantly minimized, benefiting everyone.',
+    },
+  ];
+
+  const partnersIcons = [
+    {
+      id: 1,
+      icon: <Gatsby height="64px" />,
+      classNames: '',
+      name: 'Gatsby',
+    },
+    {
+      id: 2,
+      icon: <Lili height="64px" />,
+      classNames: '',
+      name: 'Lili Schmitt',
+    },
+    {
+      id: 3,
+      icon: <Gatsby height="64px" />,
+      classNames: '',
+      name: 'Gatsby',
+    },
+    {
+      id: 4,
+      icon: <Lili height="64px" />,
+      classNames: '',
+      name: 'Lili Schmitt',
     },
   ];
 
@@ -196,10 +225,14 @@ function IndexPage() {
               <span className="encircled">partners</span>
             </h2>
             <div className="partnersCards">
-              <div className="partnerCard">
-                Icon
-              </div>
-              <p className="title">Name</p>
+              {partnersIcons.map((partner) => (
+                <>
+                  <div key={`${partner.name}-${partner.id}`} className="partnerCard">
+                    {partner.icon}
+                  </div>
+                  <p className="title">{partner.name}</p>
+                </>
+              ))}
             </div>
           </div>
         </section>
