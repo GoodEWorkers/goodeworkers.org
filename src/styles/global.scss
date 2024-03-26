@@ -16,6 +16,12 @@ body {
   color: $pearly;
   max-width:100%;
 }
+.color-snow{
+  color: $snow;
+}
+.color-coal{
+  color: $coal;
+}
 .color-amber{
   color: $amber;
 }
@@ -24,6 +30,15 @@ body {
 }
 .color-lilac{
   color: $lilac;
+}
+.bg-amber{
+  background-color: $amber;
+}
+.bg-pumpkin{
+  background-color: $pumpkin;
+}
+.bg-lilac{
+  background-color: $lilac;
 }
 .cash-semi-bold{
   font-family: 'ClashDisplay-Semibold';
