@@ -185,6 +185,24 @@ function IndexPage() {
             ))}
           </div>
         </section>
+
+        {/* Partners Section */}
+        <section id="partners">
+          <div className="partnersContent">
+            <h2 className="">
+              With the help of our
+              {' '}
+              <br />
+              <span className="encircled">partners</span>
+            </h2>
+            <div className="partnersCards">
+              <div className="partnerCard">
+                Icon
+              </div>
+              <p className="title">Name</p>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
