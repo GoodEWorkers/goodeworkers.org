@@ -1,3 +1,4 @@
+import '../styles/legals.scss';
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import PropTypes from 'prop-types';
