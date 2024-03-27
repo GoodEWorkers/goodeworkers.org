@@ -442,9 +442,12 @@ div.homeContainer {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       gap: 14px;
+      // hide scroll bar
       &::-webkit-scrollbar {
         display: none;
       }
+      -ms-overflow-style: none; /* IE */
+      scrollbar-width: none; /* Firefox */
       .partnersCard{
         //  display one card at a time
         //  flex: 0 0 auto; 
