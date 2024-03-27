@@ -400,12 +400,169 @@ div.homeContainer {
   }
 
   #advantages,
-  #team,
-  #partners {
+  #team {
     border: 2px solid $amber;
     padding: 50px;
     margin: 50px 0;
   }
+
+  #partners {
+    font-family: Inter;
+    padding-bottom: 20px;
+    .partnersContent {
+      margin: 40px 0 0;
+      >h2 {
+        margin: 40px 0 0;
+        padding: 0;
+        color: $pearly;
+        box-sizing: border-box;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-align: center;
+        >br {
+          display: block;
+        }
+        .encircled {
+          position: relative;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+      }
+    }
+    .partnersCards {
+      max-width: 320px;
+      padding: 0 12px;
+      margin: 43px 0 0;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      gap: 14px;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .partnersCard{
+        //  display one card at a time
+        //  flex: 0 0 auto; 
+        display: flex;
+        box-sizing: border-box;
+        width: 100%;
+        border-radius: 10px;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1;
+        .icon {
+          background-color: #1D1D1D;
+          border-radius: 10px;
+          width: 168px;
+          height: 168px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .title {
+          font-weight: bold;
+          font-size: 14px;
+          white-space: pre-line;
+          margin: 17px 0 0;
+          color: $pearly;
+        }
+      }
+    }
+  //   @include respond-to('small') {
+  //     .partnersContent {
+  //       >h2 {
+  //         font-size: 36px;
+  //         margin: 60px 0 0;
+  //         .encircled::after {
+  //           top: 10px;
+  //           right: -110px;
+  //           width: 142px;
+  //           height: 85px;
+  //         }
+  //         >br {
+  //           display: block;
+  //         }
+  //       }
+  //     }
+  //     .partnersCards{
+  //       padding: 0 0px;
+  //       .partnersCard{
+  //         padding: 0 24px;
+  //         max-width: 320px;
+  //         flex: 0 0 calc(50% - 10px);
+  //       }
+        
+  //     }
+  //   }@include respond-to('medium') {
+  //     .partnersContent {
+  //       >h2 {
+  //         margin: 80px 0 0;
+  //         font-size: 44px;
+  //       }
+  //     }
+  //     .partnersCards{
+  //       gap: 20px;
+  //       .partnersCard{
+  //         max-width: 320px;
+  //         .title {
+  //           margin: 24px 0 0;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   @include respond-to('large') {
+  //     .partnersContent {
+  //       >h2 {
+  //         margin: 110px 0 0;
+  //         font-size: 54px;
+  //         >br {
+  //           display: block;
+  //         }
+  //       }
+  //     }
+  //     .partnersCards{
+  //       margin: 65px auto 0;
+  //       .partnersCard{
+  //         max-width: 365px;
+  //       }
+  //     }
+  //   }
+  //   @include respond-to('extra-large') {
+  //     .partnersContent {
+  //       >h2 {
+  //         >br {
+  //           display: none;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  // @include respond-to('small') {
+  //   #partners {
+  //     padding-bottom: 40px;
+  //   }
+  // }
+  // @include respond-to('medium') {
+  //   #partners {
+  //     padding-bottom: 60px;
+  //   }
+  // }
+
+  // @include respond-to('large') {
+  //   #partners {
+  //     padding-bottom: 80px;
+  //   }
+  // }
+  
 }
+}
+
 
 
