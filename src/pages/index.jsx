@@ -75,25 +75,25 @@ function IndexPage() {
   const partnersIcons = [
     {
       id: 1,
-      icon: <Gatsby height="64px" />,
+      icon: <Gatsby />,
       classNames: '',
       name: 'Gatsby',
     },
     {
       id: 2,
-      icon: <Lili height="64px" />,
+      icon: <Lili />,
       classNames: '',
       name: 'Lili Schmitt',
     },
     {
       id: 3,
-      icon: <Gatsby height="64px" />,
+      icon: <Gatsby />,
       classNames: '',
       name: 'Gatsby',
     },
     {
       id: 4,
-      icon: <Lili height="64px" />,
+      icon: <Lili />,
       classNames: '',
       name: 'Lili Schmitt',
     },
@@ -226,12 +226,10 @@ function IndexPage() {
             </h2>
             <div className="partnersCards">
               {partnersIcons.map((partner) => (
-                <>
-                  <div key={`${partner.name}-${partner.id}`} className="partnerCard">
-                    {partner.icon}
-                  </div>
+                <div key={`${partner.name}-${partner.id}`} className="partnersCard">
+                  <div className="icon">{partner.icon}</div>
                   <p className="title">{partner.name}</p>
-                </>
+                </div>
               ))}
             </div>
           </div>
