@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.scss';
+// import './Footer.scss';
 import ContactForm from '../ContactForm/ContactForm';
 
 export default function Footer() {

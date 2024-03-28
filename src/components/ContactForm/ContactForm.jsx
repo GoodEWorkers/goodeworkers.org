@@ -1,4 +1,4 @@
-import './ContactForm.scss';
+// import './ContactForm.scss';
 import React from 'react';
 
 export default function ContactForm() {
