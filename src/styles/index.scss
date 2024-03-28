@@ -412,7 +412,6 @@ div.homeContainer {
     .partnersContent {
       margin: 40px 0 0;
       >h2 {
-        margin: 40px 0 0;
         padding: 0;
         color: $pearly;
         box-sizing: border-box;
@@ -433,8 +432,7 @@ div.homeContainer {
       }
     }
     .partnersCards {
-      max-width: 100vw;
-      padding: 0 12px;
+      max-width: 91vw;
       margin: 43px 0 0;
       box-sizing: border-box;
       display: flex;
@@ -453,7 +451,6 @@ div.homeContainer {
         //  flex: 0 0 auto; 
         display: flex;
         box-sizing: border-box;
-        width: 100%;
         border-radius: 10px;
         flex-flow: column;
         align-items: center;
@@ -477,94 +474,89 @@ div.homeContainer {
         }
       }
     }
-  //   @include respond-to('small') {
-  //     .partnersContent {
-  //       >h2 {
-  //         font-size: 36px;
-  //         margin: 60px 0 0;
-  //         .encircled::after {
-  //           top: 10px;
-  //           right: -110px;
-  //           width: 142px;
-  //           height: 85px;
-  //         }
-  //         >br {
-  //           display: block;
-  //         }
-  //       }
-  //     }
-  //     .partnersCards{
-  //       padding: 0 0px;
-  //       .partnersCard{
-  //         padding: 0 24px;
-  //         max-width: 320px;
-  //         flex: 0 0 calc(50% - 10px);
-  //       }
-        
-  //     }
-  //   }@include respond-to('medium') {
-  //     .partnersContent {
-  //       >h2 {
-  //         margin: 80px 0 0;
-  //         font-size: 44px;
-  //       }
-  //     }
-  //     .partnersCards{
-  //       gap: 20px;
-  //       .partnersCard{
-  //         max-width: 320px;
-  //         .title {
-  //           margin: 24px 0 0;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   @include respond-to('large') {
-  //     .partnersContent {
-  //       >h2 {
-  //         margin: 110px 0 0;
-  //         font-size: 54px;
-  //         >br {
-  //           display: block;
-  //         }
-  //       }
-  //     }
-  //     .partnersCards{
-  //       margin: 65px auto 0;
-  //       .partnersCard{
-  //         max-width: 365px;
-  //       }
-  //     }
-  //   }
-  //   @include respond-to('extra-large') {
-  //     .partnersContent {
-  //       >h2 {
-  //         >br {
-  //           display: none;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+    @include respond-to('small') {
+      .partnersContent {
+        >h2 {
+          font-size: 36px;
+          .encircled::after {
+            top: 10px;
+            right: -110px;
+            width: 142px;
+            height: 85px;
+          }
+          >br {
+            display: block;
+          }
+        }
+        .partnersCards {
+          max-width: 95vw;
+        }
+      }
+    }
+    @include respond-to('medium') {
+      .partnersContent {
+        >h2 {
+          font-size: 44px;
+        }
+      }
+      .partnersCards{
+        gap: 20px;
+        max-width: 96vw;
+        flex-wrap: wrap;
+        justify-content: center;
+        .partnersCard{
+          .title {
+            margin: 24px 0 0;
+          }
+        }
+      }
+    }
+    @include respond-to('large') {
+      .partnersContent {
+        >h2 {
+          font-size: 54px;
+          >br {
+            display: block;
+          }
+        }
+      }
+      .partnersCards{
+        margin: 65px auto 0;
+        .partnersCard{
+          margin-top: 20px;
+          .title {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    @include respond-to('extra-large') {
+      .partnersContent {
+        >h2 {
+          >br {
+            display: none;
+          }
+        }
+      }
+    }
+  }
 
-  // @include respond-to('small') {
-  //   #partners {
-  //     padding-bottom: 40px;
-  //   }
-  // }
-  // @include respond-to('medium') {
-  //   #partners {
-  //     padding-bottom: 60px;
-  //   }
-  // }
+  @include respond-to('small') {
+    #partners {
+      padding-bottom: 40px;
+    }
+  }
+  @include respond-to('medium') {
+    #partners {
+      padding-bottom: 60px;
+    }
+  }
 
-  // @include respond-to('large') {
-  //   #partners {
-  //     padding-bottom: 80px;
-  //   }
-  // }
-  
-}
+  @include respond-to('large') {
+    #partners {
+      padding-bottom: 80px;
+    }
+  }
 }
 
 
