@@ -5,7 +5,12 @@ module.exports = {
     './src/components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        clash: ['ClashDisplay', 'fantasy', 'Arial', 'sans-serif'],
+        inter: ['Inter', 'Arial', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };
