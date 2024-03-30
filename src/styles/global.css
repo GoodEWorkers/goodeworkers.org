@@ -79,3 +79,12 @@
     src: url('../assets/fonts/Inter-Regular.ttf') format('truetype');
   }
 }
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #111111;
+}
