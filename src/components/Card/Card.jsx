@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.scss';
+// import './Card.scss';
 // import '../../styles/global.scss';
 import PropTypes from 'prop-types';
 import Webnet from '../../assets/icons/webnet.svg';

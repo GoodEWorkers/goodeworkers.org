@@ -20,11 +20,11 @@ module.exports = {
     siteMetaDescription: "GoodEworkers is a network that helps nonprofits find remote workers and mentors them on how to work from home. We also help nonprofits structure themselves to be more remote-friendly. Whether you're a nonprofit looking to hire remote workers or a remote worker looking to find a meaningful cause to work for, GoodEworkers can help.",
   },
   plugins: [
+    'gatsby-plugin-postcss',
     'gatsby-plugin-image',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    'gatsby-plugin-sass',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
