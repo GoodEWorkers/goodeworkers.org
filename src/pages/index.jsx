@@ -92,6 +92,30 @@ function IndexPage() {
       classNames: '',
       name: 'Lili Schmitt',
     },
+    {
+      id: 5,
+      icon: <Gatsby />,
+      classNames: '',
+      name: 'Gatsby',
+    },
+    {
+      id: 6,
+      icon: <Lili />,
+      classNames: '',
+      name: 'Lili Schmitt',
+    },
+    {
+      id: 7,
+      icon: <Gatsby />,
+      classNames: '',
+      name: 'Gatsby',
+    },
+    {
+      id: 8,
+      icon: <Lili />,
+      classNames: '',
+      name: 'Lili Schmitt',
+    },
   ];
 
   return (
@@ -122,6 +146,7 @@ function IndexPage() {
           </p>
         </header>
         <main>
+          {/* Hero Section */}
           <section id="hero">
             <div className="flex flex-col mx-4 sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 mt-12 sm:mt-20 sm:justify-center sm:space-x-6 md:space-x-12 relative z-10">
               <Link to="/#contact" className="w-full max-w-[336px] bg-yellow px-8 py-4 rounded-full flex flex-col items-center hover:shadow-lg hover:scale-105 transition-transform ease-in">
@@ -168,6 +193,7 @@ function IndexPage() {
               </div>
             </div>
           </section>
+          {/* Why Section */}
           <section id="why" className="pb-12 md:pb-16 xl:pb-24">
             <div className="mt-10 sm:mt-16 md:mt-32 text-white text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] text-grey font-medium leading-[1.2] md:leading-tight lg:leading-tight">
@@ -205,25 +231,38 @@ function IndexPage() {
               ))}
             </div>
           </section>
-  {/* Partners Section */}
-        <section id="partners">
-          <div className="partnersContent">
-            <h2 className="">
-              With the help of our
-              {' '}
-              <br />
-              <span className="encircled">partners</span>
-            </h2>
-            <div className="partnersCards">
-              {partnersIcons.map((partner) => (
-                <div key={`${partner.name}-${partner.id}`} className="partnersCard">
-                  <div className="icon">{partner.icon}</div>
-                  <p className="title">{partner.name}</p>
+          {/* Partners Section */}
+          <section id="partners">
+            <div className="mt-10 text-white pb-20 xl:pb-32">
+              <h2 className="font-medium text-3xl sm:text-4xl md:text-5xl xl:text-[54px] text-center">
+                With the help of our
+                {' '}
+                <br className="xl:hidden" />
+                <Encircled text="partners" className="font-bold" />
+              </h2>
+              <div className="partnersCards md:hidden mt-12 w-full text-sm">
+                <div className="slider flex xl:pt-24 xl:pb-32 w-fit">
+                  {partnersIcons.map((partner) => (
+                    <div key={`${partner.name}-${partner.id}`} className="w-40 mr-5 las">
+                      <div className="w-40 h-40 bg-black-light rounded-xl flex flex-col justify-center items-center text-grey">{partner.icon}</div>
+                      <p className="mt-4 text-center font-bold">{partner.name}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <div className="hidden md:block md:mt-20 xl:mt-24 w-full overflow-hidden">
+                <div className="slider flex w-fit mx-auto">
+                  {partnersIcons.slice(0, 4).map((partner) => (
+                    <div key={`${partner.name}-${partner.id}`} className="w-40 mr-5 las">
+                      <div className="w-40 h-40 bg-black-light rounded-xl flex flex-col justify-center items-center text-grey">{partner.icon}</div>
+                      <p className="mt-4 text-center font-bold">{partner.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </section>      </main>
+          </section>
+        </main>
       </div>
       <Footer />
     </>
