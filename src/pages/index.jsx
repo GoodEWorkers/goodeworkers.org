@@ -8,6 +8,8 @@ import Favicon from '../images/favicon.png';
 import Map from '../assets/icons/map.svg';
 import Dollar from '../assets/icons/dollar.svg';
 import Calendar from '../assets/icons/calendar.svg';
+import Gatsby from '../assets/icons/gatsby.svg';
+import Lili from '../assets/icons/lili.svg';
 import Webnet from '../assets/icons/webnet.svg';
 import Chat from '../assets/icons/chat.svg';
 import Magnify from '../assets/icons/magnify.svg';
@@ -62,6 +64,33 @@ function IndexPage() {
       classNames: 'bg-purple text-black-light',
       title: 'Reduced \ncost',
       text: 'With no physical premises or offices, our infrastructure costs are significantly minimized, benefiting everyone.',
+    },
+  ];
+
+  const partnersIcons = [
+    {
+      id: 1,
+      icon: <Gatsby />,
+      classNames: '',
+      name: 'Gatsby',
+    },
+    {
+      id: 2,
+      icon: <Lili />,
+      classNames: '',
+      name: 'Lili Schmitt',
+    },
+    {
+      id: 3,
+      icon: <Gatsby />,
+      classNames: '',
+      name: 'Gatsby',
+    },
+    {
+      id: 4,
+      icon: <Lili />,
+      classNames: '',
+      name: 'Lili Schmitt',
     },
   ];
 
@@ -176,7 +205,25 @@ function IndexPage() {
               ))}
             </div>
           </section>
-        </main>
+  {/* Partners Section */}
+        <section id="partners">
+          <div className="partnersContent">
+            <h2 className="">
+              With the help of our
+              {' '}
+              <br />
+              <span className="encircled">partners</span>
+            </h2>
+            <div className="partnersCards">
+              {partnersIcons.map((partner) => (
+                <div key={`${partner.name}-${partner.id}`} className="partnersCard">
+                  <div className="icon">{partner.icon}</div>
+                  <p className="title">{partner.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>      </main>
       </div>
       <Footer />
     </>
