@@ -240,7 +240,7 @@ function IndexPage() {
                 <br className="xl:hidden" />
                 <Encircled text="partners" className="font-bold" />
               </h2>
-              <div className="partnersCards md:hidden mt-12 w-full text-sm">
+              <div className="partnersCards md:hidden mt-12 w-full text-sm overflow-hidden">
                 <div className="slider flex xl:pt-24 xl:pb-32 w-fit">
                   {partnersIcons.map((partner) => (
                     <div key={`${partner.name}-${partner.id}`} className="w-40 mr-5 las">
