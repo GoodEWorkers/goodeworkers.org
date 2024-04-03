@@ -3,7 +3,14 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": [
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -11,13 +18,31 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    // solves unnecessary extension from imports for these file types
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react/prop-types": "off", // since ts is used for type checking
+    // allow jsx inside tsx files
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
     "eol-last": 0,
     "react/jsx-no-bind": "off",
     "import/no-extraneous-dependencies": "off",
     "react/jsx-no-undef": "error",
     "linebreak-style": ["off"],
+    //fix label not containing input error
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
@@ -34,5 +59,14 @@
         }
       }
     ]
+  },
+  // fix unable to resolve path to module
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
