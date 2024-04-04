@@ -20,6 +20,8 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    // allow require
+    "@typescript-eslint/no-var-requires": "off",
     // solves unnecessary extension from imports for these file types
     "import/extensions": [
       "error",
