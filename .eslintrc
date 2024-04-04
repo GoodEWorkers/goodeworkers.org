@@ -33,6 +33,7 @@
         "tsx": "never"
       }
     ],
+    "react/require-default-props": "off",
     "react/prop-types": "off", // since ts is used for type checking
     // allow jsx inside tsx files
     "react/jsx-filename-extension": [
