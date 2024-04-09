@@ -1,11 +1,16 @@
 import React from 'react';
-// import './Navbar.scss';
 import { Link } from 'gatsby';
 import { Menu, Transition } from '@headlessui/react';
-import Logo from '../../images/goodeworkers.svg';
-import Hamburger from '../Miscs/Hamburger';
+import Hamburger from './Miscs/Hamburger';
+import Logo from '../images/goodeworkers.svg';
 
 export default function Navbar() {
+  const navbarTextProjects = 'Our Projects';
+  const navbarTextWhoAreWe = 'Who Are We?';
+  const navbarTextFAQ = 'FAQ';
+  const navbarTextContact = 'Contact';
+  const navbarTextMenu = 'Menu';
+
   return (
     <div className="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50">
       <nav className="relative flex justify-between items-center font-inter max-w-screen-2xl mx-auto px-4 md:px-8 pt-2 pb-2 md:pt-4 md:pb-4 text-grey">
@@ -18,26 +23,26 @@ export default function Navbar() {
         </Link>
         <ul className="hidden md:flex md:space-x-12 font-bold">
           <li>
-            <Link to="/#projects">Our Projects</Link>
+            <Link to="/#projects" className='transition-colors hover:text-orange'>{navbarTextProjects}</Link>
           </li>
           <li>
-            <Link to="/#about">Who Are We?</Link>
+            <Link to="/#about" className='transition-colors hover:text-orange'>{navbarTextWhoAreWe}</Link>
           </li>
           <li>
-            <Link to="/#faq">FAQ</Link>
+            <Link to="/#faq" className='transition-colors hover:text-orange'>{navbarTextFAQ}</Link>
           </li>
           <li>
             <Link
               to="/#contact"
-              className="border-orange border-2 -ml-2 px-2 py-px rounded-full"
+              className="border-orange border-2 -ml-2 px-2 py-px rounded-full hover:bg-orange hover:text-black transition-colors duration-200"
             >
-              Contact
+              {navbarTextContact}
             </Link>
           </li>
         </ul>
         <Menu>
           <Menu.Button className="md:hidden relative z-50">
-            <span className="sr-only">Menu</span>
+            <span className="sr-only">{navbarTextMenu}</span>
             <Hamburger />
           </Menu.Button>
           <div className="md:hidden absolute top-0 inset-x-0 z-40">
@@ -59,7 +64,7 @@ export default function Navbar() {
                           active && 'text-orange'
                         }`}
                       >
-                        Our Projects
+                        {navbarTextProjects}
                       </Link>
                     )}
                   </Menu.Item>
@@ -73,7 +78,7 @@ export default function Navbar() {
                           active && 'text-orange'
                         }`}
                       >
-                        Who Are We?
+                        {navbarTextWhoAreWe}
                       </Link>
                     )}
                   </Menu.Item>
@@ -87,7 +92,7 @@ export default function Navbar() {
                           active && 'text-orange'
                         }`}
                       >
-                        FAQ
+                        {navbarTextFAQ}
                       </Link>
                     )}
                   </Menu.Item>
@@ -101,7 +106,7 @@ export default function Navbar() {
                           active && 'text-orange'
                         }`}
                       >
-                        Contact
+                        {navbarTextContact}
                       </Link>
                     )}
                   </Menu.Item>
