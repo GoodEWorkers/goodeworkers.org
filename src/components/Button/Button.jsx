@@ -19,7 +19,7 @@ export default function Button(props) {
       target={target}
     >
       {text}
-      {largerText ? (<span>{largerText}</span>) : ''}
+      {largerText ? (<span className="text-3xl font-clash font-semibold">{largerText}</span>) : ''}
     </a>
 
   );

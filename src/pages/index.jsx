@@ -16,6 +16,7 @@ import Magnify from '../assets/icons/magnify.svg';
 import Hexagone from '../assets/icons/hexagone.svg';
 import Heart from '../assets/icons/heart.svg';
 import Encircled from '../components/Miscs/Encircled';
+import Articles from '../components/ArticlesSection/Articles';
 
 function IndexPage() {
   const heroCards = [
@@ -264,6 +265,7 @@ function IndexPage() {
           </section>
         </main>
       </div>
+      <Articles />
       <Footer />
     </>
   );

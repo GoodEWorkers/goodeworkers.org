@@ -24,6 +24,9 @@ export default function Navbar() {
             <Link to="/#about">Who Are We?</Link>
           </li>
           <li>
+            <Link to="/article">Blog</Link>
+          </li>
+          <li>
             <Link to="/#faq">FAQ</Link>
           </li>
           <li>
