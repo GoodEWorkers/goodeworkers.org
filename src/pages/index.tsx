@@ -7,6 +7,7 @@ import Partners from '../components/Landing/Partners';
 import Why from '../components/Landing/Why';
 import Navbar from '../components/Navbar';
 import Favicon from '../images/favicon.png';
+import Articles from '../components/Landing/ArticlesSection';
 
 function IndexPage() {
   return (
@@ -21,6 +22,7 @@ function IndexPage() {
           <Why />
           {/* Partners Section */}
           <Partners />
+          <Articles />
         </main>
       </div>
       <Footer />
