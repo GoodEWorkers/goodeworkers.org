@@ -1,7 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default function Encircled({ text, className }) {
+export default function Encircled({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   return (
     <span className="relative">
       <span className={`z-10 relative px-1.5 ${className}`}>{text}</span>
@@ -9,12 +14,3 @@ export default function Encircled({ text, className }) {
     </span>
   );
 }
-
-Encircled.propTypes = {
-  text: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
-
-Encircled.defaultProps = {
-  className: '',
-};
