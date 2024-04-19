@@ -70,7 +70,7 @@ function Articles() {
             </section>
             <div className="flex  w-5/6">
               {article.tag.map((element) => (
-                <p className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
+                <p key={element} className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
                   {element}
                 </p>
               ))}
