@@ -17,42 +17,6 @@ export default function Partners() {
       classNames: '',
       name: 'Lili Schmitt',
     },
-    {
-      id: 3,
-      icon: <Gatsby />,
-      classNames: '',
-      name: 'Gatsby',
-    },
-    {
-      id: 4,
-      icon: <Lili />,
-      classNames: '',
-      name: 'Lili Schmitt',
-    },
-    {
-      id: 5,
-      icon: <Gatsby />,
-      classNames: '',
-      name: 'Gatsby',
-    },
-    {
-      id: 6,
-      icon: <Lili />,
-      classNames: '',
-      name: 'Lili Schmitt',
-    },
-    {
-      id: 7,
-      icon: <Gatsby />,
-      classNames: '',
-      name: 'Gatsby',
-    },
-    {
-      id: 8,
-      icon: <Lili />,
-      classNames: '',
-      name: 'Lili Schmitt',
-    },
   ];
 
   const partnersText1 = 'With the help of our ';
