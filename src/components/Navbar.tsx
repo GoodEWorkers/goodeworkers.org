@@ -23,15 +23,6 @@ export default function Navbar() {
         </Link>
         <ul className="hidden md:flex md:space-x-12 font-bold">
           <li>
-            <Link to="/#projects" className='transition-colors hover:text-orange'>{navbarTextProjects}</Link>
-          </li>
-          <li>
-            <Link to="/#about" className='transition-colors hover:text-orange'>{navbarTextWhoAreWe}</Link>
-          </li>
-          <li>
-            <Link to="/#faq" className='transition-colors hover:text-orange'>{navbarTextFAQ}</Link>
-          </li>
-          <li>
             <Link
               to="/#contact"
               className="border-orange border-2 -ml-2 px-2 py-px rounded-full hover:bg-orange hover:text-black transition-colors duration-200"
@@ -55,48 +46,6 @@ export default function Navbar() {
               leaveTo="transform -translate-y-2 opacity-0"
             >
               <Menu.Items className="bg-black h-screen text-white font-bold text-xl pt-12">
-                <li className="pl-16 pr-4 py-3">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/#projects"
-                        className={`hover:text-orange block w-full h-full ${
-                          active && 'text-orange'
-                        }`}
-                      >
-                        {navbarTextProjects}
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </li>
-                <li className="pl-16 pr-4 py-3">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/#about"
-                        className={`hover:text-orange block w-full h-full ${
-                          active && 'text-orange'
-                        }`}
-                      >
-                        {navbarTextWhoAreWe}
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </li>
-                <li className="pl-16 pr-4 py-3">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/#faq"
-                        className={`hover:text-orange block w-full h-full ${
-                          active && 'text-orange'
-                        }`}
-                      >
-                        {navbarTextFAQ}
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </li>
                 <li className="pl-16 pr-4 py-3">
                   <Menu.Item>
                     {({ active }) => (
