@@ -66,7 +66,7 @@ export default function ContactForm() {
       <div className="mt-16 md:mt-0 flex md:flex-1 justify-center md:justify-start md:items-end">
         <label
           htmlFor="submit"
-          className="cursor-pointer w-full max-w-[336px] bg-orange px-8 py-4 rounded-full flex flex-col items-center hover:shadow-lg hover:scale-105 transition-transform ease-in"
+          className="cursor-pointer w-full max-w-[336px] bg-orange px-7 py-5 rounded-full flex flex-col items-center hover:shadow-lg hover:scale-105 transition-transform ease-in"
         >
           <input type="submit" id="submit" value="send" className="hidden" />
           <span className="text-3xl sm:text-4xl font-clash font-bold text-center">
