@@ -1,6 +1,7 @@
-import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
+import React from 'react';
 import Footer from '../components/Footer';
+import About from '../components/Landing/About';
 import Hero from '../components/Landing/Hero';
 import LandingHeader from '../components/Landing/LandingHeader';
 import Partners from '../components/Landing/Partners';
@@ -9,6 +10,7 @@ import Navbar from '../components/Navbar';
 import Favicon from '../images/favicon.png';
 
 function IndexPage() {
+
   return (
     <>
       <Navbar />
@@ -19,6 +21,8 @@ function IndexPage() {
           <Hero />
           {/* Why Section */}
           <Why />
+          {/* About Us/Team Section */}
+          <About />
           {/* Partners Section */}
           <Partners />
         </main>
