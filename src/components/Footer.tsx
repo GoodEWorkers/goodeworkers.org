@@ -35,6 +35,9 @@ export default function Footer() {
           <li className='hover:underline'>
             <Link to="/legal-notice">{goodEWorkersText4}</Link>
           </li>
+          <li>
+            This site is powered by <a className='hover:underline' href="https://netlify.com?utm_source=goodeworkers">Netlify</a>
+          </li>
           <li>{goodEWorkersText3}</li>
         </ul>
       </div>
