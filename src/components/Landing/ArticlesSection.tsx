@@ -31,8 +31,8 @@ function Articles() {
   ];
   return (
     <section className="bg-black-light text-white  relative -mt-12 mb-12 px-8 pt-12 lg:pt-32 pb-6 md:pb-16 lg:pb-28 rounded-xl sm:rounded-2xl lg:rounded-3xl lg:justify-between">
-      <div className="flex justify-between items-center px-10 pb-16">
-        <p className="w-2/4 text-4xl ">
+      <div className="flex justify-between items-center px-10 pb-16 max-md:px-0">
+        <p className="w-2/4 text-4xl max-md:text-2xl">
           <span>Lorem</span>
 
           <span className=" font-semibold">
@@ -46,7 +46,7 @@ function Articles() {
         <BigRoundedLinkBtn
           upperSmallText={text}
           bigBtmText={largerText}
-          className="bg-purple text-black"
+          className="bg-purple text-black max-md:w-3/5"
           href="/article"
         />
       </div>
@@ -68,7 +68,7 @@ function Articles() {
                 <p>{article.readingTime}</p>
               </div>
             </section>
-            <div className="flex  w-5/6">
+            <div className="flex  w-5/6 max-md:flex-wrap">
               {article.tag.map((element) => (
                 <p key={element} className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
                   {element}

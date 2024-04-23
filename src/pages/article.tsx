@@ -17,7 +17,7 @@ function ArticlePage() {
       <Navbar />
       <main>
         <section className="text-white">
-          <div className="text-white flex font-clash px-36 md:px-52 py-4">
+          <div className="text-white flex font-clash px-24 md:px-52 py-4">
             <Link
               to="/"
               className="text-white flex font-clash text-xl items-center "
@@ -27,12 +27,12 @@ function ArticlePage() {
               blog
             </Link>
           </div>
-          <div className="px-36 md:px-52 flex-col py-6 ">
-            <h1 className="text-5xl  w-1/2 font-clash max-md:text-3xl">
+          <div className="px-24 md:px-52 flex-col py-6 ">
+            <h1 className="md:text-5xl  w-1/2 font-clash text-2xl max-md:w-full">
               Titre lorem ipsum dolor si amet consectetur adipiscing elit.
             </h1>
-            <div className="flex items-center py-12">
-              <div className="bg-black-light rounded-2xl absolute left-12 max-md:left-4">
+            <div className="flex-col items-center py-12 md:flex">
+              <div className="bg-black-light rounded-2xl md:absolute md:left-12   ">
                 <div className="flex">
                   <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
                     tech
@@ -41,7 +41,7 @@ function ArticlePage() {
                     design
                   </div>
                 </div>
-                <section className=" w-4/6 pb-8 max-lg:w-full">
+                <section className=" w-4/6  pb-8 max-lg:w-full ">
                   <div>
                     <p className="text-purple">writer</p>
                     <p>Jean Michel Ipsum</p>
@@ -56,9 +56,9 @@ function ArticlePage() {
                   </div>
                 </section>
               </div>
-              <img src={ArticleImgLarge} alt="ArticleImg" className="" />
+              <img src={ArticleImgLarge} alt="ArticleImg" />
             </div>
-            <h2 className="text-xl py-12 font-semibold">
+            <h2 className="text-xl py-12 font-semibold max-md:text-lg">
               Quis autem vel eum iure reprehenderit qui in ea voluptate velit
               esse quam nihil molestiae consequatur, vel illum qui dolorem eum
               fugiat quo voluptas nulla pariatur?
@@ -98,7 +98,7 @@ function ArticlePage() {
               voluptatibus maiores alias consequatur aut perferendis doloribus
               asperiores repellat
             </p>
-            <p className="italic p-12 ">
+            <p className="italic p-12 max-md:p-6">
               Quis autem vel eum iure reprehenderit qui in ea voluptate velit
               esse quam nihil molestiae consequatur, vel illum qui dolorem eum
               fugiat quo voluptas nulla pariatur? that they cannot foresee the
@@ -106,8 +106,8 @@ function ArticlePage() {
               to those who fail in their duty through weakness.
             </p>
             <div className="flex justify-between">
-              <img src={ArticleImg} alt="ArticleImg" className="w-5/12" />
-              <img src={ArticleImg} alt="ArticleImg" className="w-5/12" />
+              <img src={ArticleImg} alt="ArticleImg" className="w-5/12 max-md:w-1/2" />
+              <img src={ArticleImg} alt="ArticleImg" className="w-5/12 max-md:w-1/2" />
             </div>
             <p className="py-12">
               2. At vero eos et accusamus et iusto odio dignissimos
@@ -127,10 +127,10 @@ function ArticlePage() {
               _ Temporibus autem quibusdam et aut officiis debitis aut
               rerum
             </p>
-            <div className="flex py-12 justify-around pb-24">
-              <img src={ArticleImg} alt="ArticleImg" />
-              <img src={ArticleImg} alt="ArticleImg" />
-              <img src={ArticleImg} alt="ArticleImg" />
+            <div className="flex py-12 justify-around pb-24 max-md:flex-col max-md:">
+              <img src={ArticleImg} alt="ArticleImg" className="max-md:py-4" />
+              <img src={ArticleImg} alt="ArticleImg" className="max-md:py-4" />
+              <img src={ArticleImg} alt="ArticleImg" className="max-md:py-4" />
             </div>
           </div>
         </section>
