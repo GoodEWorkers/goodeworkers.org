@@ -90,9 +90,11 @@ body {
   white-space: pre-wrap;
 }
 
+/* hidden partners cards anim
+
 @media only screen and (max-width: 768px) {
   .slider {
-    animation: slide 18s linear infinite; /* Slide animation */
+    animation: slide 18s linear infinite; 
   }
   .slider:hover, .slider:focus {
     animation-play-state: paused;
@@ -101,6 +103,8 @@ body {
 
 @keyframes slide {
   100% {
-    transform: translateX(-50%); /* Slide to the left */
+    transform: translateX(-50%);
   }
 }
+
+*/

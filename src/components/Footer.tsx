@@ -1,5 +1,6 @@
 import React from 'react';
 import ContactForm from './ContactForm';
+import { Link } from 'gatsby';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -7,6 +8,7 @@ export default function Footer() {
   const goodEWorkersText1 = 'hello';
   const goodEWorkersText2 = '@goodeworkers.org';
   const goodEWorkersText3 = `GoodEWorkers © ${currentYear}`;
+  const goodEWorkersText4 = 'Legal Notice | Mentions légales';
 
   return (
     <footer className="relative z-10 bg-white text-black font-inter">
@@ -29,7 +31,13 @@ export default function Footer() {
           </div>
           <ContactForm />
         </div>
-        <ul className="mt-24 md:mt-40 xl:mt-60 flex flex-col items-center text-sm">
+        <ul className="mt-24 md:mt-40 xl:mt-60 flex flex-col items-center text-sm space-y-2">
+          <li className='hover:underline'>
+            <Link to="/legal-notice">{goodEWorkersText4}</Link>
+          </li>
+          <li>
+            This site is powered by <a className='hover:underline' href="https://netlify.com?utm_source=goodeworkers">Netlify</a>
+          </li>
           <li>{goodEWorkersText3}</li>
         </ul>
       </div>
