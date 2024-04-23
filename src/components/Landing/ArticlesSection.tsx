@@ -1,6 +1,6 @@
 import React from 'react';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn';
-import ArticleImg from '../../assets/icons/ArticleImg.svg';
+import ArticleImg from '../../images/ArticleImg.svg';
 
 function Articles() {
   const text = 'Voir tous nos ';
@@ -8,21 +8,21 @@ function Articles() {
 
   const ArticleCards = [
     {
-      icon: <ArticleImg />,
+      icon: ArticleImg,
       title: 'Titre lorem ipsum dolor si amet consectetur adipiscing elit',
       writer: 'Jean Michel Lipsum',
       readingTime: '8min',
       tag: ['tech', 'design'],
     },
     {
-      icon: <ArticleImg />,
+      icon: ArticleImg,
       title: 'Titre lorem ipsum',
       writer: 'Jean Michel Lipsum',
       readingTime: '8min',
       tag: ['tech', 'design', 'design', 'loremipsum'],
     },
     {
-      icon: <ArticleImg />,
+      icon: ArticleImg,
       title: 'Titre lorem ipsum dolor si amet consectetur',
       writer: 'Jean Michel Lipsum',
       readingTime: '8min',
@@ -54,7 +54,7 @@ function Articles() {
       <div className="flex w-10/12 m-auto max-xl:flex-col max-xl:items-center max-xl:w-1/2 ">
         {ArticleCards.map((article) => (
           <div key={article.title} className="w-3/5 my-4 max-xl:w-full">
-            <div>{article.icon}</div>
+            <img src={article.icon} alt="img" />
             <h2 className="font-clash font-semibold text-xl py-5 w-4/6 max-lg:w-full">
               {article.title}
             </h2>

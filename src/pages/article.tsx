@@ -2,9 +2,10 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import Articles from '../components/Landing/ArticlesSection';
-import ArticleImg from '../assets/icons/ArticleImg.svg';
+import ArticleImg from '../images/ArticleImg.svg';
+import ArticleImgLarge from '../images/ArticleImgLarge.svg';
 import Fleche from '../assets/icons/fleche.svg';
-import Video from '../assets/icons/video.svg';
+import Video from '../images/video.svg';
 import Reseaux from '../assets/icons/reseaux.svg';
 
 import Navbar from '../components/Navbar';
@@ -16,19 +17,29 @@ function ArticlePage() {
       <Navbar />
       <main>
         <section className="text-white">
-          <Link to="/" className="text-white flex font-clash">
-            <Fleche />
-            Blog
-          </Link>
-          <div>
-            <h1>Lorem ipsum dolor sit amet consectetur.</h1>
-            <div className="flex">
-              <div>
-                <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-">
-                  tech
-                </div>
-                <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
-                  design
+          <div className="text-white flex font-clash px-36 md:px-52 py-4">
+            <Link
+              to="/"
+              className="text-white flex font-clash text-xl items-center "
+            >
+              <Fleche />
+              {'   '}
+              blog
+            </Link>
+          </div>
+          <div className="px-36 md:px-52 flex-col py-6 ">
+            <h1 className="text-5xl  w-1/2 font-clash max-md:text-3xl">
+              Titre lorem ipsum dolor si amet consectetur adipiscing elit.
+            </h1>
+            <div className="flex items-center py-12">
+              <div className="bg-black-light rounded-2xl absolute left-12 max-md:left-4">
+                <div className="flex">
+                  <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
+                    tech
+                  </div>
+                  <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
+                    design
+                  </div>
                 </div>
                 <section className=" w-4/6 pb-8 max-lg:w-full">
                   <div>
@@ -45,9 +56,9 @@ function ArticlePage() {
                   </div>
                 </section>
               </div>
-              <ArticleImg />
+              <img src={ArticleImgLarge} alt="ArticleImg" className="" />
             </div>
-            <h2>
+            <h2 className="text-xl py-12 font-semibold">
               Quis autem vel eum iure reprehenderit qui in ea voluptate velit
               esse quam nihil molestiae consequatur, vel illum qui dolorem eum
               fugiat quo voluptas nulla pariatur?
@@ -68,9 +79,12 @@ function ArticlePage() {
               voluptatibus maiores alias consequatur aut perferendis doloribus
               asperiores repellat
             </p>
-            <Video />
-            <p>
-              1. Ducimus qui blanditiis praesentium voluptatum deleniti atque
+            <img src={Video} alt="Video" className="w-full m-auto py-12" />
+            <p className="text-lg font-semibold">
+              1. At vero eos et accusamus et iusto odio dignissimos
+            </p>
+            <p className="pt-12">
+              Ducimus qui blanditiis praesentium voluptatum deleniti atque
               corrupti quos dolores et quas molestias excepturi sint occaecati
               cupiditate non provident, similique sunt in culpa qui officia
               deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
@@ -84,33 +98,40 @@ function ArticlePage() {
               voluptatibus maiores alias consequatur aut perferendis doloribus
               asperiores repellat
             </p>
-            <p>
+            <p className="italic p-12 ">
               Quis autem vel eum iure reprehenderit qui in ea voluptate velit
               esse quam nihil molestiae consequatur, vel illum qui dolorem eum
               fugiat quo voluptas nulla pariatur? that they cannot foresee the
               pain and trouble that are bound to ensue; and equal blame belongs
               to those who fail in their duty through weakness.
             </p>
-            <div>
-              <ArticleImg />
-              <ArticleImg />
+            <div className="flex justify-between">
+              <img src={ArticleImg} alt="ArticleImg" className="w-5/12" />
+              <img src={ArticleImg} alt="ArticleImg" className="w-5/12" />
             </div>
-            <p>
-              2. At vero eos et accusamus et iusto odio dignissimos Ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt in culpa qui officia deserunt mollitia
-              animi, id est laborum et dolorum fuga. Et harum quidem rerum
-              facilis est et expedita distinctio. _ Nam libero tempore, cum
-              soluta nobis est eligendi uod _ Maxime placeat facere possimus,
-              omnis voluptas assumenda est, omnis dolor repellendus _ Temporibus
-              autem quibusdam et aut officiis debitis aut rerum
+            <p className="py-12">
+              2. At vero eos et accusamus et iusto odio dignissimos
             </p>
-          </div>
-          <div>
-            <ArticleImg />
-            <ArticleImg />
-            <ArticleImg />
+            <p>
+              Ducimus qui blanditiis praesentium voluptatum deleniti atque
+              corrupti quos dolores et quas molestias excepturi sint occaecati
+              cupiditate non provident, similique sunt in culpa qui officia
+              deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
+              quidem rerum facilis est et expedita distinctio.
+              <br />
+              _ Nam libero tempore, cum soluta nobis est eligendi uod
+              <br />
+              _ Maxime placeat facere possimus, omnis voluptas assumenda est,
+              omnis dolor repellendus
+              <br />
+              _ Temporibus autem quibusdam et aut officiis debitis aut
+              rerum
+            </p>
+            <div className="flex py-12 justify-around pb-24">
+              <img src={ArticleImg} alt="ArticleImg" />
+              <img src={ArticleImg} alt="ArticleImg" />
+              <img src={ArticleImg} alt="ArticleImg" />
+            </div>
           </div>
         </section>
         <Articles />
