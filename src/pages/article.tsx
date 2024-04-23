@@ -12,6 +12,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 function ArticlePage() {
+  const videos = [{ icon: Video }];
+  const articlesImg = [
+    { img: ArticleImg },
+    { img: ArticleImg },
+
+  ];
+  const articlesImg2 = [
+    { img: ArticleImg },
+    { img: ArticleImg },
+    { img: ArticleImg },
+  ];
   return (
     <>
       <Navbar />
@@ -32,7 +43,7 @@ function ArticlePage() {
               Titre lorem ipsum dolor si amet consectetur adipiscing elit.
             </h1>
             <div className="flex-col items-center py-12 md:flex">
-              <div className="bg-black-light rounded-2xl md:absolute md:left-12   ">
+              <div className="bg-black-light rounded-2xl md:absolute md:left-12">
                 <div className="flex">
                   <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
                     tech
@@ -79,7 +90,13 @@ function ArticlePage() {
               voluptatibus maiores alias consequatur aut perferendis doloribus
               asperiores repellat
             </p>
-            <img src={Video} alt="Video" className="w-full m-auto py-12" />
+            {videos.map((video) => (
+              <img
+                src={video.icon}
+                alt="Video"
+                className="w-full m-auto py-12"
+              />
+            ))}
             <p className="text-lg font-semibold">
               1. At vero eos et accusamus et iusto odio dignissimos
             </p>
@@ -106,8 +123,13 @@ function ArticlePage() {
               to those who fail in their duty through weakness.
             </p>
             <div className="flex justify-between">
-              <img src={ArticleImg} alt="ArticleImg" className="w-5/12 max-md:w-1/2" />
-              <img src={ArticleImg} alt="ArticleImg" className="w-5/12 max-md:w-1/2" />
+              {articlesImg.map((element) => (
+                <img
+                  src={element.img}
+                  alt="ArticleImg"
+                  className="w-5/12 max-md:w-1/2"
+                />
+              ))}
             </div>
             <p className="py-12">
               2. At vero eos et accusamus et iusto odio dignissimos
@@ -128,9 +150,13 @@ function ArticlePage() {
               rerum
             </p>
             <div className="flex py-12 justify-around pb-24 max-md:flex-col max-md:">
-              <img src={ArticleImg} alt="ArticleImg" className="max-md:py-4" />
-              <img src={ArticleImg} alt="ArticleImg" className="max-md:py-4" />
-              <img src={ArticleImg} alt="ArticleImg" className="max-md:py-4" />
+              {articlesImg2.map((element) => (
+                <img
+                  src={element.img}
+                  alt="ArticleImg"
+                  className="max-md:py-4"
+                />
+              ))}
             </div>
           </div>
         </section>
