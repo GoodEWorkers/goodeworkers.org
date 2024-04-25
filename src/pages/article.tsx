@@ -12,16 +12,33 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 function ArticlePage() {
-  const videos = [{ icon: Video }];
+  const videos = [{ icon: Video,
+    videoName: "video",
+   }];
   const articlesImg = [
-    { img: ArticleImg },
-    { img: ArticleImg },
+    {
+      img: ArticleImg,
+      index: 1,
+    },
+    {
+      img: ArticleImg,
+      index: 2,
+    },
 
   ];
   const articlesImg2 = [
-    { img: ArticleImg },
-    { img: ArticleImg },
-    { img: ArticleImg },
+    {
+      img: ArticleImg,
+      index: 1,
+    },
+    {
+      img: ArticleImg,
+      index: 2,
+    },
+    {
+      img: ArticleImg,
+      index: 3,
+    },
   ];
   return (
     <>
@@ -92,6 +109,7 @@ function ArticlePage() {
             </p>
             {videos.map((video) => (
               <img
+                key={video.videoName}
                 src={video.icon}
                 alt="Video"
                 className="w-full m-auto py-12"
@@ -125,6 +143,7 @@ function ArticlePage() {
             <div className="flex justify-between">
               {articlesImg.map((element) => (
                 <img
+                  key={element.index}
                   src={element.img}
                   alt="ArticleImg"
                   className="w-5/12 max-md:w-1/2"
@@ -152,6 +171,7 @@ function ArticlePage() {
             <div className="flex py-12 justify-around pb-24 max-md:flex-col max-md:">
               {articlesImg2.map((element) => (
                 <img
+                  key={element.index}
                   src={element.img}
                   alt="ArticleImg"
                   className="max-md:py-4"
