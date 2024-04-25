@@ -13,8 +13,8 @@ import Footer from '../components/Footer';
 
 function ArticlePage() {
   const videos = [{ icon: Video,
-    videoName: "video",
-   }];
+    videoName: 'video',
+  }];
   const articlesImg = [
     {
       img: ArticleImg,
