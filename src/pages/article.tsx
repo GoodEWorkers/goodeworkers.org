@@ -12,9 +12,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 function ArticlePage() {
-  const videos = [{ icon: Video,
-    videoName: "video",
-   }];
+  const videos = [{ icon: Video, videoName: 'video' }];
   const articlesImg = [
     {
       img: ArticleImg,
@@ -24,7 +22,6 @@ function ArticlePage() {
       img: ArticleImg,
       index: 2,
     },
-
   ];
   const articlesImg2 = [
     {
@@ -45,23 +42,24 @@ function ArticlePage() {
       <Navbar />
       <main>
         <section className="text-white">
-          <div className="text-white flex font-clash px-24 md:px-52 py-4">
+          <div className="text-white flex font-clash px-24 md:px-52 py-4 ">
             <Link
               to="/"
-              className="text-white flex font-clash text-xl items-center "
+              className="text-white flex font-clash text-3xl items-center "
             >
               <Fleche />
-              {'   '}
+              {'    '}
               blog
             </Link>
           </div>
           <div className="px-24 md:px-52 flex-col py-6 ">
-            <h1 className="md:text-5xl  w-1/2 font-clash text-2xl max-md:w-full">
+            <h1 className="lg:text-8xl  md:text-6xl font-clash text-2xl w-full">
               Titre lorem ipsum dolor si amet consectetur adipiscing elit.
             </h1>
-            <div className="flex-col items-center py-12 md:flex">
-              <div className="bg-black-light rounded-2xl md:absolute md:left-12">
-                <div className="flex">
+            <div className="flex-col items-center py-12 md:flex  ">
+              <img src={ArticleImgLarge} alt="ArticleImg" className="w-full " />
+              <div className="bg-black-light w-48 rounded-2xl md:absolute md:left-4 px-2 md:px-4 ">
+                <div className="flex py-4">
                   <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
                     tech
                   </div>
@@ -69,22 +67,21 @@ function ArticlePage() {
                     design
                   </div>
                 </div>
-                <section className=" w-4/6  pb-8 max-lg:w-full ">
+                <section className=" w-4/6  pb-8 max-lg:w-full">
                   <div>
                     <p className="text-purple">writer</p>
-                    <p>Jean Michel Ipsum</p>
+                    <p className="py-1 md:py-4">Jean Michel Ipsum</p>
                   </div>
                   <div>
                     <p className="text-purple">reading time</p>
-                    <p>8min</p>
+                    <p className="py-1 md:py-4">8min</p>
                   </div>
                   <div>
-                    <p className="text-purple">share on </p>
+                    <p className="text-purple md:pb-4">share on </p>
                     <Reseaux />
                   </div>
                 </section>
               </div>
-              <img src={ArticleImgLarge} alt="ArticleImg" />
             </div>
             <h2 className="text-xl py-12 font-semibold max-md:text-lg">
               Quis autem vel eum iure reprehenderit qui in ea voluptate velit
