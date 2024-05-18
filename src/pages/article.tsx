@@ -42,37 +42,37 @@ function ArticlePage() {
       <Navbar />
       <main>
         <section className="text-white">
-          <div className="text-white flex font-clash px-24 md:px-52 py-4 ">
+          <div className="text-white flex font-clash px-4 md:px-52 py-4 ">
             <Link
               to="/"
-              className="text-white flex font-clash text-3xl items-center "
+              className="text-white flex font-clash text-xl items-center md:text-3xl "
             >
               <Fleche />
               {'    '}
               blog
             </Link>
           </div>
-          <div className="px-24 md:px-52 flex-col py-6 ">
-            <h1 className="lg:text-8xl  md:text-6xl font-clash text-2xl w-full">
+          <div className="px-4 md:px-52 flex-col py-6 ">
+            <aside className="lg:text-8xl  md:text-6xl font-clash text-3xl w-full">
               Titre lorem ipsum dolor si amet consectetur adipiscing elit.
-            </h1>
+            </aside>
             <div className="flex-col items-center py-12 md:flex  ">
               <img src={ArticleImgLarge} alt="ArticleImg" className="w-full " />
-              <div className="bg-black-light w-48 rounded-2xl md:absolute md:left-4 px-2 md:px-4 ">
+              <div className="bg-black-light md:w-48 rounded-2xl md:absolute md:left-4 px-2 md:px-4 m-auto w-full">
                 <div className="flex py-4">
-                  <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
+                  <div className=" rounded-xl z-0 border-white border md:border-1 mr-2 px-2">
                     tech
                   </div>
-                  <div className=" rounded-2xl z-0 border-white border md:border-1 mr-2 px-2">
+                  <div className=" rounded-xl z-0 border-white border md:border-1 mr-2 px-2">
                     design
                   </div>
                 </div>
                 <section className=" w-4/6  pb-8 max-lg:w-full">
-                  <div>
+                  <div className="border-b-2 mb-2">
                     <p className="text-purple">writer</p>
                     <p className="py-1 md:py-4">Jean Michel Ipsum</p>
                   </div>
-                  <div>
+                  <div className="border-b-2 mb-2">
                     <p className="text-purple">reading time</p>
                     <p className="py-1 md:py-4">8min</p>
                   </div>
@@ -98,7 +98,11 @@ function ArticlePage() {
               nobis est eligendi optio cumque nihil impedit quo minus id quod
               maxime placeat facere possimus, omnis voluptas assumenda est,
               omnis dolor repellendus. Temporibus autem quibusdam et aut
-              officiis debitis aut rerum necessitatibus saepe eveniet ut et
+              officiis debitis aut rerum necessitatibus
+              {' '}
+              <span className="text-yellow underline">saepe eveniet</span>
+              {' '}
+              ut et
               voluptates repudiandae sint et molestiae non recusandae. Itaque
               earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
               voluptatibus maiores alias consequatur aut perferendis doloribus
@@ -115,21 +119,30 @@ function ArticlePage() {
             <p className="text-lg font-semibold">
               1. At vero eos et accusamus et iusto odio dignissimos
             </p>
-            <p className="pt-12">
+            <span className="pt-12">
               Ducimus qui blanditiis praesentium voluptatum deleniti atque
               corrupti quos dolores et quas molestias excepturi sint occaecati
               cupiditate non provident, similique sunt in culpa qui officia
               deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
               quidem rerum facilis est et expedita distinctio. Nam libero
-              tempore, cum soluta nobis est eligendi optio cumque nihil impedit
-              quo minus id quod maxime placeat facere possimus, omnis voluptas
+              tempore, cum soluta nobis est eligendi optio
+              {' '}
+              {' '}
+            </span>
+            <span className="text-yellow underline">
+              cumque nihil impedit quo minus
+            </span>
+            <span>
+              {' '}
+              {' '}
+              id quod maxime placeat facere possimus, omnis voluptas
               assumenda est, omnis dolor repellendus. Temporibus autem quibusdam
               et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
               et voluptates repudiandae sint et molestiae non recusandae. Itaque
               earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
               voluptatibus maiores alias consequatur aut perferendis doloribus
               asperiores repellat
-            </p>
+            </span>
             <p className="italic p-12 max-md:p-6">
               Quis autem vel eum iure reprehenderit qui in ea voluptate velit
               esse quam nihil molestiae consequatur, vel illum qui dolorem eum
@@ -137,17 +150,17 @@ function ArticlePage() {
               pain and trouble that are bound to ensue; and equal blame belongs
               to those who fail in their duty through weakness.
             </p>
-            <div className="flex justify-between">
+            <div className="flex justify-around max-sm:flex-col">
               {articlesImg.map((element) => (
                 <img
                   key={element.index}
                   src={element.img}
                   alt="ArticleImg"
-                  className="w-5/12 max-md:w-1/2"
+                  className=" mb-2 "
                 />
               ))}
             </div>
-            <p className="py-12">
+            <p className="py-12 font-semibold">
               2. At vero eos et accusamus et iusto odio dignissimos
             </p>
             <p>
@@ -165,7 +178,7 @@ function ArticlePage() {
               _ Temporibus autem quibusdam et aut officiis debitis aut
               rerum
             </p>
-            <div className="flex py-12 justify-around pb-24 max-md:flex-col max-md:">
+            <div className="flex py-12 justify-around pb-24 max-sm:flex-col ">
               {articlesImg2.map((element) => (
                 <img
                   key={element.index}
