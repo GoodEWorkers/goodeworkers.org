@@ -62,7 +62,7 @@ function ArticlePage() {
               <div className="bg-black-light md:w-48 rounded-2xl md:absolute md:left-4 px-2 md:px-4 m-auto w-full">
                 <div className="flex py-4 flex-wrap">
                   {payload.data.article.tags.map((tag) => (
-                    <div className=" rounded-xl border-white border md:border-1 mr-2 px-2 m-2">
+                    <div className=" rounded-xl border-white border md:border-1 mr-2 px-2 m-2" key={tag}>
                       {tag}
                     </div>
                   ))}
