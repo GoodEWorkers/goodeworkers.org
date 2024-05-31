@@ -1,0 +1,44 @@
+.article h1{
+    font-size: 5rem;
+    @media screen and (max-width:769px) {
+        font-size: 2rem;
+   }
+ 
+}
+.article strong{
+    color: #FDC959;
+    text-decoration: underline;
+}
+.article ol, .article ul{
+list-style-type:"_" ;
+width: 98%;
+}
+.article a{
+color:#B3A0CF
+}
+.article a:hover{
+    text-decoration: underline;
+}
+.article .articleBody {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+   
+}
+.article .articleBody img{
+    border-radius: 2rem;
+    
+
+}
+.article pre{
+    white-space:pre-wrap;
+    padding: 2rem;
+    
+}
+.article code{
+    width: 50%;
+}
+
+
