@@ -56,13 +56,13 @@ function ArticlePage() {
             </Link>
           </div>
           <div className="px-4 md:px-52 flex-col py-6 ">
-            <h1>{payload.data.article.title}</h1>
+            <h1 className="font-clash">{payload.data.article.title}</h1>
             <div className="flex-col items-center py-12 md:flex ">
               <img src={payload.data.article.coverPicture.url} alt="ArticleImg" className="rounded-2xl" />
               <div className="bg-black-light md:w-48 rounded-2xl md:absolute md:left-4 px-2 md:px-4 m-auto w-full">
                 <div className="flex py-4 flex-wrap">
                   {payload.data.article.tags.map((tag) => (
-                    <div className=" rounded-xl border-white border md:border-1 mr-2 px-2 m-2" key={tag}>
+                    <div className=" rounded-lg border-white border md:border-1 mr-2 px-2 m-2 font-clash font-semibold" key={tag}>
                       {tag}
                     </div>
                   ))}

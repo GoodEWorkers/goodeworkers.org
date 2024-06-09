@@ -1,7 +1,8 @@
 .article h1{
     font-size: 5rem;
+    font-weight: 500;
     @media screen and (max-width:769px) {
-        font-size: 2rem;
+        font-size: 2.2rem;
    }
  
 }
@@ -13,7 +14,7 @@
 list-style-type:"_" ;
 width: 98%;
 }
-.article a{
+.articleBody a{
 color:#B3A0CF
 }
 .article a:hover{
