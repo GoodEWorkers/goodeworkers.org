@@ -93,7 +93,7 @@ function Articles() {
         />
       </div>
 
-      <div className="flex m-auto max-xl:items-center snap-mandatory overflow-x-scroll md:overflow-hidden pt-10">
+      <div className="flex m-auto max-xl:items-center snap-mandatory overflow-x-scroll md:overflow-hidden pt-14">
         {articlesList.data.articles.map((article) => (
           <Link to="/article" key={article.title} className="m-4 snap-center max-sm:w-full">
             <div className="flex">
