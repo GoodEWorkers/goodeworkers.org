@@ -30,11 +30,12 @@ node scripts/shoot.mjs   # full-page Playwright screenshots vs the live site
 ```
 src/
   pages/          routes — English at the root, French mirrored under pages/fr/
+                  (articles/ is English-only)
   layouts/        BaseLayout (SEO head), LegalLayout
   i18n/           routes.ts (localized URLs) + ui.ts (all copy, per language)
   components/     Astro components (Navbar, Footer, LanguageSwitcher, Landing/*,
                   Contributors/*, Projects/*, …)
-  content/        content collections: legals/<lang>/, home/<lang>.md,
+  content/        content collections: legals/<lang>/, home/<lang>.md, articles/,
                   job-boards/<lang>.md (the remote job boards list),
                   contributors/ and projects/
   assets/         fonts, icons, images (processed by Astro)
@@ -137,6 +138,25 @@ Link to other sites with `src/components/ExternalLink.astro`, never a bare
 given) from `src/lib/outbound.ts`. Keep URLs plain in content files. `npm run
 smoke` fails on any outbound link without the new tab, `noopener` or
 `utm_source`.
+
+## Adding an article
+
+Articles are markdown files in `src/content/articles/`. The filename (minus `.md`) becomes the URL slug — `my-article.md` → `/articles/my-article`. They are English-only for now (no `/fr/` pages).
+
+```markdown
+---
+title: "Your article title"
+date: "2025-04-29"
+description: "One-line summary shown in cards and meta description."
+author: "Your name"            # optional
+tags: ["remote", "nonprofit"]  # optional
+draft: false                   # optional, set true to hide from listings
+---
+
+Your article body in markdown. Headings, links, lists, code blocks, etc.
+```
+
+After writing the file, commit and push to `main`. Netlify rebuilds and the article appears on `/articles` and (if it's one of the three most recent) on the home page's "Latest articles" section.
 
 ## Deployment
 

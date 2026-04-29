@@ -43,6 +43,8 @@ check_page "/legal-notice/"         "200" "Legal Notice"
 check_page "/no-such-page/"         "404" "Page not found"
 check_page "/thanks/"               "200" "GitHub"
 check_page "/remote-job-boards/"    "200" "We Work Remotely"
+check_page "/articles/"                          "200" "Our"
+check_page "/articles/welcome-to-goodeworkers/"  "200" "Welcome to GoodEworkers"
 
 # French mirror
 check_page "/fr/"                   "200" "les associations"

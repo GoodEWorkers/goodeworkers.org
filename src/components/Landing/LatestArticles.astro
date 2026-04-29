@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Encircled from '../Miscs/Encircled.astro';
+import ArticleCard from '../Articles/ArticleCard.astro';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+{articles.length > 0 && (
+  <section id="latest-articles" class="pb-20 xl:pb-32">
+    <div class="text-grey text-center">
+      <h2
+        class="font-medium text-3xl sm:text-4xl md:text-5xl xl:text-[54px]"
+      >
+        Latest <Encircled text="articles" class="font-bold" />
+      </h2>
+    </div>
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-screen-xl mx-auto">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+    <div class="mt-10 flex justify-center">
+      <a
+        href="/articles"
+        class="border-orange border-2 px-6 py-2 rounded-full text-grey font-bold hover:bg-orange hover:text-black transition-colors duration-200"
+      >
+        See all articles
+      </a>
+    </div>
+  </section>
+)}

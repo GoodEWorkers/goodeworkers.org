@@ -310,8 +310,21 @@ const projects = defineCollection({
     }),
 });
 
+const articles = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    description: z.string(),
+    author: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 export const collections = {
   legals,
+  articles,
   home,
   'job-boards': jobBoards,
   'job-board-list': jobBoardList,
