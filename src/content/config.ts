@@ -8,4 +8,17 @@ const legals = defineCollection({
   }),
 });
 
-export const collections = { legals };
+const articles = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    description: z.string(),
+    author: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    cover: z.string().url().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
+export const collections = { legals, articles };

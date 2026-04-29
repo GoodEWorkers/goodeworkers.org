@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { readingTime, coverUrl } from '../../lib/articleMeta';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  class?: string;
+}
+
+const { article, class: className } = Astro.props;
+const { title, author, tags } = article.data;
+const cover = coverUrl(article, 800, 500);
+const time = readingTime(article);
+---
+
+<a
+  href={`/articles/${article.slug}`}
+  class:list={[
+    'group block',
+    className,
+  ]}
+>
+  <div class="relative">
+    <img
+      src={cover}
+      alt=""
+      loading="lazy"
+      width="800"
+      height="500"
+      class="w-full aspect-[16/10] object-cover rounded-2xl"
+    />
+    <span
+      aria-hidden="true"
+      class="absolute top-3 right-3 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white text-black flex items-center justify-center transition-transform duration-200 group-hover:bg-orange group-hover:text-white group-hover:rotate-45"
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path
+          d="M3 13L13 3M13 3H5M13 3V11"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+  </div>
+  <h3 class="mt-5 text-lg md:text-xl font-clash font-semibold text-grey leading-tight">
+    {title}
+  </h3>
+  <dl class="mt-4 flex justify-between gap-4 text-sm">
+    {author && (
+      <div>
+        <dt class="text-purple text-xs">writer</dt>
+        <dd class="text-grey mt-1">{author}</dd>
+      </div>
+    )}
+    <div class="text-right">
+      <dt class="text-purple text-xs">reading time</dt>
+      <dd class="text-grey mt-1">{time}</dd>
+    </div>
+  </dl>
+  {tags && tags.length > 0 && (
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <li class="px-3 py-1 rounded-lg border border-grey text-grey font-clash font-semibold text-sm">
+          {tag}
+        </li>
+      ))}
+    </ul>
+  )}
+</a>

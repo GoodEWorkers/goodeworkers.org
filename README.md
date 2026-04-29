@@ -29,15 +29,34 @@ node scripts/shoot.mjs   # full-page Playwright screenshots vs the live site
 
 ```
 src/
-  pages/          routes (index, 404, [slug] for legal pages)
+  pages/          routes (index, 404, articles/, [slug] for legal pages)
   layouts/        BaseLayout
-  components/     Astro components (Navbar, Footer, Landing/*, Common/*, Miscs/*, icons/*)
-  content/        content collections (legals/)
+  components/     Astro components (Navbar, Footer, Landing/*, Articles/*, Common/*, Miscs/*, icons/*)
+  content/        content collections (legals/, articles/)
   assets/         fonts, icons, images (processed by Astro)
   styles/         global.css (Tailwind + @font-face)
 public/           favicon and other static files
 scripts/          smoke.sh, shoot.mjs (Playwright), crop.mjs, inspect.mjs
 ```
+
+## Adding an article
+
+Articles are markdown files in `src/content/articles/`. The filename (minus `.md`) becomes the URL slug — `my-article.md` → `/articles/my-article`.
+
+```markdown
+---
+title: "Your article title"
+date: "2025-04-29"
+description: "One-line summary shown in cards and meta description."
+author: "Your name"            # optional
+tags: ["remote", "nonprofit"]  # optional
+draft: false                   # optional, set true to hide from listings
+---
+
+Your article body in markdown. Headings, links, lists, code blocks, etc.
+```
+
+After writing the file, commit and push to `main`. Netlify rebuilds and the article appears on `/articles` and (if it's one of the three most recent) on the home page's "Latest articles" section.
 
 ## Deployment
 
