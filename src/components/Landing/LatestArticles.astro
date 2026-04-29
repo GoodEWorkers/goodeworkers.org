@@ -1,32 +1,50 @@
 ---
 import { getCollection } from 'astro:content';
-import Encircled from '../Miscs/Encircled.astro';
+import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
 import ArticleCard from '../Articles/ArticleCard.astro';
 
-const articles = (await getCollection('articles', ({ data }) => !data.draft))
+interface Props {
+  heading?: string;
+  excludeSlug?: string;
+  limit?: number;
+}
+
+const {
+  heading = 'Latest articles',
+  excludeSlug,
+  limit = 3,
+} = Astro.props;
+
+const articles = (
+  await getCollection('articles', ({ data }) => !data.draft)
+)
+  .filter((a) => a.slug !== excludeSlug)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+  .slice(0, limit);
 ---
 
 {articles.length > 0 && (
-  <section id="latest-articles" class="pb-20 xl:pb-32">
-    <div class="text-grey text-center">
+  <section
+    id="latest-articles"
+    class="bg-black-light text-grey rounded-3xl px-6 md:px-10 py-12 md:py-16 mb-20 xl:mb-32"
+  >
+    <div
+      class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between max-w-screen-2xl mx-auto"
+    >
       <h2
-        class="font-medium text-3xl sm:text-4xl md:text-5xl xl:text-[54px]"
+        class="text-3xl sm:text-4xl md:text-5xl font-clash"
       >
-        Latest <Encircled text="articles" class="font-bold" />
+        {heading}
       </h2>
-    </div>
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-screen-xl mx-auto">
-      {articles.map((article) => <ArticleCard article={article} />)}
-    </div>
-    <div class="mt-10 flex justify-center">
-      <a
+      <BigRoundedLinkBtn
+        upperSmallText="See all our"
+        bigBtmText="articles"
         href="/articles"
-        class="border-orange border-2 px-6 py-2 rounded-full text-grey font-bold hover:bg-orange hover:text-black transition-colors duration-200"
-      >
-        See all articles
-      </a>
+        class="bg-purple text-black w-full md:max-w-[260px]"
+      />
+    </div>
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-screen-2xl mx-auto">
+      {articles.map((article) => <ArticleCard article={article} />)}
     </div>
   </section>
 )}
