@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'GoodEworkers: Promote remote work in nonprofits',
+  description = "GoodEworkers is a network that helps nonprofits find remote workers and mentors them on how to work from home. We also help nonprofits structure themselves to be more remote-friendly. Whether you're a nonprofit looking to hire remote workers or a remote worker looking to find a meaningful cause to work for, GoodEworkers can help.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="remote work, nonprofits, mentor, social enterprise" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <Navbar />
+    <slot />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LandingHeader from '../components/Landing/LandingHeader.astro';
+import Hero from '../components/Landing/Hero.astro';
+import Why from '../components/Landing/Why.astro';
+import About from '../components/Landing/About.astro';
+import Partners from '../components/Landing/Partners.astro';
+---
+
+<BaseLayout>
+  <div class="font-inter px-4 md:px-8">
+    <LandingHeader />
+    <main>
+      <Hero />
+      <Why />
+      <About />
+      <Partners />
+    </main>
+  </div>
+</BaseLayout>

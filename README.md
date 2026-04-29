@@ -1,49 +1,44 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby Minimal Starter
-</h1>
+# goodeworkers.org
 
-## 🚀 Quick start
+The website for [GoodEworkers](https://goodeworkers.org), a nonprofit network helping nonprofits go remote.
 
-1.  **Create a Gatsby site.**
+Built with [Astro](https://astro.build/) and Tailwind CSS.
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+## Develop
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+```bash
+npm install
+npm run dev       # http://localhost:4321
+```
 
-2.  **Start developing.**
+## Build
 
-    Navigate into your new site’s directory and start it up.
+```bash
+npm run build     # static output in dist/
+npm run preview   # serve the build locally
+```
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+## Verify
 
-3.  **Open the code and start customizing!**
+```bash
+npm run smoke     # smoke test the running dev server (status + body checks)
+node scripts/shoot.mjs   # full-page Playwright screenshots vs the live site
+```
 
-    Your site is now running at http://localhost:8000!
+## Project layout
 
-    Edit `src/pages/index.js` to see your site update in real-time!
+```
+src/
+  pages/          routes (index, 404, [slug] for legal pages)
+  layouts/        BaseLayout
+  components/     Astro components (Navbar, Footer, Landing/*, Common/*, Miscs/*, icons/*)
+  content/        content collections (legals/)
+  assets/         fonts, icons, images (processed by Astro)
+  styles/         global.css (Tailwind + @font-face)
+public/           favicon and other static files
+scripts/          smoke.sh, shoot.mjs (Playwright), crop.mjs, inspect.mjs
+```
 
-4.  **Learn more**
+## Deployment
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-    - [Tutorials](https://www.gatsbyjs.com/docs/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-    - [Guides](https://www.gatsbyjs.com/docs/how-to/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-## 🚀 Quick start (Netlify)
-
-Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
-
-[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal)
+Hosted on Netlify. Build command `npm run build`, publish dir `dist/`. The contact form uses Netlify Forms (`data-netlify="true"`).

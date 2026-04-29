@@ -1,0 +1,45 @@
+---
+interface Props {
+  open?: boolean;
+}
+
+const { open = false } = Astro.props;
+---
+
+<div
+  data-hamburger
+  data-open={open ? 'true' : 'false'}
+  class:list={[
+    'flex flex-col relative w-[26px] h-[28px]',
+    open && 'is-open',
+  ]}
+>
+  <div
+    class="bar bar-top absolute inset-x-0 top-0 h-[2px] w-[24px] rounded-full bg-yellow transition-all duration-150 origin-left"
+  >
+  </div>
+  <div
+    class="bar bar-mid absolute inset-x-0 top-0 mt-[12px] h-[2px] w-[24px] rounded-full bg-orange transition-opacity duration-150"
+  >
+  </div>
+  <div
+    class="bar bar-bot absolute inset-x-0 top-0 mt-[24px] h-[2px] w-[24px] rounded-full bg-purple transition-all duration-150 origin-left"
+  >
+  </div>
+</div>
+
+<style>
+  [data-hamburger].is-open .bar-top {
+    height: 3px;
+    width: 34px;
+    transform: rotate(45deg);
+  }
+  [data-hamburger].is-open .bar-mid {
+    opacity: 0;
+  }
+  [data-hamburger].is-open .bar-bot {
+    height: 3px;
+    width: 34px;
+    transform: rotate(-45deg);
+  }
+</style>

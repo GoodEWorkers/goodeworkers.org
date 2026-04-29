@@ -1,0 +1,82 @@
+---
+import Icon from '../icons/Icon.astro';
+import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+
+const heroCards = [
+  { icon: 'webnet', title: 'Website\ncreation' },
+  { icon: 'chat', title: 'Content\nmarketing' },
+  { icon: 'magnify', title: 'SEO\nOptimization' },
+  { icon: 'hexagone', title: 'Audits\nand advice' },
+  { icon: 'heart', title: 'And much\nmore...' },
+] as const;
+
+const heroText1 = 'I am a';
+const heroText2 = 'nonprofit';
+const heroText3 = 'I want to';
+const heroText4 = 'help';
+const heroText5 = ' can help you ';
+const heroText6 = 'go digital';
+const heroText7 =
+  'We provide a variety of services, including website development, content marketing, and social media management. We also offer a free consultation to help you understand your needs and how we can help you achieve your goals.';
+---
+
+<section id="hero">
+  <div
+    class="flex flex-col mx-4 sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 mt-12 sm:mt-20 sm:justify-center sm:space-x-6 md:space-x-12 relative z-10"
+  >
+    <BigRoundedLinkBtn
+      upperSmallText={heroText1}
+      bigBtmText={heroText2}
+      class="bg-yellow"
+      href="/#contact"
+    />
+    <BigRoundedLinkBtn
+      upperSmallText={heroText3}
+      bigBtmText={heroText4}
+      class="bg-purple"
+      href="/#contact"
+    />
+  </div>
+  <div
+    class="bg-white relative -mt-12 px-8 pt-20 lg:pt-32 pb-6 md:pb-16 lg:pb-28 rounded-xl sm:rounded-2xl lg:rounded-3xl lg:justify-between"
+  >
+    <div class="flex flex-col lg:flex-row lg:space-x-8 max-w-screen-xl mx-auto">
+      <div class="px-4 sm:px-16 lg:px-0 max-w-screen-md mx-auto lg:mx-0 lg:flex-1">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-[54px]">
+          <span class="font-clash font-medium">
+            Good<span class="font-semibold">e</span>Workers
+          </span>
+          <span class="font-inter font-medium">
+            {heroText5}
+            <span class="font-bold">{heroText6}</span>
+          </span>
+        </h2>
+        <p class="mt-10 font-bold leading-tight">{heroText7}</p>
+      </div>
+      <div
+        class="mt-10 lg:mt-0 grid grid-cols-2 sm:flex sm:flex-wrap w-full max-w-80 sm:max-w-xl sm:justify-center mx-auto gap-1.5 md:gap-3 xl:gap-5 lg:flex-1"
+      >
+        {
+          heroCards.map((heroCard, index) => (
+            <div
+              title={heroCard.title}
+              class:list={[
+                'hover:opacity-85 aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
+                index === heroCards.length - 1
+                  ? 'bg-orange text-white'
+                  : 'bg-grey',
+              ]}
+            >
+              <div class="[&>*]:w-5 [&>*]:h-5">
+                <Icon name={heroCard.icon} />
+              </div>
+              <p class="mt-4 text-sm md:text-base font-bold whitespace-pre-line text-center">
+                {heroCard.title}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

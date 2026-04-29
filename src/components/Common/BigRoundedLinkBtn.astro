@@ -1,0 +1,24 @@
+---
+interface Props {
+  upperSmallText?: string;
+  bigBtmText: string;
+  href: string;
+  class?: string;
+}
+
+const { upperSmallText, bigBtmText, href, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class={`w-full max-w-[336px] px-7 py-5 rounded-full flex flex-col items-center hover:shadow-lg hover:scale-105 transition-transform ease-in ${className ?? ''}`}
+>
+  {
+    upperSmallText && (
+      <span class="text-sm sm:text-base font-medium">{upperSmallText}</span>
+    )
+  }
+  <span class="text-3xl sm:text-4xl font-clash font-bold text-center">
+    {bigBtmText}
+  </span>
+</a>
