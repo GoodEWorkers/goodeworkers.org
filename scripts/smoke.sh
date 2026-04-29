@@ -36,9 +36,11 @@ check_page() {
   rm -f "$body"
 }
 
-check_page "/"             "200" "GoodEworkers"
-check_page "/legal-notice" "200" "Legal Notice"
-check_page "/no-such-page" "404" "Page not found"
+check_page "/"                                   "200" "GoodEworkers"
+check_page "/legal-notice"                       "200" "Legal Notice"
+check_page "/articles"                           "200" "Our"
+check_page "/articles/welcome-to-goodeworkers"   "200" "Welcome to GoodEworkers"
+check_page "/no-such-page"                       "404" "Page not found"
 
 if [[ $fail -ne 0 ]]; then
   echo

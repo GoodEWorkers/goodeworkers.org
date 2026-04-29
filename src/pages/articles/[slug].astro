@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('articles', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, date, description, author, tags } = entry.data;
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} | GoodEworkers`} description={description}>
+  <div class="font-inter text-grey px-4 md:px-8">
+    <article class="max-w-screen-md mx-auto pt-8 md:pt-16 pb-20">
+      <a
+        href="/articles"
+        class="text-sm text-purple hover:text-orange transition-colors duration-200"
+      >
+        ← Back to articles
+      </a>
+      <header class="mt-6">
+        <p class="text-xs uppercase tracking-wider text-purple font-bold">
+          <time datetime={date.toISOString()}>{formattedDate}</time>{author && <span> · {author}</span>}
+        </p>
+        <h1
+          class="mt-3 text-3xl md:text-4xl lg:text-5xl font-clash font-bold leading-tight"
+        >
+          {title}
+        </h1>
+        <p class="mt-4 text-base md:text-lg text-ashgray">{description}</p>
+        {tags && tags.length > 0 && (
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <li class="text-xs px-2 py-1 rounded-full border border-purple text-purple">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
+      </header>
+      <div
+        class="mt-10 prose prose-invert prose-headings:font-clash prose-a:text-orange max-w-none"
+      >
+        <Content />
+      </div>
+    </article>
+  </div>
+</BaseLayout>

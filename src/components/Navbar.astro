@@ -2,6 +2,7 @@
 import logoSvg from '../assets/images/goodeworkers.svg?raw';
 import Hamburger from './Miscs/Hamburger.astro';
 
+const navbarTextArticles = 'Articles';
 const navbarTextContact = 'Contact';
 const navbarTextMenu = 'Menu';
 ---
@@ -16,7 +17,12 @@ const navbarTextMenu = 'Menu';
         set:html={logoSvg}
       />
     </a>
-    <ul class="hidden md:flex md:space-x-12 font-bold">
+    <ul class="hidden md:flex md:space-x-8 lg:space-x-12 items-center font-bold">
+      <li>
+        <a href="/articles" class="hover:text-orange transition-colors duration-200">
+          {navbarTextArticles}
+        </a>
+      </li>
       <li>
         <a
           href="/#contact"
@@ -42,6 +48,15 @@ const navbarTextMenu = 'Menu';
       data-menu-panel
     >
       <ul class="bg-black h-screen text-white font-bold text-xl pt-12">
+        <li class="pl-16 pr-4 py-3">
+          <a
+            href="/articles"
+            class="hover:text-orange block w-full h-full"
+            data-menu-link
+          >
+            {navbarTextArticles}
+          </a>
+        </li>
         <li class="pl-16 pr-4 py-3">
           <a
             href="/#contact"
