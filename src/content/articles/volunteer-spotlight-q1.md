@@ -4,6 +4,7 @@ date: "2025-04-15"
 description: "A look back at the volunteers who made our first projects possible — and what they got out of it."
 author: "Alice Perchaud"
 tags: ["volunteers", "community"]
+cover: "https://picsum.photos/seed/volunteers/1600/900"
 ---
 
 Our first quarter as GoodEworkers wrapped up with two completed projects and a small but committed group of volunteers across four countries. Here's what we learned from working with them.

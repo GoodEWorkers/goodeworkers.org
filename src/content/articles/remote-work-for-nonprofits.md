@@ -4,6 +4,7 @@ date: "2025-03-18"
 description: "A pragmatic checklist for nonprofits considering their first remote hires or volunteers."
 author: "Richard Raduly"
 tags: ["remote work", "operations"]
+cover: "https://picsum.photos/seed/remote/1600/900"
 ---
 
 Going remote is not a binary decision. The best small nonprofits we've worked with treat it as a series of small adjustments rather than a single migration.

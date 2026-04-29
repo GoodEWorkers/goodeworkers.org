@@ -4,9 +4,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Encircled from '../../components/Miscs/Encircled.astro';
 import ArticleCard from '../../components/Articles/ArticleCard.astro';
 
-const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const articles = (
+  await getCollection('articles', ({ data }) => !data.draft)
+).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <BaseLayout
@@ -24,11 +24,11 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft)).so
         Stories, insights, and updates from the GoodEworkers community.
       </p>
     </header>
-    <main class="max-w-screen-xl mx-auto mt-12 md:mt-16 pb-20">
+    <main class="max-w-screen-2xl mx-auto mt-12 md:mt-16 pb-20">
       {articles.length === 0 ? (
         <p class="text-center text-ashgray">No articles yet. Check back soon!</p>
       ) : (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {articles.map((article) => <ArticleCard article={article} />)}
         </div>
       )}

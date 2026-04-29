@@ -20,7 +20,7 @@ const homeHref = routes.home[lang];
 const isContributors =
   getRouteKey(Astro.url.pathname) === 'contributors' ||
   getContributorSlug(Astro.url.pathname) !== undefined;
-const isArticles = Astro.url.pathname.startsWith('/articles');
+const isArticles = Astro.url.pathname.startsWith('/articles/');
 const isProjects =
   getRouteKey(Astro.url.pathname) === 'projects' ||
   getProjectSlug(Astro.url.pathname) !== undefined;
@@ -41,7 +41,7 @@ const isProjects =
         {lang === 'en' && (
           <li class="flex items-center">
             <a
-              href="/articles"
+              href="/articles/"
               aria-current={isArticles ? 'page' : undefined}
               class:list={[
                 'transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
@@ -106,7 +106,7 @@ const isProjects =
         {lang === 'en' && (
           <li class="pl-16 pr-4 py-3">
             <a
-              href="/articles"
+              href="/articles/"
               class="hover:text-orange block w-full h-full"
               aria-current={isArticles ? 'page' : undefined}
               data-menu-link
