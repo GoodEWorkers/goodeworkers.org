@@ -23,8 +23,6 @@ const aboutText9 = 'Projects that make sense in line with your values';
 const aboutText10 =
   'Open source work you can point to, and a plus for your CV, Portfolio, Book';
 const aboutText11 = 'Join Us';
-const aboutText12 = '2';
-const aboutText13 = 'ongoing\nprojects';
 const aboutText14 = 'Co-founder';
 const aboutText15 = 'Executive Director';
 ---
@@ -50,17 +48,26 @@ const aboutText15 = 'Executive Director';
         </p>
         <p class="mt-4">{aboutText4}</p>
         <p class="mt-4">{aboutText5}</p>
-        <p class="mt-8 font-bold text-purple uppercase">{aboutText6}</p>
-        <p class="mt-8 underline leading-loose">{aboutText7}</p>
-        <p class="mt-8 underline leading-loose">{aboutText8}</p>
-        <p class="mt-8 underline leading-loose">{aboutText9}</p>
-        <p class="mt-8 underline leading-loose">{aboutText10}</p>
+        <h3 class="mt-8 font-bold text-purple uppercase">{aboutText6}</h3>
+        <ul class="mt-8 space-y-6 leading-loose list-disc pl-5">
+          <li>{aboutText7}</li>
+          <li>{aboutText8}</li>
+          <li>{aboutText9}</li>
+          <li>
+            {aboutText10}{' '}
+            <a
+              href="https://github.com/GoodEWorkers"
+              class="underline hover:text-orange"
+              rel="noopener">See the code on GitHub</a
+            >.
+          </li>
+        </ul>
       </div>
       <div>
         <BigRoundedLinkBtn
           bigBtmText={aboutText11}
-          href="/#contact"
-          class="lg:hidden bg-orange text-white mt-10 mx-auto"
+          href="/?from=joinus-mobile#contact"
+          class="lg:hidden bg-orange text-black mt-10 mx-auto"
         />
         <div
           class="relative mt-6 sm:mt-16 lg:mt-20 h-72 sm:h-80 lg:h-72 w-full flex justify-center items-center"
@@ -68,7 +75,7 @@ const aboutText15 = 'Executive Director';
           <div class="w-40 sm:w-56 flex-shrink-0 translate-x-3 sm:translate-x-5 relative">
             <Image
               src={Richard}
-              alt="Richard"
+              alt=""
               width={240}
               height={240}
               class="rounded-xl w-full aspect-square"
@@ -80,21 +87,9 @@ const aboutText15 = 'Executive Director';
           <div
             class="w-40 sm:w-56 flex-shrink-0 -translate-x-3 sm:-translate-x-5 translate-y-32 sm:translate-y-44 relative"
           >
-            <div
-              class="absolute top-0 right-0 rounded-2xl bg-white w-28 sm:w-36 h-36 sm:h-48 -translate-y-[165px] sm:-translate-y-56 flex justify-center items-center flex-col"
-            >
-              <p
-                class="font-clash text-2xl sm:text-3xl font-bold text-center text-black"
-              >
-                {aboutText12}
-              </p>
-              <p class="text-sm sm:text-base font-medium text-center text-black whitespace-pre-line">
-                {aboutText13}
-              </p>
-            </div>
             <Image
               src={Alice}
-              alt="Alice"
+              alt=""
               width={240}
               height={240}
               class="rounded-xl w-full aspect-square"
@@ -107,8 +102,8 @@ const aboutText15 = 'Executive Director';
         <div class="hidden lg:block xl:relative xl:-left-56 xl:-top-40">
           <BigRoundedLinkBtn
             bigBtmText={aboutText11}
-            href="/#contact"
-            class="bg-orange text-white mt-56 mx-auto"
+            href="/?from=joinus-desktop#contact"
+            class="bg-orange text-black mt-56 mx-auto"
           />
         </div>
       </div>

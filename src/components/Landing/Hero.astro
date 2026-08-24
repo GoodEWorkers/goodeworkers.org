@@ -28,13 +28,13 @@ const heroText7 =
       upperSmallText={heroText1}
       bigBtmText={heroText2}
       class="bg-yellow"
-      href="/#contact"
+      href="/?from=nonprofit#contact"
     />
     <BigRoundedLinkBtn
       upperSmallText={heroText3}
       bigBtmText={heroText4}
       class="bg-purple"
-      href="/#contact"
+      href="/?from=volunteer#contact"
     />
   </div>
   <div
@@ -59,11 +59,10 @@ const heroText7 =
         {
           heroCards.map((heroCard, index) => (
             <div
-              title={heroCard.title}
               class:list={[
-                'hover:opacity-85 aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
+                'aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
                 index === heroCards.length - 1
-                  ? 'bg-orange text-white'
+                  ? 'bg-orange text-black'
                   : 'bg-grey',
               ]}
             >

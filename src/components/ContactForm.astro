@@ -3,74 +3,145 @@ const formText1 = 'Your name';
 const formText2 = 'Your email address';
 const formText3 = 'Your message';
 const formText4 = 'Send';
+
+// Shared field classes. These fields previously zeroed the focus ring:
+// @tailwindcss/forms suppresses the *native* focus outline and substitutes its
+// own ring, so cancelling that substitute as well left focused and unfocused
+// inputs pixel-identical (WCAG 2.4.7 failure). A visible ring is restored below.
+const fieldClass =
+  'peer w-full bg-white border-x-0 border-t-0 border-b-2 border-black px-0 text-base ' +
+  'focus:ring-2 focus:ring-orange focus:ring-offset-1 focus:border-orange';
+
+// The float is driven by `:not(:placeholder-shown)` with a single-space
+// placeholder, rather than by making the placeholder transparent. Hiding it with
+// `color: transparent` breaks in Windows High Contrast / forced-colors mode,
+// where author colours are overridden and the placeholder reappears directly on
+// top of the identically-worded label.
+const labelClass =
+  'absolute left-0 top-1 text-base text-gray-500 cursor-text transition-all ' +
+  'peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600 ' +
+  'peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-sm ' +
+  'peer-[:not(:placeholder-shown)]:text-gray-600';
 ---
 
 <form
   class="flex flex-col md:flex-row md:space-x-20"
   name="contact"
   method="POST"
+  action="/thanks/"
   data-netlify="true"
+  data-netlify-honeypot="bot-field"
 >
   <div class="flex flex-col md:flex-1">
     <input type="hidden" name="form-name" value="contact" />
+
+    <!-- Records which CTA the visitor arrived from. Populated by the script at
+         the bottom of this file from the ?from= query parameter; simply stays
+         empty when absent or when JS is unavailable. -->
+    <input type="hidden" name="source" value="" data-source-field />
+
+    <!-- Honeypot. Bots fill every field they find; humans never see this one. -->
+    <p class="hidden" aria-hidden="true">
+      <label>
+        Do not fill this in
+        <input name="bot-field" tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
     <div class="relative mt-14">
       <input
-        class="peer w-full bg-white border-x-0 border-t-0 border-b-2 border-black px-0 pt-0 pb-1 h-10 text-base focus:ring-0 focus:border-black placeholder-transparent"
+        class={`${fieldClass} pt-0 pb-1 h-10`}
         type="text"
         name="name"
         id="name"
-        placeholder={formText1}
+        placeholder=" "
+        autocomplete="name"
         required
       />
-      <label
-        for="name"
-        class="absolute left-0 -top-5 text-gray-600 text-sm cursor-text transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1 peer-focus:-top-5 peer-focus:text-gray-600 peer-focus:text-sm"
-      >
-        {formText1}
-      </label>
+      <label for="name" class={labelClass}>{formText1}</label>
     </div>
+
     <div class="relative mt-16">
       <input
-        class="peer w-full bg-white border-x-0 border-t-0 border-b-2 border-black px-0 pt-0 pb-1 h-10 text-base focus:ring-0 focus:border-black placeholder-transparent"
+        class={`${fieldClass} pt-0 pb-1 h-10`}
         type="email"
         name="email"
         id="email"
-        placeholder={formText2}
+        placeholder=" "
+        autocomplete="email"
         required
       />
-      <label
-        for="email"
-        class="absolute left-0 -top-5 text-gray-600 text-sm cursor-text transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1 peer-focus:-top-5 peer-focus:text-gray-600 peer-focus:text-sm"
-      >
-        {formText2}
-      </label>
+      <label for="email" class={labelClass}>{formText2}</label>
     </div>
+
     <div class="relative mt-16">
       <textarea
-        class="pt-4 pb-2 peer w-full bg-white border-x-0 h-40 focus:h-40 placeholder-shown:h-14 border-t-0 border-b-2 border-black px-0 py-0 text-base focus:ring-0 focus:border-black placeholder-transparent"
+        class={`${fieldClass} pt-4 pb-2 h-40`}
         name="message"
         id="message"
-        placeholder={formText3}
+        placeholder=" "
         required></textarea>
-      <label
-        for="message"
-        class="absolute left-0 -top-4 text-gray-600 text-sm cursor-text transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-5 peer-focus:-top-4 peer-focus:text-gray-600 peer-focus:text-sm"
-      >
-        {formText3}
-      </label>
+      <label for="message" class={`${labelClass} top-5`}>{formText3}</label>
     </div>
+
+    <!-- GDPR Art. 13 notice at the point of collection. Replying to an inbound
+         enquiry rests on legitimate interest, so a consent checkbox is not
+         strictly required — but informing the visitor is. -->
+    <p class="mt-8 text-xs text-gray-600 max-w-prose">
+      We use your name and email only to reply to you. See our <a
+        href="/legal-notice/"
+        class="underline">legal notice</a
+      >.
+    </p>
   </div>
+
   <div
-    class="mt-16 md:mt-0 flex md:flex-1 justify-center md:justify-start md:items-end"
+    class="mt-16 md:mt-0 flex flex-col md:flex-1 items-center md:items-start md:justify-end"
   >
-    <label
-      for="submit"
-      class="cursor-pointer w-full max-w-[336px] bg-orange px-7 py-5 rounded-full flex flex-col items-center hover:shadow-lg hover:scale-105 transition-transform ease-in"
+    <!--
+      A real <button type="submit">.
+
+      This was previously a styled <label for="submit"> wrapping
+      <input type="submit" class="hidden">. Because `.hidden` is
+      `display: none`, the input was removed from the tab order *and* from the
+      accessibility tree, and a <label> is never focusable and exposes no
+      interactive role — so the form had no submit control for keyboard or
+      screen-reader users at all. It worked with a mouse only, because <label>
+      forwards click activation even to a display:none control.
+
+      Also `text-black` rather than `text-white`: #F8F8F8 on #FD5E09 computes to
+      2.92:1, below even the 3:1 large-text floor. Black on the same orange is
+      6.10:1.
+    -->
+    <button
+      type="submit"
+      class="w-full max-w-[336px] bg-orange text-black px-7 py-5 rounded-full
+             flex flex-col items-center hover:shadow-lg hover:scale-105
+             transition-transform ease-in
+             focus-visible:outline focus-visible:outline-2
+             focus-visible:outline-offset-2 focus-visible:outline-black"
     >
-      <input type="submit" id="submit" value="send" class="hidden" />
       <span class="text-3xl sm:text-4xl font-clash font-bold text-center">
         {formText4}
       </span>
-    </label>
+    </button>
+
+    <p class="mt-4 text-sm text-gray-600 max-w-[336px] text-center md:text-left">
+      Alice or Richard replies personally, usually within 3 working days.
+    </p>
   </div>
 </form>
+
+<script>
+  // Carry the originating CTA through to the submission. Every CTA on the site
+  // points at /#contact, so without this there is no way to tell them apart.
+  function setupSourceField() {
+    const field = document.querySelector<HTMLInputElement>('[data-source-field]');
+    if (!field) return;
+    const from = new URLSearchParams(window.location.search).get('from');
+    if (from) field.value = from.slice(0, 64);
+  }
+
+  setupSourceField();
+  document.addEventListener('astro:page-load', setupSourceField);
+</script>

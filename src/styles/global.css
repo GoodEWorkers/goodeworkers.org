@@ -4,6 +4,12 @@
 
 /* Fonts - adapted from Guiseppe Amato's code */
 @layer base {
+  /*
+    ClashDisplay: the variable face alone covers the whole 200–700 range this
+    site uses, so the six static faces that used to follow have been removed.
+    They were never needed, and the browser preferred the exact-weight statics,
+    pulling several files where one would do.
+  */
   @font-face {
     font-family: 'ClashDisplay';
     src: url('../assets/fonts/ClashDisplay-Variable.woff2') format('woff2'),
@@ -14,69 +20,28 @@
     font-style: normal;
   }
 
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Extralight.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Extralight.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Extralight.ttf') format('truetype');
-    font-weight: 200;
-    font-display: swap;
-    font-style: normal;
-  }
+  /*
+    Inter: `font-display: swap` added.
 
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Light.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Light.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-display: swap;
-    font-style: normal;
-  }
+    Without it the spec default is `auto`, which Chrome implements as a block
+    period of up to 3 seconds — and `.font-inter` wraps the entire page, so all
+    body copy (including both hero CTA labels) rendered invisible until the font
+    arrived.
 
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Regular.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Regular.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-display: swap;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Medium.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Medium.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-display: swap;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Semibold.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Semibold.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Semibold.ttf') format('truetype');
-    font-weight: 600;
-    font-display: swap;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Bold.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Bold.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-display: swap;
-    font-style: normal;
-  }
-
+    STILL TO DO — needs a font toolchain, so it is not done here: this is a
+    309 KB TTF (~136 KB brotli) where a Latin-subset WOFF2 would be ~25–45 KB.
+    Fonts are currently ~90% of page weight. Convert with:
+      pyftsubset Inter-Regular.ttf --flavor=woff2 --layout-features='*' \
+        --unicodes=U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+20AC
+    then swap the src below and add a <link rel="preload"> in BaseLayout so the
+    font is not discovered on the third hop (HTML → CSS → font).
+  */
   @font-face {
     font-family: 'Inter';
     src: url('../assets/fonts/Inter-Regular.ttf') format('truetype');
+    font-weight: 400 700;
+    font-display: swap;
+    font-style: normal;
   }
 }
 
@@ -87,4 +52,22 @@ body {
 
 body {
   background-color: #111111;
+}
+
+/* Respect a declared preference for reduced motion. The global smooth scroll
+   above is the notable one for vestibular sensitivity; the CTA hover
+   transforms are covered too. */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

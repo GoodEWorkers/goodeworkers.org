@@ -8,10 +8,17 @@ interface Props {
   description?: string;
   /** Set on pages that must stay out of the index (404, thank-you pages). */
   noindex?: boolean;
+  /** BCP-47 language of the page content. The legal notice is French. */
+  lang?: string;
 }
 
-const SITE_NAME = 'GoodEworkers';
-const DEFAULT_TITLE = 'GoodEworkers: Promote remote work in nonprofits';
+// One spelling, everywhere. The site previously rendered the name five ways
+// ("GoodEworkers", "GoodEWorkers", "GoodeWorkers", "Good eWorkers",
+// "Goodeworkers.org"), which splits brand search and breaks recall. The
+// lowercase-e wordmark in the H1 is a deliberate logo treatment; prose and
+// metadata now agree on this form.
+const SITE_NAME = 'GoodEWorkers';
+const DEFAULT_TITLE = 'GoodEWorkers: Promote remote work in nonprofits';
 // Kept under 160 chars so Google renders the whole snippet instead of truncating it.
 const DEFAULT_DESCRIPTION =
   "A community of remote workers building for nonprofits and releasing it as open source. We run fully remote to prove it's a competitive advantage.";
@@ -20,6 +27,7 @@ const {
   title = DEFAULT_TITLE,
   description = DEFAULT_DESCRIPTION,
   noindex = false,
+  lang = 'en',
 } = Astro.props;
 
 // Astro.site comes from `site` in astro.config.mjs. Building the canonical from
@@ -28,17 +36,40 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL('/og-image.png', Astro.site);
 
+// og:locale expects the underscored form, and must follow the page language.
+const ogLocale = lang === 'fr' ? 'fr_FR' : 'en_US';
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
+      // `NGO` is a direct subtype of Organization and the precise entity type
+      // here — it is the input to nonprofit-specific treatment and to entity
+      // resolution in AI answers.
+      '@type': 'NGO',
       '@id': `${Astro.site}#organization`,
       name: SITE_NAME,
+      legalName: SITE_NAME,
       url: Astro.site?.href,
-      logo: new URL('/favicon.png', Astro.site).href,
-      email: 'hello@goodeworkers.org',
+      // NOTE: this is still the favicon. At 198x198 it clears Google's 112x112
+      // minimum so it validates, but it is the square icon mark rather than the
+      // horizontal wordmark. Replace with a dedicated /logo-512.png when one
+      // exists, and update width/height below.
+      logo: {
+        '@type': 'ImageObject',
+        '@id': `${Astro.site}#logo`,
+        url: new URL('/favicon.png', Astro.site).href,
+        contentUrl: new URL('/favicon.png', Astro.site).href,
+        width: 198,
+        height: 198,
+        caption: SITE_NAME,
+      },
+      image: { '@id': `${Astro.site}#logo` },
       description: DEFAULT_DESCRIPTION,
+      email: 'hello@goodeworkers.org',
+      // Machine-readable statement that we serve French speakers. Nothing on
+      // the site said this before.
+      knowsLanguage: ['fr', 'en'],
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Legal Place, 60 Rue François 1er',
@@ -46,13 +77,72 @@ const structuredData = {
         addressLocality: 'Paris',
         addressCountry: 'FR',
       },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'hello@goodeworkers.org',
+          availableLanguage: ['fr', 'en'],
+          areaServed: 'FR',
+        },
+      ],
+      // `sameAs` is Google's primary entity-reconciliation signal. Only verified
+      // profiles belong here — a sameAs pointing at a 404 is worse than none.
+      // Add the LinkedIn company page once it exists.
+      sameAs: ['https://github.com/GoodEWorkers'],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services for nonprofits',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Website creation',
+              serviceType: 'Website design and development',
+              provider: { '@id': `${Astro.site}#organization` },
+              audience: {
+                '@type': 'Audience',
+                audienceType: 'Nonprofit organizations and associations',
+              },
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Content marketing',
+              serviceType: 'Content marketing and social media management',
+              provider: { '@id': `${Astro.site}#organization` },
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'SEO optimization',
+              serviceType: 'Search engine optimization',
+              provider: { '@id': `${Astro.site}#organization` },
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Audits and advice',
+              serviceType: 'Digital audit and advisory',
+              provider: { '@id': `${Astro.site}#organization` },
+            },
+          },
+        ],
+      },
     },
     {
       '@type': 'WebSite',
       '@id': `${Astro.site}#website`,
       name: SITE_NAME,
       url: Astro.site?.href,
-      inLanguage: 'en',
+      inLanguage: ['en', 'fr'],
       publisher: { '@id': `${Astro.site}#organization` },
     },
   ],
@@ -60,18 +150,21 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
+    <!-- `maximum-scale` / `user-scalable=no` removed: they blocked pinch-zoom on
+         Android Chrome and in-app webviews (WCAG 1.4.4). The layout is already
+         fully responsive, so there is no design cost to allowing zoom. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="keywords" content="remote work, nonprofits, mentor, social enterprise" />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- body is #111, so without this Android Chrome keeps light browser chrome
+         against a near-black page. -->
+    <meta name="theme-color" content="#111111" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Self-referencing canonical: /index.html also resolves on Netlify, so this
@@ -85,13 +178,13 @@ const structuredData = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="GoodEworkers - Helping nonprofits go remote"
+      content="GoodEWorkers - Helping nonprofits go remote"
     />
 
     <!-- Twitter Card -->
@@ -106,6 +199,14 @@ const structuredData = {
     />
   </head>
   <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:m-2
+             focus:rounded focus:bg-yellow focus:px-4 focus:py-2 focus:text-black
+             focus:font-bold"
+    >
+      Skip to main content
+    </a>
     <Navbar />
     <slot />
     <Footer />

@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        clash: ['ClashDisplay', 'fantasy', 'Arial', 'sans-serif'],
+        clash: ['ClashDisplay', 'Arial Narrow', 'Impact', 'system-ui', 'sans-serif'],
         inter: ['Inter', 'Arial', 'sans-serif'],
       },
       colors: {
