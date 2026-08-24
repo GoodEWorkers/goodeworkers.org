@@ -6,12 +6,57 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  /** Set on pages that must stay out of the index (404, thank-you pages). */
+  noindex?: boolean;
 }
 
+const SITE_NAME = 'GoodEworkers';
+const DEFAULT_TITLE = 'GoodEworkers: Promote remote work in nonprofits';
+// Kept under 160 chars so Google renders the whole snippet instead of truncating it.
+const DEFAULT_DESCRIPTION =
+  'GoodEworkers helps nonprofits hire remote workers, mentors them on working from home, and makes their teams more remote-friendly. Talk to us.';
+
 const {
-  title = 'GoodEworkers: Promote remote work in nonprofits',
-  description = "GoodEworkers is a network that helps nonprofits find remote workers and mentors them on how to work from home. We also help nonprofits structure themselves to be more remote-friendly. Whether you're a nonprofit looking to hire remote workers or a remote worker looking to find a meaningful cause to work for, GoodEworkers can help.",
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  noindex = false,
 } = Astro.props;
+
+// Astro.site comes from `site` in astro.config.mjs. Building the canonical from
+// Astro.url.pathname keeps it self-referencing on every page and matches the
+// trailing-slash form @astrojs/sitemap emits.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL('/og-image.png', Astro.site);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${Astro.site}#organization`,
+      name: SITE_NAME,
+      url: Astro.site?.href,
+      logo: new URL('/favicon.png', Astro.site).href,
+      email: 'hello@goodeworkers.org',
+      description: DEFAULT_DESCRIPTION,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Legal Place, 60 Rue François 1er',
+        postalCode: '75008',
+        addressLocality: 'Paris',
+        addressCountry: 'FR',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${Astro.site}#website`,
+      name: SITE_NAME,
+      url: Astro.site?.href,
+      inLanguage: 'en',
+      publisher: { '@id': `${Astro.site}#organization` },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -25,9 +70,40 @@ const {
     />
     <meta name="description" content={description} />
     <meta name="keywords" content="remote work, nonprofits, mentor, social enterprise" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <link rel="icon" href="/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Self-referencing canonical: /index.html also resolves on Netlify, so this
+         tells Google which URL is authoritative. Skipped on noindex pages —
+         /404.html has no canonical URL to point at. -->
+    {!noindex && <link rel="canonical" href={canonicalURL} />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="GoodEworkers - Helping nonprofits go remote"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
   </head>
   <body>
     <Navbar />
