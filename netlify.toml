@@ -4,3 +4,19 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# robots.txt and og-image.png live in public/ — Astro copies public/ verbatim
+# into dist/, so they are served from the site root. No redirect needed.
+
+# NOTE: /index.html also returns 200 with content identical to /, so the homepage
+# is reachable at two URLs. The self-referencing <link rel="canonical"> in
+# src/layouts/BaseLayout.astro is what resolves this for search engines.
+# A hard redirect is possible but needs force = true (a file already exists at
+# that path), and forced index.html redirects are a known source of 404s and
+# loops on Netlify — so verify on a deploy preview before enabling:
+#
+# [[redirects]]
+#   from = "/index.html"
+#   to = "/"
+#   status = 301
+#   force = true
