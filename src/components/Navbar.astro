@@ -19,8 +19,8 @@ const navbarTextMenu = 'Menu';
     <ul class="hidden md:flex md:space-x-12 font-bold">
       <li>
         <a
-          href="/#contact"
-          class="border-orange border-2 -ml-2 px-2 py-px rounded-full hover:bg-orange hover:text-black transition-colors duration-200"
+          href="/?from=nav#contact"
+          class="border-orange border-2 -ml-2 px-3 py-1 rounded-full hover:bg-orange hover:text-black transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
         >
           {navbarTextContact}
         </a>
@@ -41,10 +41,10 @@ const navbarTextMenu = 'Menu';
       class="hidden md:hidden absolute top-0 inset-x-0 z-40 mobile-menu"
       data-menu-panel
     >
-      <ul class="bg-black h-screen text-white font-bold text-xl pt-12">
+      <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
         <li class="pl-16 pr-4 py-3">
           <a
-            href="/#contact"
+            href="/?from=nav-mobile#contact"
             class="hover:text-orange block w-full h-full"
             data-menu-link
           >
@@ -80,6 +80,7 @@ const navbarTextMenu = 'Menu';
       panel.classList.remove('is-open');
       hamburger.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.removeProperty('overflow');
     };
     const open = () => {
       panel.classList.remove('hidden');
@@ -87,11 +88,20 @@ const navbarTextMenu = 'Menu';
       requestAnimationFrame(() => panel.classList.add('is-open'));
       hamburger.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
+      // Stop the page scrolling behind the full-screen overlay.
+      document.body.style.overflow = 'hidden';
     };
 
     toggle.addEventListener('click', () => {
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
       isOpen ? close() : open();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      close();
+      toggle.focus();
     });
 
     panel.querySelectorAll<HTMLAnchorElement>('[data-menu-link]').forEach((a) => {
