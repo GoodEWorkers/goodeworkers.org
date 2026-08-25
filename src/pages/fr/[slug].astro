@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import LegalLayout from '../../layouts/LegalLayout.astro';
+
+// French legal documents: legals/fr/<slug>.md -> /fr/<slug>
+// Slugs are translated on purpose (/fr/mentions-legales, not /fr/legal-notice);
+// the pairing lives in src/i18n/routes.ts so hreflang stays correct.
+export async function getStaticPaths() {
+  const entries = await getCollection('legals', ({ data }) => data.lang === 'fr');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug.replace(/^fr\//, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<LegalLayout title={entry.data.title}>
+  <Content />
+</LegalLayout>

@@ -3,29 +3,12 @@ import { Image } from 'astro:assets';
 import Alice from '../../assets/images/alice_thumb.png';
 import Richard from '../../assets/images/richard_thumb.png';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import { getLangFromPath, homeAnchor } from '../../i18n/routes';
+import { homeContent } from '../../i18n/home';
 
-const aboutText1_1 = 'A team of ';
-const aboutText1_2 = 'expert and complementary';
-const aboutText1_3 = ' volunteers';
-const aboutText2 =
-  "It's hard to be both an expert and versatile! That's why we rely on a team of volunteers with varied profiles. Freelancers or employees, technical, graphic or semantic experts, all have decided to make a gesture for";
-const aboutText3 =
-  ' a fairer and more humane world by joining the Good eWorkers network.';
-const aboutText4 =
-  'We form a new team for each project based on the established specifications and the availability of our volunteers.';
-const aboutText5 =
-  'Are you a freelancer, employee, student, unemployed or retired, and you want to do your part for the planet?';
-const aboutText6 = 'The benefits of joining us:';
-const aboutText7 =
-  'Free training to introduce you to remote work and our methods';
-const aboutText8 = 'An expert community to help you progress in your field';
-const aboutText9 = 'Projects that make sense in line with your values';
-const aboutText10 = 'A plus for your CV, Portfolio, Book';
-const aboutText11 = 'Join Us';
-const aboutText12 = '2';
-const aboutText13 = 'ongoing\nprojects';
-const aboutText14 = 'Co-founder';
-const aboutText15 = 'Executive Director';
+const lang = getLangFromPath(Astro.url.pathname);
+const { about } = await homeContent(lang);
+const contactHref = homeAnchor(lang, 'contact');
 ---
 
 <section id="who-are-we">
@@ -39,26 +22,27 @@ const aboutText15 = 'Executive Director';
         <h2
           class="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[54px] font-medium leading-[1.2] md:leading-tight lg:leading-tight"
         >
-          {aboutText1_1}
-          <span class="font-bold">{aboutText1_2}</span>
-          {aboutText1_3}
+          {about.titlePart1}
+          <span class="font-bold">{about.titleBold}</span>
+          {about.titlePart2}
         </h2>
         <p class="mt-7 sm:mt-10 md:mt-14 lg:mt-10">
-          {aboutText2}
-          <span class="font-bold">{aboutText3}</span>
+          {about.intro}
+          <span class="font-bold">{about.introBold}</span>
         </p>
-        <p class="mt-4">{aboutText4}</p>
-        <p class="mt-4">{aboutText5}</p>
-        <p class="mt-8 font-bold text-purple uppercase">{aboutText6}</p>
-        <p class="mt-8 underline leading-loose">{aboutText7}</p>
-        <p class="mt-8 underline leading-loose">{aboutText8}</p>
-        <p class="mt-8 underline leading-loose">{aboutText9}</p>
-        <p class="mt-8 underline leading-loose">{aboutText10}</p>
+        <p class="mt-4">{about.text2}</p>
+        <p class="mt-4">{about.text3}</p>
+        <p class="mt-8 font-bold text-purple uppercase">{about.benefitsTitle}</p>
+        {
+          about.benefits.map((benefit) => (
+            <p class="mt-8 underline leading-loose">{benefit}</p>
+          ))
+        }
       </div>
       <div>
         <BigRoundedLinkBtn
-          bigBtmText={aboutText11}
-          href="/#contact"
+          bigBtmText={about.cta}
+          href={contactHref}
           class="lg:hidden bg-orange text-white mt-10 mx-auto"
         />
         <div
@@ -67,13 +51,13 @@ const aboutText15 = 'Executive Director';
           <div class="w-40 sm:w-56 flex-shrink-0 translate-x-3 sm:translate-x-5 relative">
             <Image
               src={Richard}
-              alt="Richard"
+              alt={`Richard — ${about.roleFounder}`}
               width={240}
               height={240}
               class="rounded-xl w-full aspect-square"
             />
             <p class="text-xs sm:text-sm absolute -bottom-6 left-0">
-              Richard, <span class="font-semibold">{aboutText14}</span>
+              Richard, <span class="font-semibold">{about.roleFounder}</span>
             </p>
           </div>
           <div
@@ -85,28 +69,28 @@ const aboutText15 = 'Executive Director';
               <p
                 class="font-clash text-2xl sm:text-3xl font-bold text-center text-black"
               >
-                {aboutText12}
+                {about.statNumber}
               </p>
               <p class="text-sm sm:text-base font-medium text-center text-black whitespace-pre-line">
-                {aboutText13}
+                {about.statLabel}
               </p>
             </div>
             <Image
               src={Alice}
-              alt="Alice"
+              alt={`Alice — ${about.roleDirector}`}
               width={240}
               height={240}
               class="rounded-xl w-full aspect-square"
             />
             <p class="text-xs sm:text-sm -bottom-6 absolute left-0">
-              Alice, <span class="font-semibold">{aboutText15}</span>
+              Alice, <span class="font-semibold">{about.roleDirector}</span>
             </p>
           </div>
         </div>
         <div class="hidden lg:block xl:relative xl:-left-56 xl:-top-40">
           <BigRoundedLinkBtn
-            bigBtmText={aboutText11}
-            href="/#contact"
+            bigBtmText={about.cta}
+            href={contactHref}
             class="bg-orange text-white mt-56 mx-auto"
           />
         </div>

@@ -4,3 +4,12 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Astro's directory build format emits the French 404 as /fr/404/index.html,
+# which Netlify does not pick up automatically. This rule serves it (with a
+# real 404 status) for any unknown URL under /fr. Non-forced rules run after
+# the static file lookup, so real pages such as /fr/mentions-legales still win.
+[[redirects]]
+  from = "/fr/*"
+  to = "/fr/404/index.html"
+  status = 404

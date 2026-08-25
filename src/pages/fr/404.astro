@@ -1,0 +1,10 @@
+---
+// Netlify serves the closest 404.html in the directory tree, so this one
+// answers for any unknown URL under /fr.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NotFound from '../../components/NotFound.astro';
+---
+
+<BaseLayout metaKey="notFound" noindex>
+  <NotFound />
+</BaseLayout>

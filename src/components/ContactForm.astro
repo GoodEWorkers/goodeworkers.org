@@ -1,8 +1,14 @@
 ---
-const formText1 = 'Your name';
-const formText2 = 'Your email address';
-const formText3 = 'Your message';
-const formText4 = 'Send';
+import { getLangFromPath } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const { form } = t(lang);
+
+const formText1 = form.name;
+const formText2 = form.email;
+const formText3 = form.message;
+const formText4 = form.send;
 ---
 
 <form
@@ -13,6 +19,7 @@ const formText4 = 'Send';
 >
   <div class="flex flex-col md:flex-1">
     <input type="hidden" name="form-name" value="contact" />
+    <input type="hidden" name="locale" value={lang} />
     <div class="relative mt-14">
       <input
         class="peer w-full bg-white border-x-0 border-t-0 border-b-2 border-black px-0 pt-0 pb-1 h-10 text-base focus:ring-0 focus:border-black placeholder-transparent"
@@ -67,7 +74,7 @@ const formText4 = 'Send';
       for="submit"
       class="cursor-pointer w-full max-w-[336px] bg-orange px-7 py-5 rounded-full flex flex-col items-center hover:shadow-lg hover:scale-105 transition-transform ease-in"
     >
-      <input type="submit" id="submit" value="send" class="hidden" />
+      <input type="submit" id="submit" value={formText4} class="hidden" />
       <span class="text-3xl sm:text-4xl font-clash font-bold text-center">
         {formText4}
       </span>

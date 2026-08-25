@@ -1,6 +1,7 @@
 ---
 date: "2024-04-16"
-title: "Legal Notice | Mentions légales"
+title: "Mentions légales"
+lang: "fr"
 ---
 
 Identification de l'association
@@ -50,4 +51,4 @@ Ce site web est hébergé par Netlify.
 
 Contact
 
-Pour toute question ou information, vous pouvez contacter l'association GoodEWorkers à l'adresse de courrier électronique suivante : hello@goodeworkers.
+Pour toute question ou information, vous pouvez contacter l'association GoodEWorkers à l'adresse de courrier électronique suivante : hello@goodeworkers.org

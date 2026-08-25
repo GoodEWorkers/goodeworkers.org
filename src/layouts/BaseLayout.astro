@@ -2,32 +2,114 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import {
+  SITE,
+  absoluteUrl,
+  getAlternates,
+  getLangFromPath,
+  defaultLang,
+  langCodes,
+  languages,
+} from '../i18n/routes';
+import { t } from '../i18n/ui';
 
 interface Props {
+  /** Which `meta` entry of the dictionary to use for title/description. */
+  metaKey?: 'home' | 'legal' | 'notFound';
+  /** Overrides the dictionary title (used by content-driven pages). */
   title?: string;
   description?: string;
+  /** Error pages must stay out of the index — no canonical, no hreflang. */
+  noindex?: boolean;
 }
 
-const {
-  title = 'GoodEworkers: Promote remote work in nonprofits',
-  description = "GoodEworkers is a network that helps nonprofits find remote workers and mentors them on how to work from home. We also help nonprofits structure themselves to be more remote-friendly. Whether you're a nonprofit looking to hire remote workers or a remote worker looking to find a meaningful cause to work for, GoodEworkers can help.",
-} = Astro.props;
+const { metaKey = 'home', title, description, noindex = false } = Astro.props;
+
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang);
+const meta = strings.meta[metaKey];
+
+const pageTitle = title ?? meta.title;
+const pageDescription = description ?? meta.description;
+
+const canonical = absoluteUrl(Astro.url.pathname);
+const alternates = getAlternates(Astro.url.pathname);
+const ogImage = `${SITE}/og-image.png`;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  '@id': `${SITE}/#organization`,
+  name: 'GoodEWorkers',
+  alternateName: 'Good eWorkers',
+  url: canonical,
+  logo: `${SITE}/favicon.png`,
+  image: ogImage,
+  email: 'hello@goodeworkers.org',
+  description: strings.org.description,
+  inLanguage: languages[lang].htmlLang,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '60 Rue François 1er',
+    postalCode: '75008',
+    addressLocality: 'Paris',
+    addressCountry: 'FR',
+  },
+  areaServed: 'Worldwide',
+  knowsLanguage: langCodes.map((code) => languages[code].htmlLang),
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={languages[lang].htmlLang}>
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
-    <meta name="description" content={description} />
-    <meta name="keywords" content="remote work, nonprofits, mentor, social enterprise" />
-    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    {meta.keywords && <meta name="keywords" content={meta.keywords} />}
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {
+      !noindex && (
+        <>
+          {langCodes.map((code) => (
+            <link rel="alternate" hreflang={languages[code].htmlLang} href={alternates[code]} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={alternates[defaultLang]} />
+        </>
+      )
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GoodEWorkers" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GoodEWorkers" />
+    <meta property="og:locale" content={languages[lang].ogLocale} />
+    {
+      langCodes
+        .filter((code) => code !== lang)
+        .map((code) => (
+          <meta property="og:locale:alternate" content={languages[code].ogLocale} />
+        ))
+    }
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
   </head>
   <body>
     <Navbar />

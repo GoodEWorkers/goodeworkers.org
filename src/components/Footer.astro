@@ -1,12 +1,15 @@
 ---
 import ContactForm from './ContactForm.astro';
+import { getLangFromPath, languages, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const { footer } = t(lang);
 
 const currentYear = new Date().getFullYear();
 const goodEWorkersEmail = 'hello@goodeworkers.org';
-const goodEWorkersText1 = 'hello';
-const goodEWorkersText2 = '@goodeworkers.org';
-const goodEWorkersText3 = `GoodEWorkers © ${currentYear}`;
-const goodEWorkersText4 = 'Legal Notice | Mentions légales';
+const emailLocalPart = 'hello';
+const emailDomainPart = '@goodeworkers.org';
 ---
 
 <footer class="relative z-10 bg-white text-black font-inter">
@@ -17,10 +20,10 @@ const goodEWorkersText4 = 'Legal Notice | Mentions légales';
   </div>
   <div class="max-w-screen-2xl mx-auto px-4 md:px-8 mb-4 pt-12 pb-10">
     <div class="flex flex-col">
-      <p class="text-xs font-bold">Contact-us !</p>
+      <p class="text-xs font-bold">{footer.contactTitle}</p>
       <div class="mt-4">
         <a href={`mailto:${goodEWorkersEmail}`} class="text-3xl font-bold">
-          {goodEWorkersText1}<br />{goodEWorkersText2}
+          {emailLocalPart}<br />{emailDomainPart}
         </a>
       </div>
       <ContactForm />
@@ -29,14 +32,17 @@ const goodEWorkersText4 = 'Legal Notice | Mentions légales';
       class="mt-24 md:mt-40 xl:mt-60 flex flex-col items-center text-sm space-y-2"
     >
       <li class="hover:underline">
-        <a href="/legal-notice">{goodEWorkersText4}</a>
+        <a href={routes.legal[lang]} hreflang={languages[lang].htmlLang}>
+          {footer.legalLink}
+        </a>
       </li>
       <li>
-        This site is powered by <a
+        {footer.poweredBy} <a
           class="hover:underline"
-          href="https://netlify.com?utm_source=goodeworkers">Netlify</a>
+          href="https://netlify.com?utm_source=goodeworkers"
+          rel="noopener">Netlify</a>
       </li>
-      <li>{goodEWorkersText3}</li>
+      <li>{footer.copyright(currentYear)}</li>
     </ul>
   </div>
 </footer>
