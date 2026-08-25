@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Thanks from '../components/Thanks.astro';
+
+// The contact form's `action` target. Kept out of the index — it is a
+// post-submission state, not a page anyone should reach from search. It also
+// gives the form a real success URL, which is the only place a conversion
+// event can ever be recorded.
+---
+
+<BaseLayout metaKey="thanks" noindex>
+  <Thanks />
+</BaseLayout>

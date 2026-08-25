@@ -8,22 +8,12 @@ const legals = defineCollection({
   schema: z.object({
     date: z.string(),
     title: z.string(),
+    /** Per-page meta description. Without this every legal page inherited the
+     *  homepage default, so two indexable URLs shared one description. */
+    description: z.string().optional(),
     lang: z.enum(['en', 'fr']),
   }),
 });
-
-// Icon names must match an svg in src/assets/icons/.
-const iconName = z.enum([
-  'calendar',
-  'chat',
-  'dollar',
-  'heart',
-  'hexagone',
-  'lili',
-  'magnify',
-  'map',
-  'webnet',
-]);
 
 // Homepage copy lives in home/<lang>.md (all of it in the frontmatter), so it
 // can be edited without touching the components. The file name is the
@@ -67,16 +57,12 @@ const home = defineCollection({
       text3: z.string(),
       benefitsTitle: z.string(),
       benefits: z.array(z.string()),
+      /** Last benefit; rendered with the GitHub link appended after it. */
+      benefitOpenSource: z.string(),
+      githubCta: z.string(),
       cta: z.string(),
-      statNumber: z.string(),
-      statLabel: z.string(),
       roleFounder: z.string(),
       roleDirector: z.string(),
-    }),
-    partners: z.object({
-      titlePart1: z.string(),
-      titleEncircled: z.string(),
-      list: z.array(z.object({ icon: iconName, name: z.string() })),
     }),
   }),
 });

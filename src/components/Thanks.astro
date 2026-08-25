@@ -1,0 +1,42 @@
+---
+import { getLangFromPath, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const { thanks } = t(lang);
+---
+
+<div class="font-inter text-white bg-black-light mx-4 md:mx-8 my-10 rounded-3xl">
+  <main id="main-content" class="max-w-screen-2xl mx-auto px-4 py-16 md:py-24">
+    <div class="max-w-screen-md mx-auto">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-clash font-bold">
+        {thanks.title}
+      </h1>
+      <p class="mt-8 text-base md:text-lg text-ashgray">{thanks.lead}</p>
+
+      <ol class="mt-10 space-y-4 list-decimal pl-6 text-ashgray">
+        {thanks.steps.map((step) => <li class="leading-relaxed">{step}</li>)}
+      </ol>
+
+      <p class="mt-12 text-base text-ashgray">
+        {thanks.whileWaiting}
+        <a
+          href="https://github.com/GoodEWorkers"
+          class="underline hover:text-orange"
+          rel="noopener">{thanks.githubCta}</a
+        >.
+      </p>
+
+      <a
+        href={routes.home[lang]}
+        class="inline-block mt-12 bg-orange text-black px-7 py-4 rounded-full
+               font-clash font-bold text-xl hover:shadow-lg hover:scale-105
+               transition-transform ease-in
+               focus-visible:outline focus-visible:outline-2
+               focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        {thanks.backHome}
+      </a>
+    </div>
+  </main>
+</div>

@@ -2,11 +2,15 @@
 date: "2024-04-16"
 title: "Mentions légales"
 lang: "fr"
+description: "Mentions légales de l'association GoodEWorkers : identification, numéro RNA, directeur de la publication, hébergeur, données personnelles et droit applicable."
 ---
 
 Identification de l'association
 
     Nom de l'association : GoodEWorkers
+    Numéro RNA : W751270057
+    Numéro SIREN : 923811285
+    Date de déclaration en préfecture : 21 juin 2023
     Siège social : Legal Place,  60 Rue François 1er, 75008 Paris, France
     Adresse de courrier électronique : hello@goodeworkers.org
 
@@ -27,7 +31,11 @@ Le contenu du site web, y compris les textes, les images, les vidéos et les son
 
 Données personnelles
 
-L'association GoodEWorkers ne collecte aucune donnée personnelle sur les visiteurs de son site web.
+Le site web de l'association GoodEWorkers n'utilise aucun cookie, aucun traceur et aucun outil de mesure d'audience. La simple consultation du site ne donne lieu à aucune collecte de données personnelles.
+
+Lorsque vous utilisez le formulaire de contact, nous collectons votre nom et votre adresse électronique dans le seul but de répondre à votre demande. La base légale de ce traitement est l'intérêt légitime de l'association à traiter les demandes qui lui sont adressées. Ces données sont transmises et hébergées par notre prestataire technique Netlify (États-Unis) et ne sont ni cédées, ni vendues, ni utilisées à des fins de prospection. Elles sont conservées le temps nécessaire au traitement de votre demande, puis supprimées.
+
+Conformément au Règlement général sur la protection des données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition sur vos données. Pour l'exercer, écrivez à hello@goodeworkers.org.
 
 Liens hypertextes
 

@@ -15,11 +15,12 @@ import { t } from '../i18n/ui';
 
 interface Props {
   /** Which `meta` entry of the dictionary to use for title/description. */
-  metaKey?: 'home' | 'legal' | 'notFound';
+  metaKey?: 'home' | 'legal' | 'notFound' | 'thanks';
   /** Overrides the dictionary title (used by content-driven pages). */
   title?: string;
   description?: string;
-  /** Error pages must stay out of the index — no canonical, no hreflang. */
+  /** Set on pages that must stay out of the index (404, thank-you pages) —
+   *  no canonical, no hreflang. */
   noindex?: boolean;
 }
 
@@ -29,6 +30,13 @@ const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
 const meta = strings.meta[metaKey];
 
+// One spelling, everywhere. The site previously rendered the name five ways
+// ("GoodEworkers", "GoodEWorkers", "GoodeWorkers", "Good eWorkers",
+// "Goodeworkers.org"), which splits brand search and breaks recall. The
+// lowercase-e wordmark in the H1 is a deliberate logo treatment; prose and
+// metadata now agree on this form.
+const SITE_NAME = 'GoodEWorkers';
+
 const pageTitle = title ?? meta.title;
 const pageDescription = description ?? meta.description;
 
@@ -36,27 +44,112 @@ const canonical = absoluteUrl(Astro.url.pathname);
 const alternates = getAlternates(Astro.url.pathname);
 const ogImage = `${SITE}/og-image.png`;
 
-const organizationSchema = {
+const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'NGO',
-  '@id': `${SITE}/#organization`,
-  name: 'GoodEWorkers',
-  alternateName: 'Good eWorkers',
-  url: canonical,
-  logo: `${SITE}/favicon.png`,
-  image: ogImage,
-  email: 'hello@goodeworkers.org',
-  description: strings.org.description,
-  inLanguage: languages[lang].htmlLang,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '60 Rue François 1er',
-    postalCode: '75008',
-    addressLocality: 'Paris',
-    addressCountry: 'FR',
-  },
-  areaServed: 'Worldwide',
-  knowsLanguage: langCodes.map((code) => languages[code].htmlLang),
+  '@graph': [
+    {
+      // `NGO` is a direct subtype of Organization and the precise entity type
+      // here — it is the input to nonprofit-specific treatment and to entity
+      // resolution in AI answers.
+      '@type': 'NGO',
+      '@id': `${SITE}/#organization`,
+      name: SITE_NAME,
+      legalName: SITE_NAME,
+      url: `${SITE}/`,
+      // NOTE: this is still the favicon. At 198x198 it clears Google's 112x112
+      // minimum so it validates, but it is the square icon mark rather than the
+      // horizontal wordmark. Replace with a dedicated /logo-512.png when one
+      // exists, and update width/height below.
+      logo: {
+        '@type': 'ImageObject',
+        '@id': `${SITE}/#logo`,
+        url: `${SITE}/favicon.png`,
+        contentUrl: `${SITE}/favicon.png`,
+        width: 198,
+        height: 198,
+        caption: SITE_NAME,
+      },
+      image: { '@id': `${SITE}/#logo` },
+      description: strings.org.description,
+      email: 'hello@goodeworkers.org',
+      // Machine-readable statement that we serve French speakers.
+      knowsLanguage: langCodes.map((code) => languages[code].htmlLang),
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Legal Place, 60 Rue François 1er',
+        postalCode: '75008',
+        addressLocality: 'Paris',
+        addressCountry: 'FR',
+      },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'hello@goodeworkers.org',
+          availableLanguage: ['fr', 'en'],
+          areaServed: 'FR',
+        },
+      ],
+      // `sameAs` is Google's primary entity-reconciliation signal. Only verified
+      // profiles belong here — a sameAs pointing at a 404 is worse than none.
+      // Add the LinkedIn company page once it exists.
+      sameAs: ['https://github.com/GoodEWorkers'],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services for nonprofits',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Website creation',
+              serviceType: 'Website design and development',
+              provider: { '@id': `${SITE}/#organization` },
+              audience: {
+                '@type': 'Audience',
+                audienceType: 'Nonprofit organizations and associations',
+              },
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Content marketing',
+              serviceType: 'Content marketing and social media management',
+              provider: { '@id': `${SITE}/#organization` },
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'SEO optimization',
+              serviceType: 'Search engine optimization',
+              provider: { '@id': `${SITE}/#organization` },
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Audits and advice',
+              serviceType: 'Digital audit and advisory',
+              provider: { '@id': `${SITE}/#organization` },
+            },
+          },
+        ],
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      name: SITE_NAME,
+      url: `${SITE}/`,
+      inLanguage: langCodes.map((code) => languages[code].htmlLang),
+      publisher: { '@id': `${SITE}/#organization` },
+    },
+  ],
 };
 ---
 
@@ -64,12 +157,23 @@ const organizationSchema = {
 <html lang={languages[lang].htmlLang}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
+    <!-- `maximum-scale` / `user-scalable=no` removed: they blocked pinch-zoom on
+         Android Chrome and in-app webviews (WCAG 1.4.4). The layout is already
+         fully responsive, so there is no design cost to allowing zoom. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={pageDescription} />
-    {meta.keywords && <meta name="keywords" content={meta.keywords} />}
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- body is #111, so without this Android Chrome keeps light browser chrome
+         against a near-black page. -->
+    <meta name="theme-color" content="#111111" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
+    <!-- Self-referencing canonical: /index.html also resolves on Netlify, so this
+         tells Google which URL is authoritative. Skipped on noindex pages —
+         a 404 has no canonical URL to point at. -->
     {!noindex && <link rel="canonical" href={canonical} />}
     {
       !noindex && (
@@ -82,15 +186,12 @@ const organizationSchema = {
       )
     }
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="GoodEWorkers" />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="GoodEWorkers" />
     <meta property="og:locale" content={languages[lang].ogLocale} />
     {
       langCodes
@@ -99,19 +200,34 @@ const organizationSchema = {
           <meta property="og:locale:alternate" content={languages[code].ogLocale} />
         ))
     }
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="GoodEWorkers - Helping nonprofits go remote"
+    />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="icon" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
   </head>
   <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:m-2
+             focus:rounded focus:bg-yellow focus:px-4 focus:py-2 focus:text-black
+             focus:font-bold"
+    >
+      {strings.nav.skipToContent}
+    </a>
     <Navbar />
     <slot />
     <Footer />

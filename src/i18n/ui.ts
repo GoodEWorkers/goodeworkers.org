@@ -12,28 +12,29 @@ import type { Lang } from './routes';
 const en = {
   meta: {
     home: {
-      title: 'Remote Volunteers for Nonprofits | GoodEWorkers',
+      title: 'GoodEWorkers: Promote remote work in nonprofits',
+      // Kept under 160 chars so Google renders the whole snippet.
       description:
-        'GoodEWorkers connects nonprofits with expert remote volunteers for websites, content marketing, SEO and design — free support, anywhere in the world.',
-      keywords:
-        'remote work, nonprofits, volunteering, digital volunteers, web development, content marketing, SEO, charity website',
+        "A community of remote workers building for nonprofits and releasing it as open source. We run fully remote to prove it's a competitive advantage.",
     },
     legal: {
       title: 'Legal Notice | GoodEWorkers',
       description:
         'Legal notice for GoodEWorkers: publisher, hosting provider, intellectual property, personal data and applicable law.',
-      keywords: 'legal notice, GoodEWorkers, publisher, hosting, personal data',
     },
     notFound: {
       title: 'Page not found | GoodEWorkers',
       description: 'The page you are looking for does not exist.',
-      keywords: '',
+    },
+    thanks: {
+      title: 'Thanks | GoodEWorkers',
+      description: 'Your message has been sent.',
     },
   },
 
   org: {
     description:
-      'GoodEWorkers is a nonprofit network of remote volunteers helping other nonprofits go digital: websites, content marketing, SEO, design and audits.',
+      'GoodEWorkers is a community of remote workers helping nonprofits go digital: websites, content marketing, SEO, design and audits — released as open source.',
     logoAlt: 'GoodEWorkers',
     homeAriaLabel: 'GoodEWorkers home',
   },
@@ -51,8 +52,10 @@ const en = {
   },
 
   footer: {
-    contactTitle: 'Contact-us !',
+    contactTitle: 'Tell us about your project',
+    mailSubject: 'Project enquiry',
     legalLink: 'Legal Notice',
+    openSource: 'Our work is open source on',
     poweredBy: 'This site is powered by',
     copyright: (year: number) => `GoodEWorkers © ${year}`,
   },
@@ -62,6 +65,22 @@ const en = {
     email: 'Your email address',
     message: 'Your message',
     send: 'Send',
+    gdprNotice: 'We use your name and email only to reply to you. See our',
+    gdprLinkLabel: 'legal notice',
+    replyNote: 'Alice or Richard replies personally, usually within 3 working days.',
+  },
+
+  thanks: {
+    title: 'Thanks — we have your message',
+    lead: "Your message is in. Here's what happens next.",
+    steps: [
+      'Alice or Richard reads it personally — not a shared inbox rota.',
+      'You get a reply within 3 working days, whichever side you wrote from.',
+      'If it looks like a fit, we scope the work in writing before anyone starts building.',
+    ],
+    whileWaiting: 'While you wait, the code we write is public — including this site.',
+    githubCta: 'Browse our repositories on GitHub',
+    backHome: 'Back to the homepage',
   },
 
   notFound: {
@@ -77,28 +96,28 @@ type Dictionary = typeof en;
 const fr: Dictionary = {
   meta: {
     home: {
-      title: 'Bénévoles à distance pour associations | GoodEWorkers',
+      title: 'GoodEWorkers : Promouvoir le travail à distance dans les associations',
       description:
-        "GoodEWorkers met des bénévoles experts à distance au service des associations : site web, marketing de contenu, SEO et design. Un accompagnement gratuit.",
-      keywords:
-        "bénévolat à distance, associations, télétravail, site web association, marketing de contenu, référencement SEO, bénévolat en ligne",
+        "Une communauté de télétravailleurs qui construit pour les associations et publie son travail en open source. Entièrement à distance, et c'est un atout.",
     },
     legal: {
       title: 'Mentions légales | GoodEWorkers',
       description:
         "Mentions légales de GoodEWorkers : éditeur, hébergeur, propriété intellectuelle, données personnelles et droit applicable.",
-      keywords: 'mentions légales, GoodEWorkers, éditeur, hébergeur, données personnelles',
     },
     notFound: {
       title: 'Page introuvable | GoodEWorkers',
       description: "La page que vous cherchez n'existe pas.",
-      keywords: '',
+    },
+    thanks: {
+      title: 'Merci | GoodEWorkers',
+      description: 'Votre message a bien été envoyé.',
     },
   },
 
   org: {
     description:
-      "GoodEWorkers est une association de bénévoles à distance qui aide les autres associations à passer au numérique : site web, marketing de contenu, SEO, design et audits.",
+      "GoodEWorkers est une communauté de télétravailleurs qui aide les associations à passer au numérique : site web, marketing de contenu, SEO, design et audits — publiés en open source.",
     logoAlt: 'GoodEWorkers',
     homeAriaLabel: "GoodEWorkers, retour à l'accueil",
   },
@@ -115,8 +134,10 @@ const fr: Dictionary = {
   },
 
   footer: {
-    contactTitle: 'Contactez-nous !',
+    contactTitle: 'Parlez-nous de votre projet',
+    mailSubject: 'Demande de projet',
     legalLink: 'Mentions légales',
+    openSource: 'Notre travail est open source sur',
     poweredBy: 'Ce site est propulsé par',
     copyright: (year: number) => `GoodEWorkers © ${year}`,
   },
@@ -126,6 +147,24 @@ const fr: Dictionary = {
     email: 'Votre adresse e-mail',
     message: 'Votre message',
     send: 'Envoyer',
+    gdprNotice:
+      'Nous utilisons votre nom et votre e-mail uniquement pour vous répondre. Consultez nos',
+    gdprLinkLabel: 'mentions légales',
+    replyNote: 'Alice ou Richard vous répond personnellement, en général sous 3 jours ouvrés.',
+  },
+
+  thanks: {
+    title: 'Merci — nous avons bien reçu votre message',
+    lead: 'Votre message est arrivé. Voici la suite.',
+    steps: [
+      "Alice ou Richard le lit personnellement — pas de boîte mail partagée.",
+      'Vous recevez une réponse sous 3 jours ouvrés, quel que soit le formulaire utilisé.',
+      "Si le projet correspond, nous cadrons le travail par écrit avant de commencer quoi que ce soit.",
+    ],
+    whileWaiting:
+      'En attendant, le code que nous écrivons est public — y compris celui de ce site.',
+    githubCta: 'Parcourir nos dépôts sur GitHub',
+    backHome: "Retour à l'accueil",
   },
 
   notFound: {

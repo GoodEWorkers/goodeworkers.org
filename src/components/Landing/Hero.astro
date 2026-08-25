@@ -1,7 +1,7 @@
 ---
 import Icon from '../icons/Icon.astro';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
-import { getLangFromPath, homeAnchor } from '../../i18n/routes';
+import { contactAnchor, getLangFromPath } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
 // Presentation stays here, copy comes from the content file — zipped by index.
@@ -9,7 +9,6 @@ const cardIcons = ['webnet', 'chat', 'magnify', 'hexagone', 'heart'] as const;
 
 const lang = getLangFromPath(Astro.url.pathname);
 const { hero } = await homeContent(lang);
-const contactHref = homeAnchor(lang, 'contact');
 ---
 
 <section id="hero">
@@ -20,13 +19,13 @@ const contactHref = homeAnchor(lang, 'contact');
       upperSmallText={hero.ctaNonprofitSmall}
       bigBtmText={hero.ctaNonprofitBig}
       class="bg-yellow"
-      href={contactHref}
+      href={contactAnchor(lang, 'nonprofit')}
     />
     <BigRoundedLinkBtn
       upperSmallText={hero.ctaHelpSmall}
       bigBtmText={hero.ctaHelpBig}
       class="bg-purple"
-      href={contactHref}
+      href={contactAnchor(lang, 'volunteer')}
     />
   </div>
   <div
@@ -51,11 +50,10 @@ const contactHref = homeAnchor(lang, 'contact');
         {
           hero.cards.map((heroCard, index) => (
             <div
-              title={heroCard.title}
               class:list={[
-                'hover:opacity-85 aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
+                'aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
                 index === hero.cards.length - 1
-                  ? 'bg-orange text-white'
+                  ? 'bg-orange text-black'
                   : 'bg-grey',
               ]}
             >

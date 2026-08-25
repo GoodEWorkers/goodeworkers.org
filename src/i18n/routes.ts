@@ -22,29 +22,42 @@ export const defaultLang: Lang = 'en';
 
 export const langCodes = Object.keys(languages) as Lang[];
 
-/** Canonical path of every indexable page, per language. */
+/**
+ * Canonical path of every indexable page, per language.
+ *
+ * Paths use the trailing-slash form: Astro's directory build makes Netlify
+ * serve `/fr/` with a 200 and 301 `/fr` onto it, so the slashed form is the
+ * only one that never costs a redirect — canonicals, hreflang, the sitemap
+ * and internal links must all agree on it.
+ */
 export const routes = {
-  home: { en: '/', fr: '/fr' },
-  legal: { en: '/legal-notice', fr: '/fr/mentions-legales' },
+  home: { en: '/', fr: '/fr/' },
+  legal: { en: '/legal-notice/', fr: '/fr/mentions-legales/' },
 } as const satisfies Record<string, Record<Lang, string>>;
 
 export type RouteKey = keyof typeof routes;
 
-/** Link to an anchor on the localized homepage, e.g. `/#contact`, `/fr#contact`. */
+/** Link to an anchor on the localized homepage, e.g. `/#contact`, `/fr/#contact`. */
 export function homeAnchor(lang: Lang, hash: string): string {
-  const home = routes.home[lang];
-  return home === '/' ? `/#${hash}` : `${home}#${hash}`;
+  return `${routes.home[lang]}#${hash}`;
 }
 
-/** Drop the trailing slash so a path always has exactly one representation. */
+/**
+ * Localized contact-section link carrying a `from` attribution param the
+ * contact form forwards with the submission, e.g. `/?from=nav#contact`.
+ */
+export function contactAnchor(lang: Lang, from: string): string {
+  return `${routes.home[lang]}?from=${from}#contact`;
+}
+
+/** Canonical form: exactly one trailing slash (see the note on `routes`). */
 export function normalizePath(path: string): string {
   const withoutSlash = path.replace(/\/+$/, '');
-  return withoutSlash === '' ? '/' : withoutSlash;
+  return withoutSlash === '' ? '/' : `${withoutSlash}/`;
 }
 
 export function absoluteUrl(path: string): string {
-  const normalized = normalizePath(path);
-  return normalized === '/' ? `${SITE}/` : `${SITE}${normalized}`;
+  return `${SITE}${normalizePath(path)}`;
 }
 
 /** Which language does this path belong to? Anything under /fr is French. */
@@ -77,12 +90,12 @@ export function getAlternatePaths(path: string): Record<Lang, string> {
   const bare =
     current === defaultLang
       ? normalizePath(path)
-      : normalizePath(normalizePath(path).replace(new RegExp(`^/${current}`), '')) || '/';
+      : normalizePath(normalizePath(path).replace(new RegExp(`^/${current}/`), '/'));
 
   return Object.fromEntries(
     langCodes.map((lang) => [
       lang,
-      lang === defaultLang ? bare : normalizePath(`/${lang}${bare === '/' ? '' : bare}`),
+      lang === defaultLang ? bare : normalizePath(`/${lang}${bare}`),
     ])
   ) as Record<Lang, string>;
 }

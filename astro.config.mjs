@@ -28,7 +28,9 @@ for (const perLang of Object.values(routes)) {
 
 export default defineConfig({
   site: SITE,
-  trailingSlash: 'never',
+  // Netlify's directory build serves the slashed URL with a 200 and 301s the
+  // unslashed form, so the slashed form is canonical everywhere (routes.ts).
+  trailingSlash: 'always',
   i18n: {
     defaultLocale: 'en',
     locales: [...langCodes],
@@ -41,7 +43,13 @@ export default defineConfig({
     tailwind(),
     react(),
     sitemap({
-      filter: (page) => !normalizePath(page).endsWith('/404'),
+      // Google uses lastmod as a recrawl-scheduling hint when it is consistent
+      // and honest. Deliberately no `priority` or `changefreq` — Google has
+      // confirmed it ignores both.
+      lastmod: new Date(),
+      // 404 pages and /thanks (a post-submission state) are not destinations.
+      filter: (page) =>
+        !normalizePath(page).endsWith('/404/') && !page.includes('/thanks'),
       serialize: (item) => ({
         ...item,
         links: alternatesByUrl.get(normalizePath(item.url)),

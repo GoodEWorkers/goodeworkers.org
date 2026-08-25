@@ -13,8 +13,8 @@ header:
   titlePart1: "Aider"
   titleEncircled: "les associations"
   titlePart2: "à travailler à distance"
-  intro: "En tant qu'association, nous sommes convaincus que chacun a le pouvoir de changer les choses — et nous voulons rendre cela possible depuis chez soi."
-  introBold: "Vous êtes une association ? Nous vous accompagnons en développement web, marketing de contenu, design ou animation."
+  intro: "Nous sommes une communauté de télétravailleurs. Nous construisons pour les associations, publions ce que nous créons en open source, et nous n'avons jamais eu de bureau. La plupart des organisations voient le travail à distance comme une concession. Nous pensons que c'est un atout — et nous en sommes la preuve."
+  introBold: "Une association avec un projet, ou un télétravailleur qui en cherche un ? Commencez ci-dessous."
 
 hero:
   ctaNonprofitSmall: "Je suis une"
@@ -23,7 +23,7 @@ hero:
   ctaHelpBig: "aider"
   titleMiddle: " vous aide à "
   titleBold: "passer au numérique"
-  text: "Nous proposons de nombreux services : création de site web, marketing de contenu et gestion des réseaux sociaux. Nous offrons également une consultation gratuite pour cerner vos besoins et définir comment vous aider à atteindre vos objectifs."
+  text: "Nous créons des sites web, rédigeons du contenu et gérons les réseaux sociaux. Chaque projet est mené à distance et en asynchrone, et nous publions ce que nous pouvons en open source. Commencez par une consultation gratuite pour cerner ce dont vous avez vraiment besoin."
   cards:
     - title: "Création\nde site web"
     - title: "Marketing\nde contenu"
@@ -34,23 +34,23 @@ hero:
 why:
   titlePart1: "Faire de la distance un "
   titleEncircled: "atout"
-  textBold: "Pendant toute la durée de votre projet, vous disposez d'un interlocuteur dédié"
-  textMiddle: " avec qui vous échangez régulièrement par téléphone, e-mail, visioconférence ou messagerie. "
-  textEnd: "Vous êtes ainsi tenu informé de l'avancement comme des éventuels imprévus."
+  textBold: "GoodEWorkers n'a jamais eu de bureau."
+  textMiddle: " Chaque projet, décision et réunion se fait à distance : nous ne défendons pas une idée que nous n'avons pas éprouvée. "
+  textEnd: "Vous disposez d'un interlocuteur dédié pendant toute la durée du projet, joignable par téléphone, e-mail, visio ou messagerie."
   cards:
     - title: "Aucune restriction \ngéographique"
-      text: "Nous ne sommes pas une association locale : nous accueillons des bénévoles du monde entier."
+      text: "Nous ne sommes pas une association locale. Nos membres viennent de partout : la bonne personne pour une tâche n'est jamais écartée à cause de son lieu de vie."
     - title: "Une organisation \nfluide"
-      text: "Nous maîtrisons l'art du travail à distance et de l'asynchrone : chaque tâche est définie en amont pour gagner en efficacité, au bénéfice de tous."
+      text: "Nous travaillons en asynchrone, chaque tâche étant écrite avant de commencer. C'est ce que la plupart des organisations ratent."
     - title: "Des coûts \nréduits"
-      text: "Sans locaux ni bureaux, nos coûts d'infrastructure sont réduits au minimum, et tout le monde y gagne."
+      text: "Sans bureaux, nos coûts d'infrastructure sont quasi nuls. C'est cette économie qui garde le travail abordable."
 
 about:
-  titlePart1: "Une équipe de bénévoles "
+  titlePart1: "Une communauté de télétravailleurs "
   titleBold: "experts et complémentaires"
   titlePart2: ""
-  intro: "Difficile d'être à la fois expert et polyvalent ! C'est pourquoi nous nous appuyons sur une équipe de bénévoles aux profils variés. Freelances ou salariés, experts techniques, graphiques ou sémantiques, tous ont décidé d'agir pour"
-  introBold: " un monde plus juste et plus humain en rejoignant le réseau Good eWorkers."
+  intro: "Difficile d'être à la fois expert et polyvalent ! C'est pourquoi nous réunissons des profils variés. Freelances ou salariés, experts techniques, graphiques ou sémantiques, tous ont décidé d'agir pour"
+  introBold: " un monde plus juste et plus humain en rejoignant la communauté GoodEWorkers."
   text2: "Nous constituons une nouvelle équipe pour chaque projet, en fonction du cahier des charges établi et des disponibilités de nos bénévoles."
   text3: "Vous êtes freelance, salarié, étudiant, sans emploi ou retraité, et vous souhaitez apporter votre pierre à l'édifice ?"
   benefitsTitle: "Les avantages à nous rejoindre :"
@@ -58,19 +58,11 @@ about:
     - "Une formation gratuite pour vous initier au travail à distance et à nos méthodes"
     - "Une communauté d'experts pour progresser dans votre domaine"
     - "Des projets qui ont du sens et en accord avec vos valeurs"
-    - "Un plus pour votre CV, votre portfolio ou votre book"
+  # Affiché comme dernier avantage, avec le lien GitHub ajouté à la suite.
+  benefitOpenSource: "Du travail open source que vous pouvez montrer, et un plus pour votre CV, votre portfolio ou votre book."
+  githubCta: "Voir le code sur GitHub"
   # Court pour que le bouton tienne sur une ligne, comme « Join Us » en anglais.
   cta: "Nous rejoindre"
-  statNumber: "2"
-  statLabel: "projets\nen cours"
   roleFounder: "Cofondation"
   roleDirector: "Direction générale"
-
-partners:
-  titlePart1: "Avec l'aide de nos "
-  titleEncircled: "partenaires"
-  # icon doit correspondre à un svg dans src/assets/icons/
-  list:
-    - icon: lili
-      name: "Lili Schmitt"
 ---

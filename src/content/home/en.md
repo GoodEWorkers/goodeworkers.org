@@ -12,8 +12,8 @@ header:
   titlePart1: "Helping"
   titleEncircled: "nonprofits"
   titlePart2: "go remote"
-  intro: "As a nonprofit we believe that everyone has the power to make a difference in the world, and we want to make it easier for people to do that from the comfort of their own homes."
-  introBold: "If you're a nonprofit, we can help you with web development, content marketing, design, or animation."
+  intro: "We're a community of remote workers. We build for nonprofits, release what we make as open source, and have never had an office. Most organizations treat remote work as a concession. We think it's an advantage, and we're the proof."
+  introBold: "Nonprofit with a project, or a remote worker looking for one? Start below."
 
 hero:
   ctaNonprofitSmall: "I am a"
@@ -22,7 +22,7 @@ hero:
   ctaHelpBig: "help"
   titleMiddle: " can help you "
   titleBold: "go digital"
-  text: "We provide a variety of services, including website development, content marketing, and social media management. We also offer a free consultation to help you understand your needs and how we can help you achieve your goals."
+  text: "We build websites, write content, and run social media. Every project is remote and asynchronous, and we release what we can as open source. Start with a free consultation to work out what you actually need."
   cards:
     - title: "Website\ncreation"
     - title: "Content\nmarketing"
@@ -33,23 +33,23 @@ hero:
 why:
   titlePart1: "Making distance an "
   titleEncircled: "advantage"
-  textBold: "Throughout the duration of your project, you will have a dedicated interlocutor"
-  textMiddle: " with whom you will regularly communicate via phone, email, video conferencing, or chat. "
-  textEnd: "This way, you will be kept informed of progress and any potential setbacks."
+  textBold: "GoodEWorkers has never had an office."
+  textMiddle: " Every project, decision and meeting happens remotely, so we're not arguing for something we haven't tried. "
+  textEnd: "You get one dedicated contact for the whole project, reachable by phone, email, video or chat."
   cards:
     - title: "No geographical \nrestrictions"
-      text: "We are not a local association, we welcome all volunteers from around the globe."
+      text: "We are not a local association. Members join from anywhere, so the right person for a task is never ruled out by where they live."
     - title: "A streamlined \norganization"
-      text: "We excel in the art of remote work, working asynchronously, with all tasks predefined to enhance efficiency for all stakeholders."
+      text: "We work asynchronously, with every task written down before it starts. It's the part most organizations get wrong."
     - title: "Reduced \ncost"
-      text: "With no physical premises or offices, our infrastructure costs are significantly minimized, benefiting everyone."
+      text: "With no offices, our infrastructure costs are close to zero. That saving is what keeps the work affordable."
 
 about:
-  titlePart1: "A team of "
+  titlePart1: "A community of "
   titleBold: "expert and complementary"
-  titlePart2: " volunteers"
-  intro: "It's hard to be both an expert and versatile! That's why we rely on a team of volunteers with varied profiles. Freelancers or employees, technical, graphic or semantic experts, all have decided to make a gesture for"
-  introBold: " a fairer and more humane world by joining the Good eWorkers network."
+  titlePart2: " remote workers"
+  intro: "It's hard to be both an expert and versatile! That's why we bring together people with varied profiles. Freelancers or employees, technical, graphic or semantic experts, all have decided to make a gesture for"
+  introBold: " a fairer and more humane world by joining the GoodEWorkers community."
   text2: "We form a new team for each project based on the established specifications and the availability of our volunteers."
   text3: "Are you a freelancer, employee, student, unemployed or retired, and you want to do your part for the planet?"
   benefitsTitle: "The benefits of joining us:"
@@ -57,18 +57,10 @@ about:
     - "Free training to introduce you to remote work and our methods"
     - "An expert community to help you progress in your field"
     - "Projects that make sense in line with your values"
-    - "A plus for your CV, Portfolio, Book"
+  # Rendered as the last benefit, with the GitHub link appended after it.
+  benefitOpenSource: "Open source work you can point to, and a plus for your CV, Portfolio, Book."
+  githubCta: "See the code on GitHub"
   cta: "Join Us"
-  statNumber: "2"
-  statLabel: "ongoing\nprojects"
   roleFounder: "Co-founder"
   roleDirector: "Executive Director"
-
-partners:
-  titlePart1: "With the help of our "
-  titleEncircled: "partners"
-  # icon must match an svg name in src/assets/icons/
-  list:
-    - icon: lili
-      name: "Lili Schmitt"
 ---

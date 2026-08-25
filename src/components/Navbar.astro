@@ -2,14 +2,13 @@
 import logoSvg from '../assets/images/goodeworkers.svg?raw';
 import Hamburger from './Miscs/Hamburger.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { getLangFromPath, homeAnchor, routes } from '../i18n/routes';
+import { contactAnchor, getLangFromPath, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
 
 const homeHref = routes.home[lang];
-const contactHref = homeAnchor(lang, 'contact');
 ---
 
 <div class="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50" data-navbar>
@@ -26,8 +25,8 @@ const contactHref = homeAnchor(lang, 'contact');
       <ul class="flex space-x-12 font-bold">
         <li>
           <a
-            href={contactHref}
-            class="border-orange border-2 -ml-2 px-2 py-px rounded-full hover:bg-orange hover:text-black transition-colors duration-200"
+            href={contactAnchor(lang, 'nav')}
+            class="border-orange border-2 -ml-2 px-3 py-1 rounded-full hover:bg-orange hover:text-black transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
           >
             {strings.nav.contact}
           </a>
@@ -50,10 +49,10 @@ const contactHref = homeAnchor(lang, 'contact');
       class="hidden md:hidden absolute top-0 inset-x-0 z-40 mobile-menu"
       data-menu-panel
     >
-      <ul class="bg-black h-screen text-white font-bold text-xl pt-12">
+      <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
         <li class="pl-16 pr-4 py-3">
           <a
-            href={contactHref}
+            href={contactAnchor(lang, 'nav-mobile')}
             class="hover:text-orange block w-full h-full"
             data-menu-link
           >
@@ -92,6 +91,7 @@ const contactHref = homeAnchor(lang, 'contact');
       panel.classList.remove('is-open');
       hamburger.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.removeProperty('overflow');
     };
     const open = () => {
       panel.classList.remove('hidden');
@@ -99,11 +99,20 @@ const contactHref = homeAnchor(lang, 'contact');
       requestAnimationFrame(() => panel.classList.add('is-open'));
       hamburger.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
+      // Stop the page scrolling behind the full-screen overlay.
+      document.body.style.overflow = 'hidden';
     };
 
     toggle.addEventListener('click', () => {
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
       isOpen ? close() : open();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      close();
+      toggle.focus();
     });
 
     panel.querySelectorAll<HTMLAnchorElement>('[data-menu-link]').forEach((a) => {

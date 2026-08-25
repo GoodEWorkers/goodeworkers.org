@@ -5,6 +5,9 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# robots.txt and og-image.png live in public/ — Astro copies public/ verbatim
+# into dist/, so they are served from the site root. No redirect needed.
+
 # Astro's directory build format emits the French 404 as /fr/404/index.html,
 # which Netlify does not pick up automatically. This rule serves it (with a
 # real 404 status) for any unknown URL under /fr. Non-forced rules run after
@@ -13,3 +16,45 @@
   from = "/fr/*"
   to = "/fr/404/index.html"
   status = 404
+
+# NOTE: /index.html also returns 200 with content identical to /, so the homepage
+# is reachable at two URLs. The self-referencing <link rel="canonical"> in
+# src/layouts/BaseLayout.astro is what resolves this for search engines.
+# A hard redirect is possible but needs force = true (a file already exists at
+# that path), and forced index.html redirects are a known source of 404s and
+# loops on Netlify — so verify on a deploy preview before enabling:
+#
+# [[redirects]]
+#   from = "/index.html"
+#   to = "/"
+#   status = 301
+#   force = true
+
+# Every /_astro/ asset is content-hashed (the filename changes whenever the
+# content does), which is precisely the precondition for immutable caching.
+# They were being served `max-age=0, must-revalidate`, so each repeat visit
+# spent ~10 conditional requests being told nothing had changed.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Only HSTS was present. Low exploit risk on a static brochure site with no
+# auth and no user data, but several scanners and procurement checklists grade
+# on these — and an agency that builds websites should not fail that check.
+# `unsafe-inline` on script-src is required by the inline menu module in
+# Navbar.astro; move that to an external file to drop it.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"

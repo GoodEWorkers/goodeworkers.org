@@ -1,4 +1,9 @@
+# https://goodeworkers.org/robots.txt
+# Served from public/ — Astro copies this file verbatim into dist/ at build time.
+
 User-agent: *
 Allow: /
 
+# @astrojs/sitemap emits sitemap-index.xml (not sitemap.xml).
+# This directive is how crawlers discover it.
 Sitemap: https://goodeworkers.org/sitemap-index.xml

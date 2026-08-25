@@ -2,11 +2,15 @@
 date: "2024-04-16"
 title: "Legal Notice"
 lang: "en"
+description: "Legal notice for the GoodEWorkers association: identification, RNA number, publication director, hosting provider, personal data and applicable law."
 ---
 
 Identification of the association
 
     Name of the association: GoodEWorkers
+    RNA number: W751270057
+    SIREN number: 923811285
+    Date of declaration at the prefecture: 21 June 2023
     Registered office: Legal Place, 60 Rue François 1er, 75008 Paris, France
     Email address: hello@goodeworkers.org
 
@@ -27,7 +31,9 @@ The content of this website, including texts, images, videos and sounds, is prot
 
 Personal data
 
-The GoodEWorkers association does not collect any personal data about visitors to its website.
+The GoodEWorkers website uses no cookies, no trackers and no audience-measurement tools. Simply browsing the site involves no collection of personal data.
+
+When you use the contact form, we collect your name and email address for the sole purpose of replying to your enquiry. The legal basis for this processing is the association's legitimate interest in handling the enquiries addressed to it. This data is transmitted to and hosted by our technical provider Netlify (United States) and is never shared, sold or used for marketing. It is kept for as long as needed to handle your enquiry, then deleted.
 
 Hyperlinks
 

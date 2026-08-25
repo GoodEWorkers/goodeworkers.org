@@ -10,6 +10,7 @@ const currentYear = new Date().getFullYear();
 const goodEWorkersEmail = 'hello@goodeworkers.org';
 const emailLocalPart = 'hello';
 const emailDomainPart = '@goodeworkers.org';
+const githubUrl = 'https://github.com/GoodEWorkers';
 ---
 
 <footer class="relative z-10 bg-white text-black font-inter">
@@ -20,9 +21,14 @@ const emailDomainPart = '@goodeworkers.org';
   </div>
   <div class="max-w-screen-2xl mx-auto px-4 md:px-8 mb-4 pt-12 pb-10">
     <div class="flex flex-col">
-      <p class="text-xs font-bold">{footer.contactTitle}</p>
+      <h2 class="text-2xl sm:text-3xl font-clash font-bold">
+        {footer.contactTitle}
+      </h2>
       <div class="mt-4">
-        <a href={`mailto:${goodEWorkersEmail}`} class="text-3xl font-bold">
+        <a
+          href={`mailto:${goodEWorkersEmail}?subject=${encodeURIComponent(footer.mailSubject)}`}
+          class="text-3xl font-bold hover:underline"
+        >
           {emailLocalPart}<br />{emailDomainPart}
         </a>
       </div>
@@ -35,6 +41,15 @@ const emailDomainPart = '@goodeworkers.org';
         <a href={routes.legal[lang]} hreflang={languages[lang].htmlLang}>
           {footer.legalLink}
         </a>
+      </li>
+      <li>
+        <!-- "Open source" is claimed repeatedly across the site; this is the
+             first link that lets anyone verify it. -->
+        {footer.openSource} <a
+          class="hover:underline"
+          href={githubUrl}
+          rel="noopener">GitHub</a
+        >
       </li>
       <li>
         {footer.poweredBy} <a

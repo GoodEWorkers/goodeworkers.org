@@ -3,12 +3,11 @@ import { Image } from 'astro:assets';
 import Alice from '../../assets/images/alice_thumb.png';
 import Richard from '../../assets/images/richard_thumb.png';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
-import { getLangFromPath, homeAnchor } from '../../i18n/routes';
+import { contactAnchor, getLangFromPath } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const { about } = await homeContent(lang);
-const contactHref = homeAnchor(lang, 'contact');
 ---
 
 <section id="who-are-we">
@@ -32,18 +31,24 @@ const contactHref = homeAnchor(lang, 'contact');
         </p>
         <p class="mt-4">{about.text2}</p>
         <p class="mt-4">{about.text3}</p>
-        <p class="mt-8 font-bold text-purple uppercase">{about.benefitsTitle}</p>
-        {
-          about.benefits.map((benefit) => (
-            <p class="mt-8 underline leading-loose">{benefit}</p>
-          ))
-        }
+        <h3 class="mt-8 font-bold text-purple uppercase">{about.benefitsTitle}</h3>
+        <ul class="mt-8 space-y-6 leading-loose list-disc pl-5">
+          {about.benefits.map((benefit) => <li>{benefit}</li>)}
+          <li>
+            {about.benefitOpenSource}{' '}
+            <a
+              href="https://github.com/GoodEWorkers"
+              class="underline hover:text-orange"
+              rel="noopener">{about.githubCta}</a
+            >.
+          </li>
+        </ul>
       </div>
       <div>
         <BigRoundedLinkBtn
           bigBtmText={about.cta}
-          href={contactHref}
-          class="lg:hidden bg-orange text-white mt-10 mx-auto"
+          href={contactAnchor(lang, 'joinus-mobile')}
+          class="lg:hidden bg-orange text-black mt-10 mx-auto"
         />
         <div
           class="relative mt-6 sm:mt-16 lg:mt-20 h-72 sm:h-80 lg:h-72 w-full flex justify-center items-center"
@@ -51,7 +56,7 @@ const contactHref = homeAnchor(lang, 'contact');
           <div class="w-40 sm:w-56 flex-shrink-0 translate-x-3 sm:translate-x-5 relative">
             <Image
               src={Richard}
-              alt={`Richard — ${about.roleFounder}`}
+              alt=""
               width={240}
               height={240}
               class="rounded-xl w-full aspect-square"
@@ -63,21 +68,9 @@ const contactHref = homeAnchor(lang, 'contact');
           <div
             class="w-40 sm:w-56 flex-shrink-0 -translate-x-3 sm:-translate-x-5 translate-y-32 sm:translate-y-44 relative"
           >
-            <div
-              class="absolute top-0 right-0 rounded-2xl bg-white w-28 sm:w-36 h-36 sm:h-48 -translate-y-[165px] sm:-translate-y-56 flex justify-center items-center flex-col"
-            >
-              <p
-                class="font-clash text-2xl sm:text-3xl font-bold text-center text-black"
-              >
-                {about.statNumber}
-              </p>
-              <p class="text-sm sm:text-base font-medium text-center text-black whitespace-pre-line">
-                {about.statLabel}
-              </p>
-            </div>
             <Image
               src={Alice}
-              alt={`Alice — ${about.roleDirector}`}
+              alt=""
               width={240}
               height={240}
               class="rounded-xl w-full aspect-square"
@@ -90,8 +83,8 @@ const contactHref = homeAnchor(lang, 'contact');
         <div class="hidden lg:block xl:relative xl:-left-56 xl:-top-40">
           <BigRoundedLinkBtn
             bigBtmText={about.cta}
-            href={contactHref}
-            class="bg-orange text-white mt-56 mx-auto"
+            href={contactAnchor(lang, 'joinus-desktop')}
+            class="bg-orange text-black mt-56 mx-auto"
           />
         </div>
       </div>
