@@ -29,14 +29,38 @@ node scripts/shoot.mjs   # full-page Playwright screenshots vs the live site
 
 ```
 src/
-  pages/          routes (index, 404, [slug] for legal pages)
-  layouts/        BaseLayout
-  components/     Astro components (Navbar, Footer, Landing/*, Common/*, Miscs/*, icons/*)
-  content/        content collections (legals/)
+  pages/          routes — English at the root, French mirrored under pages/fr/
+  layouts/        BaseLayout (SEO head), LegalLayout
+  i18n/           routes.ts (localized URLs) + ui.ts (all copy, per language)
+  components/     Astro components (Navbar, Footer, LanguageSwitcher, Landing/*, …)
+  content/        content collections (legals/en/, legals/fr/)
   assets/         fonts, icons, images (processed by Astro)
   styles/         global.css (Tailwind + @font-face)
-public/           favicon and other static files
-scripts/          smoke.sh, shoot.mjs (Playwright), crop.mjs, inspect.mjs
+public/           favicon, og-image.png, robots.txt
+scripts/          smoke.sh, og-image.mjs, shoot.mjs (Playwright), crop.mjs, inspect.mjs
+```
+
+## Languages
+
+English is served from `/`, French from `/fr`. Two files drive everything:
+
+- **`src/i18n/ui.ts`** — every user-facing string, per language. `en` is the
+  reference shape and `fr` is typed against it, so a missing key is a type error.
+- **`src/i18n/routes.ts`** — the canonical URL of each page in each language.
+  It is the single source for the language switcher, the `<link rel="alternate">`
+  hreflang tags and the sitemap's alternates, so those three cannot drift apart.
+
+Components read the current language from the URL (`getLangFromPath`), so a new
+localized page is just a file under `src/pages/fr/` plus an entry in `routes.ts`.
+
+French slugs are translated (`/fr/mentions-legales`, not `/fr/legal-notice`).
+There is deliberately **no** automatic redirect based on browser language —
+it hides one language from crawlers and traps users on the wrong version.
+
+Regenerate the social sharing card after a brand change:
+
+```bash
+npm run og-image  # writes public/og-image.png (1200x630)
 ```
 
 ## Deployment

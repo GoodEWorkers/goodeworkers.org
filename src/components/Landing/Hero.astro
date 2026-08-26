@@ -1,23 +1,14 @@
 ---
 import Icon from '../icons/Icon.astro';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import { contactAnchor, getLangFromPath } from '../../i18n/routes';
+import { homeContent } from '../../i18n/home';
 
-const heroCards = [
-  { icon: 'webnet', title: 'Website\ncreation' },
-  { icon: 'chat', title: 'Content\nmarketing' },
-  { icon: 'magnify', title: 'SEO\nOptimization' },
-  { icon: 'hexagone', title: 'Audits\nand advice' },
-  { icon: 'heart', title: 'And much\nmore...' },
-] as const;
+// Presentation stays here, copy comes from the content file — zipped by index.
+const cardIcons = ['webnet', 'chat', 'magnify', 'hexagone', 'heart'] as const;
 
-const heroText1 = 'I am a';
-const heroText2 = 'nonprofit';
-const heroText3 = 'I want to';
-const heroText4 = 'help';
-const heroText5 = ' can help you ';
-const heroText6 = 'go digital';
-const heroText7 =
-  'We build websites, write content, and run social media. Every project is remote and asynchronous, and we release what we can as open source. Start with a free consultation to work out what you actually need.';
+const lang = getLangFromPath(Astro.url.pathname);
+const { hero } = await homeContent(lang);
 ---
 
 <section id="hero">
@@ -25,16 +16,16 @@ const heroText7 =
     class="flex flex-col mx-4 sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 mt-12 sm:mt-20 sm:justify-center sm:space-x-6 md:space-x-12 relative z-10"
   >
     <BigRoundedLinkBtn
-      upperSmallText={heroText1}
-      bigBtmText={heroText2}
+      upperSmallText={hero.ctaNonprofitSmall}
+      bigBtmText={hero.ctaNonprofitBig}
       class="bg-yellow"
-      href="/?from=nonprofit#contact"
+      href={contactAnchor(lang, 'nonprofit')}
     />
     <BigRoundedLinkBtn
-      upperSmallText={heroText3}
-      bigBtmText={heroText4}
+      upperSmallText={hero.ctaHelpSmall}
+      bigBtmText={hero.ctaHelpBig}
       class="bg-purple"
-      href="/?from=volunteer#contact"
+      href={contactAnchor(lang, 'volunteer')}
     />
   </div>
   <div
@@ -47,27 +38,27 @@ const heroText7 =
             Good<span class="font-semibold">e</span>Workers
           </span>
           <span class="font-inter font-medium">
-            {heroText5}
-            <span class="font-bold">{heroText6}</span>
+            {hero.titleMiddle}
+            <span class="font-bold">{hero.titleBold}</span>
           </span>
         </h2>
-        <p class="mt-10 font-bold leading-tight">{heroText7}</p>
+        <p class="mt-10 font-bold leading-tight">{hero.text}</p>
       </div>
       <div
         class="mt-10 lg:mt-0 grid grid-cols-2 sm:flex sm:flex-wrap w-full max-w-80 sm:max-w-xl sm:justify-center mx-auto gap-1.5 md:gap-3 xl:gap-5 lg:flex-1"
       >
         {
-          heroCards.map((heroCard, index) => (
+          hero.cards.map((heroCard, index) => (
             <div
               class:list={[
                 'aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
-                index === heroCards.length - 1
+                index === hero.cards.length - 1
                   ? 'bg-orange text-black'
                   : 'bg-grey',
               ]}
             >
               <div class="[&>*]:w-5 [&>*]:h-5">
-                <Icon name={heroCard.icon} />
+                <Icon name={cardIcons[index]} />
               </div>
               <p class="mt-4 text-sm md:text-base font-bold whitespace-pre-line text-center">
                 {heroCard.title}

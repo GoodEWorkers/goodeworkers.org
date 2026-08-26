@@ -1,0 +1,32 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  /** Per-page meta description; falls back to the dictionary's legal meta. */
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout metaKey="legal" title={`${title} | GoodEWorkers`} description={description}>
+  <div class="font-inter text-white bg-black-light mx-8 my-10 rounded-3xl">
+    <main id="main-content" class="max-w-screen-2xl mx-auto min-h-screen px-4 py-8">
+      <div class="max-w-screen-md mx-auto">
+        <h1 class="mt-14 text-3xl sm:text-4xl lg:text-5xl xl:text-[54px]">
+          {title}
+        </h1>
+        <div class="mt-10 legal-content">
+          <slot />
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .legal-content p {
+    margin-top: 1rem;
+  }
+</style>

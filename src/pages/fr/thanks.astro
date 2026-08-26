@@ -1,0 +1,10 @@
+---
+// French twin of /thanks — the form on /fr/ posts here so the visitor stays
+// in their language. Same noindex reasoning as the English page.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Thanks from '../../components/Thanks.astro';
+---
+
+<BaseLayout metaKey="thanks" noindex>
+  <Thanks />
+</BaseLayout>

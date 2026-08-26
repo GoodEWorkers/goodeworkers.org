@@ -36,9 +36,24 @@ check_page() {
   rm -f "$body"
 }
 
-check_page "/"             "200" "GoodEworkers"
-check_page "/legal-notice" "200" "Legal Notice"
-check_page "/no-such-page" "404" "Page not found"
+# Trailing-slash form throughout: it is the canonical form the site serves
+# (see src/i18n/routes.ts) and the only one Astro answers in dev.
+check_page "/"                      "200" "Helping"
+check_page "/legal-notice/"         "200" "Legal Notice"
+check_page "/no-such-page/"         "404" "Page not found"
+check_page "/thanks/"               "200" "GitHub"
+
+# French mirror
+check_page "/fr/"                   "200" "les associations"
+check_page "/fr/mentions-legales/"  "200" "Mentions légales"
+check_page "/fr/no-such-page/"      "404" "Page introuvable"
+check_page "/fr/thanks/"            "200" "GitHub"
+
+# SEO wiring: every indexable page declares both language variants
+check_page "/"                      "200" 'hreflang="fr" href="https://goodeworkers.org/fr/"'
+check_page "/fr/"                   "200" 'hreflang="en" href="https://goodeworkers.org/"'
+check_page "/legal-notice/"         "200" 'hreflang="fr" href="https://goodeworkers.org/fr/mentions-legales/"'
+check_page "/fr/mentions-legales/"  "200" 'rel="canonical" href="https://goodeworkers.org/fr/mentions-legales/"'
 
 if [[ $fail -ne 0 ]]; then
   echo

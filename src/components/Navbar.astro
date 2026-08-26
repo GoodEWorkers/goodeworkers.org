@@ -1,31 +1,39 @@
 ---
 import logoSvg from '../assets/images/goodeworkers.svg?raw';
 import Hamburger from './Miscs/Hamburger.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { contactAnchor, getLangFromPath, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
 
-const navbarTextContact = 'Contact';
-const navbarTextMenu = 'Menu';
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang);
+
+const homeHref = routes.home[lang];
 ---
 
 <div class="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50" data-navbar>
   <nav
     class="relative flex justify-between items-center font-inter max-w-screen-2xl mx-auto px-4 md:px-8 pt-2 pb-2 md:pt-4 md:pb-4 text-grey"
   >
-    <a href="/" aria-label="Good eWorkers home">
+    <a href={homeHref} aria-label={strings.org.homeAriaLabel}>
       <span
         class="inline-block w-[110px] h-[44px] md:w-[160px] md:h-[63px] [&>svg]:w-full [&>svg]:h-full"
         set:html={logoSvg}
       />
     </a>
-    <ul class="hidden md:flex md:space-x-12 font-bold">
-      <li>
-        <a
-          href="/?from=nav#contact"
-          class="border-orange border-2 -ml-2 px-3 py-1 rounded-full hover:bg-orange hover:text-black transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-        >
-          {navbarTextContact}
-        </a>
-      </li>
-    </ul>
+    <div class="hidden md:flex md:items-center md:space-x-8">
+      <ul class="flex space-x-12 font-bold">
+        <li>
+          <a
+            href={contactAnchor(lang, 'nav')}
+            class="border-orange border-2 -ml-2 px-3 py-1 rounded-full hover:bg-orange hover:text-black transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+          >
+            {strings.nav.contact}
+          </a>
+        </li>
+      </ul>
+      <LanguageSwitcher />
+    </div>
     <button
       type="button"
       class="md:hidden relative z-50"
@@ -33,7 +41,7 @@ const navbarTextMenu = 'Menu';
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
-      <span class="sr-only">{navbarTextMenu}</span>
+      <span class="sr-only">{strings.nav.menu}</span>
       <Hamburger />
     </button>
     <div
@@ -44,12 +52,15 @@ const navbarTextMenu = 'Menu';
       <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
         <li class="pl-16 pr-4 py-3">
           <a
-            href="/?from=nav-mobile#contact"
+            href={contactAnchor(lang, 'nav-mobile')}
             class="hover:text-orange block w-full h-full"
             data-menu-link
           >
-            {navbarTextContact}
+            {strings.nav.contact}
           </a>
+        </li>
+        <li class="pl-16 pr-4 py-3">
+          <LanguageSwitcher variant="menu" />
         </li>
       </ul>
     </div>

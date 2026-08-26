@@ -1,0 +1,20 @@
+---
+// French homepage. The components read the language from the URL, so this is
+// the same tree as the English one — only the /fr prefix differs.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LandingHeader from '../../components/Landing/LandingHeader.astro';
+import Hero from '../../components/Landing/Hero.astro';
+import Why from '../../components/Landing/Why.astro';
+import About from '../../components/Landing/About.astro';
+---
+
+<BaseLayout metaKey="home">
+  <div class="font-inter px-4 md:px-8">
+    <LandingHeader />
+    <main id="main-content">
+      <Hero />
+      <Why />
+      <About />
+    </main>
+  </div>
+</BaseLayout>

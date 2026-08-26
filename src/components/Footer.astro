@@ -1,19 +1,16 @@
 ---
 import ContactForm from './ContactForm.astro';
+import { getLangFromPath, languages, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const { footer } = t(lang);
 
 const currentYear = new Date().getFullYear();
 const goodEWorkersEmail = 'hello@goodeworkers.org';
-const goodEWorkersText1 = 'hello';
-const goodEWorkersText2 = '@goodeworkers.org';
-const goodEWorkersText3 = `GoodEWorkers © ${currentYear}`;
-const goodEWorkersText4 = 'Legal Notice | Mentions légales';
+const emailLocalPart = 'hello';
+const emailDomainPart = '@goodeworkers.org';
 const githubUrl = 'https://github.com/GoodEWorkers';
-
-// "Contact-us !" was a calque of "Contactez-nous" carrying French punctuation
-// spacing into English, set in 12px type as a <p> — so the conversion section
-// had the smallest text on the page and no heading at all, while every other
-// section has an H2.
-const contactHeading = 'Tell us about your project';
 ---
 
 <footer class="relative z-10 bg-white text-black font-inter">
@@ -25,14 +22,14 @@ const contactHeading = 'Tell us about your project';
   <div class="max-w-screen-2xl mx-auto px-4 md:px-8 mb-4 pt-12 pb-10">
     <div class="flex flex-col">
       <h2 class="text-2xl sm:text-3xl font-clash font-bold">
-        {contactHeading}
+        {footer.contactTitle}
       </h2>
       <div class="mt-4">
         <a
-          href={`mailto:${goodEWorkersEmail}?subject=Project%20enquiry`}
+          href={`mailto:${goodEWorkersEmail}?subject=${encodeURIComponent(footer.mailSubject)}`}
           class="text-3xl font-bold hover:underline"
         >
-          {goodEWorkersText1}<br />{goodEWorkersText2}
+          {emailLocalPart}<br />{emailDomainPart}
         </a>
       </div>
       <ContactForm />
@@ -41,25 +38,26 @@ const contactHeading = 'Tell us about your project';
       class="mt-24 md:mt-40 xl:mt-60 flex flex-col items-center text-sm space-y-2"
     >
       <li class="hover:underline">
-        <!-- Trailing slash: /legal-notice 301s to /legal-notice/, so linking the
-             un-slashed form spent a redirect on every internal click. -->
-        <a href="/legal-notice/">{goodEWorkersText4}</a>
+        <a href={routes.legal[lang]} hreflang={languages[lang].htmlLang}>
+          {footer.legalLink}
+        </a>
       </li>
       <li>
         <!-- "Open source" is claimed repeatedly across the site; this is the
              first link that lets anyone verify it. -->
-        Our work is open source on <a
+        {footer.openSource} <a
           class="hover:underline"
           href={githubUrl}
           rel="noopener">GitHub</a
         >
       </li>
       <li>
-        This site is powered by <a
+        {footer.poweredBy} <a
           class="hover:underline"
-          href="https://netlify.com?utm_source=goodeworkers">Netlify</a>
+          href="https://netlify.com?utm_source=goodeworkers"
+          rel="noopener">Netlify</a>
       </li>
-      <li>{goodEWorkersText3}</li>
+      <li>{footer.copyright(currentYear)}</li>
     </ul>
   </div>
 </footer>

@@ -2,15 +2,33 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import {
+  SITE,
+  absoluteUrl,
+  getAlternates,
+  getLangFromPath,
+  defaultLang,
+  langCodes,
+  languages,
+} from '../i18n/routes';
+import { t } from '../i18n/ui';
 
 interface Props {
+  /** Which `meta` entry of the dictionary to use for title/description. */
+  metaKey?: 'home' | 'legal' | 'notFound' | 'thanks';
+  /** Overrides the dictionary title (used by content-driven pages). */
   title?: string;
   description?: string;
-  /** Set on pages that must stay out of the index (404, thank-you pages). */
+  /** Set on pages that must stay out of the index (404, thank-you pages) —
+   *  no canonical, no hreflang. */
   noindex?: boolean;
-  /** BCP-47 language of the page content. The legal notice is French. */
-  lang?: string;
 }
+
+const { metaKey = 'home', title, description, noindex = false } = Astro.props;
+
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang);
+const meta = strings.meta[metaKey];
 
 // One spelling, everywhere. The site previously rendered the name five ways
 // ("GoodEworkers", "GoodEWorkers", "GoodeWorkers", "Good eWorkers",
@@ -18,26 +36,13 @@ interface Props {
 // lowercase-e wordmark in the H1 is a deliberate logo treatment; prose and
 // metadata now agree on this form.
 const SITE_NAME = 'GoodEWorkers';
-const DEFAULT_TITLE = 'GoodEWorkers: Promote remote work in nonprofits';
-// Kept under 160 chars so Google renders the whole snippet instead of truncating it.
-const DEFAULT_DESCRIPTION =
-  "A community of remote workers building for nonprofits and releasing it as open source. We run fully remote to prove it's a competitive advantage.";
 
-const {
-  title = DEFAULT_TITLE,
-  description = DEFAULT_DESCRIPTION,
-  noindex = false,
-  lang = 'en',
-} = Astro.props;
+const pageTitle = title ?? meta.title;
+const pageDescription = description ?? meta.description;
 
-// Astro.site comes from `site` in astro.config.mjs. Building the canonical from
-// Astro.url.pathname keeps it self-referencing on every page and matches the
-// trailing-slash form @astrojs/sitemap emits.
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL('/og-image.png', Astro.site);
-
-// og:locale expects the underscored form, and must follow the page language.
-const ogLocale = lang === 'fr' ? 'fr_FR' : 'en_US';
+const canonical = absoluteUrl(Astro.url.pathname);
+const alternates = getAlternates(Astro.url.pathname);
+const ogImage = `${SITE}/og-image.png`;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -47,29 +52,28 @@ const structuredData = {
       // here — it is the input to nonprofit-specific treatment and to entity
       // resolution in AI answers.
       '@type': 'NGO',
-      '@id': `${Astro.site}#organization`,
+      '@id': `${SITE}/#organization`,
       name: SITE_NAME,
       legalName: SITE_NAME,
-      url: Astro.site?.href,
+      url: `${SITE}/`,
       // NOTE: this is still the favicon. At 198x198 it clears Google's 112x112
       // minimum so it validates, but it is the square icon mark rather than the
       // horizontal wordmark. Replace with a dedicated /logo-512.png when one
       // exists, and update width/height below.
       logo: {
         '@type': 'ImageObject',
-        '@id': `${Astro.site}#logo`,
-        url: new URL('/favicon.png', Astro.site).href,
-        contentUrl: new URL('/favicon.png', Astro.site).href,
+        '@id': `${SITE}/#logo`,
+        url: `${SITE}/favicon.png`,
+        contentUrl: `${SITE}/favicon.png`,
         width: 198,
         height: 198,
         caption: SITE_NAME,
       },
-      image: { '@id': `${Astro.site}#logo` },
-      description: DEFAULT_DESCRIPTION,
+      image: { '@id': `${SITE}/#logo` },
+      description: strings.org.description,
       email: 'hello@goodeworkers.org',
-      // Machine-readable statement that we serve French speakers. Nothing on
-      // the site said this before.
-      knowsLanguage: ['fr', 'en'],
+      // Machine-readable statement that we serve French speakers.
+      knowsLanguage: langCodes.map((code) => languages[code].htmlLang),
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Legal Place, 60 Rue François 1er',
@@ -100,7 +104,7 @@ const structuredData = {
               '@type': 'Service',
               name: 'Website creation',
               serviceType: 'Website design and development',
-              provider: { '@id': `${Astro.site}#organization` },
+              provider: { '@id': `${SITE}/#organization` },
               audience: {
                 '@type': 'Audience',
                 audienceType: 'Nonprofit organizations and associations',
@@ -113,7 +117,7 @@ const structuredData = {
               '@type': 'Service',
               name: 'Content marketing',
               serviceType: 'Content marketing and social media management',
-              provider: { '@id': `${Astro.site}#organization` },
+              provider: { '@id': `${SITE}/#organization` },
             },
           },
           {
@@ -122,7 +126,7 @@ const structuredData = {
               '@type': 'Service',
               name: 'SEO optimization',
               serviceType: 'Search engine optimization',
-              provider: { '@id': `${Astro.site}#organization` },
+              provider: { '@id': `${SITE}/#organization` },
             },
           },
           {
@@ -131,7 +135,7 @@ const structuredData = {
               '@type': 'Service',
               name: 'Audits and advice',
               serviceType: 'Digital audit and advisory',
-              provider: { '@id': `${Astro.site}#organization` },
+              provider: { '@id': `${SITE}/#organization` },
             },
           },
         ],
@@ -139,26 +143,26 @@ const structuredData = {
     },
     {
       '@type': 'WebSite',
-      '@id': `${Astro.site}#website`,
+      '@id': `${SITE}/#website`,
       name: SITE_NAME,
-      url: Astro.site?.href,
-      inLanguage: ['en', 'fr'],
-      publisher: { '@id': `${Astro.site}#organization` },
+      url: `${SITE}/`,
+      inLanguage: langCodes.map((code) => languages[code].htmlLang),
+      publisher: { '@id': `${SITE}/#organization` },
     },
   ],
 };
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={languages[lang].htmlLang}>
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <!-- `maximum-scale` / `user-scalable=no` removed: they blocked pinch-zoom on
          Android Chrome and in-app webviews (WCAG 1.4.4). The layout is already
          fully responsive, so there is no design cost to allowing zoom. -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <meta name="description" content={pageDescription} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <link rel="icon" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
@@ -169,17 +173,34 @@ const structuredData = {
 
     <!-- Self-referencing canonical: /index.html also resolves on Netlify, so this
          tells Google which URL is authoritative. Skipped on noindex pages —
-         /404.html has no canonical URL to point at. -->
-    {!noindex && <link rel="canonical" href={canonicalURL} />}
+         a 404 has no canonical URL to point at. -->
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {
+      !noindex && (
+        <>
+          {langCodes.map((code) => (
+            <link rel="alternate" hreflang={languages[code].htmlLang} href={alternates[code]} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={alternates[defaultLang]} />
+        </>
+      )
+    }
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:locale" content={ogLocale} />
-    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={languages[lang].ogLocale} />
+    {
+      langCodes
+        .filter((code) => code !== lang)
+        .map((code) => (
+          <meta property="og:locale:alternate" content={languages[code].ogLocale} />
+        ))
+    }
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
@@ -189,9 +210,9 @@ const structuredData = {
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
 
     <script
       type="application/ld+json"
@@ -205,7 +226,7 @@ const structuredData = {
              focus:rounded focus:bg-yellow focus:px-4 focus:py-2 focus:text-black
              focus:font-bold"
     >
-      Skip to main content
+      {strings.nav.skipToContent}
     </a>
     <Navbar />
     <slot />

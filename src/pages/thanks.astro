@@ -1,52 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Thanks from '../components/Thanks.astro';
 
 // The contact form's `action` target. Kept out of the index — it is a
 // post-submission state, not a page anyone should reach from search. It also
 // gives the form a real success URL, which is the only place a conversion
 // event can ever be recorded.
-const thanksTitle = 'Thanks — we have your message';
-const thanksLead = "Your message is in. Here's what happens next.";
-const steps = [
-  'Alice or Richard reads it personally — not a shared inbox rota.',
-  'You get a reply within 3 working days, whichever side you wrote from.',
-  'If it looks like a fit, we scope the work in writing before anyone starts building.',
-];
 ---
 
-<BaseLayout title="Thanks | GoodEWorkers" noindex>
-  <div class="font-inter text-white bg-black-light mx-4 md:mx-8 my-10 rounded-3xl">
-    <main id="main-content" class="max-w-screen-2xl mx-auto px-4 py-16 md:py-24">
-      <div class="max-w-screen-md mx-auto">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-clash font-bold">
-          {thanksTitle}
-        </h1>
-        <p class="mt-8 text-base md:text-lg text-ashgray">{thanksLead}</p>
-
-        <ol class="mt-10 space-y-4 list-decimal pl-6 text-ashgray">
-          {steps.map((step) => <li class="leading-relaxed">{step}</li>)}
-        </ol>
-
-        <p class="mt-12 text-base text-ashgray">
-          While you wait, the code we write is public — including this site.
-          <a
-            href="https://github.com/GoodEWorkers"
-            class="underline hover:text-orange"
-            rel="noopener">Browse our repositories on GitHub</a
-          >.
-        </p>
-
-        <a
-          href="/"
-          class="inline-block mt-12 bg-orange text-black px-7 py-4 rounded-full
-                 font-clash font-bold text-xl hover:shadow-lg hover:scale-105
-                 transition-transform ease-in
-                 focus-visible:outline focus-visible:outline-2
-                 focus-visible:outline-offset-2 focus-visible:outline-white"
-        >
-          Back to the homepage
-        </a>
-      </div>
-    </main>
-  </div>
+<BaseLayout metaKey="thanks" noindex>
+  <Thanks />
 </BaseLayout>

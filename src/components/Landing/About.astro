@@ -3,28 +3,11 @@ import { Image } from 'astro:assets';
 import Alice from '../../assets/images/alice_thumb.png';
 import Richard from '../../assets/images/richard_thumb.png';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import { contactAnchor, getLangFromPath } from '../../i18n/routes';
+import { homeContent } from '../../i18n/home';
 
-const aboutText1_1 = 'A community of ';
-const aboutText1_2 = 'expert and complementary';
-const aboutText1_3 = ' remote workers';
-const aboutText2 =
-  "It's hard to be both an expert and versatile! That's why we bring together people with varied profiles. Freelancers or employees, technical, graphic or semantic experts, all have decided to make a gesture for";
-const aboutText3 =
-  ' a fairer and more humane world by joining the GoodEWorkers community.';
-const aboutText4 =
-  'We form a new team for each project based on the established specifications and the availability of our volunteers.';
-const aboutText5 =
-  'Are you a freelancer, employee, student, unemployed or retired, and you want to do your part for the planet?';
-const aboutText6 = 'The benefits of joining us:';
-const aboutText7 =
-  'Free training to introduce you to remote work and our methods';
-const aboutText8 = 'An expert community to help you progress in your field';
-const aboutText9 = 'Projects that make sense in line with your values';
-const aboutText10 =
-  'Open source work you can point to, and a plus for your CV, Portfolio, Book';
-const aboutText11 = 'Join Us';
-const aboutText14 = 'Co-founder';
-const aboutText15 = 'Executive Director';
+const lang = getLangFromPath(Astro.url.pathname);
+const { about } = await homeContent(lang);
 ---
 
 <section id="who-are-we">
@@ -38,35 +21,33 @@ const aboutText15 = 'Executive Director';
         <h2
           class="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[54px] font-medium leading-[1.2] md:leading-tight lg:leading-tight"
         >
-          {aboutText1_1}
-          <span class="font-bold">{aboutText1_2}</span>
-          {aboutText1_3}
+          {about.titlePart1}
+          <span class="font-bold">{about.titleBold}</span>
+          {about.titlePart2}
         </h2>
         <p class="mt-7 sm:mt-10 md:mt-14 lg:mt-10">
-          {aboutText2}
-          <span class="font-bold">{aboutText3}</span>
+          {about.intro}
+          <span class="font-bold">{about.introBold}</span>
         </p>
-        <p class="mt-4">{aboutText4}</p>
-        <p class="mt-4">{aboutText5}</p>
-        <h3 class="mt-8 font-bold text-purple uppercase">{aboutText6}</h3>
+        <p class="mt-4">{about.text2}</p>
+        <p class="mt-4">{about.text3}</p>
+        <h3 class="mt-8 font-bold text-purple uppercase">{about.benefitsTitle}</h3>
         <ul class="mt-8 space-y-6 leading-loose list-disc pl-5">
-          <li>{aboutText7}</li>
-          <li>{aboutText8}</li>
-          <li>{aboutText9}</li>
+          {about.benefits.map((benefit) => <li>{benefit}</li>)}
           <li>
-            {aboutText10}{' '}
+            {about.benefitOpenSource}{' '}
             <a
               href="https://github.com/GoodEWorkers"
               class="underline hover:text-orange"
-              rel="noopener">See the code on GitHub</a
+              rel="noopener">{about.githubCta}</a
             >.
           </li>
         </ul>
       </div>
       <div>
         <BigRoundedLinkBtn
-          bigBtmText={aboutText11}
-          href="/?from=joinus-mobile#contact"
+          bigBtmText={about.cta}
+          href={contactAnchor(lang, 'joinus-mobile')}
           class="lg:hidden bg-orange text-black mt-10 mx-auto"
         />
         <div
@@ -81,7 +62,7 @@ const aboutText15 = 'Executive Director';
               class="rounded-xl w-full aspect-square"
             />
             <p class="text-xs sm:text-sm absolute -bottom-6 left-0">
-              Richard, <span class="font-semibold">{aboutText14}</span>
+              Richard, <span class="font-semibold">{about.roleFounder}</span>
             </p>
           </div>
           <div
@@ -95,14 +76,14 @@ const aboutText15 = 'Executive Director';
               class="rounded-xl w-full aspect-square"
             />
             <p class="text-xs sm:text-sm -bottom-6 absolute left-0">
-              Alice, <span class="font-semibold">{aboutText15}</span>
+              Alice, <span class="font-semibold">{about.roleDirector}</span>
             </p>
           </div>
         </div>
         <div class="hidden lg:block xl:relative xl:-left-56 xl:-top-40">
           <BigRoundedLinkBtn
-            bigBtmText={aboutText11}
-            href="/?from=joinus-desktop#contact"
+            bigBtmText={about.cta}
+            href={contactAnchor(lang, 'joinus-desktop')}
             class="bg-orange text-black mt-56 mx-auto"
           />
         </div>

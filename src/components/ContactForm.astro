@@ -1,8 +1,13 @@
 ---
-const formText1 = 'Your name';
-const formText2 = 'Your email address';
-const formText3 = 'Your message';
-const formText4 = 'Send';
+import { getLangFromPath, routes } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const { form } = t(lang);
+
+// Post to the same-language thank-you page so the visitor stays in French
+// when they wrote from /fr/.
+const thanksAction = `${routes.home[lang]}thanks/`;
 
 // Shared field classes. These fields previously zeroed the focus ring:
 // @tailwindcss/forms suppresses the *native* focus outline and substitutes its
@@ -28,12 +33,13 @@ const labelClass =
   class="flex flex-col md:flex-row md:space-x-20"
   name="contact"
   method="POST"
-  action="/thanks/"
+  action={thanksAction}
   data-netlify="true"
   data-netlify-honeypot="bot-field"
 >
   <div class="flex flex-col md:flex-1">
     <input type="hidden" name="form-name" value="contact" />
+    <input type="hidden" name="locale" value={lang} />
 
     <!-- Records which CTA the visitor arrived from. Populated by the script at
          the bottom of this file from the ?from= query parameter; simply stays
@@ -58,7 +64,7 @@ const labelClass =
         autocomplete="name"
         required
       />
-      <label for="name" class={labelClass}>{formText1}</label>
+      <label for="name" class={labelClass}>{form.name}</label>
     </div>
 
     <div class="relative mt-16">
@@ -71,7 +77,7 @@ const labelClass =
         autocomplete="email"
         required
       />
-      <label for="email" class={labelClass}>{formText2}</label>
+      <label for="email" class={labelClass}>{form.email}</label>
     </div>
 
     <div class="relative mt-16">
@@ -81,16 +87,16 @@ const labelClass =
         id="message"
         placeholder=" "
         required></textarea>
-      <label for="message" class={`${labelClass} top-5`}>{formText3}</label>
+      <label for="message" class={`${labelClass} top-5`}>{form.message}</label>
     </div>
 
     <!-- GDPR Art. 13 notice at the point of collection. Replying to an inbound
          enquiry rests on legitimate interest, so a consent checkbox is not
          strictly required — but informing the visitor is. -->
     <p class="mt-8 text-xs text-gray-600 max-w-prose">
-      We use your name and email only to reply to you. See our <a
-        href="/legal-notice/"
-        class="underline">legal notice</a
+      {form.gdprNotice} <a
+        href={routes.legal[lang]}
+        class="underline">{form.gdprLinkLabel}</a
       >.
     </p>
   </div>
@@ -122,19 +128,22 @@ const labelClass =
              focus-visible:outline-offset-2 focus-visible:outline-black"
     >
       <span class="text-3xl sm:text-4xl font-clash font-bold text-center">
-        {formText4}
+        {form.send}
       </span>
     </button>
 
-    <p class="mt-4 text-sm text-gray-600 max-w-[336px] text-center md:text-left">
-      Alice or Richard replies personally, usually within 3 working days.
-    </p>
+    {form.replyNote && (
+      <p class="mt-4 text-sm text-gray-600 max-w-[336px] text-center md:text-left">
+        {form.replyNote}
+      </p>
+    )}
   </div>
 </form>
 
 <script>
   // Carry the originating CTA through to the submission. Every CTA on the site
-  // points at /#contact, so without this there is no way to tell them apart.
+  // points at the localized #contact anchor, so without this there is no way
+  // to tell them apart.
   function setupSourceField() {
     const field = document.querySelector<HTMLInputElement>('[data-source-field]');
     if (!field) return;
