@@ -74,7 +74,6 @@ const en = {
     title: 'Thanks — we have your message',
     lead: "Your message is in. Here's what happens next.",
     steps: [
-      'Alice or Richard reads it personally — not a shared inbox rota.',
       'You get a reply within 3 working days, whichever side you wrote from.',
       'If it looks like a fit, we scope the work in writing before anyone starts building.',
     ],
@@ -91,7 +90,13 @@ const en = {
   },
 };
 
-type Dictionary = typeof en;
+/**
+ * `fr` is typed against `en`, so every key must be present in both — except
+ * `replyNote`, which is deliberately English-only: the French form omits it.
+ */
+type Dictionary = Omit<typeof en, 'form'> & {
+  form: Omit<(typeof en)['form'], 'replyNote'> & { replyNote?: string };
+};
 
 const fr: Dictionary = {
   meta: {
@@ -150,14 +155,12 @@ const fr: Dictionary = {
     gdprNotice:
       'Nous utilisons votre nom et votre e-mail uniquement pour vous répondre. Consultez nos',
     gdprLinkLabel: 'mentions légales',
-    replyNote: 'Alice ou Richard vous répond personnellement, en général sous 3 jours ouvrés.',
   },
 
   thanks: {
     title: 'Merci — nous avons bien reçu votre message',
     lead: 'Votre message est arrivé. Voici la suite.',
     steps: [
-      "Alice ou Richard le lit personnellement — pas de boîte mail partagée.",
       'Vous recevez une réponse sous 3 jours ouvrés, quel que soit le formulaire utilisé.',
       "Si le projet correspond, nous cadrons le travail par écrit avant de commencer quoi que ce soit.",
     ],
