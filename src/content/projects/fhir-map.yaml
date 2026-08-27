@@ -1,0 +1,22 @@
+# fhir-map — FHIR terminology & transformation server. Slug: /projects/fhir-map/
+title: FHIR Map
+# Open-source initiative, no client logo. Falls back to the wordmark.
+markColor: purple
+status: ongoing
+startedOn: "2026-02"
+url: https://github.com/GoodEWorkers/fhir-map
+linkText:
+  en: Go to the code
+  fr: Voir le code
+description:
+  en: |-
+    An open-source FHIR terminology and transformation server for healthcare data pipelines. It translates codes between medical terminology systems (ICD-10, SNOMED CT, LOINC, RxNorm) and converts clinical messages between formats, including HL7v2 and HPRIM, the French healthcare messaging standard, into FHIR. One server serves both R4 and R5 clients.
+  fr: |-
+    Un serveur open source de terminologie et de transformation FHIR pour les pipelines de données de santé. Il traduit les codes entre les systèmes de terminologie médicale (CIM-10, SNOMED CT, LOINC, RxNorm) et convertit les messages cliniques entre formats, dont HL7v2 et HPRIM, le standard français de messagerie de santé, vers FHIR. Un seul serveur sert les clients R4 et R5.
+why:
+  en: |-
+    Healthcare systems don't speak the same language. Lab systems use LOINC, billing uses ICD-10, pharmacies use RxNorm, and every interface or migration needs mapping. Teams build that mapping from scratch, badly, and maintain it forever. fhir-map does it as open source, fast enough to sit inline in clinical workflows, so healthcare orgs, including nonprofits, don't have to reinvent it.
+  fr: |-
+    Les systèmes de santé ne parlent pas la même langue. Les laboratoires utilisent LOINC, la facturation CIM-10, les pharmacies RxNorm, et chaque interface ou migration nécessite une correspondance. Les équipes construisent cette correspondance à partir de zéro, mal, et la maintiennent indéfiniment. fhir-map le fait en open source, assez rapide pour s'insérer dans les flux cliniques, pour que les organisations de santé, y compris les associations, n'aient pas à la réinventer.
+contributors:
+  - r-ichard

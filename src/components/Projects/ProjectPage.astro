@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectProfile from './ProjectProfile.astro';
+import { absoluteUrl, getLangFromPath, projectPath } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import { contributorName } from '../Contributors/contributors';
+import { getCollection } from 'astro:content';
+import type { Project } from './projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang).projects;
+
+// Resolve contributor slugs to names for structured data.
+const allContributors = await getCollection('contributors');
+const bySlug = new Map(allContributors.map((c) => [c.id, c]));
+const teamNames = project.data.contributors
+  .map((slug) => bySlug.get(slug))
+  .filter(Boolean)
+  .map((c) => contributorName(c!));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: project.data.title,
+  description: project.data.description[lang],
+  dateCreated: project.data.startedOn,
+  ...(project.data.url && { url: project.data.url }),
+  ...(teamNames.length > 0 && {
+    author: teamNames.map((name) => ({ '@type': 'Person', name })),
+  }),
+};
+---
+
+<BaseLayout
+  metaKey="projects"
+  title={`${project.data.title} | GoodEWorkers`}
+  description={strings.projectMetaDescription(project.data.title)}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <ProjectProfile project={project} />
+</BaseLayout>

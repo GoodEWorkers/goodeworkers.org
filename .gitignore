@@ -26,3 +26,8 @@ screenshots/
 
 # impeccable review captures
 .impeccable/review/
+
+# editor / agent tooling
+.claude/
+.cursor/
+.idea/

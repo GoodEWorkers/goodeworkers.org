@@ -43,7 +43,8 @@ Fully remote since day one, with no office ever. A community, not an agency: a t
 
 - Team photos of Richard (co-founder) and Alice (executive director) in `src/assets/images/`.
 - Public code on GitHub (github.com/GoodEWorkers).
-- No testimonials, client logos, case studies or impact metrics exist in the repository. Contributor and project pages are in progress on the `feat/contributors-and-projects` branch. Do not invent proof.
+- Contributor profiles (`/contributors/`, one YAML file and portrait per person in `src/content/contributors/`) and project pages (`/projects/`, `src/content/projects/`): Yoon CRM, a nonprofit client shown with its logo, plus the FHIR Map and website open-source initiatives.
+- No testimonials, case studies or impact metrics exist in the repository. Do not invent proof.
 
 ## Product Principles
 

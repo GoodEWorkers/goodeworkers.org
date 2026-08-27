@@ -1,0 +1,29 @@
+# Richard Raduly — Co-founder. Slug: /contributors/r-ichard/
+firstName: Richard
+lastName: Raduly
+role:
+  en: Co-founder
+  fr: Cofondation
+currentSituation:
+  en: Freelancing Fractional CTO
+  fr: Fractional CTO en freelance
+about:
+  en: |-
+    Richard co-founded GoodEWorkers and takes care of the technical side. He works as a fractional CTO for clients during the day and brings that same engineering discipline to the association.
+  fr: |-
+    Richard a cofondé GoodEWorkers et s'occupe du technique. Le jour, il travaille comme fractional CTO pour des clients, et il apporte cette même rigueur d'ingénierie à l'association.
+avatar: ./r-ichard.png
+lastContribution: "2026-08"
+contributions:
+  en: |-
+    Richard designed and built this website, maintains it, and publishes what the association makes on GitHub.
+
+    He is one of the two people behind the contact form. Write to GoodEWorkers and he may be the one who replies.
+  fr: |-
+    Richard a conçu et développé ce site, le maintient, et publie ce que l'association produit sur GitHub.
+
+    Il est l'une des deux personnes derrière le formulaire de contact. Écrivez à GoodEWorkers et c'est peut-être lui qui vous répondra.
+socials:
+  github: https://github.com/r-ichard
+  linkedin: https://www.linkedin.com/in/r-ichard/
+  website: https://r-ichard.com
