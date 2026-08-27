@@ -17,7 +17,7 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
 <section id="why" class="pb-12 md:pb-16 xl:pb-24">
   <div class="mt-10 sm:mt-16 md:mt-32 text-white text-center">
     <h2
-      class="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] text-grey font-medium leading-[1.2] md:leading-tight lg:leading-tight"
+      class="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] text-grey font-medium leading-[1.2] md:leading-tight lg:leading-tight xl:leading-[63px]"
     >
       {why.titlePart1}
       <br class="min-[1200px]:hidden" />
@@ -29,7 +29,7 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
       </span>
     </h2>
     <p
-      class="mt-8 sm:mt-12 md:mt-12 lg:mt-12 px-8 sm:px-12 max-w-md sm:max-w-screen-md mx-auto text-sm md:text-base text-ashgray leading-tight md:leading-tight"
+      class="mt-8 sm:mt-12 md:mt-12 lg:mt-12 px-8 sm:px-12 max-w-md sm:max-w-screen-md mx-auto text-sm md:text-base text-ashgray leading-[1.6875]"
     >
       <span class="font-bold">{why.textBold}</span>
       <span class="font-medium">{why.textMiddle}</span>
@@ -44,7 +44,7 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
       why.cards.map((whyCard, index) => (
         <div
           class:list={[
-            'aspect-square min-[580px]:basis-60 md:basis-80 flex-grow max-w-80 min-[580px]:max-w-[48%] md:max-w-[360px] flex flex-col items-center justify-center text-center px-8 min-[580px]:px-4 sm:px-8 rounded-lg',
+            'aspect-square min-[580px]:basis-60 md:basis-80 flex-grow max-w-80 min-[580px]:max-w-[48%] md:max-w-[360px] flex flex-col items-center justify-center text-center px-8 min-[580px]:px-4 sm:px-8 rounded-2xl',
             cardStyles[index].classNames,
           ]}
         >

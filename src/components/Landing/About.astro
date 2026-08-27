@@ -19,20 +19,20 @@ const { about } = await homeContent(lang);
     >
       <div class="flex flex-col max-w-screen-md lg:py-16">
         <h2
-          class="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[54px] font-medium leading-[1.2] md:leading-tight lg:leading-tight"
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[54px] font-medium leading-[1.2] md:leading-tight lg:leading-tight 2xl:leading-[63px]"
         >
           {about.titlePart1}
           <span class="font-bold">{about.titleBold}</span>
           {about.titlePart2}
         </h2>
-        <p class="mt-7 sm:mt-10 md:mt-14 lg:mt-10">
+        <p class="mt-7 sm:mt-10 md:mt-14 lg:mt-10 leading-[1.6875]">
           {about.intro}
           <span class="font-bold">{about.introBold}</span>
         </p>
-        <p class="mt-4">{about.text2}</p>
-        <p class="mt-4">{about.text3}</p>
+        <p class="mt-4 leading-[1.6875]">{about.text2}</p>
+        <p class="mt-4 leading-[1.6875]">{about.text3}</p>
         <h3 class="mt-8 font-bold text-purple uppercase">{about.benefitsTitle}</h3>
-        <ul class="mt-8 space-y-6 leading-loose list-disc pl-5">
+        <ul class="mt-8 space-y-6 leading-[1.6875] list-disc pl-5">
           {about.benefits.map((benefit) => <li>{benefit}</li>)}
           <li>
             {about.benefitOpenSource}{' '}
@@ -59,7 +59,7 @@ const { about } = await homeContent(lang);
               alt=""
               width={240}
               height={240}
-              class="rounded-xl w-full aspect-square"
+              class="rounded-2xl w-full aspect-square"
             />
             <p class="text-xs sm:text-sm absolute -bottom-6 left-0">
               Richard, <span class="font-semibold">{about.roleFounder}</span>
@@ -73,7 +73,7 @@ const { about } = await homeContent(lang);
               alt=""
               width={240}
               height={240}
-              class="rounded-xl w-full aspect-square"
+              class="rounded-2xl w-full aspect-square"
             />
             <p class="text-xs sm:text-sm -bottom-6 absolute left-0">
               Alice, <span class="font-semibold">{about.roleDirector}</span>
