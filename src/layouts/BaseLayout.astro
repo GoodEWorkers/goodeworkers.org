@@ -22,9 +22,19 @@ interface Props {
   /** Set on pages that must stay out of the index (404, thank-you pages) —
    *  no canonical, no hreflang. */
   noindex?: boolean;
+  /** Opts the page out of the shared content column, for pages that manage
+   *  their own horizontal rhythm (the full-screen 404). Everything else should
+   *  leave this off — see the column note below. */
+  fullBleed?: boolean;
 }
 
-const { metaKey = 'home', title, description, noindex = false } = Astro.props;
+const {
+  metaKey = 'home',
+  title,
+  description,
+  noindex = false,
+  fullBleed = false,
+} = Astro.props;
 
 const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
@@ -219,7 +229,7 @@ const structuredData = {
       set:html={JSON.stringify(structuredData)}
     />
   </head>
-  <body>
+  <body class="font-inter">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:m-2
@@ -229,7 +239,26 @@ const structuredData = {
       {strings.nav.skipToContent}
     </a>
     <Navbar />
-    <slot />
+    <!--
+      The shared content column. Every page sits in the same box as the navbar
+      and the footer, which both use this exact recipe — that is what puts page
+      content on the same left/right margins as the logotype and the Contact
+      button (issue #45).
+
+      Two rules for anything placed inside it:
+
+        * Do not add a second layer of horizontal padding. A panel with its own
+          `px-8` inside this `px-8` pushes its content 32px past the logotype,
+          which is the bug #45 reported.
+        * A surface that must span wider than the column (the hero's white
+          panel) breaks out and re-applies the padding — `-mx-4 md:-mx-8
+          px-4 md:px-8` — so the panel bleeds but its content stays on the
+          column. A *card* that sits within the column (the About panel, the
+          legal panel) keeps its own padding and is deliberately inset.
+    -->
+    <div class:list={[!fullBleed && 'max-w-screen-2xl mx-auto px-4 md:px-8']}>
+      <slot />
+    </div>
     <Footer />
   </body>
 </html>

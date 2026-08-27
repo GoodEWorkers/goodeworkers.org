@@ -15,6 +15,10 @@ export default {
         orange: '#FD5E09',
         yellow: '#FDC959',
         white: '#F8F8F8',
+        // Pure white, reserved for the label on an orange CTA fill. The brand
+        // off-white sits at 2.92:1 on #FD5E09 — just under the 3:1 large-text
+        // floor — where pure white clears it at 3.10:1. See issue #48.
+        'white-pure': '#FFFFFF',
         grey: '#ECECEC',
         black: '#111111',
         'black-light': '#1D1D1D',

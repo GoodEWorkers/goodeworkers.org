@@ -7,6 +7,17 @@ import { homeContent } from '../../i18n/home';
 // Presentation stays here, copy comes from the content file — zipped by index.
 const cardIcons = ['webnet', 'chat', 'magnify', 'hexagone', 'heart'] as const;
 
+// From sm up, cards sit on a fixed 6-track grid so the second row lands
+// offset by half a card (brick pattern, per Figma node 997:278) instead of
+// stacking flush under row one.
+const cardGridPlacement = [
+  'sm:col-start-1 sm:row-start-1',
+  'sm:col-start-3 sm:row-start-1',
+  'sm:col-start-5 sm:row-start-1',
+  'sm:col-start-2 sm:row-start-2',
+  'sm:col-start-4 sm:row-start-2',
+] as const;
+
 const lang = getLangFromPath(Astro.url.pathname);
 const { hero } = await homeContent(lang);
 ---
@@ -29,11 +40,13 @@ const { hero } = await homeContent(lang);
     />
   </div>
   <div
-    class="bg-white relative -mt-12 px-8 pt-20 lg:pt-32 pb-6 md:pb-16 lg:pb-28 rounded-xl sm:rounded-2xl lg:rounded-3xl lg:justify-between"
+    class="bg-white relative -mt-12 -mx-4 md:-mx-8 px-4 md:px-8 pt-20 lg:pt-32 pb-6 md:pb-16 lg:pb-28 rounded-xl sm:rounded-2xl lg:rounded-3xl lg:justify-between"
   >
-    <div class="flex flex-col lg:flex-row lg:space-x-8 max-w-screen-xl mx-auto">
+    <div class="flex flex-col lg:flex-row lg:gap-16 xl:gap-24">
       <div class="px-4 sm:px-16 lg:px-0 max-w-screen-md mx-auto lg:mx-0 lg:flex-1">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-[54px]">
+        <h2
+          class="text-3xl leading-tight sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight xl:text-[54px] xl:leading-[63px]"
+        >
           <span class="font-clash font-medium">
             Good<span class="font-semibold">e</span>Workers
           </span>
@@ -42,16 +55,17 @@ const { hero } = await homeContent(lang);
             <span class="font-bold">{hero.titleBold}</span>
           </span>
         </h2>
-        <p class="mt-10 font-bold leading-tight">{hero.text}</p>
+        <p class="mt-10 font-bold leading-[1.6875]">{hero.text}</p>
       </div>
       <div
-        class="mt-10 lg:mt-0 grid grid-cols-2 sm:flex sm:flex-wrap w-full max-w-80 sm:max-w-xl sm:justify-center mx-auto gap-1.5 md:gap-3 xl:gap-5 lg:flex-1"
+        class="mt-10 lg:mt-0 grid grid-cols-2 sm:grid-cols-[repeat(6,69px)] md:grid-cols-[repeat(6,74px)] xl:grid-cols-[repeat(6,70px)] w-full max-w-80 sm:max-w-xl lg:max-w-[520px] mx-auto gap-1.5 md:gap-3 xl:gap-5 lg:w-auto lg:mx-0 lg:ml-auto"
       >
         {
           hero.cards.map((heroCard, index) => (
             <div
               class:list={[
-                'aspect-square flex flex-col items-center justify-center rounded-lg sm:w-36 md:w-40',
+                'aspect-square flex flex-col items-center justify-center rounded-2xl sm:w-36 md:w-40 sm:col-span-2',
+                cardGridPlacement[index],
                 index === hero.cards.length - 1
                   ? 'bg-orange text-black'
                   : 'bg-grey',
