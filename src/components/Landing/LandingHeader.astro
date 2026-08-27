@@ -7,10 +7,15 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
 ---
 
 <header class="pt-8 md:pt-12 lg:pt-24 text-grey">
-  <h1 class="text-4xl md:text-5xl lg:text-7xl text-center">
+  <!--
+    Both lines of the H1 share one line-height. The second line used to be an
+    `inline-block` carrying `mt-4 md:mt-8 lg:mt-12`, which stacked a 48px margin
+    on top of the line box and pushed the two lines ~1.7x apart — issue #45.
+  -->
+  <h1 class="text-4xl/tight md:text-5xl/tight lg:text-7xl/tight text-center">
     <span class="text-yellow font-clash font-medium">Good</span><span class="text-orange font-clash font-semibold">e</span><span class="text-purple font-clash font-medium">Workers</span>
     <br />
-    <span class="inline-block mt-4 md:mt-8 lg:mt-12 font-medium">{header.titlePart1}</span> <Encircled text={header.titleEncircled} class="font-bold" /> <span class="font-medium">{header.titlePart2}</span>
+    <span class="font-medium">{header.titlePart1}</span> <Encircled text={header.titleEncircled} class="font-bold" /> <span class="font-medium">{header.titlePart2}</span>
   </h1>
   <p
     class="mt-8 md:mt-12 lg:mt-16 px-4 sm:px-16 max-w-screen-md mx-auto text-sm md:text-base text-center leading-snug md:leading-tight"

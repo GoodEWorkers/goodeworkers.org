@@ -57,14 +57,17 @@ The brand word "Goode**W**orkers" always renders the "e" in `font-semibold` (Cla
 - Shape: `rounded-full`, full-width up to 336px
 - Padding: `px-7 py-5`
 - Layout: small label on top, large ClashDisplay bold text below
-- Hover: `scale-105` with shadow
+- Hover: `scale-105`, no shadow
 - Variants: `bg-yellow` (nonprofit), `bg-purple` (help/volunteer), `bg-orange` (join CTA)
+- On `bg-orange` the label is `text-white-pure` (`#FFF`), not the brand off-white:
+  `#F8F8F8` on `#FD5E09` is 2.92:1, under the 3:1 large-text floor; `#FFF` is 3.10:1.
+  Small text (< 18.66px bold) on orange stays `text-black` — no white passes 4.5:1 there.
 
 ### Service / Feature cards
 - Shape: `rounded-lg`, square aspect ratio
 - Normal state: `bg-grey` with icon + bold label
-- Highlighted: `bg-orange text-white` for the "and more…" card
-- Why cards: `bg-yellow text-black-light`, `bg-orange text-white`, `bg-purple text-black-light`
+- Highlighted: `bg-orange text-black` for the "and more…" card (label is 14–16px — see the contrast note under the pill button)
+- Why cards: `bg-yellow text-black-light`, `bg-orange text-black`, `bg-purple text-black-light`
 
 ### Section rhythm
 - Dark sections: `bg-black` or `bg-black-light`, text in `text-grey` / `text-ashgray`
@@ -76,7 +79,7 @@ The brand word "Goode**W**orkers" always renders the "e" in `font-semibold` (Cla
 ## 5. Motion & Interaction
 
 - Transitions: `duration-200 ease-in` on color changes (nav hover)
-- Scale: `hover:scale-105` on CTAs
+- Scale: `hover:scale-105` on CTAs (no shadow — see issue #46)
 - Mobile menu: slide + fade `100ms ease-in`
 - Scroll: `scroll-behavior: smooth`
 

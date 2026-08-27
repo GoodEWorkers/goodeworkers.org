@@ -115,14 +115,15 @@ const labelClass =
       screen-reader users at all. It worked with a mouse only, because <label>
       forwards click activation even to a display:none control.
 
-      Also `text-black` rather than `text-white`: #F8F8F8 on #FD5E09 computes to
-      2.92:1, below even the 3:1 large-text floor. Black on the same orange is
-      6.10:1.
+      The label is `text-white-pure`, not `text-white`: the design calls for a
+      white label on the orange CTA (issue #48), but the brand off-white
+      (#F8F8F8) computes to 2.92:1 on #FD5E09 — under the 3:1 floor that the
+      36px bold label needs. Pure #FFF on the same orange is 3.10:1 and passes.
     -->
     <button
       type="submit"
-      class="w-full max-w-[336px] bg-orange text-black px-7 py-5 rounded-full
-             flex flex-col items-center hover:shadow-lg hover:scale-105
+      class="w-full max-w-[336px] bg-orange text-white-pure px-7 py-5 rounded-full
+             flex flex-col items-center hover:scale-105
              transition-transform ease-in
              focus-visible:outline focus-visible:outline-2
              focus-visible:outline-offset-2 focus-visible:outline-black"
