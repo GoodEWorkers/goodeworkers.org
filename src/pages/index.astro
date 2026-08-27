@@ -7,12 +7,10 @@ import About from '../components/Landing/About.astro';
 ---
 
 <BaseLayout metaKey="home">
-  <div class="font-inter max-w-screen-2xl mx-auto px-4 md:px-8">
-    <LandingHeader />
-    <main id="main-content">
-      <Hero />
-      <Why />
-      <About />
-    </main>
-  </div>
+  <LandingHeader />
+  <main id="main-content">
+    <Hero />
+    <Why />
+    <About />
+  </main>
 </BaseLayout>
