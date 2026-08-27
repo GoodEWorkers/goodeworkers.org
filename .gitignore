@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 # local dev artifacts
 screenshots/
+
+# editor / agent tooling
+.claude/
+.cursor/
+.idea/
+.impeccable/

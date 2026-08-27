@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import { contributorPath, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import {
+  contributorInitials,
+  contributorName,
+  formatContributionMonth,
+  type Contributor,
+} from './contributors';
+
+interface Props {
+  contributor: Contributor;
+  lang: Lang;
+}
+
+const { contributor, lang } = Astro.props;
+const strings = t(lang).contributors;
+const name = contributorName(contributor);
+const month = formatContributionMonth(contributor.data.lastContribution, lang);
+---
+
+<a
+  href={contributorPath(lang, contributor.id)}
+  aria-label={strings.profileLabel(name)}
+  class="group block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange"
+>
+  <div class="overflow-hidden rounded-xl bg-black">
+    {
+      contributor.data.avatar ? (
+        <Image
+          src={contributor.data.avatar}
+          alt=""
+          width={480}
+          height={480}
+          class="aspect-square w-full object-cover transition-transform duration-200 ease-in group-hover:scale-105"
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          class="aspect-square w-full flex items-center justify-center bg-purple/15 font-clash font-bold text-5xl md:text-6xl text-purple transition-transform duration-200 ease-in group-hover:scale-105"
+        >
+          {contributorInitials(contributor)}
+        </div>
+      )
+    }
+  </div>
+  <h2
+    class="mt-4 font-clash font-bold text-xl md:text-2xl leading-tight text-grey transition-colors duration-200 group-hover:text-orange"
+  >
+    {name}
+  </h2>
+  <p class="mt-1 text-sm text-ashgray">{contributor.data.role[lang]}</p>
+  <p
+    class="mt-3 inline-block rounded-full bg-yellow px-3 py-1 text-xs font-bold capitalize text-black"
+  >
+    <span class="sr-only">{strings.lastContributionLabel}:</span>
+    {month}
+  </p>
+</a>

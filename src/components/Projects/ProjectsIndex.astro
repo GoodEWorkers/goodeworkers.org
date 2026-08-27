@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+import Encircled from '../Miscs/Encircled.astro';
+import { getLangFromPath } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import { sortProjects } from './projects';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang).projects;
+
+const projects = sortProjects(await getCollection('projects'));
+---
+
+<div class="font-inter text-white bg-black-light mx-4 md:mx-8 my-10 rounded-3xl">
+  <!--
+    DIRECTION CONTRACT (projects surface, extends the established world).
+    THESIS: each project is a face — a logo for client work, a wordmark in a
+      theme accent for our own initiatives, so "no logo" is a deliberate
+      treatment, not a gap. Refuses the category default of identical
+      thumbnail cards that hide the client/initiative distinction.
+    OWN-WORLD: the site's dark world — #111 ground, black-light rounded sheet,
+      ClashDisplay headings with the orange encircled motif, Inter body,
+      yellow status badges, orange hover, pill links.
+    STORY: a visitor sees what GoodEWorkers actually builds (work for
+      nonprofits + its own open source), recency-ordered, and clicks through
+      to the what / why / who of any one project.
+    FIRST VIEWPORT: encircled H1 + one-line intro, then the project grid
+      fills the viewport immediately.
+    FORM: card grid (Experience mode) with a logo/wordmark focal tile; detail
+      page is a black-light sheet with a structured fact row, description,
+      why, and a list of contributors that links back to the people.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with
+      the finish review, the verdict, DESIGN.md, and every shipping raster
+      carrying its provenance.
+  -->
+  <main id="main-content" class="max-w-screen-2xl mx-auto px-4 py-16 md:py-24">
+    <header class="max-w-screen-md mx-auto text-center">
+      <h1 class="font-clash font-bold text-4xl md:text-5xl lg:text-6xl leading-tight">
+        {strings.titlePart1}
+        <Encircled text={strings.titleEncircled} class="font-bold" />
+        {strings.titlePart2}
+      </h1>
+      <p class="mt-6 md:mt-8 text-sm md:text-base text-ashgray leading-relaxed">
+        {strings.intro}
+      </p>
+    </header>
+    <ul
+      class="mt-14 md:mt-20 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12 md:gap-x-10"
+    >
+      {
+        projects.map((project) => (
+          <li>
+            <ProjectCard project={project} lang={lang} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</div>

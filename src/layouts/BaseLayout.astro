@@ -15,7 +15,7 @@ import { t } from '../i18n/ui';
 
 interface Props {
   /** Which `meta` entry of the dictionary to use for title/description. */
-  metaKey?: 'home' | 'legal' | 'notFound' | 'thanks';
+  metaKey?: 'home' | 'legal' | 'contributors' | 'projects' | 'notFound' | 'thanks';
   /** Overrides the dictionary title (used by content-driven pages). */
   title?: string;
   description?: string;
@@ -218,6 +218,8 @@ const structuredData = {
       type="application/ld+json"
       set:html={JSON.stringify(structuredData)}
     />
+    <!-- Per-page extras (e.g. a ProfilePage JSON-LD on contributor pages). -->
+    <slot name="head" />
   </head>
   <body>
     <a

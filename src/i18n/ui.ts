@@ -22,6 +22,16 @@ const en = {
       description:
         'Legal notice for GoodEWorkers: publisher, hosting provider, intellectual property, personal data and applicable law.',
     },
+    contributors: {
+      title: 'Contributors | GoodEWorkers',
+      description:
+        'The people behind GoodEWorkers: volunteers who build websites, content and open source for nonprofits, fully remote.',
+    },
+    projects: {
+      title: 'Projects | GoodEWorkers',
+      description:
+        'The work GoodEWorkers does: websites for nonprofits and open-source initiatives of its own, all remote, all public.',
+    },
     notFound: {
       title: 'Page not found | GoodEWorkers',
       description: 'The page you are looking for does not exist.',
@@ -41,6 +51,8 @@ const en = {
 
   nav: {
     contact: 'Contact',
+    contributors: 'Contributors',
+    projects: 'Projects',
     menu: 'Menu',
     skipToContent: 'Skip to content',
   },
@@ -82,6 +94,53 @@ const en = {
     backHome: 'Back to the homepage',
   },
 
+  contributors: {
+    titlePart1: 'The',
+    titleEncircled: 'people',
+    titlePart2: 'behind the work',
+    intro:
+      'GoodEWorkers is its volunteers: developers, designers, writers and translators who give nonprofits a hand, remotely.',
+    lastContributionLabel: 'Last contribution',
+    currentSituationLabel: 'Current situation',
+    aboutLabel: 'About',
+    contributionsTitle: (name: string) => `What ${name} has done for GoodEWorkers`,
+    socialsTitle: 'Elsewhere online',
+    socialLabels: {
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      x: 'X',
+      website: 'Website',
+    },
+    backToContributors: 'All contributors',
+    profileLabel: (name: string) => `See ${name}'s page`,
+    profileMetaDescription: (name: string, role: string) =>
+      `${name}, ${role} at GoodEWorkers. What they have done and where to find them online.`,
+  },
+
+  projects: {
+    titlePart1: 'The',
+    titleEncircled: 'work',
+    titlePart2: 'in progress',
+    intro:
+      'Websites for nonprofits and our own open-source initiatives. Remote, specification-led, released in the open.',
+    startedOnLabel: 'Started on',
+    descriptionLabel: 'Description',
+    whyLabel: 'Why',
+    contributorsLabel: 'Contributors',
+    statusLabel: 'Status',
+    linkLabel: 'Link',
+    visitProject: 'Visit project',
+    backToProjects: 'All projects',
+    noContributors: 'No contributors recorded yet.',
+    statusLabels: {
+      ongoing: 'Ongoing',
+      completed: 'Completed',
+    },
+    projectLabel: (name: string) => `See the ${name} project`,
+    projectMetaDescription: (name: string) =>
+      `${name}, a GoodEWorkers project: what it is, why we did it, and who built it.`,
+  },
+
   notFound: {
     code: '404',
     title: 'Page not found',
@@ -110,6 +169,16 @@ const fr: Dictionary = {
       description:
         "Mentions légales de GoodEWorkers : éditeur, hébergeur, propriété intellectuelle, données personnelles et droit applicable.",
     },
+    contributors: {
+      title: 'Contributeurs | GoodEWorkers',
+      description:
+        "Les personnes derrière GoodEWorkers : des bénévoles qui construisent sites, contenus et open source pour les associations, entièrement à distance.",
+    },
+    projects: {
+      title: 'Projets | GoodEWorkers',
+      description:
+        "Le travail de GoodEWorkers : des sites pour des associations et des initiatives open source, tout à distance, tout en public.",
+    },
     notFound: {
       title: 'Page introuvable | GoodEWorkers',
       description: "La page que vous cherchez n'existe pas.",
@@ -129,6 +198,8 @@ const fr: Dictionary = {
 
   nav: {
     contact: 'Contact',
+    contributors: 'Contributeurs',
+    projects: 'Projets',
     menu: 'Menu',
     skipToContent: 'Aller au contenu',
   },
@@ -168,6 +239,53 @@ const fr: Dictionary = {
       'En attendant, le code que nous écrivons est public — y compris celui de ce site.',
     githubCta: 'Parcourir nos dépôts sur GitHub',
     backHome: "Retour à l'accueil",
+  },
+
+  contributors: {
+    titlePart1: 'Les',
+    titleEncircled: 'personnes',
+    titlePart2: 'derrière le travail',
+    intro:
+      "GoodEWorkers, c'est ses bénévoles : développeurs, designers, rédacteurs et traducteurs qui donnent un coup de main aux associations, à distance.",
+    lastContributionLabel: 'Dernière contribution',
+    currentSituationLabel: 'Situation actuelle',
+    aboutLabel: 'À propos',
+    contributionsTitle: (name: string) => `Ce que ${name} a fait pour GoodEWorkers`,
+    socialsTitle: 'Ailleurs sur le web',
+    socialLabels: {
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      x: 'X',
+      website: 'Site web',
+    },
+    backToContributors: 'Tous les contributeurs',
+    profileLabel: (name: string) => `Voir la page de ${name}`,
+    profileMetaDescription: (name: string, role: string) =>
+      `${name} — ${role}. Son apport à GoodEWorkers et où le retrouver en ligne.`,
+  },
+
+  projects: {
+    titlePart1: 'Les',
+    titleEncircled: 'projets',
+    titlePart2: 'en cours',
+    intro:
+      "Des sites pour des associations et nos propres initiatives open source. À distance, cadré par écrit, publié en open source.",
+    startedOnLabel: 'Démarré en',
+    descriptionLabel: 'Description',
+    whyLabel: 'Pourquoi',
+    contributorsLabel: 'Contributeurs',
+    statusLabel: 'Statut',
+    linkLabel: 'Lien',
+    visitProject: 'Voir le projet',
+    backToProjects: 'Tous les projets',
+    noContributors: 'Aucun contributeur enregistré pour le moment.',
+    statusLabels: {
+      ongoing: 'En cours',
+      completed: 'Terminé',
+    },
+    projectLabel: (name: string) => `Voir le projet ${name}`,
+    projectMetaDescription: (name: string) =>
+      `${name}, un projet GoodEWorkers : ce que c'est, pourquoi on l'a fait, et qui l'a construit.`,
   },
 
   notFound: {

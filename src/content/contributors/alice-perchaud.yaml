@@ -1,0 +1,28 @@
+# Alice Perchaud — Executive Director. Slug: /contributors/alice-perchaud/
+firstName: Alice
+lastName: Perchaud
+role:
+  en: Executive Director
+  fr: Direction générale
+currentSituation:
+  en: Freelancing Marketing expert (SEO/GEO)
+  fr: Experte marketing en freelance (SEO/GEO)
+about:
+  en: |-
+    Alice runs GoodEWorkers day to day and is the first contact for nonprofits who reach out. She brings marketing and SEO experience from her freelance work.
+  fr: |-
+    Alice dirige GoodEWorkers au quotidien et est le premier contact pour les associations qui sollicitent l'association. Elle apporte son expérience marketing et SEO de son activité en freelance.
+avatar: ./alice-perchaud.png
+lastContribution: "2026-08"
+contributions:
+  en: |-
+    As présidente and director of publication, Alice coordinates the volunteer team put together for each project.
+
+    She is one of the two people behind the contact form. Nonprofits who write in hear back from her.
+  fr: |-
+    Présidente et directrice de la publication, Alice coordonne l'équipe de bénévoles constituée pour chaque projet.
+
+    Elle est l'une des deux personnes derrière le formulaire de contact. Les associations qui écrivent reçoivent sa réponse.
+socials:
+  linkedin: https://www.linkedin.com/in/alice-perchaud/
+  website: https://aliceperchaud.fr
