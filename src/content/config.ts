@@ -90,6 +90,9 @@ const contributors = defineCollection({
       about: z.object({ en: z.string(), fr: z.string() }).optional(),
       /** Square-ish portrait, stored next to the YAML file. */
       avatar: image().optional(),
+      /** Theme colour painted behind the portrait. Meant for cut-out PNGs
+       *  with a transparent background; omit when the photo already has one. */
+      avatarColor: z.enum(['orange', 'yellow', 'purple']).optional(),
       /** YYYY-MM — the gallery's primary sort key (most recent first). */
       lastContribution: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
       /** What the person did for GoodEWorkers, per language. A blank line
