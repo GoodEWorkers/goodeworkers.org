@@ -45,3 +45,20 @@ export function contributorInitials(contributor: Contributor): string {
     .map((part) => part!.charAt(0).toUpperCase())
     .join('');
 }
+
+/**
+ * Map the schema's `avatarColor` enum to a Tailwind background class, painted
+ * behind transparent portraits. Spelled out so Tailwind can see the class names.
+ */
+export function avatarColorClass(color: 'orange' | 'yellow' | 'purple' | undefined): string {
+  switch (color) {
+    case 'orange':
+      return 'bg-orange';
+    case 'yellow':
+      return 'bg-yellow';
+    case 'purple':
+      return 'bg-purple';
+    default:
+      return '';
+  }
+}
