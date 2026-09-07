@@ -5,6 +5,180 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Host-based 301 redirects: send every look-alike domain to https://goodeworkers.org
+# force = true is required on every rule below -- without it Netlify will just
+# serve the site's own content on that domain instead of redirecting, since the
+# domain is already registered as a Netlify domain alias.
+# Keep these above the path-only rules: Netlify applies the first match.
+
+[[redirects]]
+  from = "https://eworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://eworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.eworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.eworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://eworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://eworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.eworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.eworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://goodeworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://goodeworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.goodeworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.goodeworker.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://goodeworkers.com/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://goodeworkers.com/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.goodeworkers.com/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.goodeworkers.com/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://goodiworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://goodiworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.goodiworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.goodiworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://goodworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://goodworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.goodworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.goodworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://goodyworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://goodyworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.goodyworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.goodyworkers.org/*"
+  to = "https://goodeworkers.org/:splat"
+  status = 301
+  force = true
+
 # robots.txt and og-image.png live in public/ — Astro copies public/ verbatim
 # into dist/, so they are served from the site root. No redirect needed.
 
