@@ -1,0 +1,24 @@
+# The GoodEWorkers website itself — our first project. Slug: /projects/goodeworkers-website/
+title: GoodEWorkers Website
+# No logo: an initiative, not a client. Falls back to the wordmark.
+markColor: orange
+status: ongoing
+startedOn: "2024-04"
+url: https://github.com/GoodEWorkers/goodeworkers.org
+linkText:
+  en: Go to the code
+  fr: Voir le code
+description:
+  en: |-
+    The site you are on. Bilingual, built with Astro and Tailwind, shipped as open source on GitHub.
+  fr: |-
+    Le site sur lequel vous êtes. Bilingue, construit avec Astro et Tailwind, publié en open source sur GitHub.
+why:
+  en: |-
+    The association needs a public face that says what it does, in two languages, without an agency budget. Building it ourselves was also the first proof that a remote team can ship something real, asynchronously, in the open.
+  fr: |-
+    L'association a besoin d'une vitrine qui dit ce qu'elle fait, en deux langues, sans budget d'agence. Le construire nous-mêmes était aussi la première preuve qu'une équipe à distance peut livrer quelque chose de réel, en asynchrone, en public.
+contributors:
+  - r-ichard
+  - alice-perchaud
+  - lili-schmitt

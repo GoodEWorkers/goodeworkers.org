@@ -1,0 +1,199 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { getLangFromPath, projectPath, routes } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import {
+  contributorName,
+  type Contributor,
+} from '../Contributors/contributors';
+import { formatStartMonth, markColorClass, type Project } from './projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang).projects;
+const started = formatStartMonth(project.data.startedOn, lang);
+const statusLabel = strings.statusLabels[project.data.status];
+
+// Resolve contributor slugs into entries, preserving the order in the YAML.
+const allContributors = await getCollection('contributors');
+const bySlug = new Map<string, Contributor>(
+  allContributors.map((c) => [c.id, c])
+);
+const team = project.data.contributors
+  .map((slug) => bySlug.get(slug))
+  .filter((c): c is Contributor => Boolean(c));
+
+const descriptionParagraphs = project.data.description[lang]
+  .split(/\n\s*\n/)
+  .map((p) => p.trim())
+  .filter(Boolean);
+const whyParagraphs = project.data.why[lang]
+  .split(/\n\s*\n/)
+  .map((p) => p.trim())
+  .filter(Boolean);
+
+const linkText = project.data.linkText?.[lang] ?? strings.visitProject;
+
+const factRows: { label: string; value: string }[] = [
+  { label: strings.startedOnLabel, value: started },
+  { label: strings.statusLabel, value: statusLabel },
+];
+---
+
+<div class="font-inter text-white bg-black-light mx-4 md:mx-8 my-10 rounded-3xl">
+  <main id="main-content" class="max-w-screen-2xl mx-auto px-4 py-16 md:py-24">
+    <div class="max-w-screen-lg mx-auto">
+      <a
+        href={routes.projects[lang]}
+        class="inline-flex items-center gap-2 text-sm font-bold text-ashgray transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+      >
+        <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" class="h-3.5 w-3.5">
+          <path
+            d="M10 3 5 8l5 5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+        {strings.backToProjects}
+      </a>
+
+      <div class="mt-10 md:mt-14 md:flex md:items-start md:gap-12 lg:gap-16">
+        <div class="w-40 shrink-0 md:w-64">
+          <div
+            class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-white/5"
+          >
+            {
+              project.data.logo ? (
+                <Image
+                  src={project.data.logo}
+                  alt=""
+                  width={512}
+                  height={512}
+                  class="max-h-[70%] w-auto max-w-[80%] object-contain"
+                />
+              ) : (
+                <div
+                  aria-hidden="true"
+                  class:list={[
+                    'px-4 text-center font-clash font-bold text-2xl md:text-3xl leading-tight',
+                    markColorClass(project.data.markColor),
+                  ]}
+                >
+                  {project.data.title}
+                </div>
+              )
+            }
+          </div>
+        </div>
+
+        <div class="mt-8 md:mt-0">
+          <h1 class="font-clash font-bold text-4xl md:text-5xl leading-tight">
+            {project.data.title}
+          </h1>
+
+          <dl class="mt-6 divide-y divide-white/10 overflow-hidden rounded-xl border border-white/10">
+            {
+              factRows.map((row) => (
+                <div class="flex items-baseline gap-3 bg-white/5 px-4 py-3">
+                  <dt class="w-32 shrink-0 text-xs font-bold uppercase tracking-wide text-purple">
+                    {row.label}
+                  </dt>
+                  <dd class="text-sm md:text-base font-medium text-grey">
+                    {row.value}
+                  </dd>
+                </div>
+              ))
+            }
+            {
+              project.data.url && (
+                <div class="flex items-center gap-3 bg-white/5 px-4 py-3">
+                  <dt class="w-32 shrink-0 text-xs font-bold uppercase tracking-wide text-purple">
+                    {strings.linkLabel}
+                  </dt>
+                  <dd>
+                    <a
+                      href={project.data.url}
+                      target="_blank"
+                      rel="noopener"
+                      class="inline-flex items-center gap-2 font-medium text-grey transition-colors duration-200 hover:text-orange"
+                    >
+                      {linkText}
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        class="h-3.5 w-3.5"
+                      >
+                        <path
+                          d="M4 12 12 4M6 4h6v6"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </a>
+                  </dd>
+                </div>
+              )
+            }
+          </dl>
+
+          <h2 class="mt-10 font-clash font-bold text-2xl md:text-3xl">
+            {strings.descriptionLabel}
+          </h2>
+          <div class="max-w-prose">
+            {
+              descriptionParagraphs.map((paragraph) => (
+                <p class="mt-4 text-sm md:text-base leading-relaxed text-ashgray">
+                  {paragraph}
+                </p>
+              ))
+            }
+          </div>
+
+          <h2 class="mt-10 font-clash font-bold text-2xl md:text-3xl">
+            {strings.whyLabel}
+          </h2>
+          <div class="max-w-prose">
+            {
+              whyParagraphs.map((paragraph) => (
+                <p class="mt-4 text-sm md:text-base leading-relaxed text-ashgray">
+                  {paragraph}
+                </p>
+              ))
+            }
+          </div>
+
+          <h2 class="mt-12 font-clash font-bold text-2xl md:text-3xl">
+            {strings.contributorsLabel}
+          </h2>
+          {
+            team.length > 0 ? (
+              <ul class="mt-5 flex flex-wrap gap-3">
+                {team.map((contributor) => (
+                  <li>
+                    <a
+                      href={`${routes.contributors[lang]}${contributor.id}/`}
+                      class="inline-flex items-center gap-2 rounded-full border-2 border-orange px-4 py-1.5 text-sm font-bold text-grey transition-colors duration-200 hover:bg-orange hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                    >
+                      {contributorName(contributor)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-4 text-sm text-ashgray">{strings.noContributors}</p>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
