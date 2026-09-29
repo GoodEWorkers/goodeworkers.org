@@ -87,7 +87,10 @@ stays in `src/content/job-boards/<lang>.md`.
 (after redirects). CI runs it on pull requests that touch the list and every
 Monday (`.github/workflows/job-board-links.yml`), and fails on any dead link.
 Sites behind a Cloudflare bot challenge can't be checked by a robot: they are
-listed as warnings to check by hand.
+listed as warnings to check by hand. For a site that refuses automated checks
+some other way (FlexJobs drops requests from cloud servers), mark its entry
+`linkCheck: manual` with a comment: a failed check then warns instead of
+failing.
 
 ## External links
 

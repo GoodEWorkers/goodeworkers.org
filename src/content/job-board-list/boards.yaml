@@ -13,6 +13,9 @@
 # language, as Welcome to the Jungle does below.
 # The build stops with an error naming the entry if a category doesn't exist,
 # a translation is missing, a name is used twice or a URL isn't https.
+# CI checks every URL answers 200 (npm run check-links). For a site that
+# refuses automated checks, add `linkCheck: manual` with a comment saying why:
+# a failed check then warns instead of failing.
 #
 # Notes are claims about someone else's product: keep to what the board says
 # about itself on its own site. Re-check every link before moving linksChecked.
@@ -139,6 +142,8 @@ boards:
       fr: "Des offres en startup avec le salaire et les parts (equity) affichés. Filtrez les postes à distance sur l'Europe."
   - name: "FlexJobs"
     url: "https://www.flexjobs.com"
+    # Drops requests from cloud servers (times out in CI); fine in a browser.
+    linkCheck: manual
     category: global
     note:
       en: "Paid, with every listing hand-screened to keep out scams and junk. Filter by jobs open in Europe."

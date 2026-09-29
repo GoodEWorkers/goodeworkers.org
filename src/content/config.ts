@@ -138,6 +138,9 @@ const listedSite = z.object({
   /** One URL, or one per language when the target is localised. */
   url: z.union([httpsUrl, z.object({ en: httpsUrl, fr: httpsUrl })]),
   note: localized,
+  /** `manual`: the site refuses automated checks, so a failed link check is
+   *  reported as a warning instead of failing CI (scripts/check-links.mjs). */
+  linkCheck: z.literal('manual').optional(),
 });
 
 const jobBoardList = defineCollection({
