@@ -1,6 +1,7 @@
 ---
 import { getLangFromPath, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
+import ExternalLink from './ExternalLink.astro';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const { thanks } = t(lang);
@@ -20,10 +21,8 @@ const { thanks } = t(lang);
 
       <p class="mt-12 text-base text-ashgray">
         {thanks.whileWaiting}
-        <a
-          href="https://github.com/GoodEWorkers"
-          class="underline hover:text-orange"
-          rel="noopener">{thanks.githubCta}</a
+        <ExternalLink href="https://github.com/GoodEWorkers" class="underline hover:text-orange"
+          >{thanks.githubCta}</ExternalLink
         >.
       </p>
 

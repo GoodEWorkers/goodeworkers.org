@@ -1,0 +1,14 @@
+---
+import Encircled from '../Miscs/Encircled.astro';
+
+interface Props {
+  /** One heading from the content file: the encircled word plus the words around it. */
+  text: { before: string; encircled: string; after: string };
+}
+
+const { text } = Astro.props;
+---
+
+{text.before && `${text.before} `}<Encircled text={text.encircled} class="font-bold" />{
+  text.after && ` ${text.after}`
+}

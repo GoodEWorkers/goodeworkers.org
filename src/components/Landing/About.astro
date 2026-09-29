@@ -3,7 +3,8 @@ import { Image } from 'astro:assets';
 import Alice from '../../assets/images/alice_thumb.png';
 import Richard from '../../assets/images/richard_thumb.png';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
-import { contactAnchor, getLangFromPath } from '../../i18n/routes';
+import ExternalLink from '../ExternalLink.astro';
+import { contactAnchor, getLangFromPath, routes } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
 const lang = getLangFromPath(Astro.url.pathname);
@@ -36,13 +37,19 @@ const { about } = await homeContent(lang);
           {about.benefits.map((benefit) => <li>{benefit}</li>)}
           <li>
             {about.benefitOpenSource}{' '}
-            <a
-              href="https://github.com/GoodEWorkers"
-              class="underline hover:text-orange"
-              rel="noopener">{about.githubCta}</a
+            <ExternalLink href="https://github.com/GoodEWorkers" class="underline hover:text-orange"
+              >{about.githubCta}</ExternalLink
             >.
           </li>
         </ul>
+        <!-- The section already speaks to freelancers, students and people
+             between jobs, so this is where the job boards list belongs. -->
+        <p class="mt-8 leading-[1.6875]">
+          {about.jobBoards.before}<a
+            href={routes.jobBoards[lang]}
+            class="underline hover:text-orange">{about.jobBoards.link}</a
+          >{about.jobBoards.after}
+        </p>
       </div>
       <div>
         <BigRoundedLinkBtn

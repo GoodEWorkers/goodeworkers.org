@@ -26,6 +26,11 @@ interface Props {
    *  their own horizontal rhythm (the full-screen 404). Everything else should
    *  leave this off — see the column note below. */
   fullBleed?: boolean;
+  /** Page-specific schema.org nodes, appended to the site-wide graph so they
+   *  can reference the organization and website by @id. */
+  graph?: Record<string, unknown>[];
+  /** Overrides the footer's contact heading and mail subject on this page. */
+  contact?: { title: string; mailSubject: string };
 }
 
 const {
@@ -34,6 +39,8 @@ const {
   description,
   noindex = false,
   fullBleed = false,
+  graph = [],
+  contact,
 } = Astro.props;
 
 const lang = getLangFromPath(Astro.url.pathname);
@@ -159,6 +166,7 @@ const structuredData = {
       inLanguage: langCodes.map((code) => languages[code].htmlLang),
       publisher: { '@id': `${SITE}/#organization` },
     },
+    ...graph,
   ],
 };
 ---
@@ -259,6 +267,6 @@ const structuredData = {
     <div class:list={[!fullBleed && 'max-w-screen-2xl mx-auto px-4 md:px-8']}>
       <slot />
     </div>
-    <Footer />
+    <Footer contact={contact} />
   </body>
 </html>

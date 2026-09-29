@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # local dev artifacts
 screenshots/
+
+# impeccable review captures
+.impeccable/review/

@@ -33,7 +33,8 @@ src/
   layouts/        BaseLayout (SEO head), LegalLayout
   i18n/           routes.ts (localized URLs) + ui.ts (all copy, per language)
   components/     Astro components (Navbar, Footer, LanguageSwitcher, Landing/*, …)
-  content/        content collections (legals/en/, legals/fr/)
+  content/        content collections: legals/<lang>/, home/<lang>.md and
+                  job-boards/<lang>.md (the remote job boards list)
   assets/         fonts, icons, images (processed by Astro)
   styles/         global.css (Tailwind + @font-face)
 public/           favicon, og-image.png, robots.txt
@@ -62,6 +63,43 @@ Regenerate the social sharing card after a brand change:
 ```bash
 npm run og-image  # writes public/og-image.png (1200x630)
 ```
+
+## Remote job boards list
+
+The list on `/remote-job-boards/` and `/fr/offres-emploi-teletravail/` lives in
+one file, **`src/content/job-board-list/boards.yaml`**, with both languages side
+by side:
+
+- **Add or edit a board:** name, url, category and a `note` in each language
+  (`en`, `fr`). Boards are grouped by category, in file order.
+- **Add, rename or reorder a category:** edit `categories`. Their order is the
+  order of the filter buttons; colours: yellow, orange, purple, black,
+  pantone, gold, plum. Empty categories are hidden.
+- **After re-checking the links,** bump `linksChecked`: it drives the "Links
+  checked in…" line, the year in the title and the structured data.
+
+Counts in the title and intro update themselves. The build stops with an
+error naming the entry if a category doesn't exist, a translation is missing,
+a name is used twice or a URL isn't https. Page copy (title, intro, labels)
+stays in `src/content/job-boards/<lang>.md`.
+
+`npm run check-links` checks that every URL in the list still answers 200
+(after redirects). CI runs it on pull requests that touch the list and every
+Monday (`.github/workflows/job-board-links.yml`), and fails on any dead link.
+Sites behind a Cloudflare bot challenge can't be checked by a robot: they are
+listed as warnings to check by hand. For a site that refuses automated checks
+some other way (FlexJobs drops requests from cloud servers), mark its entry
+`linkCheck: manual` with a comment: a failed check then warns instead of
+failing.
+
+## External links
+
+Link to other sites with `src/components/ExternalLink.astro`, never a bare
+`<a>`: it opens a new tab with `rel="noopener"` and adds
+`utm_source=goodeworkers.org&utm_medium=referral` (plus `utm_campaign` when
+given) from `src/lib/outbound.ts`. Keep URLs plain in content files. `npm run
+smoke` fails on any outbound link without the new tab, `noopener` or
+`utm_source`.
 
 ## Deployment
 

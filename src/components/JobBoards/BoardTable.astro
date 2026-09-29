@@ -1,0 +1,264 @@
+---
+import Icon from '../icons/Icon.astro';
+import ExternalLink from '../ExternalLink.astro';
+import { boardHost, boardSlug, foldText, type JobBoardsContent } from '../../i18n/jobBoards';
+import { categoryDot } from './categoryColors';
+
+interface Props {
+  content: JobBoardsContent;
+}
+
+const { content } = Astro.props;
+const { table } = content;
+
+const total = content.boards.length;
+const category = new Map(content.categories.map((c) => [c.id, c]));
+// utm_campaign on every board link, so each board can tell this page apart.
+const campaign = 'remote-job-boards';
+const showing = (shown: number) =>
+  table.showing.replace('{shown}', String(shown)).replace('{total}', String(total));
+
+const pill =
+  'group inline-flex items-center gap-1.5 md:gap-2 rounded-full border-2 border-black px-3 md:px-4 py-1 md:py-1.5 ' +
+  'text-xs md:text-sm font-bold transition-colors duration-200 hover:bg-grey aria-pressed:bg-black aria-pressed:text-grey ' +
+  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange';
+const pillCount = 'font-medium text-black/60 group-aria-pressed:text-grey/70';
+// The ring keeps the black freelance dot visible on a pressed (black) pill.
+const pillDot = 'w-2.5 h-2.5 rounded-full shrink-0 group-aria-pressed:ring-1 group-aria-pressed:ring-grey';
+---
+
+<section
+  aria-labelledby="table-title"
+  class="mt-12 md:mt-16 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 pb-10 md:pb-14 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+  data-board-table
+>
+  <h2 id="table-title" class="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight">
+    {table.title}
+  </h2>
+
+  <!-- On wide screens the filters stick under the navbar (101px tall once
+       stuck), so the list can be narrowed from anywhere in the table. -->
+  <span class="block h-px" aria-hidden="true" data-toolbar-sentinel></span>
+  <div
+    class="toolbar lg:sticky lg:top-[101px] z-30 -mx-4 md:-mx-8 px-4 md:px-8 pt-5 md:pt-7 pb-4 bg-white"
+    data-board-toolbar
+  >
+    <div role="group" aria-label={table.kindFilter} class="flex flex-wrap gap-1.5 md:gap-2">
+      <button type="button" aria-pressed="true" data-kind-filter="all" class={pill}>
+        {table.all}
+        <span class={pillCount}>{total}</span>
+      </button>
+      {
+        content.categories.map((c) => (
+          <button type="button" aria-pressed="false" data-kind-filter={c.id} class={pill}>
+            <span class:list={[pillDot, categoryDot[c.color]]} aria-hidden="true" />
+            {c.label}
+            <span class={pillCount}>{c.count}</span>
+          </button>
+        ))
+      }
+    </div>
+    <div class="mt-5 md:mt-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div class="w-full md:max-w-sm">
+        <label for="board-search" class="block text-sm font-bold">{table.search}</label>
+        <input
+          id="board-search"
+          type="search"
+          autocomplete="off"
+          placeholder={table.searchPlaceholder}
+          data-board-search
+          class="mt-1 w-full bg-transparent border-x-0 border-t-0 border-b-2 border-black px-0 py-1.5 text-base caret-orange placeholder:text-black/60 focus:ring-2 focus:ring-orange focus:ring-offset-1 focus:border-orange"
+        />
+      </div>
+      <p class="text-sm text-black/70" aria-live="polite" data-board-count data-template={table.showing}>
+        {showing(total)}
+      </p>
+    </div>
+  </div>
+
+  <table class="mt-2 w-full border-collapse text-left" data-board-list>
+    <thead class="max-md:sr-only">
+      <tr class="border-b-2 border-black text-sm">
+        <th scope="col" class="py-3 pr-6 font-bold md:w-56 lg:w-64">{table.board}</th>
+        <th scope="col" class="py-3 pr-6 font-bold">{table.goodFor}</th>
+        <th scope="col" class="py-3 pr-6 font-bold md:w-48 lg:w-56">{table.kind}</th>
+        <th scope="col" class="py-3 font-bold md:w-40 lg:w-48">{table.site}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        content.boards.map((board) => (
+          <tr
+            id={boardSlug(board.name)}
+            data-kind={board.category}
+            data-text={foldText(`${board.name} ${board.note} ${category.get(board.category)?.label} ${boardHost(board.url)}`)}
+            class="relative border-b border-black/10 transition-colors duration-150 hover:bg-grey target:bg-yellow/30 scroll-mt-24 lg:scroll-mt-72 max-md:grid max-md:grid-cols-1 max-md:gap-y-2 max-md:py-5"
+          >
+            <th scope="row" class="py-5 pr-6 align-top text-left max-md:p-0">
+              <ExternalLink
+                href={board.url}
+                campaign={campaign}
+                class="font-clash font-semibold text-lg md:text-xl underline-offset-4 decoration-2 hover:underline visited:text-black/60 after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-orange"
+              >
+                {board.name}
+              </ExternalLink>
+            </th>
+            <td class="py-5 pr-6 align-top text-sm md:text-base leading-relaxed max-md:row-start-3 max-md:p-0">
+              {board.note}
+            </td>
+            <td class="py-5 pr-6 align-top max-md:row-start-2 max-md:p-0">
+              <span class="inline-flex items-baseline gap-2 text-sm text-black/70">
+                <span
+                  class:list={['w-2.5 h-2.5 rounded-full shrink-0 self-center md:self-auto md:translate-y-px', categoryDot[category.get(board.category)!.color]]}
+                  aria-hidden="true"
+                />
+                {category.get(board.category)?.label}
+              </span>
+            </td>
+            <td class="py-5 align-top text-sm text-black/70 max-md:row-start-4 max-md:p-0">
+              <span class="inline-flex items-center gap-1">
+                {boardHost(board.url)}
+                <span class="[&>svg]:w-3.5 [&>svg]:h-3.5" aria-hidden="true">
+                  <Icon name="arrow-up-right" />
+                </span>
+              </span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+
+  <div class="py-16 text-center" hidden data-board-empty>
+    <p class="text-base font-bold">{table.empty}</p>
+    <button
+      type="button"
+      data-board-clear
+      class="mt-4 text-sm underline underline-offset-4 decoration-2 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+    >
+      {table.clear}
+    </button>
+  </div>
+
+  {
+    content.tools.length > 0 && (
+      <p class="mt-8 text-sm md:text-base leading-relaxed text-black/80 max-w-3xl">
+        <span class="font-bold">{content.toolsLabel}</span>{' '}
+        {content.tools.map((tool, index) => (
+          <>
+            {index > 0 && ' '}
+            <ExternalLink
+              href={tool.url}
+              campaign={campaign}
+              class="font-clash font-semibold underline underline-offset-4 decoration-2 hover:text-orange visited:text-black/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+            >
+              {tool.name}
+            </ExternalLink>{' '}
+            — {tool.note}
+          </>
+        ))}
+      </p>
+    )
+  }
+</section>
+
+<style>
+  /* A hairline under the filters only while they are stuck over the table. */
+  .toolbar {
+    transition: box-shadow 200ms ease-out;
+  }
+
+  .toolbar[data-stuck] {
+    box-shadow: 0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45);
+  }
+</style>
+
+<script>
+  function setupBoardTable() {
+    const root = document.querySelector<HTMLElement>('[data-board-table]');
+    if (!root) return;
+
+    const rows = [...root.querySelectorAll<HTMLTableRowElement>('tbody tr')];
+    const pills = [...root.querySelectorAll<HTMLButtonElement>('[data-kind-filter]')];
+    const search = root.querySelector<HTMLInputElement>('[data-board-search]');
+    const count = root.querySelector<HTMLElement>('[data-board-count]');
+    const empty = root.querySelector<HTMLElement>('[data-board-empty]');
+    const clear = root.querySelector<HTMLButtonElement>('[data-board-clear]');
+    const toolbar = root.querySelector<HTMLElement>('[data-board-toolbar]');
+    const sentinel = root.querySelector<HTMLElement>('[data-toolbar-sentinel]');
+    const list = root.querySelector<HTMLElement>('[data-board-list]');
+    const template = count?.dataset.template ?? '';
+    let kind = 'all';
+
+    // Same folding as `foldText` on the server: lowercase, no accents, so
+    // "teletravail" finds "télétravail". Words are loosely stemmed, so
+    // "salary" also finds "salaries"; every word typed has to match.
+    const fold = (text: string) =>
+      text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const stem = (word: string) => word.replace(/(ies|es|s|y)$/, '');
+
+    // Height of the sticky navbar once it is stuck (md and up).
+    const NAVBAR = 101;
+    const isSticky = () => !!toolbar && getComputedStyle(toolbar).position === 'sticky';
+
+    // Filtering from deep in the table shrinks the page under the visitor;
+    // bring the top of the results back to just under the stuck filters.
+    // The target is absolute, so it holds even when the shorter page has
+    // already pulled the filters up with it.
+    const revealResults = () => {
+      if (!toolbar || !list || !isSticky()) return;
+      const offset = NAVBAR + toolbar.offsetHeight;
+      const top = list.getBoundingClientRect().top;
+      if (top < offset) window.scrollTo({ top: window.scrollY + top - offset });
+    };
+
+    const apply = () => {
+      const terms = fold(search?.value ?? '').split(/\s+/).filter(Boolean).map(stem);
+      let shown = 0;
+      for (const row of rows) {
+        const text = row.dataset.text ?? '';
+        const match =
+          (kind === 'all' || row.dataset.kind === kind) && terms.every((term) => text.includes(term));
+        // Inline style, not `hidden`: the rows are `display: grid` on small
+        // screens, and a utility class outranks the [hidden] rule.
+        row.style.display = match ? '' : 'none';
+        if (match) shown += 1;
+      }
+      if (count) {
+        count.textContent = template
+          .replace('{shown}', String(shown))
+          .replace('{total}', String(rows.length));
+      }
+      if (empty) empty.hidden = shown > 0;
+      revealResults();
+    };
+
+    const select = (next: string) => {
+      kind = next;
+      pills.forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.kindFilter === kind)));
+      apply();
+    };
+
+    pills.forEach((p) => p.addEventListener('click', () => select(p.dataset.kindFilter ?? 'all')));
+    search?.addEventListener('input', apply);
+    clear?.addEventListener('click', () => {
+      if (search) search.value = '';
+      select('all');
+      search?.focus();
+    });
+
+    // Stuck = the toolbar is sticky (wide screens only) and the sentinel just
+    // above it has scrolled up past the navbar's bottom edge.
+    if (toolbar && sentinel) {
+      new IntersectionObserver(
+        ([entry]) => {
+          const above = !entry.isIntersecting && entry.boundingClientRect.top <= NAVBAR;
+          toolbar.toggleAttribute('data-stuck', isSticky() && above);
+        },
+        { rootMargin: `-${NAVBAR}px 0px 0px 0px` }
+      ).observe(sentinel);
+    }
+  }
+
+  setupBoardTable();
+</script>
