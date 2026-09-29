@@ -1,0 +1,27 @@
+---
+// The remote job boards page, shared by /remote-job-boards/ and its French
+// twin /fr/offres-emploi-teletravail/. The language comes from the URL, like
+// every other component; the copy from src/content/job-boards/<lang>.md.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Intro from './Intro.astro';
+import BoardTable from './BoardTable.astro';
+import JoinCta from './JoinCta.astro';
+import { getLangFromPath } from '../../i18n/routes';
+import { jobBoardsContent, jobBoardsGraph } from '../../i18n/jobBoards';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const content = await jobBoardsContent(lang);
+---
+
+<BaseLayout
+  title={content.title}
+  description={content.description}
+  graph={jobBoardsGraph(content, lang)}
+  contact={{ title: content.join.formTitle, mailSubject: content.join.mailSubject }}
+>
+  <main id="main-content" class="selection:bg-yellow selection:text-black">
+    <Intro content={content} />
+    <BoardTable content={content} />
+    <JoinCta join={content.join} />
+  </main>
+</BaseLayout>

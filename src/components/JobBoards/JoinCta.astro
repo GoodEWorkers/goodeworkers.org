@@ -1,0 +1,34 @@
+---
+import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import CircledText from './CircledText.astro';
+import type { JobBoardsContent } from '../../i18n/jobBoards';
+
+interface Props {
+  join: JobBoardsContent['join'];
+}
+
+const { join } = Astro.props;
+
+// The footer's contact form tags the enquiry with `from`. Linking to this
+// page's own #contact keeps the visitor next to the list they came for.
+const href = `${Astro.url.pathname}?from=job-boards#contact`;
+---
+
+<!-- Set like the homepage's dark-ground sections: the heading straight on
+     #111 with one encircled word, then the orange pill. -->
+<section aria-labelledby="join-title" class="mt-24 md:mt-32 mb-20 md:mb-28 text-center text-grey">
+  <h2
+    id="join-title"
+    class="mx-auto max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+  >
+    <CircledText text={join.title} />
+  </h2>
+  <p class="mt-8 md:mt-10 mx-auto max-w-2xl px-2 text-sm md:text-base leading-[1.6875] text-ashgray">
+    {join.text}
+  </p>
+  <BigRoundedLinkBtn
+    bigBtmText={join.cta}
+    href={href}
+    class="mt-10 md:mt-12 mx-auto bg-orange text-white-pure sm:w-fit sm:max-w-none sm:px-12"
+  />
+</section>

@@ -1,0 +1,23 @@
+---
+// The one way to link to another site: opens in a new tab with
+// rel="noopener" (the new page can't reach back into ours), carries our UTM
+// tags (src/lib/outbound.ts), and tells screen readers about the new tab.
+// scripts/smoke.sh fails on any outbound link that skips it.
+import type { HTMLAttributes } from 'astro/types';
+import { getLangFromPath } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { outboundUrl } from '../lib/outbound';
+
+type Props = Omit<HTMLAttributes<'a'>, 'href' | 'target' | 'rel'> & {
+  href: string;
+  /** Becomes utm_campaign, e.g. the page the link sits on. */
+  campaign?: string;
+};
+
+const { href, campaign, ...attrs } = Astro.props;
+const { links } = t(getLangFromPath(Astro.url.pathname));
+---
+
+<a href={outboundUrl(href, campaign)} target="_blank" rel="noopener" {...attrs}
+  ><slot /><span class="sr-only"> {links.newTab}</span></a
+>

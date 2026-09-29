@@ -33,6 +33,7 @@ export const langCodes = Object.keys(languages) as Lang[];
 export const routes = {
   home: { en: '/', fr: '/fr/' },
   legal: { en: '/legal-notice/', fr: '/fr/mentions-legales/' },
+  jobBoards: { en: '/remote-job-boards/', fr: '/fr/offres-emploi-teletravail/' },
 } as const satisfies Record<string, Record<Lang, string>>;
 
 export type RouteKey = keyof typeof routes;

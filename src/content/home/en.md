@@ -60,6 +60,11 @@ about:
   # Rendered as the last benefit, with the GitHub link appended after it.
   benefitOpenSource: "Open source work you can point to, and a plus for your CV, Portfolio, Book."
   githubCta: "See the code on GitHub"
+  # Line after the benefits; `link` points at /remote-job-boards/.
+  jobBoards:
+    before: "Job hunting too? We keep a list of "
+    link: "remote job boards"
+    after: " worth your time."
   cta: "Join Us"
   roleFounder: "Co-founder"
   roleDirector: "Executive Director"

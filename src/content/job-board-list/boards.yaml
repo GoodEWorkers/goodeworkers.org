@@ -1,0 +1,155 @@
+# The remote job boards list, shared by /remote-job-boards/ (en) and
+# /fr/offres-emploi-teletravail/ (fr). Page copy (title, intro, labels) lives
+# in job-boards/<lang>.md; everything about the boards lives here.
+#
+# Add a board: copy an entry under `boards` and fill in name, url, category and
+# a note in each language. Boards are grouped by category, in the order below.
+# Add a category: add it under `categories` (its order here is the order of the
+# filter buttons) and pick a colour: yellow, orange, purple, black, pantone,
+# gold or plum.
+# URLs stay plain https:// links: when the page is built every outbound link
+# opens in a new tab with rel="noopener" and gets utm_source, utm_medium and
+# utm_campaign added (src/lib/outbound.ts). A url can also be given per
+# language, as Welcome to the Jungle does below.
+# The build stops with an error naming the entry if a category doesn't exist,
+# a translation is missing, a name is used twice or a URL isn't https.
+#
+# Notes are claims about someone else's product: keep to what the board says
+# about itself on its own site. Re-check every link before moving linksChecked.
+
+linksChecked: "2026-09-29"
+
+categories:
+  - id: community
+    color: orange
+    label:
+      en: "Recommended by remote workers"
+      fr: "Recommandés par des télétravailleurs"
+  - id: europe
+    color: pantone
+    label:
+      en: "Built for Europe"
+      fr: "Spécialisés Europe"
+  - id: global
+    color: yellow
+    label:
+      en: "Global boards, filter by Europe"
+      fr: "Internationaux, filtrez sur l'Europe"
+
+boards:
+  - name: "HiringCafe"
+    url: "https://hiringcafe.com"
+    category: community
+    note:
+      en: "Pulls listings straight from company career pages, with strict country and remote filters. Recommended twice, independently, on Reddit."
+      fr: "Récupère les offres directement sur les pages carrières des entreprises, avec des filtres stricts par pays et télétravail. Recommandé deux fois, indépendamment, sur Reddit."
+  - name: "Hacker News: Who is hiring?"
+    url: "https://hnhiring.com/locations/remote"
+    category: community
+    note:
+      en: "The monthly Hacker News hiring thread, filtered to remote roles by hnhiring.com. Many posts say “Remote (EU)” up front."
+      fr: "Le fil mensuel « Who is hiring? » de Hacker News, filtré sur le télétravail par hnhiring.com. Beaucoup d'annonces indiquent « Remote (EU) » dès la première ligne."
+  - name: "NoDesk"
+    url: "https://nodesk.co"
+    category: community
+    note:
+      en: "New remote jobs at remote companies and startups, free to browse and apply."
+      fr: "Des offres récentes d'entreprises en télétravail et de startups, à consulter et postuler gratuitement."
+  - name: "RemoteFast"
+    url: "https://remotefast.co"
+    category: community
+    note:
+      en: "Remote listings from many companies in one place, filterable by category and salary."
+      fr: "Des offres en télétravail de nombreuses entreprises au même endroit, filtrables par catégorie et par salaire."
+
+  - name: "EU Remote Jobs"
+    url: "https://euremotejobs.com"
+    category: europe
+    note:
+      en: "Hand-curated remote jobs on European time zones, at companies with EU entities."
+      fr: "Des offres en télétravail sélectionnées à la main, sur les fuseaux horaires européens, dans des entreprises présentes dans l'UE."
+  - name: "Jobgether"
+    url: "https://jobgether.com/remote-jobs/europe"
+    category: europe
+    note:
+      en: "Remote jobs open to candidates in Europe, with time-zone and work-authorization filters. Extras are paid."
+      fr: "Des offres en télétravail ouvertes aux candidats en Europe, avec des filtres par fuseau horaire et autorisation de travail. Les options avancées sont payantes."
+  - name: "Himalayas"
+    url: "https://himalayas.app"
+    category: europe
+    note:
+      en: "A general remote board with unusually detailed filters for which countries can apply."
+      fr: "Un job board remote généraliste aux filtres très détaillés sur les pays autorisés à postuler."
+  - name: "Working Nomads (Europe)"
+    url: "https://www.workingnomads.com/remote-europe-jobs"
+    category: europe
+    note:
+      en: "Working Nomads' Europe listings: fully remote jobs open to people based in Europe."
+      fr: "La sélection Europe de Working Nomads : des postes 100 % à distance ouverts aux personnes basées en Europe."
+  - name: "Landing.jobs"
+    url: "https://landing.jobs"
+    category: europe
+    note:
+      en: "Tech jobs in Europe, including remote ones, plus visa and relocation guidance."
+      fr: "Des offres tech en Europe, télétravail compris, avec des conseils visa et relocalisation."
+  - name: "Welcome to the Jungle"
+    url:
+      en: "https://www.welcometothejungle.com/en/jobs"
+      fr: "https://www.welcometothejungle.com/fr/jobs"
+    category: europe
+    note:
+      en: "Jobs at European companies, with detailed company profiles and a remote filter."
+      fr: "Des offres dans des entreprises européennes, avec des fiches entreprises détaillées et un filtre télétravail."
+  - name: "Flexa"
+    url: "https://flexa.careers/jobs?flexLocation=FULLY_REMOTE"
+    category: europe
+    note:
+      en: "UK-focused: jobs at companies whose flexible and remote working has been verified. This link opens its fully remote filter; most remote roles are UK-only."
+      fr: "Centré sur le Royaume-Uni : des offres dans des entreprises dont le télétravail et la flexibilité ont été vérifiés. Ce lien ouvre le filtre 100 % à distance ; la plupart des postes à distance sont réservés au Royaume-Uni."
+  - name: "JobRack"
+    url: "https://jobrack.eu"
+    category: europe
+    note:
+      en: "A remote job board based in Eastern Europe."
+      fr: "Un job board de télétravail basé en Europe de l'Est."
+
+  - name: "We Work Remotely"
+    url: "https://weworkremotely.com"
+    category: global
+    note:
+      en: "A long-running, high-volume remote-only board. Filter by Europe or EMEA to cut it down."
+      fr: "Un job board 100 % remote de longue date, avec beaucoup d'offres. Filtrez sur l'Europe ou l'EMEA pour y voir clair."
+  - name: "Remote OK"
+    url: "https://remoteok.com/remote-jobs-in-europe"
+    category: global
+    note:
+      en: "A large remote board that shows salaries on its listings. This link opens its Europe filter."
+      fr: "Un grand job board remote qui affiche les salaires sur ses offres. Ce lien ouvre directement son filtre Europe."
+  - name: "Remotive"
+    url: "https://remotive.com"
+    category: global
+    note:
+      en: "Curated, fully remote jobs, free to browse; filter by Europe. A paid plan unlocks the full list."
+      fr: "Des offres 100 % remote sélectionnées, consultables gratuitement ; filtrez sur l'Europe. Une formule payante débloque la liste complète."
+  - name: "Wellfound"
+    url: "https://wellfound.com/remote"
+    category: global
+    note:
+      en: "Startup jobs with the salary and equity on the listing. Filter remote roles by Europe."
+      fr: "Des offres en startup avec le salaire et les parts (equity) affichés. Filtrez les postes à distance sur l'Europe."
+  - name: "FlexJobs"
+    url: "https://www.flexjobs.com"
+    category: global
+    note:
+      en: "Paid, with every listing hand-screened to keep out scams and junk. Filter by jobs open in Europe."
+      fr: "Payant, avec chaque offre vérifiée à la main pour écarter les arnaques. Filtrez sur les postes ouverts en Europe."
+  - name: "Remote.com"
+    url: "https://remote.com/jobs/all"
+    category: global
+    note:
+      en: "Jobs from companies hiring across borders, each tagged with the countries it accepts (“Anywhere”, “Europe only”…). Pick your country in the filter."
+      fr: "Des offres d'entreprises qui recrutent à l'international, chacune avec les pays acceptés (« Anywhere », « Europe only »…). Choisissez votre pays dans le filtre."
+
+# Helpers that are not job boards (e.g. CV tools): shown on one line under the
+# table, and left out of the count, the filters and the structured data.
+tools: []

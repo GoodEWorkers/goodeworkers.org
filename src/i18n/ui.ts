@@ -51,9 +51,15 @@ const en = {
     switchTo: 'Switch to',
   },
 
+  links: {
+    /** Read out after every outbound link (they all open in a new tab). */
+    newTab: '(opens in a new tab)',
+  },
+
   footer: {
     contactTitle: 'Tell us about your project',
     mailSubject: 'Project enquiry',
+    jobBoardsLink: 'Remote job boards',
     legalLink: 'Legal Notice',
     openSource: 'Our work is open source on',
     poweredBy: 'This site is powered by',
@@ -138,9 +144,14 @@ const fr: Dictionary = {
     switchTo: 'Passer en',
   },
 
+  links: {
+    newTab: "(s'ouvre dans un nouvel onglet)",
+  },
+
   footer: {
     contactTitle: 'Parlez-nous de votre projet',
     mailSubject: 'Demande de projet',
+    jobBoardsLink: "Offres d'emploi en télétravail",
     legalLink: 'Mentions légales',
     openSource: 'Notre travail est open source sur',
     poweredBy: 'Ce site est propulsé par',

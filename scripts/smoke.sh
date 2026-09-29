@@ -42,18 +42,52 @@ check_page "/"                      "200" "Helping"
 check_page "/legal-notice/"         "200" "Legal Notice"
 check_page "/no-such-page/"         "404" "Page not found"
 check_page "/thanks/"               "200" "GitHub"
+check_page "/remote-job-boards/"    "200" "We Work Remotely"
 
 # French mirror
 check_page "/fr/"                   "200" "les associations"
 check_page "/fr/mentions-legales/"  "200" "Mentions légales"
 check_page "/fr/no-such-page/"      "404" "Page introuvable"
 check_page "/fr/thanks/"            "200" "GitHub"
+check_page "/fr/offres-emploi-teletravail/" "200" "Filtrer par mot-clé"
 
 # SEO wiring: every indexable page declares both language variants
 check_page "/"                      "200" 'hreflang="fr" href="https://goodeworkers.org/fr/"'
 check_page "/fr/"                   "200" 'hreflang="en" href="https://goodeworkers.org/"'
 check_page "/legal-notice/"         "200" 'hreflang="fr" href="https://goodeworkers.org/fr/mentions-legales/"'
 check_page "/fr/mentions-legales/"  "200" 'rel="canonical" href="https://goodeworkers.org/fr/mentions-legales/"'
+check_page "/remote-job-boards/"    "200" 'hreflang="fr" href="https://goodeworkers.org/fr/offres-emploi-teletravail/"'
+check_page "/fr/offres-emploi-teletravail/" "200" 'rel="canonical" href="https://goodeworkers.org/fr/offres-emploi-teletravail/"'
+check_page "/remote-job-boards/"    "200" '"@type":"ItemList"'
+
+# Homepage body links to the job boards page (the footer link is separate)
+# (lowercase anchor text: the footer link is capitalised)
+check_page "/"                      "200" '>remote job boards</a>'
+check_page "/fr/"                   "200" '>offres d&#39;emploi en télétravail</a>'
+
+# Every link to another site opens in a new tab, with rel="noopener" and our
+# utm_source: all of them go through src/components/ExternalLink.astro.
+check_external_links() {
+  local url="${BASE}$1" tag count=0 bad=0
+  while IFS= read -r tag; do
+    [[ -z "$tag" ]] && continue
+    count=$((count + 1))
+    if [[ "$tag" != *'target="_blank"'* || "$tag" != *'rel="noopener'* || "$tag" != *'utm_source='* ]]; then
+      [[ $bad -eq 0 ]] && echo "FAIL $url external link without new tab, noopener or utm_source:"
+      echo "      ${tag:0:160}"
+      bad=$((bad + 1))
+    fi
+  done < <(curl -s "$url" | grep -oE '<a [^>]*href="https?://[^"]+"[^>]*>' | grep -v 'href="https://goodeworkers.org' || true)
+  if [[ $bad -gt 0 ]]; then
+    fail=1
+  else
+    echo "OK   $url ($count external links: new tab, noopener, utm_source)"
+  fi
+}
+
+for path in / /fr/ /remote-job-boards/ /fr/offres-emploi-teletravail/ /legal-notice/ /thanks/; do
+  check_external_links "$path"
+done
 
 if [[ $fail -ne 0 ]]; then
   echo

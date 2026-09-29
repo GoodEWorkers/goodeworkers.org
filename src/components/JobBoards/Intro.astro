@@ -1,0 +1,28 @@
+---
+import CircledText from './CircledText.astro';
+import { getLangFromPath } from '../../i18n/routes';
+import { checkedParts, type JobBoardsContent } from '../../i18n/jobBoards';
+
+interface Props {
+  content: JobBoardsContent;
+}
+
+const { content } = Astro.props;
+const checked = checkedParts(content, getLangFromPath(Astro.url.pathname));
+---
+
+<!-- The lede sits beside the heading on wide screens, so the table below
+     starts inside the first viewport. -->
+<header
+  class="pt-10 md:pt-14 lg:pt-16 text-grey lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] lg:items-end lg:gap-16"
+>
+  <h1 class="text-4xl/tight md:text-5xl/tight lg:text-6xl/tight xl:text-7xl/tight font-medium">
+    <CircledText text={content.heading} />
+  </h1>
+  <div class="mt-6 md:mt-8 lg:mt-0 lg:pb-2">
+    <p class="max-w-2xl text-sm md:text-base leading-[1.6875] text-ashgray">{content.intro}</p>
+    <p class="mt-3 text-xs md:text-sm text-ashgray/70">
+      {checked.before}<time datetime={checked.datetime}>{checked.label}</time>{checked.after}
+    </p>
+  </div>
+</header>

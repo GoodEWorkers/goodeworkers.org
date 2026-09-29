@@ -61,6 +61,11 @@ about:
   # Affiché comme dernier avantage, avec le lien GitHub ajouté à la suite.
   benefitOpenSource: "Du travail open source que vous pouvez montrer, et un plus pour votre CV, votre portfolio ou votre book."
   githubCta: "Voir le code sur GitHub"
+  # Ligne après les avantages ; `link` pointe vers /fr/offres-emploi-teletravail/.
+  jobBoards:
+    before: "Vous cherchez aussi un emploi ? Voici où trouver des "
+    link: "offres d'emploi en télétravail"
+    after: "."
   # Court pour que le bouton tienne sur une ligne, comme « Join Us » en anglais.
   cta: "Nous rejoindre"
   roleFounder: "Cofondation"
