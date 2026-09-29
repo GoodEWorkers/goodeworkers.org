@@ -83,6 +83,12 @@ error naming the entry if a category doesn't exist, a translation is missing,
 a name is used twice or a URL isn't https. Page copy (title, intro, labels)
 stays in `src/content/job-boards/<lang>.md`.
 
+`npm run check-links` checks that every URL in the list still answers 200
+(after redirects). CI runs it on pull requests that touch the list and every
+Monday (`.github/workflows/job-board-links.yml`), and fails on any dead link.
+Sites behind a Cloudflare bot challenge can't be checked by a robot: they are
+listed as warnings to check by hand.
+
 ## External links
 
 Link to other sites with `src/components/ExternalLink.astro`, never a bare
