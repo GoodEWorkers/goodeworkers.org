@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T11:13:55+00:00",
+  "title": "Design System: GoodEWorkers",
+  "extensions": {
+    "colorMeta": {
+      "orange": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "oklch(68.3% 0.208 41)",
+        "tonalRamp": [
+          "#1C0300",
+          "#470E00",
+          "#771E00",
+          "#AB2F00",
+          "#E14500",
+          "#F97C4C",
+          "#FFAC88",
+          "#FFDCC2"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Marigold",
+        "canonical": "oklch(86.2% 0.140 84)",
+        "tonalRamp": [
+          "#120900",
+          "#332200",
+          "#583D00",
+          "#805A00",
+          "#A97900",
+          "#C69F4B",
+          "#E4C588",
+          "#FFECC2"
+        ]
+      },
+      "purple": {
+        "role": "tertiary",
+        "displayName": "Lavender",
+        "canonical": "oklch(73.8% 0.070 303)",
+        "tonalRamp": [
+          "#0D0911",
+          "#282131",
+          "#473C55",
+          "#68597C",
+          "#8B78A5",
+          "#AC9DC2",
+          "#CEC3E0",
+          "#F2EAFF"
+        ]
+      },
+      "pantone": {
+        "role": "tertiary",
+        "displayName": "Pantone Periwinkle",
+        "canonical": "oklch(54.3% 0.105 282)",
+        "tonalRamp": [
+          "#090A16",
+          "#21223B",
+          "#3C3D64",
+          "#595B91",
+          "#787ABF",
+          "#9C9FD9",
+          "#C2C5F3",
+          "#E9ECFF"
+        ]
+      },
+      "black": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "canonical": "oklch(17.8% 0 0)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "black-light": {
+        "role": "neutral",
+        "displayName": "Raised Night",
+        "canonical": "oklch(23.1% 0 0)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(97.9% 0 0)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "white-pure": {
+        "role": "neutral",
+        "displayName": "Pure White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "grey": {
+        "role": "neutral",
+        "displayName": "Light Grey",
+        "canonical": "oklch(94.3% 0 0)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "ashgray": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "oklch(90.7% 0 0)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page H1s on the dark ground (Inter 500; 36px to 72px, homepage to 74px)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings on either ground; emphasised or encircled word bold."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "ClashDisplay 600 names a visitor clicks: board and tool names."
+      },
+      "cta": {
+        "displayName": "CTA",
+        "purpose": "ClashDisplay 700 label inside the large pill buttons."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading copy; line-height 1.6875; ledes max 42rem."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav, filter pills, field labels, table headers (Inter 700). Note: Inter 500/700 currently render at 400; see The Hollow Bold Rule."
+      }
+    },
+    "shadows": [
+      {
+        "name": "toolbar-stuck",
+        "value": "0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45)",
+        "purpose": "State-only hairline under the sticky filter toolbar while rows scroll beneath it. No resting shadows exist."
+      }
+    ],
+    "motion": [
+      {
+        "name": "color-hover",
+        "value": "200ms ease-in",
+        "purpose": "Colour fills on nav pill and filter pills."
+      },
+      {
+        "name": "row-hover",
+        "value": "150ms",
+        "purpose": "Table row #ECECEC fill."
+      },
+      {
+        "name": "cta-scale",
+        "value": "transform scale(1.05), 150ms ease-in",
+        "purpose": "CTA pill hover; no shadow."
+      },
+      {
+        "name": "menu-reveal",
+        "value": "opacity + translateY(-0.5rem), 100ms ease-in",
+        "purpose": "Mobile menu overlay."
+      },
+      {
+        "name": "toolbar-stuck",
+        "value": "box-shadow 200ms ease-out",
+        "purpose": "Stuck toolbar hairline fade."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transitions 0.01ms, scroll-behavior auto",
+        "purpose": "prefers-reduced-motion override in global.css."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "2xl",
+        "value": "1536px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Orange CTA Pill",
+      "kind": "button",
+      "refersTo": "button-cta-orange",
+      "description": "The one primary action per view (Join us, Send). Pure-white ClashDisplay label; scales on hover.",
+      "html": "<a class=\"ds-cta ds-cta-orange\" href=\"#\"><span class=\"ds-cta-label\">Join us</span></a>",
+      "css": ".ds-cta{display:flex;flex-direction:column;align-items:center;width:100%;max-width:336px;padding:20px 28px;border-radius:9999px;text-decoration:none;transition:transform 150ms ease-in;} .ds-cta:hover{transform:scale(1.05);} .ds-cta:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-cta-orange{background:#FD5E09;color:#FFFFFF;} .ds-cta-label{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:36px;line-height:1.1;text-align:center;}"
+    },
+    {
+      "name": "Yellow Path Pill",
+      "kind": "button",
+      "refersTo": "button-cta-yellow",
+      "description": "Audience path CTA (I am a nonprofit): small Inter label above a ClashDisplay line.",
+      "html": "<a class=\"ds-cta-y\" href=\"#\"><span class=\"ds-cta-y-small\">I am a</span><span class=\"ds-cta-y-big\">nonprofit</span></a>",
+      "css": ".ds-cta-y{display:flex;flex-direction:column;align-items:center;width:100%;max-width:336px;padding:20px 28px;border-radius:9999px;background:#FDC959;color:#111111;text-decoration:none;transition:transform 150ms ease-in;} .ds-cta-y:hover{transform:scale(1.05);} .ds-cta-y:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-cta-y-small{font-family:Inter, Arial, sans-serif;font-weight:500;font-size:16px;} .ds-cta-y-big{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:36px;line-height:1.1;}"
+    },
+    {
+      "name": "Nav Contact Pill",
+      "kind": "nav",
+      "refersTo": "nav-contact",
+      "description": "Sticky #111 navbar with the orange-outline Contact pill that fills orange on hover.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-logo\">GoodEWorkers</span><div class=\"ds-nav-right\"><a class=\"ds-nav-contact\" href=\"#\">Contact</a><span class=\"ds-nav-lang\">EN <span>FR</span></span></div></nav>",
+      "css": ".ds-nav{display:flex;justify-content:space-between;align-items:center;background:#111111;color:#ECECEC;padding:16px 32px;font-family:Inter, Arial, sans-serif;font-weight:700;} .ds-nav-logo{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:22px;color:#FD5E09;} .ds-nav-right{display:flex;align-items:center;gap:32px;} .ds-nav-contact{border:2px solid #FD5E09;border-radius:9999px;padding:4px 12px;color:#ECECEC;text-decoration:none;transition:background-color 200ms ease-in,color 200ms ease-in;} .ds-nav-contact:hover{background:#FD5E09;color:#111111;} .ds-nav-contact:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-nav-lang span{opacity:.6;}"
+    },
+    {
+      "name": "Kind Filter Pills",
+      "kind": "chip",
+      "refersTo": "filter-pill",
+      "description": "Black-outline toggle pills with kind dot and count; pressed fills black.",
+      "html": "<div class=\"ds-pills\" role=\"group\" aria-label=\"Kind\"><button class=\"ds-pill\" aria-pressed=\"true\">All <span class=\"ds-pill-count\">29</span></button><button class=\"ds-pill\" aria-pressed=\"false\"><span class=\"ds-dot\" style=\"background:#FDC959\"></span>Remote-only boards <span class=\"ds-pill-count\">9</span></button><button class=\"ds-pill\" aria-pressed=\"false\"><span class=\"ds-dot\" style=\"background:#FD5E09\"></span>Vetted listings <span class=\"ds-pill-count\">3</span></button><button class=\"ds-pill\" aria-pressed=\"false\"><span class=\"ds-dot\" style=\"background:#6667AB\"></span>Search engines <span class=\"ds-pill-count\">6</span></button></div>",
+      "css": ".ds-pills{display:flex;flex-wrap:wrap;gap:8px;background:#F8F8F8;padding:16px;} .ds-pill{display:inline-flex;align-items:center;gap:8px;border:2px solid #111111;border-radius:9999px;padding:6px 16px;background:transparent;color:#111111;font-family:Inter, Arial, sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:background-color 200ms,color 200ms;} .ds-pill:hover{background:#ECECEC;} .ds-pill[aria-pressed=true]{background:#111111;color:#ECECEC;} .ds-pill:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-pill-count{font-weight:500;color:rgb(17 17 17 / .6);} .ds-pill[aria-pressed=true] .ds-pill-count{color:rgb(236 236 236 / .7);} .ds-dot{width:10px;height:10px;border-radius:9999px;flex-shrink:0;} .ds-pill[aria-pressed=true] .ds-dot{box-shadow:0 0 0 1px #ECECEC;}"
+    },
+    {
+      "name": "Form-field Search Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Underlined field: 2px black bottom rule, orange caret, orange rule and ring on focus.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field-label\" for=\"ds-q\">Filter by keyword</label><input id=\"ds-q\" class=\"ds-input\" type=\"search\" placeholder=\"salary, freelance, design...\"></div>",
+      "css": ".ds-field{background:#F8F8F8;padding:16px;max-width:384px;font-family:Inter, Arial, sans-serif;} .ds-field-label{display:block;font-weight:700;font-size:14px;color:#111111;} .ds-input{margin-top:4px;width:100%;background:transparent;border:0;border-bottom:2px solid #111111;border-radius:0;padding:6px 0;font-size:16px;color:#111111;caret-color:#FD5E09;font-family:inherit;} .ds-input::placeholder{color:rgb(17 17 17 / .6);} .ds-input:focus{outline:none;border-bottom-color:#FD5E09;box-shadow:0 0 0 1px #F8F8F8,0 0 0 3px #FD5E09;}"
+    },
+    {
+      "name": "Light Sheet",
+      "kind": "card",
+      "refersTo": "panel-light",
+      "description": "The #F8F8F8 working surface, rounded and broken out to the column edges on the #111 ground.",
+      "html": "<div class=\"ds-ground\"><section class=\"ds-sheet\"><h2 class=\"ds-sheet-title\">All 29 boards</h2><p class=\"ds-sheet-text\">Working content sits on the sheet; statements sit on the ground.</p></section></div>",
+      "css": ".ds-ground{background:#111111;padding:32px 0;} .ds-sheet{background:#F8F8F8;color:#111111;border-radius:24px;padding:48px 32px 56px;font-family:Inter, Arial, sans-serif;} .ds-sheet-title{font-weight:500;font-size:36px;line-height:1.25;margin:0;} .ds-sheet-text{margin-top:16px;font-size:16px;line-height:1.6875;color:rgb(17 17 17 / .8);}"
+    },
+    {
+      "name": "Encircled Word Heading",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Signature: one word per heading ringed in orange; the word is bold.",
+      "html": "<h1 class=\"ds-h1\"><span class=\"ds-circ\"><span class=\"ds-circ-word\">Remote</span><span class=\"ds-circ-ring\"></span></span> job boards</h1>",
+      "css": ".ds-h1{background:#111111;color:#ECECEC;font-family:Inter, Arial, sans-serif;font-weight:500;font-size:60px;line-height:1.25;padding:24px;margin:0;} .ds-circ{position:relative;} .ds-circ-word{position:relative;z-index:1;padding:0 6px;font-weight:700;} .ds-circ-ring{position:absolute;left:0;right:0;top:25%;height:62%;border:2px solid #FD5E09;border-radius:9999px;}"
+    },
+    {
+      "name": "Comparison Table Row",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Dense one-line row: ClashDisplay name stretched over the row, visited dims to black/60, kind dot with label, external host.",
+      "html": "<table class=\"ds-table\"><thead><tr><th>Board</th><th>Good for</th><th>Kind</th><th>Site</th></tr></thead><tbody><tr class=\"ds-row\"><th scope=\"row\"><a class=\"ds-row-name\" href=\"#\">We Work Remotely</a></th><td>A long-running remote-only board with tech and non-tech roles.</td><td><span class=\"ds-kind\"><span class=\"ds-dot\"></span>Remote-only boards</span></td><td class=\"ds-host\">weworkremotely.com <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4.75 11.25L11.25 4.75M6.25 4.75H11.25V9.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></td></tr></tbody></table>",
+      "css": ".ds-table{width:100%;border-collapse:collapse;text-align:left;background:#F8F8F8;color:#111111;font-family:Inter, Arial, sans-serif;} .ds-table thead tr{border-bottom:2px solid #111111;font-size:14px;} .ds-table th,.ds-table td{padding:20px 24px 20px 0;vertical-align:top;} .ds-table thead th{padding:12px 24px 12px 0;font-weight:700;} .ds-row{position:relative;border-bottom:1px solid rgb(17 17 17 / .1);transition:background-color 150ms;} .ds-row:hover{background:#ECECEC;} .ds-row td{font-size:16px;line-height:1.625;} .ds-row-name{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:20px;color:#111111;text-decoration:none;text-underline-offset:4px;text-decoration-thickness:2px;} .ds-row-name::after{content:'';position:absolute;inset:0;} .ds-row-name:hover{text-decoration-line:underline;} .ds-row-name:visited{color:rgb(17 17 17 / .6);} .ds-row-name:focus-visible{outline:none;} .ds-row-name:focus-visible::after{outline:2px solid #FD5E09;outline-offset:-2px;} .ds-kind{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:rgb(17 17 17 / .7);white-space:nowrap;} .ds-dot{width:10px;height:10px;border-radius:9999px;background:#FDC959;} .ds-host{font-size:14px;color:rgb(17 17 17 / .7);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lit Window at Night",
+    "overview": "The site is a near-black room with one bright, warm sheet laid on it. The dark ground (#111) carries the big statements, and the off-white sheet (#F8F8F8), rounded and pulled out to the column edges, carries the working material: the hero's service grid, the job-board table, the contact form. Colour is warm and used sparingly: orange for the one thing to do, yellow and lavender for the other paths, and a single hand-circled word in orange that marks what the heading is about.\n\nIt feels made by people, not by a template. Photos overlap at offset angles, the card grid is irregular, and the CTAs are fat pills with a heavy geometric label that grow slightly when hovered. Density depends on the ground: statements on the dark ground are centred and roomy, while working content on the light sheet can be dense, down to one line per row, because that is where the visitor gets things done.\n\nThe system is flat. It builds depth from the contrast between the two grounds, from panels overlapping, and from scale on hover. Shadows are not part of it.",
+    "keyCharacteristics": [
+      "Two grounds: #111 near-black and the #F8F8F8 rounded sheet, alternating down the page.",
+      "One orange ring around one word per heading.",
+      "Warm accents (orange, yellow, lavender) as fills on pills and cards, or as small dots, never as large text fields.",
+      "Fat rounded pill CTAs with a ClashDisplay bold label; `hover` scales them to 105%.",
+      "Flat surfaces; no resting shadows.",
+      "Inter for reading and UI; ClashDisplay for the brand name, names you click, and CTA labels."
+    ],
+    "rules": [
+      {
+        "name": "The Two Grounds Rule",
+        "body": "Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D insets on dark and #ECECEC cards on light. Don't use a mid-value ground.",
+        "section": "colors"
+      },
+      {
+        "name": "The Orange Label Rule",
+        "body": "A label on an orange fill is pure white only at large bold sizes (the 30–40px ClashDisplay CTA). Smaller text on orange is black.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dot Never Speaks Alone Rule",
+        "body": "A kind dot (10px circle) always sits beside its text label. The yellow dot on paper is well under 3:1, so the dot is only a wayfinding echo and can't be the only signal. Kind colours: remote-only yellow, vetted orange, startups and niches purple, freelance black, search engines pantone. On a pressed black pill, the dot gets a 1px grey ring so the black dot stays visible.",
+        "section": "colors"
+      },
+      {
+        "name": "The Brand Voice Rule",
+        "body": "ClashDisplay appears only for the brand name, CTA pill labels, the footer contact heading, and names a visitor clicks to leave (board and tool names). Headings and UI are set in Inter.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hollow Bold Rule",
+        "body": "The system intends Inter at 500 and 700. But `src/styles/global.css` maps the single `Inter-Regular.ttf` to weights 400–700, so every Inter `font-medium` and `font-bold` currently renders at 400. Record and design to the intended weights. Don't retune sizes or colours to make up for the missing weight. This is pre-existing drift, reported to the owner, and not fixed here.",
+        "section": "typography"
+      },
+      {
+        "name": "The Shared Column Rule",
+        "body": "Content aligns to the logotype. Break out with `-mx` and re-pad; never pad twice.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat At Rest Rule",
+        "body": "Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar does. Hover is shown with scale or colour fill.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do alternate the #111 ground and the #F8F8F8 sheet, and break the sheet out to the column edge with `-mx-4 md:-mx-8 px-4 md:px-8`.",
+      "Do give each view one orange action, and use a pure-white label only on the large CTA pill.",
+      "Do encircle at most one word per heading, and pick it in the copy.",
+      "Do put a text label next to every kind dot.",
+      "Do use a 2px orange outline (or ring) with a 2px offset on every focusable element.",
+      "Do keep ClashDisplay for the brand name, CTA labels, the footer contact heading, and names a visitor clicks.",
+      "Do show hover with scale (CTAs) or fill (#ECECEC on the sheet, orange on the nav pill), with transitions of 150–200ms.",
+      "Do keep `prefers-reduced-motion` switching off smooth scroll and transitions."
+    ],
+    "donts": [
+      "Don't add resting shadows. The only shadow in the system is the state hairline on a stuck toolbar.",
+      "Don't place the logo, or any surface, on a mid-value ground (`BRAND.md`).",
+      "Don't set small text in white on orange. Below large-bold size, labels on orange are black.",
+      "Don't use Tailwind's stock palette (gray-500/600/900, indigo-600) or stock UI recipes. Use the brand tokens and black alpha steps.",
+      "Don't add a second horizontal padding layer inside the shared column.",
+      "Don't use glyph or emoji icons. Icons are inline SVG line icons from `src/assets/icons/`, drawn in `currentColor`.",
+      "Don't add small uppercase labels above headings. The system has no eyebrow or kicker device."
+    ]
+  }
+}
