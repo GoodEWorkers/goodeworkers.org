@@ -20,3 +20,4 @@ why:
     Les systèmes de santé ne parlent pas la même langue. Les laboratoires utilisent LOINC, la facturation CIM-10, les pharmacies RxNorm, et chaque interface ou migration nécessite une correspondance. Les équipes construisent cette correspondance à partir de zéro, mal, et la maintiennent indéfiniment. fhir-map le fait en open source, assez rapide pour s'insérer dans les flux cliniques, pour que les organisations de santé, y compris les associations, n'aient pas à la réinventer.
 contributors:
   - r-ichard
+  - kevin-dzaky-hendratama
