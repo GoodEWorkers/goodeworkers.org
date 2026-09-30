@@ -72,8 +72,8 @@ boards:
 
   - name: "EU Remote Jobs"
     url: "https://euremotejobs.com"
-    # On some runs, answers 202 instead of the page to GitHub's CI servers
-    # (2 of the first 3 runs); fine in a browser.
+    # Answered 202 instead of the page to GitHub's CI servers on 2026-09-29 and
+    # 2026-09-30, 200 on other runs; fine in a browser.
     linkCheck: manual
     category: europe
     note:
