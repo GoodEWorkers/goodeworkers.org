@@ -5,6 +5,8 @@
 #
 # {count} devient le nombre de sites et {year} l'année de la dernière
 # vérification des liens ; {date} dans `checked` devient ce mois et cette année.
+# {searches} est le nombre de recherches Google listées sous les sites :
+# retirez-le du titre du tableau si la liste n'en contient plus aucune.
 
 # Pas de suffixe « | GoodEWorkers » : avec, le titre dépasse ~60 caractères.
 title: "Offres d'emploi en télétravail en Europe : {count} sites ({year})"
@@ -20,12 +22,12 @@ checked: "Liens vérifiés en {date}."
 toolsLabel: "À voir aussi :"
 
 table:
-  title: "Les {count} sites"
+  title: "Les {count} sites, plus {searches} astuces Google"
   all: "Tous"
   kindFilter: "Afficher"
   search: "Filtrer par mot-clé"
   searchPlaceholder: "Europe, salaire, startups…"
-  showing: "{shown} sites affichés sur {total}"
+  showing: "Affichage : {shown} sur {total}"
   empty: "Aucun site ne correspond à ce filtre."
   clear: "Effacer les filtres"
   board: "Site"

@@ -1,5 +1,6 @@
 // Checks that every URL in the remote job boards list still answers HTTP 200.
 // Run by CI (.github/workflows/job-board-links.yml) and with `npm run check-links`.
+// The Google searches (`searches`) have no URL of their own and are not checked.
 //
 // Redirects are followed: what counts is the status of the final page. A site
 // behind a Cloudflare bot challenge (403 + `cf-mitigated: challenge`) refuses

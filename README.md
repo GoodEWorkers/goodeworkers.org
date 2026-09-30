@@ -75,6 +75,12 @@ by side:
 - **Add, rename or reorder a category:** edit `categories`. Their order is the
   order of the filter buttons; colours: yellow, orange, purple, black,
   pantone, gold, plum. Empty categories are hidden.
+- **Google tricks:** rows under `searches` open a Google search instead of a
+  site, e.g. `"remote" site:greenhouse.io`. Give a name, the `query` as you
+  would type it into Google, a category and a note per language.
+  `searchPeriod` is the time filter for all of them (`d` = past 24 hours).
+  They are not boards: the count, the structured data and the link check
+  leave them out.
 - **After re-checking the links,** bump `linksChecked`: it drives the "Links
   checked in…" line, the year in the title and the structured data.
 

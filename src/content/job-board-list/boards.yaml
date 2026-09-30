@@ -38,6 +38,11 @@ categories:
     label:
       en: "Global boards, filter by Europe"
       fr: "Internationaux, filtrez sur l'Europe"
+  - id: google
+    color: purple
+    label:
+      en: "Google tricks"
+      fr: "Astuces Google"
 
 boards:
   - name: "HiringCafe"
@@ -154,6 +159,53 @@ boards:
     note:
       en: "Jobs from companies hiring across borders, each tagged with the countries it accepts (“Anywhere”, “Europe only”…). Pick your country in the filter."
       fr: "Des offres d'entreprises qui recrutent à l'international, chacune avec les pays acceptés (« Anywhere », « Europe only »…). Choisissez votre pays dans le filtre."
+
+# Google searches, listed in the table under their own category. They are not
+# job boards: each one asks Google for the job pages companies publish through
+# their hiring software (Greenhouse, Lever…), so they stay out of the board
+# count, the structured data and the link check.
+# `query` goes to Google exactly as written. `searchPeriod` keeps every search
+# to pages Google added recently, like the time filter under Google's Tools
+# (sent as tbs=qdr:…): h = past hour, d = past 24 hours, w = past week,
+# m = past month; a number narrows it, e.g. h12 = past 12 hours. The notes say
+# "past 24 hours": change them with it.
+searchPeriod: "d"
+
+searches:
+  - name: "Greenhouse, via Google"
+    query: '"remote" site:greenhouse.io'
+    category: google
+    note:
+      en: "A Google trick, not Greenhouse's own search: jobs that mention “remote” on career pages hosted by Greenhouse, added to Google in the past 24 hours. Add your job title in Google's search box, and change “Past 24 hours” under Tools."
+      fr: "Astuce Google, pas le moteur de recherche de Greenhouse : les offres qui mentionnent « remote » sur les pages carrières hébergées par Greenhouse, ajoutées à Google il y a moins de 24 heures. Ajoutez votre intitulé de poste dans la barre de recherche, et changez « Moins de 24 heures » dans Outils."
+  - name: "Ashby, via Google"
+    query: '"remote" site:ashbyhq.com'
+    category: google
+    note:
+      en: "A Google trick, not Ashby's own search: jobs that mention “remote” on career pages hosted by Ashby, added to Google in the past 24 hours. Add your job title in Google's search box, and change “Past 24 hours” under Tools."
+      fr: "Astuce Google, pas le moteur de recherche d'Ashby : les offres qui mentionnent « remote » sur les pages carrières hébergées par Ashby, ajoutées à Google il y a moins de 24 heures. Ajoutez votre intitulé de poste dans la barre de recherche, et changez « Moins de 24 heures » dans Outils."
+  - name: "Lever, via Google"
+    query: '"remote" site:lever.co'
+    category: google
+    note:
+      en: "A Google trick, not Lever's own search: jobs that mention “remote” on career pages hosted by Lever, added to Google in the past 24 hours. Add your job title in Google's search box, and change “Past 24 hours” under Tools."
+      fr: "Astuce Google, pas le moteur de recherche de Lever : les offres qui mentionnent « remote » sur les pages carrières hébergées par Lever, ajoutées à Google il y a moins de 24 heures. Ajoutez votre intitulé de poste dans la barre de recherche, et changez « Moins de 24 heures » dans Outils."
+  - name: "Workable, via Google"
+    # apply.workable.com, not workable.com: the main site is full of job
+    # description templates that would drown the real jobs.
+    query: '"remote" site:apply.workable.com'
+    category: google
+    note:
+      en: "A Google trick, not Workable's own search: jobs that mention “remote” on career pages hosted by Workable, added to Google in the past 24 hours. Add your job title in Google's search box, and change “Past 24 hours” under Tools."
+      fr: "Astuce Google, pas le moteur de recherche de Workable : les offres qui mentionnent « remote » sur les pages carrières hébergées par Workable, ajoutées à Google il y a moins de 24 heures. Ajoutez votre intitulé de poste dans la barre de recherche, et changez « Moins de 24 heures » dans Outils."
+  - name:
+      en: "All four, via Google"
+      fr: "Les quatre, via Google"
+    query: '"remote" (site:greenhouse.io OR site:ashbyhq.com OR site:lever.co OR site:apply.workable.com)'
+    category: google
+    note:
+      en: "A Google trick: the Greenhouse, Ashby, Lever and Workable searches in one, for jobs that mention “remote” added to Google in the past 24 hours. Add your job title in Google's search box, and change “Past 24 hours” under Tools."
+      fr: "Astuce Google : les recherches Greenhouse, Ashby, Lever et Workable en une seule, pour les offres qui mentionnent « remote » ajoutées à Google il y a moins de 24 heures. Ajoutez votre intitulé de poste dans la barre de recherche, et changez « Moins de 24 heures » dans Outils."
 
 # Helpers that are not job boards (e.g. CV tools): shown on one line under the
 # table, and left out of the count, the filters and the structured data.
