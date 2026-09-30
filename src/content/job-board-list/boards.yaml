@@ -72,6 +72,8 @@ boards:
 
   - name: "EU Remote Jobs"
     url: "https://euremotejobs.com"
+    # Answers 202 instead of the page to GitHub's CI servers; fine in a browser.
+    linkCheck: manual
     category: europe
     note:
       en: "Hand-curated remote jobs on European time zones, at companies with EU entities."
