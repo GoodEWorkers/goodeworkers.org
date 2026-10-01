@@ -77,8 +77,9 @@ const home = defineCollection({
 //   languages, with a note and a label per language.
 //
 // Tokens filled in by `jobBoardsContent()`: `{count}` is the number of boards
-// (title, description, intro, table title), `{year}` the year of the list's
-// `linksChecked` date (title), and `{date}` its month and year (`checked`).
+// (title, description, intro, table title), `{searches}` the number of Google
+// searches (table title), `{year}` the year of the list's `linksChecked` date
+// (title), and `{date}` its month and year (`checked`).
 
 /** A heading with one word drawn inside the hand-drawn orange circle. */
 const circledHeading = z.object({
@@ -143,6 +144,20 @@ const listedSite = z.object({
   linkCheck: z.literal('manual').optional(),
 });
 
+/** A table row that opens a Google search instead of a site of its own. */
+const googleSearch = z.object({
+  /** One name, or one per language. */
+  name: z.union([z.string().min(1), localized]),
+  /** Sent to Google exactly as written, e.g. '"remote" site:greenhouse.io'. */
+  query: z.string().min(1),
+  category: z.string(),
+  note: localized,
+});
+
+/** Name of a board, tool or search as the build errors quote it. */
+const nameOf = (site: { name: string | { en: string } }) =>
+  typeof site.name === 'string' ? site.name : site.name.en;
+
 const jobBoardList = defineCollection({
   type: 'data',
   schema: z
@@ -159,6 +174,12 @@ const jobBoardList = defineCollection({
         )
         .min(1),
       boards: z.array(listedSite.extend({ category: z.string() })).min(1),
+      /** Google's time filter for every search, sent as tbs=qdr:<searchPeriod>. */
+      searchPeriod: z
+        .string()
+        .regex(/^[hdwmy]\d*$/, 'Use h, d, w, m or y, optionally followed by a number (h12 = past 12 hours)')
+        .default('d'),
+      searches: z.array(googleSearch).default([]),
       tools: z.array(listedSite).default([]),
     })
     // Mistakes a schema alone can't see, reported with the entry's name so
@@ -170,14 +191,16 @@ const jobBoardList = defineCollection({
           ctx.addIssue({ code: 'custom', path: ['categories', index, 'id'], message: `Category "${id}" is listed twice.` });
         }
       });
-      list.boards.forEach((board, index) => {
-        if (!ids.includes(board.category)) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['boards', index, 'category'],
-            message: `"${board.name}" uses category "${board.category}", which is not under categories (${ids.join(', ')}).`,
-          });
-        }
+      (['boards', 'searches'] as const).forEach((key) => {
+        list[key].forEach((row, index) => {
+          if (!ids.includes(row.category)) {
+            ctx.addIssue({
+              code: 'custom',
+              path: [key, index, 'category'],
+              message: `"${nameOf(row)}" uses category "${row.category}", which is not under categories (${ids.join(', ')}).`,
+            });
+          }
+        });
       });
       [...list.boards, ...list.tools].forEach((site) => {
         const urls = typeof site.url === 'string' ? [site.url] : Object.values(site.url);
@@ -187,7 +210,13 @@ const jobBoardList = defineCollection({
           }
         }
       });
-      const names = [...list.boards, ...list.tools].map((site) => site.name.toLowerCase());
+      // A search named per language counts each distinct name once.
+      const names = [
+        ...[...list.boards, ...list.tools].map((site) => site.name),
+        ...list.searches.flatMap((search) =>
+          typeof search.name === 'string' ? [search.name] : [...new Set(Object.values(search.name))]
+        ),
+      ].map((name) => name.toLowerCase());
       names.forEach((name, index) => {
         if (names.indexOf(name) !== index) {
           ctx.addIssue({ code: 'custom', path: ['boards'], message: `"${name}" is listed twice.` });

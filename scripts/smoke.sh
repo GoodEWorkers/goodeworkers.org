@@ -59,6 +59,9 @@ check_page "/fr/mentions-legales/"  "200" 'rel="canonical" href="https://goodewo
 check_page "/remote-job-boards/"    "200" 'hreflang="fr" href="https://goodeworkers.org/fr/offres-emploi-teletravail/"'
 check_page "/fr/offres-emploi-teletravail/" "200" 'rel="canonical" href="https://goodeworkers.org/fr/offres-emploi-teletravail/"'
 check_page "/remote-job-boards/"    "200" '"@type":"ItemList"'
+# Google tricks rows: the search URL is built from `query` and `searchPeriod`
+check_page "/remote-job-boards/"    "200" 'google.com/search?q=%22remote%22+site%3Agreenhouse.io&tbs=qdr%3Ad'
+check_page "/fr/offres-emploi-teletravail/" "200" 'Les quatre, via Google'
 
 # Homepage body links to the job boards page (the footer link is separate)
 # (lowercase anchor text: the footer link is capitalised)

@@ -3,7 +3,9 @@
 # categories and their notes live in ../job-board-list/boards.yaml.
 #
 # {count} becomes the number of boards and {year} the year the links were
-# last checked; {date} in `checked` becomes that month and year.
+# last checked; {date} in `checked` becomes that month and year. {searches} is
+# the number of Google searches listed under the boards: drop it from the table
+# title if the list ever has none.
 
 title: "{count} remote job boards for Europe ({year}) | GoodEWorkers"
 description: "{count} remote job boards for Europe: the ones remote workers recommend, boards built for Europe, and global boards to filter by EU time zones."
@@ -17,12 +19,12 @@ checked: "Links checked in {date}."
 toolsLabel: "Also useful:"
 
 table:
-  title: "All {count} boards"
+  title: "All {count} boards, plus {searches} Google tricks"
   all: "All"
   kindFilter: "Show"
   search: "Filter by keyword"
   searchPlaceholder: "Europe, salary, startups…"
-  showing: "Showing {shown} of {total} boards"
+  showing: "Showing {shown} of {total}"
   empty: "No board matches that filter."
   clear: "Clear filters"
   board: "Board"

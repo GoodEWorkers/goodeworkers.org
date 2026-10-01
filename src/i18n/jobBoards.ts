@@ -28,19 +28,33 @@ export interface Board extends Tool {
 export type JobBoardsContent = PageCopy & {
   linksChecked: string;
   categories: Category[];
+  /** The job boards alone: what the count and the structured data cover. */
   boards: Board[];
+  /** What the table lists: the boards and the Google searches, grouped by category. */
+  rows: Board[];
   tools: Tool[];
 };
 
-const pick = (url: BoardList['tools'][number]['url'], lang: Lang) =>
-  typeof url === 'string' ? url : url[lang];
+const pick = (value: string | Record<Lang, string>, lang: Lang) =>
+  typeof value === 'string' ? value : value[lang];
+
+/**
+ * A Google search for `query`, kept to pages Google added within `period`
+ * (tbs=qdr:<period>, the time filter under Google's Tools; d = past 24 hours).
+ */
+export function googleSearchUrl(query: string, period: string): string {
+  const url = new URL('https://www.google.com/search');
+  url.searchParams.set('q', query);
+  url.searchParams.set('tbs', `qdr:${period}`);
+  return url.toString();
+}
 
 /**
  * The page copy from `src/content/job-boards/<lang>.md` merged with the list
  * in `src/content/job-board-list/boards.yaml`, resolved to one language.
- * Boards are grouped in category order and keep their file order within a
+ * Rows are grouped in category order and keep their file order within a
  * category, so a board added at the end of the file still lands in its group.
- * Fills the `{count}` and `{year}` tokens.
+ * Fills the `{count}`, `{searches}` and `{year}` tokens.
  */
 export async function jobBoardsContent(lang: Lang): Promise<JobBoardsContent> {
   const page = await getEntry('job-boards', lang);
@@ -48,8 +62,9 @@ export async function jobBoardsContent(lang: Lang): Promise<JobBoardsContent> {
   const list = await getEntry('job-board-list', 'boards');
   if (!list) throw new Error('Missing job boards list: src/content/job-board-list/boards.yaml');
 
-  const { categories, boards, tools, linksChecked } = list.data;
+  const { categories, boards, searches, searchPeriod, tools, linksChecked } = list.data;
   const rank = new Map(categories.map((category, index) => [category.id, index]));
+  const byCategory = (a: Board, b: Board) => (rank.get(a.category) ?? 0) - (rank.get(b.category) ?? 0);
 
   const resolvedBoards: Board[] = boards
     .map((board) => ({
@@ -58,20 +73,30 @@ export async function jobBoardsContent(lang: Lang): Promise<JobBoardsContent> {
       category: board.category,
       note: board.note[lang],
     }))
-    .sort((a, b) => (rank.get(a.category) ?? 0) - (rank.get(b.category) ?? 0));
+    .sort(byCategory);
+
+  const resolvedSearches: Board[] = searches.map((search) => ({
+    name: pick(search.name, lang),
+    url: googleSearchUrl(search.query, searchPeriod),
+    category: search.category,
+    note: search.note[lang],
+  }));
+
+  const rows = [...resolvedBoards, ...resolvedSearches].sort(byCategory);
 
   const resolvedCategories: Category[] = categories
     .map((category) => ({
       id: category.id,
       color: category.color,
       label: category.label[lang],
-      count: resolvedBoards.filter((board) => board.category === category.id).length,
+      count: rows.filter((row) => row.category === category.id).length,
     }))
     .filter((category) => category.count > 0);
 
   const fill = (text: string) =>
     text
       .replaceAll('{count}', String(resolvedBoards.length))
+      .replaceAll('{searches}', String(resolvedSearches.length))
       .replaceAll('{year}', linksChecked.slice(0, 4));
 
   const copy = page.data;
@@ -84,6 +109,7 @@ export async function jobBoardsContent(lang: Lang): Promise<JobBoardsContent> {
     linksChecked,
     categories: resolvedCategories,
     boards: resolvedBoards,
+    rows,
     tools: tools.map((tool) => ({ name: tool.name, url: pick(tool.url, lang), note: tool.note[lang] })),
   };
 }

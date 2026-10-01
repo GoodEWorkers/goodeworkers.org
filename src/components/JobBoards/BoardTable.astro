@@ -11,7 +11,7 @@ interface Props {
 const { content } = Astro.props;
 const { table } = content;
 
-const total = content.boards.length;
+const total = content.rows.length;
 const category = new Map(content.categories.map((c) => [c.id, c]));
 // utm_campaign on every board link, so each board can tell this page apart.
 const campaign = 'remote-job-boards';
@@ -87,7 +87,7 @@ const pillDot = 'w-2.5 h-2.5 rounded-full shrink-0 group-aria-pressed:ring-1 gro
     </thead>
     <tbody>
       {
-        content.boards.map((board) => (
+        content.rows.map((board) => (
           <tr
             id={boardSlug(board.name)}
             data-kind={board.category}
