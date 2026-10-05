@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import ContributorPage from '../../components/Contributors/ContributorPage.astro';
+
+// English contributor pages: contributors/<slug>.yaml -> /contributors/<slug>/
+export async function getStaticPaths() {
+  const entries = await getCollection('contributors');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<ContributorPage contributor={entry} />
