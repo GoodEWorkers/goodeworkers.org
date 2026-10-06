@@ -68,4 +68,31 @@ about:
   cta: "Join Us"
   roleFounder: "Co-founder"
   roleDirector: "Executive Director"
+
+# Section between Why and About; `items` lists the four values in order
+# (openness, autonomy, care, solidarity). Links go to the values page.
+values:
+  title:
+    before: "The"
+    encircled: "values"
+    after: "behind our work"
+  lead: "How we work matters as much as what we build."
+  groups:
+    work: "How we work"
+    care: "Whom we care for"
+  items:
+    - id: openness
+      name: "Openness"
+      text: "We write down what people need to know and build open source tools others can use and improve."
+    - id: autonomy
+      name: "Autonomy"
+      text: "We trust people to organise their contribution around their lives, with clear responsibilities and time to focus."
+    - id: care
+      name: "Care"
+      text: "We look after our wellbeing and make space for connection across distance."
+    - id: solidarity
+      name: "Solidarity"
+      text: "We put our skills behind organisations serving essential needs, so limited resources do not mean limited access to good technology."
+  cta: "Read our values"
+  initiativesCta: "Explore our initiatives"
 ---

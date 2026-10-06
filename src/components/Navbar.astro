@@ -2,13 +2,15 @@
 import logoSvg from '../assets/images/goodeworkers.svg?raw';
 import Hamburger from './Miscs/Hamburger.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { contactAnchor, getLangFromPath, routes } from '../i18n/routes';
+import { contactAnchor, getLangFromPath, normalizePath, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
 
 const homeHref = routes.home[lang];
+const initiativesHref = routes.initiatives[lang];
+const onInitiatives = normalizePath(Astro.url.pathname) === initiativesHref;
 ---
 
 <div class="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50" data-navbar>
@@ -22,7 +24,19 @@ const homeHref = routes.home[lang];
       />
     </a>
     <div class="hidden md:flex md:items-center md:space-x-8">
-      <ul class="flex space-x-12 font-bold">
+      <ul class="flex items-center space-x-8 font-bold">
+        <li>
+          <a
+            href={initiativesHref}
+            aria-current={onInitiatives ? 'page' : undefined}
+            class:list={[
+              'block pb-1 border-b-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
+              onInitiatives ? 'text-yellow border-yellow' : 'border-transparent hover:text-orange',
+            ]}
+          >
+            {strings.nav.initiatives}
+          </a>
+        </li>
         <li>
           <a
             href={contactAnchor(lang, 'nav')}
@@ -50,6 +64,16 @@ const homeHref = routes.home[lang];
       data-menu-panel
     >
       <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
+        <li class="pl-16 pr-4 py-3">
+          <a
+            href={initiativesHref}
+            aria-current={onInitiatives ? 'page' : undefined}
+            class:list={['hover:text-orange block w-full h-full', onInitiatives && 'text-yellow']}
+            data-menu-link
+          >
+            {strings.nav.initiatives}
+          </a>
+        </li>
         <li class="pl-16 pr-4 py-3">
           <a
             href={contactAnchor(lang, 'nav-mobile')}

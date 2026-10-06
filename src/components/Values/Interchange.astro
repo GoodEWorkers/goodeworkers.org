@@ -1,0 +1,75 @@
+---
+import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import CircledText from '../JobBoards/CircledText.astro';
+import Rich from '../Common/Rich.astro';
+import DrawOnView from '../Common/DrawOnView.astro';
+import { getLangFromPath, routes } from '../../i18n/routes';
+import { valueStyles } from './valueStyles';
+import { valueIds } from '../../content/config';
+import type { ValuesContent } from '../../i18n/pages';
+
+interface Props {
+  practice: ValuesContent['practice'];
+}
+
+const { practice } = Astro.props;
+const lang = getLangFromPath(Astro.url.pathname);
+
+// The four value lines leave from four points and meet where the pill sits.
+const starts = [120, 306, 494, 680];
+const lines = valueIds.map((id, index) => {
+  const x = starts[index];
+  return { id, hex: valueStyles[id].hex, d: `M${x} 4 C${x} 120, 400 96, 400 212` };
+});
+---
+
+<section aria-labelledby="practice-title" class="mt-24 md:mt-36 mb-20 md:mb-28 text-center text-grey">
+  <h2
+    id="practice-title"
+    class="mx-auto max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+  >
+    <CircledText text={practice.title} />
+  </h2>
+  <div class="mt-8 md:mt-10 mx-auto max-w-2xl space-y-4 px-2 text-sm md:text-base leading-[1.6875] text-ashgray">
+    {practice.paragraphs.map((paragraph) => <p class="[&>strong]:text-grey"><Rich text={paragraph} /></p>)}
+  </div>
+
+  <svg
+    viewBox="0 0 800 216"
+    class="mt-8 md:mt-12 mx-auto block w-full max-w-3xl h-auto"
+    aria-hidden="true"
+    data-draw
+  >
+    <defs>
+      {
+        lines.map((line, index) => (
+          <mask id={`interchange-${line.id}`} maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="216">
+            <path
+              d={line.d}
+              pathLength="1"
+              fill="none"
+              stroke="#fff"
+              stroke-width="10"
+              class="draw"
+              style={`transition-delay: ${index * 120}ms`}
+            />
+          </mask>
+        ))
+      }
+    </defs>
+    {
+      lines.map((line) => (
+        <g mask={`url(#interchange-${line.id})`}>
+          <path d={line.d} fill="none" stroke={line.hex} stroke-width="3" stroke-linecap="round" stroke-dasharray="8 10" />
+        </g>
+      ))
+    }
+    {lines.map((line, index) => <circle cx={starts[index]} cy="6" r="5" fill="#111111" stroke={line.hex} stroke-width="3" />)}
+  </svg>
+  <BigRoundedLinkBtn
+    bigBtmText={practice.cta}
+    href={routes.initiatives[lang]}
+    class="-mt-1 mx-auto bg-orange text-white-pure whitespace-nowrap sm:w-fit sm:max-w-none sm:px-12 [&>span]:text-[26px] sm:[&>span]:text-4xl xl:[&>span]:text-[40px]"
+  />
+  <DrawOnView />
+</section>

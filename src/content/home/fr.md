@@ -70,4 +70,31 @@ about:
   cta: "Nous rejoindre"
   roleFounder: "Cofondation"
   roleDirector: "Direction générale"
+
+# Section entre « Why » et « About » ; `items` liste les quatre valeurs dans
+# l'ordre (openness, autonomy, care, solidarity). Liens vers la page des valeurs.
+values:
+  title:
+    before: "Les"
+    encircled: "valeurs"
+    after: "derrière notre travail"
+  lead: "Notre façon de travailler compte autant que ce que nous construisons."
+  groups:
+    work: "Notre façon de travailler"
+    care: "Celles et ceux dont nous prenons soin"
+  items:
+    - id: openness
+      name: "Ouverture"
+      text: "Nous mettons par écrit ce que chacun doit savoir et créons des outils open source que d'autres peuvent utiliser et améliorer."
+    - id: autonomy
+      name: "Autonomie"
+      text: "Nous faisons confiance à chacun pour organiser sa contribution autour de sa vie, avec des responsabilités claires et du temps pour se concentrer."
+    - id: care
+      name: "Bienveillance"
+      text: "Nous prenons soin de notre bien-être et faisons de la place au lien, malgré la distance."
+    - id: solidarity
+      name: "Solidarité"
+      text: "Nous mettons nos compétences au service des organisations qui répondent à des besoins essentiels, pour que des moyens limités ne riment pas avec un accès limité à une bonne technologie."
+  cta: "Lire nos valeurs"
+  initiativesCta: "Découvrir nos initiatives"
 ---

@@ -15,6 +15,20 @@ const legals = defineCollection({
   }),
 });
 
+/** The four values. Each page lists them in this order and keys colours and
+ *  illustrations on the id (src/components/Values/valueStyles.ts). */
+export const valueIds = ['openness', 'autonomy', 'care', 'solidarity'] as const;
+const valueId = z.enum(valueIds);
+
+/** Exactly one entry per value, in the order of `valueIds`. */
+const valueList = <T extends z.ZodRawShape>(item: z.ZodObject<T>) =>
+  z
+    .array(item.extend({ id: valueId }))
+    .length(valueIds.length)
+    .refine((list) => list.every((entry, index) => entry.id === valueIds[index]), {
+      message: `List the values in this order: ${valueIds.join(', ')}.`,
+    });
+
 // Homepage copy lives in home/<lang>.md (all of it in the frontmatter), so it
 // can be edited without touching the components. The file name is the
 // language. Icons and colours stay in the components, zipped by index — which
@@ -67,6 +81,16 @@ const home = defineCollection({
       cta: z.string(),
       roleFounder: z.string(),
       roleDirector: z.string(),
+    }),
+    /** "The values behind our work", between Why and About. */
+    values: z.object({
+      title: z.object({ before: z.string().default(''), encircled: z.string(), after: z.string().default('') }),
+      lead: z.string(),
+      /** The two pairs, as on the values page. */
+      groups: z.object({ work: z.string(), care: z.string() }),
+      items: valueList(z.object({ name: z.string(), text: z.string() })),
+      cta: z.string(),
+      initiativesCta: z.string(),
     }),
   }),
 });
@@ -225,4 +249,73 @@ const jobBoardList = defineCollection({
     }),
 });
 
-export const collections = { legals, home, 'job-boards': jobBoards, 'job-board-list': jobBoardList };
+// The values page: values/<lang>.md. `**bold**` is honoured in `pairs` and
+// in the practice paragraphs.
+const values = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    heading: circledHeading,
+    intro: z.string(),
+    /** The sentence naming the two pairs, at the top of the charter. */
+    pairs: z.string(),
+    /** Accessible name of the charter (the four tiles). */
+    charterLabel: z.string(),
+    groups: z.object({ work: z.string(), care: z.string() }),
+    values: valueList(
+      z.object({
+        name: z.string(),
+        tagline: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+      })
+    ),
+    /** "This page is open source too: suggest a change on GitHub", under Openness. */
+    openSource: z.object({ before: z.string(), link: z.string(), after: z.string().default('') }),
+    practice: z.object({
+      title: circledHeading,
+      paragraphs: z.array(z.string()).min(1),
+      cta: z.string(),
+    }),
+  }),
+});
+
+// The initiatives page: initiatives/<lang>.md.
+const initiatives = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    heading: circledHeading,
+    intro: z.string(),
+    /** "These commitments put our values into practice." */
+    valuesLead: z.string(),
+    /** The sentence after it, cut into pieces; a piece with a `value` links
+     *  to that value on the values page. */
+    valuesLine: z.array(z.object({ text: z.string(), value: valueId.optional() })).min(1),
+    focus: z.object({
+      title: z.string(),
+      name: z.string(),
+      paragraphs: z.array(z.string()).min(1),
+    }),
+    help: z.object({
+      title: circledHeading,
+      /** Two ways in: health organisations, then contributors. */
+      doors: z
+        .array(z.object({ question: z.string(), text: z.string(), action: z.string() }))
+        .length(2),
+      /** Replaces the footer's contact heading on this page. */
+      formTitle: z.string(),
+      mailSubject: z.string(),
+    }),
+  }),
+});
+
+export const collections = {
+  legals,
+  home,
+  'job-boards': jobBoards,
+  'job-board-list': jobBoardList,
+  values,
+  initiatives,
+};
