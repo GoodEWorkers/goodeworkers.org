@@ -1,0 +1,151 @@
+---
+// The initiatives page, shared by /initiatives/ and /fr/initiatives/.
+// Copy: src/content/initiatives/<lang>.md.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SplitHeader from '../Common/SplitHeader.astro';
+import CircledText from '../JobBoards/CircledText.astro';
+import DrawOnView from '../Common/DrawOnView.astro';
+import Icon from '../icons/Icon.astro';
+import health from '../../assets/illustrations/health.svg';
+import { valueStyles } from '../Values/valueStyles';
+import { getLangFromPath, routes } from '../../i18n/routes';
+import { initiativesContent, pageGraph } from '../../i18n/pages';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const content = await initiativesContent(lang);
+const { focus, help } = content;
+
+// The two ways in echo the homepage's two pills: yellow for organisations,
+// lavender for people who want to help. `from` tags the footer form.
+const doors = help.doors.map((door, index) => ({
+  ...door,
+  fill: index === 0 ? 'bg-yellow' : 'bg-purple',
+  href: `${Astro.url.pathname}?from=${index === 0 ? 'initiatives-health' : 'initiatives-skills'}#contact`,
+}));
+
+// A heartbeat drawn in the dashed line of the values page, spiking in the gap
+// between the two people.
+const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
+---
+
+<BaseLayout
+  title={content.title}
+  description={content.description}
+  graph={pageGraph('initiatives', 'WebPage', content, lang)}
+  contact={{ title: help.formTitle, mailSubject: help.mailSubject }}
+>
+  <main id="main-content" class="selection:bg-yellow selection:text-black">
+    <SplitHeader heading={content.heading}>{content.intro}</SplitHeader>
+
+    <!-- The values, each phrase linked to its row on the values page and
+         underlined in its colour. -->
+    <p class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl xl:text-4xl font-medium leading-snug md:leading-snug xl:leading-snug text-grey">
+      <span class="text-ashgray">{content.valuesLead}</span>
+      {' '}{
+        content.valuesLine.map((piece) =>
+          piece.value ? (
+            <a
+              href={`${routes.values[lang]}#${piece.value}`}
+              class="underline decoration-[3px] underline-offset-[0.2em] transition-colors duration-200 hover:text-orange"
+              style={`text-decoration-color: ${valueStyles[piece.value].hex}`}
+            >{piece.text}</a>
+          ) : (
+            piece.text
+          )
+        )
+      }
+    </p>
+
+    <section
+      aria-labelledby="focus-title"
+      class="mt-14 md:mt-20 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 pb-4 md:pb-8 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+    >
+      <h2 id="focus-title" class="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight">{focus.title}</h2>
+      <div class="mt-6 md:mt-10 grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16">
+        <div class="lg:col-span-7 lg:pb-8 lg:self-center">
+          <h3 class="max-w-2xl text-4xl md:text-5xl font-medium leading-[1.1] [text-wrap:balance]">
+            {focus.name}
+          </h3>
+          <div class="mt-6 max-w-2xl space-y-4 text-sm md:text-base leading-[1.6875] text-black/80">
+            {focus.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </div>
+        <div
+          class="relative lg:col-span-5 min-h-[20rem] overflow-hidden rounded-2xl lg:rounded-3xl bg-yellow flex items-end justify-center pt-12"
+        >
+          <svg
+            viewBox="0 0 400 220"
+            preserveAspectRatio="none"
+            class="absolute inset-x-0 top-[22%] w-full h-[36%]"
+            aria-hidden="true"
+            data-draw
+          >
+            <defs>
+              <mask id="pulse-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="220">
+                <path d={pulse} pathLength="1" fill="none" stroke="#fff" stroke-width="14" class="draw" />
+              </mask>
+            </defs>
+            <path
+              d={pulse}
+              mask="url(#pulse-mask)"
+              fill="none"
+              stroke="#FD5E09"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-dasharray="10 9"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+          <!-- Open Peeps by Pablo Stanley (CC0): two people in conversation.
+               Decorative: nothing here stands for a real partner. -->
+          <img
+            src={health.src}
+            alt=""
+            width={health.width}
+            height={health.height}
+            loading="lazy"
+            class="relative w-[86%] max-w-md"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="help-title" class="mt-24 md:mt-32 mb-20 md:mb-28 text-grey">
+      <h2
+        id="help-title"
+        class="text-center mx-auto max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+      >
+        <CircledText text={help.title} />
+      </h2>
+      <ul class="mt-10 md:mt-14 grid md:grid-cols-2 gap-3 md:gap-5">
+        {
+          doors.map((door) => (
+            <li
+              class:list={[
+                'group relative flex min-h-[18rem] md:min-h-[22rem] flex-col rounded-2xl lg:rounded-3xl p-7 md:p-10 xl:p-12 text-black transition-transform duration-200 ease-in hover:scale-[1.02] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-orange',
+                door.fill,
+              ]}
+            >
+              <p class="max-w-md text-2xl md:text-3xl font-medium leading-tight">{door.question}</p>
+              <p class="mt-4 text-base md:text-lg">{door.text}</p>
+              <a
+                href={door.href}
+                class="mt-auto pt-10 inline-flex items-center gap-3 self-start font-clash font-bold text-2xl md:text-3xl leading-tight outline-none after:absolute after:inset-0 after:rounded-[inherit]"
+              >
+                {door.action}
+                <span
+                  class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black text-grey transition-transform duration-200 ease-out group-hover:translate-x-1 [&>svg]:h-5 [&>svg]:w-5"
+                  aria-hidden="true"
+                >
+                  <Icon name="arrow-right" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <DrawOnView />
+  </main>
+</BaseLayout>
