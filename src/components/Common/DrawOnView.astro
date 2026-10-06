@@ -1,0 +1,43 @@
+---
+// Draws the dashed lines of a [data-draw] figure in when it scrolls into
+// view. Each line is revealed by a `.draw` stroke in its mask (pathLength 1,
+// dashoffset 1 → 0). The lines are drawn by default: the script only hides
+// them when a figure is still below the fold, so without JS, with reduced
+// motion, or when the page loads scrolled past them, they simply show.
+---
+
+<style is:global>
+  [data-draw] .draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-draw][data-armed] .draw {
+    stroke-dashoffset: 1;
+    transition: none;
+  }
+</style>
+
+<script>
+  function setupDraw() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const figures = document.querySelectorAll<HTMLElement>('[data-draw]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.removeAttribute('data-armed');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    figures.forEach((figure) => {
+      if (figure.getBoundingClientRect().top < window.innerHeight) return;
+      figure.setAttribute('data-armed', '');
+      observer.observe(figure);
+    });
+  }
+
+  setupDraw();
+</script>

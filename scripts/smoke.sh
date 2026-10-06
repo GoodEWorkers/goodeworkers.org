@@ -43,6 +43,8 @@ check_page "/legal-notice/"         "200" "Legal Notice"
 check_page "/no-such-page/"         "404" "Page not found"
 check_page "/thanks/"               "200" "GitHub"
 check_page "/remote-job-boards/"    "200" "We Work Remotely"
+check_page "/values/"               "200" "Write it down. Build in the open."
+check_page "/initiatives/"          "200" "Hospitals and health-related technology"
 
 # French mirror
 check_page "/fr/"                   "200" "les associations"
@@ -50,6 +52,8 @@ check_page "/fr/mentions-legales/"  "200" "Mentions légales"
 check_page "/fr/no-such-page/"      "404" "Page introuvable"
 check_page "/fr/thanks/"            "200" "GitHub"
 check_page "/fr/offres-emploi-teletravail/" "200" "Filtrer par mot-clé"
+check_page "/fr/valeurs/"           "200" "Bienveillance"
+check_page "/fr/initiatives/"       "200" "Notre priorité pour 2026"
 
 # SEO wiring: every indexable page declares both language variants
 check_page "/"                      "200" 'hreflang="fr" href="https://goodeworkers.org/fr/"'
@@ -59,6 +63,9 @@ check_page "/fr/mentions-legales/"  "200" 'rel="canonical" href="https://goodewo
 check_page "/remote-job-boards/"    "200" 'hreflang="fr" href="https://goodeworkers.org/fr/offres-emploi-teletravail/"'
 check_page "/fr/offres-emploi-teletravail/" "200" 'rel="canonical" href="https://goodeworkers.org/fr/offres-emploi-teletravail/"'
 check_page "/remote-job-boards/"    "200" '"@type":"ItemList"'
+check_page "/values/"               "200" 'hreflang="fr" href="https://goodeworkers.org/fr/valeurs/"'
+check_page "/fr/initiatives/"       "200" 'rel="canonical" href="https://goodeworkers.org/fr/initiatives/"'
+check_page "/values/"               "200" '"@type":"AboutPage"'
 # Google tricks rows: the search URL is built from `query` and `searchPeriod`
 check_page "/remote-job-boards/"    "200" 'google.com/search?q=%22remote%22+site%3Agreenhouse.io&tbs=qdr%3Ad'
 check_page "/fr/offres-emploi-teletravail/" "200" 'Les quatre, via Google'
@@ -67,6 +74,10 @@ check_page "/fr/offres-emploi-teletravail/" "200" 'Les quatre, via Google'
 # (lowercase anchor text: the footer link is capitalised)
 check_page "/"                      "200" '>remote job boards</a>'
 check_page "/fr/"                   "200" '>offres d&#39;emploi en télétravail</a>'
+
+# Homepage values section and nav link to the new pages
+check_page "/"                      "200" 'href="/values/#openness"'
+check_page "/fr/"                   "200" 'href="/fr/initiatives/"'
 
 # Every link to another site opens in a new tab, with rel="noopener" and our
 # utm_source: all of them go through src/components/ExternalLink.astro.
@@ -88,7 +99,7 @@ check_external_links() {
   fi
 }
 
-for path in / /fr/ /remote-job-boards/ /fr/offres-emploi-teletravail/ /legal-notice/ /thanks/; do
+for path in / /fr/ /remote-job-boards/ /fr/offres-emploi-teletravail/ /values/ /fr/valeurs/ /initiatives/ /legal-notice/ /thanks/; do
   check_external_links "$path"
 done
 
