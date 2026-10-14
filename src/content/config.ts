@@ -112,6 +112,9 @@ const jobBoards = defineCollection({
       goodFor: z.string(),
       kind: z.string(),
       site: z.string(),
+      /** Column header and filter label for how a board reaches the original job post. */
+      access: z.string(),
+      accessLabels: z.object({ direct: z.string(), login: z.string() }),
     }),
     join: z.object({
       title: circledHeading,
@@ -144,6 +147,9 @@ const listedSite = z.object({
   linkCheck: z.literal('manual').optional(),
 });
 
+/** How a visitor reaches the employer's own job post from a board; see boards.yaml. */
+const access = z.enum(['direct', 'login']);
+
 /** A table row that opens a Google search instead of a site of its own. */
 const googleSearch = z.object({
   /** One name, or one per language. */
@@ -152,6 +158,8 @@ const googleSearch = z.object({
   query: z.string().min(1),
   category: z.string(),
   note: localized,
+  /** Google's results are the job pages themselves. */
+  access: access.default('direct'),
 });
 
 /** Name of a board, tool or search as the build errors quote it. */
@@ -173,7 +181,7 @@ const jobBoardList = defineCollection({
           })
         )
         .min(1),
-      boards: z.array(listedSite.extend({ category: z.string() })).min(1),
+      boards: z.array(listedSite.extend({ category: z.string(), access })).min(1),
       /** Google's time filter for every search, sent as tbs=qdr:<searchPeriod>. */
       searchPeriod: z
         .string()

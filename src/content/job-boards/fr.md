@@ -34,6 +34,10 @@ table:
   goodFor: "Utile pour"
   kind: "Type"
   site: "Adresse"
+  access: "Offre d'origine"
+  accessLabels:
+    direct: "Lien direct"
+    login: "Connexion requise"
 
 join:
   title:

@@ -70,8 +70,12 @@ The list on `/remote-job-boards/` and `/fr/offres-emploi-teletravail/` lives in
 one file, **`src/content/job-board-list/boards.yaml`**, with both languages side
 by side:
 
-- **Add or edit a board:** name, url, category and a `note` in each language
-  (`en`, `fr`). Boards are grouped by category, in file order.
+- **Add or edit a board:** name, url, category, `access` and a `note` in each
+  language (`en`, `fr`). Boards are grouped by category, in file order.
+- **`access`** drives the "Original job post" column and filter: `direct` when
+  a visitor reaches the employer's own job post or application page without
+  logging in, `login` when they have to sign up, log in or pay first. Check
+  it by opening a few jobs on the board and clicking Apply while logged out.
 - **Add, rename or reorder a category:** edit `categories`. Their order is the
   order of the filter buttons; colours: yellow, orange, purple, black,
   pantone, gold, plum. Empty categories are hidden.

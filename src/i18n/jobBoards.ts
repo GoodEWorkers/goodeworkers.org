@@ -20,8 +20,12 @@ export interface Tool {
   note: string;
 }
 
+export type Access = BoardList['boards'][number]['access'];
+
 export interface Board extends Tool {
   category: string;
+  /** direct: links to the employer's own job post without logging in; login: it doesn't. */
+  access: Access;
 }
 
 /** Everything the page renders in one language: its copy plus the list. */
@@ -72,6 +76,7 @@ export async function jobBoardsContent(lang: Lang): Promise<JobBoardsContent> {
       url: pick(board.url, lang),
       category: board.category,
       note: board.note[lang],
+      access: board.access,
     }))
     .sort(byCategory);
 
@@ -80,6 +85,7 @@ export async function jobBoardsContent(lang: Lang): Promise<JobBoardsContent> {
     url: googleSearchUrl(search.query, searchPeriod),
     category: search.category,
     note: search.note[lang],
+    access: search.access,
   }));
 
   const rows = [...resolvedBoards, ...resolvedSearches].sort(byCategory);

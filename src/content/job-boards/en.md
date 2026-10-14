@@ -31,6 +31,10 @@ table:
   goodFor: "Good for"
   kind: "Kind"
   site: "Website"
+  access: "Original job post"
+  accessLabels:
+    direct: "Direct link"
+    login: "Login needed"
 
 join:
   title:
