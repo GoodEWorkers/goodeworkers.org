@@ -162,6 +162,13 @@ boards:
     note:
       en: "Jobs from companies hiring across borders, each tagged with the countries it accepts (“Anywhere”, “Europe only”…). Pick your country in the filter."
       fr: "Des offres d'entreprises qui recrutent à l'international, chacune avec les pays acceptés (« Anywhere », « Europe only »…). Choisissez votre pays dans le filtre."
+  - name: "Dynamite Jobs"
+    # The Europe filter doesn't show in the URL: the link opens the full search.
+    url: "https://dynamitejobs.com/remote-jobs"
+    category: global
+    note:
+      en: "Jobs at remote-first companies, every listing checked to be genuine, paid and 100% remote. Many show the salary. Applying takes a free profile. Pick “Europe” under Locations."
+      fr: "Des offres d'entreprises où le télétravail est la règle, toutes vérifiées : réelles, rémunérées et 100 % à distance. Beaucoup affichent le salaire. Postuler demande un profil gratuit. Choisissez « Europe » dans Locations."
 
 # Google searches, listed in the table under their own category. They are not
 # job boards: each one asks Google for the job pages companies publish through
