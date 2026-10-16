@@ -1,0 +1,89 @@
+---
+import CircledText from '../JobBoards/CircledText.astro';
+import Icon from '../icons/Icon.astro';
+import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import { valueStyles } from '../Values/valueStyles';
+import { getLangFromPath, routes } from '../../i18n/routes';
+import { homeContent } from '../../i18n/home';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const { values } = await homeContent(lang);
+
+const pairs = [
+  { label: values.groups.work, items: values.items.slice(0, 2) },
+  { label: values.groups.care, items: values.items.slice(2) },
+];
+---
+
+<!-- The four values, short, on the paper sheet between the night-ground Why
+     section and the About card. The full text is on the values page. -->
+<section
+  id="values"
+  aria-labelledby="values-title"
+  class="-mx-4 md:-mx-8 px-4 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 mb-16 md:mb-24 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+>
+  <div class="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
+    <h2
+      id="values-title"
+      class="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+    >
+      <CircledText text={values.title} />
+    </h2>
+    <p class="mt-6 lg:mt-0 lg:pb-2 text-base md:text-lg font-bold leading-snug">{values.lead}</p>
+  </div>
+
+  <!-- The two pairs, as on the values page; the second pair sits lower so
+       the four don't read as one even row. -->
+  <div class="mt-10 md:mt-14 grid lg:grid-cols-2 gap-x-10 xl:gap-x-16 gap-y-14">
+    {
+      pairs.map((pair, pairIndex) => (
+        <div class:list={[pairIndex === 1 && 'lg:mt-24']}>
+          <p class="text-xl md:text-2xl font-medium leading-tight">{pair.label}</p>
+          <ul class="mt-6 grid sm:grid-cols-2 gap-x-6 xl:gap-x-10 gap-y-12">
+            {pair.items.map((item, index) => {
+              const style = valueStyles[item.id];
+              return (
+                <li class="group relative">
+                  <div class="flex aspect-[4/3] items-end justify-center">
+                    <img
+                      src={style.doodle.src}
+                      alt=""
+                      width={style.doodle.width}
+                      height={style.doodle.height}
+                      loading="lazy"
+                      class:list={[
+                        'max-h-full w-auto max-w-full transition-transform duration-300 ease-out group-hover:-translate-y-1',
+                        index === 0 ? '-rotate-3 group-hover:-rotate-6' : 'rotate-2 scale-90 group-hover:rotate-0',
+                      ]}
+                    />
+                  </div>
+                  <h3 class="mt-6 flex items-center gap-3">
+                    <span class:list={['h-2.5 w-2.5 shrink-0 rounded-full', style.dot]} aria-hidden="true" />
+                    <a
+                      href={`${routes.values[lang]}#${item.id}`}
+                      class="font-clash font-semibold text-2xl md:text-3xl leading-none underline-offset-4 decoration-2 group-hover:underline outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-orange"
+                    >
+                      {item.name}
+                    </a>
+                  </h3>
+                  <p class="mt-3 text-sm md:text-base leading-[1.6875] text-black/80">{item.text}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mt-14 md:mt-16 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+    <BigRoundedLinkBtn bigBtmText={values.cta} href={routes.values[lang]} class="bg-black text-grey sm:w-fit sm:max-w-none sm:px-12" />
+    <a
+      href={routes.initiatives[lang]}
+      class="inline-flex items-center gap-2 self-start sm:self-auto font-bold underline decoration-2 underline-offset-4 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange [&_svg]:h-4 [&_svg]:w-4"
+    >
+      {values.initiativesCta}
+      <Icon name="arrow-right" />
+    </a>
+  </div>
+</section>

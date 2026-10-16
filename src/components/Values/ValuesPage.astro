@@ -1,0 +1,23 @@
+---
+// The values page, shared by /values/ and its French twin /fr/valeurs/.
+// Copy: src/content/values/<lang>.md.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SplitHeader from '../Common/SplitHeader.astro';
+import Charter from './Charter.astro';
+import ValueRows from './ValueRows.astro';
+import Interchange from './Interchange.astro';
+import { getLangFromPath } from '../../i18n/routes';
+import { pageGraph, valuesContent } from '../../i18n/pages';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const content = await valuesContent(lang);
+---
+
+<BaseLayout title={content.title} description={content.description} graph={pageGraph('values', 'AboutPage', content, lang)}>
+  <main id="main-content" class="selection:bg-yellow selection:text-black">
+    <SplitHeader heading={content.heading}>{content.intro}</SplitHeader>
+    <Charter content={content} />
+    <ValueRows content={content} />
+    <Interchange practice={content.practice} />
+  </main>
+</BaseLayout>

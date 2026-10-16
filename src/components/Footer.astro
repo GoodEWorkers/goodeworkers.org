@@ -49,6 +49,16 @@ const githubUrl = 'https://github.com/GoodEWorkers';
       class="mt-24 md:mt-40 xl:mt-60 flex flex-col items-center text-sm space-y-2"
     >
       <li class="hover:underline">
+        <a href={routes.values[lang]} hreflang={languages[lang].htmlLang}>
+          {footer.valuesLink}
+        </a>
+      </li>
+      <li class="hover:underline">
+        <a href={routes.initiatives[lang]} hreflang={languages[lang].htmlLang}>
+          {footer.initiativesLink}
+        </a>
+      </li>
+      <li class="hover:underline">
         <a href={routes.jobBoards[lang]} hreflang={languages[lang].htmlLang}>
           {footer.jobBoardsLink}
         </a>
