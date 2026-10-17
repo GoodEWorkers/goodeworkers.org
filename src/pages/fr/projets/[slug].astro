@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectPage from '../../../components/Projects/ProjectPage.astro';
+
+// French project pages: projects/<slug>.yaml -> /fr/projets/<slug>/
+// The slug is shared with the English version; the pairing lives in
+// projectPath() (src/i18n/routes.ts) so hreflang stays correct.
+export async function getStaticPaths() {
+  const entries = await getCollection('projects');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<ProjectPage project={entry} />

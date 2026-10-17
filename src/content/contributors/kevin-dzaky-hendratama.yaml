@@ -1,0 +1,33 @@
+# Kevin Dzaky Hendratama — Software Engineer. Slug: /contributors/kevin-dzaky-hendratama/
+firstName: Kevin
+lastName: Dzaky Hendratama
+role:
+  en: Software Engineer
+  fr: Ingénierie logicielle
+currentSituation:
+  en: Software engineer and Informatics Engineering student
+  fr: Ingénieur logiciel et étudiant en génie informatique
+about:
+  en: |-
+    Kevin is a Software Engineer and an active Informatics Engineering student driven by a continuous curiosity for modern technology. His experience covers the full software development process. Rather than focusing on just one area, he handles everything from shaping how users interact on the frontend to structuring the core logic and services on the backend.
+
+    To support his work, he also manages the underlying databases and applies DevOps practices to keep deployments running smoothly. Beyond web engineering, Kevin enjoys connecting digital systems with the physical world through IoT hardware and computer vision. From UI/UX prototyping to writing production code, his main focus is to build practical and impactful solutions.
+  fr: |-
+    Kevin est ingénieur logiciel et étudiant en génie informatique, animé par une curiosité constante pour les technologies modernes. Son expérience couvre l'ensemble du cycle de développement logiciel. Plutôt que de se concentrer sur un seul domaine, il s'occupe de tout, de la conception des interactions utilisateur côté frontend à la structuration de la logique métier et des services côté backend.
+
+    En appui de ce travail, il gère aussi les bases de données sous-jacentes et applique les pratiques DevOps pour que les déploiements se déroulent sans accroc. Au-delà du développement web, Kevin aime relier les systèmes numériques au monde physique grâce au matériel IoT et à la vision par ordinateur. Du prototypage UI/UX à l'écriture de code de production, son objectif est avant tout de bâtir des solutions concrètes et à fort impact.
+avatar: ./kevin-dzaky-hendratama.png
+lastContribution: "2026-09"
+contributions:
+  en: |-
+    As a volunteer, Kevin works on fhir-map, the association's open-source FHIR terminology and transformation server.
+
+    He made HL7v2 transforms return ER7 message text instead of a JSON object, so an HPRIM message can be converted to HL7v2 and then to FHIR in two chained calls. He also documented how the server resolves StructureMaps and brought the project's dependencies and CI workflows up to date.
+  fr: |-
+    Bénévole, Kevin contribue à fhir-map, le serveur open source de terminologie et de transformation FHIR de l'association.
+
+    Il a fait en sorte que les transformations HL7v2 renvoient un message texte ER7 plutôt qu'un objet JSON, ce qui permet de convertir un message HPRIM en HL7v2 puis en FHIR en deux appels enchaînés. Il a aussi documenté la façon dont le serveur résout les StructureMaps et mis à jour les dépendances et les workflows de CI du projet.
+socials:
+  github: https://github.com/kevidn
+  linkedin: https://www.linkedin.com/in/kevin-dzaky-hendratama/
+  website: https://www.keviniest.tech/

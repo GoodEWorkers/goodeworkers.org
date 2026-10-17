@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import ContributorCard from './ContributorCard.astro';
+import Encircled from '../Miscs/Encircled.astro';
+import { getLangFromPath } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import { sortContributors } from './contributors';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const strings = t(lang).contributors;
+
+const contributors = sortContributors(await getCollection('contributors'));
+---
+
+<div class="font-inter text-white bg-black-light mx-4 md:mx-8 my-10 rounded-3xl">
+  <!--
+    DIRECTION CONTRACT (contributors surface, extends the established world).
+    THESIS: the faces are the page — a wall of the people who build
+      GoodEWorkers, not a résumé list; portraits lead at gallery scale and the
+      text follows them. Refuses the category default of a name table with
+      thumbnail avatars.
+    OWN-WORLD: the site's dark world — #111 ground, black-light rounded sheet,
+      ClashDisplay headings with the orange encircled motif, Inter body,
+      yellow month badges, orange hover, pill links.
+    STORY: a visitor sees who actually does the work (recency first, then
+      last-name alphabetical), picks a face, reads what that person did and
+      where to find them.
+    FIRST VIEWPORT: encircled H1 + one-line intro, then the face grid fills
+      the viewport immediately — no hero metric, no kicker.
+    FORM: photo-led card grid (Experience mode); detail page is a black-light
+      sheet with a portrait column, contribution prose, social pills.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with
+      the finish review, the verdict, DESIGN.md, and every shipping raster
+      carrying its provenance.
+  -->
+  <main id="main-content" class="max-w-screen-2xl mx-auto px-4 py-16 md:py-24">
+    <header class="max-w-screen-md mx-auto text-center">
+      <h1 class="font-clash font-bold text-4xl md:text-5xl lg:text-6xl leading-tight">
+        {strings.titlePart1}
+        <Encircled text={strings.titleEncircled} class="font-bold" />
+        {strings.titlePart2}
+      </h1>
+      <p class="mt-6 md:mt-8 text-sm md:text-base text-ashgray leading-relaxed">
+        {strings.intro}
+      </p>
+    </header>
+    <ul
+      class="mt-14 md:mt-20 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12 md:gap-x-10"
+    >
+      {
+        contributors.map((contributor) => (
+          <li>
+            <ContributorCard contributor={contributor} lang={lang} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</div>
