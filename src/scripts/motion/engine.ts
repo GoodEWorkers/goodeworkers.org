@@ -111,7 +111,6 @@ export function initPage({ hold = false }: { hold?: boolean } = {}) {
     each('[data-reveal]', reveal);
     each('[data-stagger]', stagger, (el) => [...el.children]);
     each('svg[data-draw]', draw);
-    each('[data-wipe]', wipe);
     each('[data-parallax]', parallax);
     each('[data-roll]', roll);
     if (!isTouch()) each('[data-tilt]', tilt);
@@ -442,7 +441,7 @@ const REVEAL: Record<string, [gsap.TweenVars, gsap.TweenVars, number]> = {
 };
 
 // The shape of every scroll-once reveal (data-reveal, data-stagger, data-draw): a tween that plays when `el` reaches its line, or
-// with the page intro when it is held (see holds). The data-pop marks inside it (a station dot) wait small and scale in as it starts;
+// with the page intro when it is held (see holds). The data-pop marks inside it (the dot beside a value's name) wait small and scale in as it starts;
 // a mark belongs to the nearest reveal around it, not to the sheet that holds that one. A tween, not a timeline: ScrollTrigger
 // starts a timeline's trigger a tick late, and a `once` trigger already past its end then kills itself in the middle of the
 // next trigger's refresh, which throws.
@@ -485,16 +484,6 @@ function draw(svg: HTMLElement) {
     paths,
     { strokeDasharray: 1, strokeDashoffset: 1 },
     { strokeDashoffset: 0, clearProps: 'strokeDasharray,strokeDashoffset', duration: 1.2, stagger: 0.12, ease: ease.out },
-  );
-}
-
-// data-wipe: a line that draws down as its parent passes through the viewport (scrubbed). A clip, not a scaleY: scaled,
-// a dashed line would squash its dashes.
-function wipe(el: HTMLElement) {
-  gsap.fromTo(
-    el,
-    { clipPath: 'inset(0% 0% 100% 0%)' },
-    { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { trigger: el.parentElement ?? el, start: 'top 80%', end: 'bottom 55%', scrub: true } },
   );
 }
 

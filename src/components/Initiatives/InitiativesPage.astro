@@ -19,7 +19,7 @@ const { focus, help } = content;
 const doors = help.doors.map((door, index) => ({
   ...door,
   fill: index === 0 ? 'bg-yellow' : 'bg-purple',
-  href: `${Astro.url.pathname}?from=${index === 0 ? 'initiatives-health' : 'initiatives-skills'}#contact`,
+  from: index === 0 ? 'initiatives-health' : 'initiatives-skills',
 }));
 
 // A heartbeat drawn in the dashed line of the values page, spiking in the gap
@@ -39,7 +39,7 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
     <!-- The values, each phrase linked to its row on the values page and
          underlined in its colour. -->
     <p
-      class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl xl:text-4xl font-medium leading-snug md:leading-snug xl:leading-snug text-grey"
+      class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl font-medium leading-snug md:leading-snug text-grey"
       data-reveal="up"
       data-delay="0.3"
     >
@@ -70,7 +70,7 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
           <h3 class="max-w-2xl text-4xl md:text-5xl font-medium leading-[1.1] [text-wrap:balance]" data-reveal="up">
             {focus.name}
           </h3>
-          <div class="mt-6 max-w-2xl space-y-4 text-sm md:text-base leading-[1.6875] text-black/80">
+          <div class="mt-6 max-w-2xl space-y-4 text-base leading-[1.6875] text-black/80">
             {focus.paragraphs.map((paragraph, i) => <p data-reveal="up" data-delay={(i + 1) * 0.08}>{paragraph}</p>)}
           </div>
         </div>
@@ -134,11 +134,12 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
               ]}
               data-tilt
             >
-              <p class="max-w-md text-2xl md:text-3xl font-medium leading-tight">{door.question}</p>
+              <p class="max-w-md text-2xl font-medium leading-snug">{door.question}</p>
               <p class="mt-4 text-base md:text-lg">{door.text}</p>
               <a
-                href={door.href}
-                class="mt-auto pt-10 inline-flex items-center gap-3 self-start font-clash font-bold text-2xl md:text-3xl leading-tight outline-none after:absolute after:inset-0 after:rounded-[inherit]"
+                href="#contact"
+                data-from={door.from}
+                class="mt-auto pt-10 inline-flex items-center gap-3 self-start font-clash font-bold text-2xl lg:text-3xl leading-tight outline-none after:absolute after:inset-0 after:rounded-[inherit]"
               >
                 {door.action}
                 <span

@@ -37,7 +37,7 @@ valuesLine:
 
 focus:
   title: "Our focus for 2026"
-  name: "Hospitals and health-related technology"
+  name: "Health and hospitals"
   paragraphs:
     - "This year, we are focusing on hospitals and health-related technology."
     - "Our aim is to make useful, modern technology more accessible to organisations working in health. Their needs should shape the work: what would help, what they can maintain and where our community’s skills can make a meaningful contribution."
@@ -55,6 +55,6 @@ help:
     - question: "Have skills you would like to contribute?"
       text: "We would like to hear from you too."
       action: "Tell us how you could help"
-  formTitle: "Tell us about your needs or how you could help"
+  formTitle: "Tell us about your needs or skills"
   mailSubject: "Initiatives 2026"
 ---

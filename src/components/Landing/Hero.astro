@@ -1,7 +1,7 @@
 ---
 import Icon from '../icons/Icon.astro';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
-import { contactAnchor, getLangFromPath } from '../../i18n/routes';
+import { getLangFromPath } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
 // Presentation stays here, copy comes from the content file — zipped by index.
@@ -32,7 +32,8 @@ const { hero } = await homeContent(lang);
         upperSmallText={hero.ctaNonprofitSmall}
         bigBtmText={hero.ctaNonprofitBig}
         class="bg-yellow"
-        href={contactAnchor(lang, 'nonprofit')}
+        href="#contact"
+        from="nonprofit"
       />
     </div>
     <div class="w-full max-w-[336px]" data-intro="cta">
@@ -40,7 +41,8 @@ const { hero } = await homeContent(lang);
         upperSmallText={hero.ctaHelpSmall}
         bigBtmText={hero.ctaHelpBig}
         class="bg-purple"
-        href={contactAnchor(lang, 'volunteer')}
+        href="#contact"
+        from="volunteer"
       />
     </div>
   </div>
@@ -84,7 +86,7 @@ const { hero } = await homeContent(lang);
               <div class="[&>*]:w-5 [&>*]:h-5">
                 <Icon name={cardIcons[index]} />
               </div>
-              <p class="mt-4 text-sm md:text-base font-bold whitespace-pre-line text-center">
+              <p class="mt-4 text-base font-bold whitespace-pre-line text-center">
                 {heroCard.title}
               </p>
             </div>

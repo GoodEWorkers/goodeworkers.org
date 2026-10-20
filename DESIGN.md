@@ -342,7 +342,6 @@ The engine in `src/scripts/motion/engine.ts` reads these:
 - `data-stagger`: the children of a grid reveal one after another, 60ms apart.
 - `data-pop`: a mark inside a reveal or stagger, such as a value's dot, that grows from 60% to full size as its container plays (0.8s, 0.2s delay, 60ms apart).
 - `data-draw` (on an `<svg>`): each `path.draw[pathLength]` draws in once, when the figure's top reaches 80% of the viewport (1.2s, `expo.out`, 120ms apart). The Why arrow's own `path[data-draw]` is scrubbed by `home.ts` instead.
-- `data-wipe`: a line that wipes down from its top as its parent passes through the viewport, scrubbed from the parent's top at 80% to its bottom at 55%. It is a clip, not a scale, so dashes keep their shape.
 - `data-parallax="0.15"`: the element drifts through its pass by up to that fraction of the viewport height in each direction. Put it on a wrapper.
 - `data-tilt`: a pointer tilt of up to 2.5 degrees, with a light that follows the pointer. `data-tilt="glow"` is the light alone. Skipped on touch.
 - `data-roll`: letter roll on a text link or button (CSS, 0.5s). The engine adds an `aria-hidden` second row.
@@ -375,7 +374,7 @@ The homepage values section, between Why and About, is a paper sheet that rises 
 
 ### Page transitions
 
-Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8F8 sheet with 24px top corners, `aria-hidden`): it slides up over the page while the next one loads (0.8s, `expo.inOut`), the engine is torn down and rebuilt under it, then it lifts off (0.9s, `expo.inOut`) and the page intro starts at 55% of that lift. Back and forward and reduced motion swap at once with no sheet, the Netlify form post keeps a full browser load, and a link to the page you are on, such as the `?from=...#contact` pills, does not swap: it updates history and glides to the hash. The lamp and the curtain persist across swaps, and links prefetch on hover.
+Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8F8 sheet with 24px top corners, `aria-hidden`): it slides up over the page while the next one loads (0.8s, `expo.inOut`), the engine is torn down and rebuilt under it, then it lifts off (0.9s, `expo.inOut`) and the page intro starts at 55% of that lift. Back and forward and reduced motion swap at once with no sheet, the Netlify form post keeps a full browser load, and a link to the page you are on, such as the CTA pills (`#contact`, with the source in `data-from`) or the nav's `/?from=nav#contact`, does not swap: it updates history and glides to the hash. The lamp and the curtain persist across swaps, and links prefetch on hover.
 
 ### Reduced motion and no JS
 

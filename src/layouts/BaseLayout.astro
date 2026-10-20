@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
+import clashDisplay from '../assets/fonts/ClashDisplay-Variable.woff2';
+import interRegular from '../assets/fonts/Inter-Regular.woff2';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import {
@@ -199,6 +201,13 @@ const structuredData = {
     <!-- body is #111, so without this Android Chrome keeps light browser chrome
          against a near-black page. -->
     <meta name="theme-color" content="#111111" />
+    <!-- Both faces render in the first viewport of every page. `crossorigin`
+         is required for font preloads even on the same origin. -->
+    {
+      [clashDisplay, interRegular].map((href) => (
+        <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+      ))
+    }
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Self-referencing canonical: /index.html also resolves on Netlify, so this

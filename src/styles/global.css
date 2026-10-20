@@ -2,43 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts - adapted from Guiseppe Amato's code */
+/* Fonts. Every face is a Latin-subset woff2 (Basic Latin, Latin-1, general
+   punctuation, euro), which covers the English and French copy. The three
+   files are preloaded in BaseLayout so they are not discovered on the third
+   hop (HTML -> CSS -> font). */
 @layer base {
-  /*
-    ClashDisplay: the variable face alone covers the whole 200–700 range this
-    site uses, so the six static faces that used to follow have been removed.
-    They were never needed, and the browser preferred the exact-weight statics,
-    pulling several files where one would do.
-  */
+  /* ClashDisplay: the variable face covers the whole 200-700 range. */
   @font-face {
     font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Variable.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Variable.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Variable.ttf') format('truetype');
+    src: url('../assets/fonts/ClashDisplay-Variable.woff2') format('woff2');
     font-weight: 200 700;
     font-display: swap;
     font-style: normal;
   }
 
-  /*
-    Inter: `font-display: swap` added.
-
-    Without it the spec default is `auto`, which Chrome implements as a block
-    period of up to 3 seconds — and `.font-inter` wraps the entire page, so all
-    body copy (including both hero CTA labels) rendered invisible until the font
-    arrived.
-
-    STILL TO DO — needs a font toolchain, so it is not done here: this is a
-    309 KB TTF (~136 KB brotli) where a Latin-subset WOFF2 would be ~25–45 KB.
-    Fonts are currently ~90% of page weight. Convert with:
-      pyftsubset Inter-Regular.ttf --flavor=woff2 --layout-features='*' \
-        --unicodes=U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+20AC
-    then swap the src below and add a <link rel="preload"> in BaseLayout so the
-    font is not discovered on the third hop (HTML → CSS → font).
-  */
+  /* Inter: one face, declared over 400-700 on purpose. The site was designed
+     and approved with Inter at a single weight, so `font-medium` and
+     `font-bold` resolve to Regular with no synthetic bold. Keep it that way
+     unless the design changes. */
   @font-face {
     font-family: 'Inter';
-    src: url('../assets/fonts/Inter-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/Inter-Regular.woff2') format('woff2');
     font-weight: 400 700;
     font-display: swap;
     font-style: normal;

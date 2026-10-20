@@ -38,7 +38,7 @@ valuesLine:
 
 focus:
   title: "Notre priorité pour 2026"
-  name: "Les hôpitaux et les technologies liées à la santé"
+  name: "Santé et hôpitaux"
   paragraphs:
     - "Cette année, nous nous concentrons sur les hôpitaux et les technologies liées à la santé."
     - "Notre objectif : rendre des technologies utiles et modernes plus accessibles aux organisations qui travaillent dans la santé. Leurs besoins doivent guider le travail : ce qui les aiderait, ce qu'elles peuvent maintenir et là où les compétences de notre communauté peuvent vraiment faire la différence."
@@ -50,12 +50,12 @@ help:
     encircled: "façonner"
     after: "ce travail"
   doors:
-    - question: "Vous travaillez dans un hôpital ou une association de santé et vous faites face à un défi technologique ?"
+    - question: "Vous travaillez dans la santé et faites face à un défi technologique ?"
       text: "Nous aimerions le comprendre."
       action: "Parlez-nous de vos besoins"
     - question: "Vous avez des compétences à mettre au service de ce travail ?"
       text: "Nous aimerions aussi avoir de vos nouvelles."
       action: "Dites-nous comment vous pourriez aider"
-  formTitle: "Parlez-nous de vos besoins ou de la façon dont vous pourriez aider"
+  formTitle: "Vos besoins ou vos compétences"
   mailSubject: "Initiatives 2026"
 ---

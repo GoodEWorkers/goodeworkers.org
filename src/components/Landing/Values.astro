@@ -15,12 +15,12 @@ const pairs = [
 ];
 ---
 
-<!-- The four values, short, on the paper sheet between the night-ground Why
+<!-- The four values, short, on a dark card between the night-ground Why
      section and the About card. The full text is on the values page. -->
 <section
   id="values"
   aria-labelledby="values-title"
-  class="-mx-4 md:-mx-8 px-4 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 mb-16 md:mb-24 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+  class="-mx-4 md:-mx-8 px-4 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 mb-16 md:mb-24 bg-black-light text-grey rounded-xl sm:rounded-2xl lg:rounded-3xl"
   data-reveal="up"
 >
   <div class="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
@@ -34,33 +34,17 @@ const pairs = [
     <p class="mt-6 lg:mt-0 lg:pb-2 text-base md:text-lg font-bold leading-snug" data-reveal="up" data-delay="0.1">{values.lead}</p>
   </div>
 
-  <!-- The two pairs, as on the values page; the second pair sits lower so
-       the four don't read as one even row. -->
+  <!-- The two pairs, as on the values page. -->
   <div class="mt-10 md:mt-14 grid lg:grid-cols-2 gap-x-10 xl:gap-x-16 gap-y-14">
     {
-      pairs.map((pair, pairIndex) => (
-        <div class:list={[pairIndex === 1 && 'lg:mt-24']}>
+      pairs.map((pair) => (
+        <div>
           <p class="text-xl md:text-2xl font-medium leading-tight">{pair.label}</p>
           <ul class="mt-6 grid sm:grid-cols-2 gap-x-6 xl:gap-x-10 gap-y-12" data-stagger>
-            {pair.items.map((item, index) => {
+            {pair.items.map((item) => {
               const style = valueStyles[item.id];
               return (
                 <li class="group relative">
-                  <div class="flex aspect-[4/3] items-end justify-center">
-                    <img
-                      src={style.doodle.src}
-                      alt=""
-                      width={style.doodle.width}
-                      height={style.doodle.height}
-                      loading="lazy"
-                      class:list={[
-                        'max-h-full w-auto max-w-full transition-transform duration-300 ease-out group-hover:-translate-y-1 group-has-[:focus-visible]:-translate-y-1',
-                        index === 0
-                          ? '-rotate-3 group-hover:-rotate-6 group-has-[:focus-visible]:-rotate-6'
-                          : 'rotate-2 scale-90 group-hover:rotate-0 group-has-[:focus-visible]:rotate-0',
-                      ]}
-                    />
-                  </div>
                   <h3 class="mt-6 flex items-center gap-3">
                     <span class:list={['h-2.5 w-2.5 shrink-0 rounded-full', style.dot]} aria-hidden="true" data-pop />
                     <a
@@ -70,7 +54,7 @@ const pairs = [
                       {item.name}
                     </a>
                   </h3>
-                  <p class="mt-3 text-sm md:text-base leading-[1.6875] text-black/80">{item.text}</p>
+                  <p class="mt-3 text-base leading-[1.6875] text-ashgray">{item.text}</p>
                 </li>
               );
             })}
@@ -81,7 +65,12 @@ const pairs = [
   </div>
 
   <div class="mt-14 md:mt-16 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
-    <BigRoundedLinkBtn bigBtmText={values.cta} href={routes.values[lang]} class="bg-black text-grey sm:w-fit sm:max-w-none sm:px-12" />
+    <BigRoundedLinkBtn
+      upperSmallText={values.ctaSmall}
+      bigBtmText={values.cta}
+      href={routes.values[lang]}
+      class="bg-orange text-black sm:w-fit sm:max-w-none sm:px-12"
+    />
     <a
       href={routes.initiatives[lang]}
       class="inline-flex items-center gap-2 self-start sm:self-auto font-bold underline decoration-2 underline-offset-4 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform [&_svg]:hover:translate-x-1 [&_svg]:focus-visible:translate-x-1"

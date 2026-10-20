@@ -4,9 +4,10 @@
  * one loads, stays down while the engine is torn down and rebuilt under it, then lifts off the new page. The page is
  * built held (initPage({ hold })): what is on its first screen plays with the page intro, as the sheet clears, not unseen under it.
  * A page that does not arrive in SLOW ms, or cannot be swapped in (offline, another origin, not HTML), is handed back to the browser.
- * No sheet for back/forward or without html.motion: those swap at once. A link to the page you are on
- * (?from=...#contact) keeps the page as it is, since a swap would replay every reveal and wipe the form, and only scrolls;
- * so does a link to a place on the page (#openness), which Astro leaves to the browser's jump: it glides there instead.
+ * No sheet for back/forward or without html.motion: those swap at once. A link to the page you are on that only changes the
+ * query (the nav's /?from=nav#contact on the homepage) keeps the page as it is, since a swap would replay every reveal and wipe
+ * the form, and only scrolls; so does a link to a place on the page (#openness, the CTA pills' #contact), which Astro leaves to
+ * the browser's jump: it glides there instead.
  * Registered once per full load by index.ts, and only when the engine is alive.
  */
 import { gsap } from 'gsap';
@@ -54,7 +55,8 @@ function hashTarget(hash = location.hash) {
 export function transitions() {
   // A link inside the page to a place on it (the charter tiles). Astro would push the entry and jump: let it keep the
   // history (entry, hash, :target, Back), then put the scroll back where it was and glide. In the capture phase, before
-  // Astro's own click handler, which then leaves the prevented event alone. Skip links outside <main> keep jumping.
+  // Astro's own click handler, which then leaves the prevented event alone. Skip links outside <main> keep jumping. The click
+  // is not stopped: ContactForm's listener still reads the pill's data-from into the form's source field.
   document.addEventListener(
     'click',
     (event) => {

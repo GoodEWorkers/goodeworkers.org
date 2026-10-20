@@ -32,7 +32,7 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
       </span>
     </h2>
     <p
-      class="mt-8 sm:mt-12 md:mt-12 lg:mt-12 px-8 sm:px-12 max-w-md sm:max-w-screen-md mx-auto text-sm md:text-base text-ashgray leading-[1.6875] text-balance"
+      class="mt-8 sm:mt-12 md:mt-12 lg:mt-12 px-8 sm:px-12 max-w-md sm:max-w-screen-md mx-auto text-base text-ashgray leading-[1.6875] text-balance"
     >
       <span class="font-bold">{why.textBold}</span>
       <span class="font-medium">{why.textMiddle}</span>
@@ -59,7 +59,7 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
           <p class="mt-4 whitespace-pre-line font-bold leading-tight">
             {whyCard.title}
           </p>
-          <p class="mt-4 text-sm md:text-base md:leading-tight font-medium leading-tight">
+          <p class="mt-4 text-base md:leading-tight font-medium leading-tight">
             {whyCard.text}
           </p>
         </div>

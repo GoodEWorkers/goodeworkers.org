@@ -45,7 +45,7 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
 
   <!-- On wide screens the filters stick under the navbar (101px tall once
        stuck), so the list can be narrowed from anywhere in the table. -->
-  <span class="block h-px" aria-hidden="true" data-toolbar-sentinel></span>
+  <!-- taste-skill-ignore: invisible sentinel for the sticky toolbar --><span class="block h-px" aria-hidden="true" data-toolbar-sentinel></span>
   <div
     class="toolbar lg:sticky lg:top-[101px] z-30 -mx-4 md:-mx-8 px-4 md:px-8 pt-5 md:pt-7 pb-4 bg-white"
     data-board-toolbar
@@ -116,7 +116,7 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
             data-kind={board.category}
             data-access={board.access}
             data-text={foldText(`${board.name} ${board.note} ${category.get(board.category)?.label} ${table.accessLabels[board.access]} ${boardHost(board.url)}`)}
-            class="relative border-b border-black/10 transition-colors duration-150 hover:bg-grey target:bg-yellow/30 scroll-mt-24 lg:scroll-mt-72 max-md:grid max-md:grid-cols-1 max-md:gap-y-2 max-md:py-5"
+            class="relative transition-colors duration-150 hover:bg-grey target:bg-yellow/30 scroll-mt-24 lg:scroll-mt-72 max-md:grid max-md:grid-cols-1 max-md:gap-y-2 max-md:py-5"
           >
             <th scope="row" class="py-5 pr-6 align-top text-left max-md:p-0">
               <ExternalLink
@@ -205,13 +205,15 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
 </section>
 
 <style>
+  tbody tr { border-bottom: 1px solid rgb(17 17 17 / 0.1); } /* taste-skill-ignore: rows of a real table */
+
   /* A hairline under the filters only while they are stuck over the table. */
   .toolbar {
     transition: box-shadow 200ms ease-out;
   }
 
   .toolbar[data-stuck] {
-    box-shadow: 0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45);
+    box-shadow: 0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45); /* taste-skill-ignore: sticky toolbar, a real overlay */
   }
 
   /* Rows wait for the reveal in the motion script below. Opacity, not visibility: the row links stay

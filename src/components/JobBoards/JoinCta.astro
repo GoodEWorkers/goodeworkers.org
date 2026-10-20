@@ -9,9 +9,6 @@ interface Props {
 
 const { join } = Astro.props;
 
-// The footer's contact form tags the enquiry with `from`. Linking to this
-// page's own #contact keeps the visitor next to the list they came for.
-const href = `${Astro.url.pathname}?from=job-boards#contact`;
 ---
 
 <!-- Set like the homepage's dark-ground sections: the heading straight on
@@ -29,7 +26,8 @@ const href = `${Astro.url.pathname}?from=job-boards#contact`;
   </p>
   <BigRoundedLinkBtn
     bigBtmText={join.cta}
-    href={href}
+    href="#contact"
+    from="job-boards"
     class="mt-10 md:mt-12 mx-auto bg-orange text-white-pure sm:w-fit sm:max-w-none sm:px-12"
   />
 </section>

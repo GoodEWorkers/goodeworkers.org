@@ -44,7 +44,7 @@ check_page "/no-such-page/"         "404" "Page not found"
 check_page "/thanks/"               "200" "GitHub"
 check_page "/remote-job-boards/"    "200" "We Work Remotely"
 check_page "/values/"               "200" "Write it down. Build in the open."
-check_page "/initiatives/"          "200" "Hospitals and health-related technology"
+check_page "/initiatives/"          "200" "Health and hospitals"
 
 # French mirror
 check_page "/fr/"                   "200" "les associations"

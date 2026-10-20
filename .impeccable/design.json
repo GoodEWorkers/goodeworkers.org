@@ -295,17 +295,12 @@
       {
         "name": "path-draw",
         "value": "stroke-dashoffset 1 to 0 on each path.draw[pathLength] in an svg[data-draw], 1.2s expo.out, 0.12s stagger, once when the top reaches 80%",
-        "purpose": "Interchange value lines and the Initiatives pulse line draw in once as the figure comes into view. Without motion they are simply drawn. The Why arrow keeps its own scrubbed draw (home.ts)."
+        "purpose": "The Initiatives pulse line draws in once as the figure comes into view. Without motion it is simply drawn. The Why arrow keeps its own scrubbed draw (home.ts)."
       },
       {
         "name": "mark-pop",
         "value": "scale 0.6 to 1, 0.8s expo.out, 0.2s delay, 0.06s stagger, starts with the nearest reveal or stagger",
-        "purpose": "Marks such as value and station dots (data-pop) grow in with the item they belong to."
-      },
-      {
-        "name": "line-wipe",
-        "value": "clip-path inset 100% to 0% from the top, scrubbed from the parent top at 80% to its bottom at 55%",
-        "purpose": "The dashed station line of each value row wipes down as its row passes through the viewport (data-wipe). A clip rather than a scale, so the dashes keep their shape."
+        "purpose": "Marks such as the dot beside each homepage value name (data-pop) grow in with the item they belong to."
       },
       {
         "name": "tile-tilt",

@@ -26,3 +26,6 @@ screenshots/
 
 # impeccable review captures
 .impeccable/review/
+
+# tasteskill inspector output
+.taste-skill/

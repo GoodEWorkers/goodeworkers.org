@@ -3,16 +3,19 @@ interface Props {
   upperSmallText?: string;
   bigBtmText: string;
   href: string;
+  /** CTA attribution the contact form records; see ContactForm. */
+  from?: string;
   class?: string;
 }
 
-const { upperSmallText, bigBtmText, href, class: className } = Astro.props;
+const { upperSmallText, bigBtmText, href, from, class: className } = Astro.props;
 ---
 
 <a
   href={href}
-  class={`w-full max-w-[336px] px-7 py-5 rounded-full flex flex-col items-center hover:scale-105 focus-visible:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange transition-transform ease-in ${className ?? ''}`}
+  data-from={from}
   data-tilt="glow"
+  class={`w-full max-w-[336px] px-7 py-5 rounded-full flex flex-col items-center hover:scale-105 focus-visible:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange transition-transform ease-out ${className ?? ''}`}
 >
   {
     upperSmallText && (

@@ -89,6 +89,7 @@ const home = defineCollection({
       /** The two pairs, as on the values page. */
       groups: z.object({ work: z.string(), care: z.string() }),
       items: valueList(z.object({ name: z.string(), text: z.string() })),
+      ctaSmall: z.string(),
       cta: z.string(),
       initiativesCta: z.string(),
     }),

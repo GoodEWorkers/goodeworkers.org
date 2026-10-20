@@ -21,13 +21,13 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
     <span class="font-medium">{header.titlePart1}</span> <Encircled text={header.titleEncircled} class="font-bold" /> <span class="font-medium">{header.titlePart2}</span>
   </h1>
   <p
-    class="mt-8 md:mt-12 lg:mt-16 px-4 sm:px-16 max-w-screen-md mx-auto text-sm md:text-base text-center leading-[1.6875]"
+    class="mt-8 md:mt-12 lg:mt-16 px-4 sm:px-16 max-w-screen-md mx-auto text-base text-center leading-[1.6875]"
     data-intro="lede"
   >
     {header.intro}
   </p>
   <p
-    class="mt-4 px-4 sm:px-16 max-w-screen-md mx-auto text-sm md:text-base font-bold text-center leading-[1.6875]"
+    class="mt-4 px-4 sm:px-16 max-w-screen-md mx-auto text-base font-bold text-center leading-[1.6875]"
     data-intro="lede"
   >
     {header.introBold}
