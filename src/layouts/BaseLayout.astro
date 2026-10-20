@@ -25,10 +25,6 @@ interface Props {
   /** Set on pages that must stay out of the index (404, thank-you pages) —
    *  no canonical, no hreflang. */
   noindex?: boolean;
-  /** Opts the page out of the shared content column, for pages that manage
-   *  their own horizontal rhythm (the full-screen 404). Everything else should
-   *  leave this off — see the column note below. */
-  fullBleed?: boolean;
   /** Page-specific schema.org nodes, appended to the site-wide graph so they
    *  can reference the organization and website by @id. */
   graph?: Record<string, unknown>[];
@@ -41,7 +37,6 @@ const {
   title,
   description,
   noindex = false,
-  fullBleed = false,
   graph = [],
   contact,
 } = Astro.props;
@@ -287,7 +282,7 @@ const structuredData = {
           column. A *card* that sits within the column (the About panel, the
           legal panel) keeps its own padding and is deliberately inset.
     -->
-    <div class:list={[!fullBleed && 'max-w-screen-2xl mx-auto px-4 md:px-8']}>
+    <div class="max-w-screen-2xl mx-auto px-4 md:px-8">
       <slot />
     </div>
     <Footer contact={contact} />

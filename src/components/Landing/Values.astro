@@ -2,12 +2,14 @@
 import CircledText from '../JobBoards/CircledText.astro';
 import Icon from '../icons/Icon.astro';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import { typeset } from '../Common/typeset';
 import { valueStyles } from '../Values/valueStyles';
 import { getLangFromPath, routes } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const { values } = await homeContent(lang);
+const t = (text: string) => typeset(text, lang);
 
 const pairs = [
   { label: values.groups.work, items: values.items.slice(0, 2) },
@@ -15,15 +17,17 @@ const pairs = [
 ];
 ---
 
-<!-- The four values, short, on a dark card between the night-ground Why
-     section and the About card. The full text is on the values page. -->
+<!-- The four values, short, on a dark card between the night-ground Why section and the About card. A dark card sits
+     inset in the column with its own padding (the About card's recipe), so the two have the same edges. The full text is
+     on the values page. From xl the card is two columns: the statement and the way on at the left, the four values as a
+     two by two register at the right (so no corner of the card is left empty). -->
 <section
   id="values"
   aria-labelledby="values-title"
-  class="-mx-4 md:-mx-8 px-4 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 mb-16 md:mb-24 bg-black-light text-grey rounded-xl sm:rounded-2xl lg:rounded-3xl"
+  class="px-6 md:px-8 pt-12 md:pt-16 pb-12 md:pb-16 mb-16 md:mb-24 bg-black-light text-grey rounded-xl sm:rounded-2xl lg:rounded-3xl xl:grid xl:grid-cols-12 xl:gap-x-8 xl:gap-y-10"
   data-reveal="up"
 >
-  <div class="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-end lg:gap-16">
+  <div class="xl:col-span-5 xl:col-start-1 xl:row-start-1">
     <h2
       id="values-title"
       class="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
@@ -31,30 +35,30 @@ const pairs = [
     >
       <CircledText text={values.title} />
     </h2>
-    <p class="mt-6 lg:mt-0 lg:pb-2 text-base md:text-lg font-bold leading-snug" data-reveal="up" data-delay="0.1">{values.lead}</p>
+    <p class="mt-6 max-w-[26rem] text-base md:text-lg font-bold leading-snug text-balance" data-reveal="up" data-delay="0.1">{t(values.lead)}</p>
   </div>
 
-  <!-- The two pairs, as on the values page. -->
-  <div class="mt-10 md:mt-14 grid lg:grid-cols-2 gap-x-10 xl:gap-x-16 gap-y-14">
+  <!-- The two pairs, as on the values page. Each name is in its value's colour, in the face of the tiles. -->
+  <div class="mt-14 xl:mt-0 xl:col-span-7 xl:col-start-6 xl:row-span-2 xl:row-start-1 space-y-[5.5rem] sm:space-y-16 xl:space-y-14">
     {
       pairs.map((pair) => (
         <div>
-          <p class="text-xl md:text-2xl font-medium leading-tight">{pair.label}</p>
-          <ul class="mt-6 grid sm:grid-cols-2 gap-x-6 xl:gap-x-10 gap-y-12" data-stagger>
+          <p class="text-xl md:text-2xl font-medium leading-tight text-balance">{t(pair.label)}</p>
+          <ul class="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-9" data-stagger>
             {pair.items.map((item) => {
               const style = valueStyles[item.id];
               return (
                 <li class="group relative">
-                  <h3 class="mt-6 flex items-center gap-3">
-                    <span class:list={['h-2.5 w-2.5 shrink-0 rounded-full', style.dot]} aria-hidden="true" data-pop />
+                  <h3>
                     <a
                       href={`${routes.values[lang]}#${item.id}`}
-                      class="font-clash font-semibold text-2xl md:text-3xl leading-none underline-offset-4 decoration-2 group-hover:underline focus-visible:underline outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-orange"
+                      style={`color: ${style.ink}`}
+                      class="font-clash font-semibold text-4xl xl:text-[40px] leading-none pb-1 outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-orange [background-image:linear-gradient(currentColor,currentColor)] bg-no-repeat bg-left-bottom bg-[length:0%_2px] transition-[background-size] duration-500 ease-out group-hover:bg-[length:100%_2px] focus-visible:bg-[length:100%_2px]"
                     >
                       {item.name}
                     </a>
                   </h3>
-                  <p class="mt-3 text-base leading-[1.6875] text-ashgray">{item.text}</p>
+                  <p class="mt-3 text-base leading-[1.6875] text-ashgray text-pretty">{t(item.text)}</p>
                 </li>
               );
             })}
@@ -64,7 +68,7 @@ const pairs = [
     }
   </div>
 
-  <div class="mt-14 md:mt-16 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+  <div class="mt-14 xl:mt-0 xl:col-span-5 xl:col-start-1 xl:row-start-2 xl:self-end flex flex-wrap items-center gap-x-8 gap-y-2">
     <BigRoundedLinkBtn
       upperSmallText={values.ctaSmall}
       bigBtmText={values.cta}
@@ -73,7 +77,7 @@ const pairs = [
     />
     <a
       href={routes.initiatives[lang]}
-      class="inline-flex items-center gap-2 self-start sm:self-auto font-bold underline decoration-2 underline-offset-4 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform [&_svg]:hover:translate-x-1 [&_svg]:focus-visible:translate-x-1"
+      class="inline-flex items-center gap-2 min-h-11 font-bold underline decoration-2 underline-offset-4 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform [&_svg]:hover:translate-x-1 [&_svg]:focus-visible:translate-x-1"
     >
       {values.initiativesCta}
       <Icon name="arrow-right" />

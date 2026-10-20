@@ -6,6 +6,7 @@ import SplitHeader from '../Common/SplitHeader.astro';
 import Charter from './Charter.astro';
 import ValueRows from './ValueRows.astro';
 import Interchange from './Interchange.astro';
+import { typeset } from '../Common/typeset';
 import { getLangFromPath } from '../../i18n/routes';
 import { pageGraph, valuesContent } from '../../i18n/pages';
 
@@ -15,7 +16,7 @@ const content = await valuesContent(lang);
 
 <BaseLayout title={content.title} description={content.description} graph={pageGraph('values', 'AboutPage', content, lang)}>
   <main id="main-content" class="selection:bg-yellow selection:text-black">
-    <SplitHeader heading={content.heading}>{content.intro}</SplitHeader>
+    <SplitHeader heading={content.heading}>{typeset(content.intro, lang)}</SplitHeader>
     <Charter content={content} />
     <ValueRows content={content} />
     <Interchange practice={content.practice} />

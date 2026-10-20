@@ -6,13 +6,17 @@ import SplitHeader from '../Common/SplitHeader.astro';
 import CircledText from '../JobBoards/CircledText.astro';
 import Icon from '../icons/Icon.astro';
 import health from '../../assets/illustrations/health.svg';
-import { valueStyles } from '../Values/valueStyles';
+import { typeset } from '../Common/typeset';
+import { bandLink, valueStyles } from '../Values/valueStyles';
 import { getLangFromPath, routes } from '../../i18n/routes';
 import { initiativesContent, pageGraph } from '../../i18n/pages';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const content = await initiativesContent(lang);
 const { focus, help } = content;
+const t = (text: string) => typeset(text, lang);
+// The statement's last phrase keeps its last two words together, so a narrow screen never ends on a lone "needs."
+const lastLink = content.valuesLine.map((piece) => !!piece.value).lastIndexOf(true);
 
 // The two ways in echo the homepage's two pills: yellow for organisations,
 // lavender for people who want to help. `from` tags the footer form.
@@ -34,53 +38,58 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
   contact={{ title: help.formTitle, mailSubject: help.mailSubject }}
 >
   <main id="main-content" class="selection:bg-yellow selection:text-black">
-    <SplitHeader heading={content.heading}>{content.intro}</SplitHeader>
+    <SplitHeader heading={content.heading}>{t(content.intro)}</SplitHeader>
 
-    <!-- The values, each phrase linked to its row on the values page and
-         underlined in its colour. -->
+    <!-- The values, each phrase linked to its row on the values page and underlined in its colour. From lg a short phrase
+         stays on one line (an underline that breaks mid-phrase reads as two links); a long one may not, or the lines around it
+         would be left half empty (in French most of them are long). -->
     <p
-      class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl font-medium leading-snug md:leading-snug text-grey"
+      class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl font-medium leading-snug md:leading-snug text-grey text-pretty md:text-balance"
       data-reveal="up"
       data-delay="0.3"
     >
-      <span class="text-ashgray">{content.valuesLead}</span>
+      <span class="text-ashgray">{t(content.valuesLead)}</span>
       {' '}{
-        content.valuesLine.map((piece) =>
+        content.valuesLine.map((piece, index) =>
           piece.value ? (
             <a
               href={`${routes.values[lang]}#${piece.value}`}
-              class="underline decoration-[3px] underline-offset-[0.2em] transition-colors duration-200 hover:text-orange"
-              style={`text-decoration-color: ${valueStyles[piece.value].hex}`}
-            >{piece.text}</a>
+              class:list={[bandLink, piece.text.length <= 30 && 'lg:whitespace-nowrap']}
+              style={`--c: ${valueStyles[piece.value].ink}`}
+            >{t(index === lastLink ? piece.text.replace(/ (\S+)$/, '\u00a0$1') : piece.text)}</a>
           ) : (
-            piece.text
+            t(piece.text)
           )
         )
       }
     </p>
 
+    <!-- The focus sheet, the page's lit window: its heading at the top left, the focus and its text at the bottom left,
+         and the yellow card with the two people as tall as the sheet. -->
     <section
       aria-labelledby="focus-title"
-      class="mt-14 md:mt-20 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 pb-4 md:pb-8 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+      class="mt-14 md:mt-20 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 pb-8 md:pb-12 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl lg:grid lg:grid-cols-[minmax(0,1fr)_calc((100%-11rem-2.5rem)/2)] xl:grid-cols-[minmax(0,1fr)_calc((100%-14rem-2.5rem)/2)] lg:grid-rows-[auto_1fr] lg:gap-x-5"
       data-reveal="up"
     >
-      <h2 id="focus-title" class="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight" data-split="lines">{focus.title}</h2>
-      <div class="mt-6 md:mt-10 grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16">
-        <div class="lg:col-span-7 lg:pb-8 lg:self-center">
-          <h3 class="max-w-2xl text-4xl md:text-5xl font-medium leading-[1.1] [text-wrap:balance]" data-reveal="up">
-            {focus.name}
-          </h3>
-          <div class="mt-6 max-w-2xl space-y-4 text-base leading-[1.6875] text-black/80">
-            {focus.paragraphs.map((paragraph, i) => <p data-reveal="up" data-delay={(i + 1) * 0.08}>{paragraph}</p>)}
-          </div>
+      <h2 id="focus-title" class="lg:col-start-1 lg:row-start-1 text-2xl md:text-3xl lg:text-4xl font-medium leading-tight" data-split="lines">{focus.title}</h2>
+      <div class="mt-6 lg:mt-0 lg:col-start-1 lg:row-start-2 lg:self-end">
+        <h3 class="max-w-2xl text-4xl md:text-5xl xl:text-[3.5rem] font-medium leading-[1.1] text-balance" data-reveal="up">
+          {t(focus.name)}
+        </h3>
+        <div class="mt-6 max-w-[34rem] space-y-4 text-base leading-[1.6875] text-black/80 text-pretty">
+          {focus.paragraphs.map((paragraph, i) => <p data-reveal="up" data-delay={(i + 1) * 0.08}>{t(paragraph)}</p>)}
         </div>
-        <div
-          class="relative lg:col-span-5 min-h-[20rem] overflow-hidden rounded-2xl lg:rounded-3xl bg-yellow flex items-end justify-center pt-12"
-        >
+      </div>
+      <div
+        class="relative mt-8 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 min-h-[20rem] lg:min-h-[28rem] overflow-hidden rounded-2xl lg:rounded-3xl bg-yellow flex items-end justify-center pt-12"
+      >
+        <!-- The heartbeat is set against the people (a share of their picture, not of the card), so it keeps
+             its place between their hands at any card height. -->
+        <div class="relative flex w-full justify-center">
           <svg
             viewBox="0 0 400 220"
             preserveAspectRatio="none"
-            class="absolute inset-x-0 top-[22%] w-full h-[36%]"
+            class="absolute inset-x-0 top-[12.5%] w-full h-[40%]"
             aria-hidden="true"
             data-draw
           >
@@ -119,31 +128,33 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
     <section aria-labelledby="help-title" class="mt-24 md:mt-32 mb-20 md:mb-28 text-grey">
       <h2
         id="help-title"
-        class="text-center mx-auto max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+        class="max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
         data-split="lines"
       >
         <CircledText text={help.title} />
       </h2>
-      <ul class="mt-10 md:mt-14 grid md:grid-cols-2 gap-3 md:gap-5" data-stagger>
+      <!-- From md the two doors share three rows (the question, its line, the action), so what is written in them lines up
+           across the cards however the questions wrap. -->
+      <ul class="mt-10 md:mt-14 grid md:grid-cols-2 md:grid-rows-[auto_auto_1fr_auto] gap-3 md:gap-x-5 md:gap-y-0" data-stagger>
         {
           doors.map((door) => (
             <li
               class:list={[
-                'door group relative flex min-h-[18rem] md:min-h-[22rem] flex-col rounded-2xl lg:rounded-3xl p-7 md:p-10 xl:p-12 text-black has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-orange',
+                'door group relative flex min-h-[18rem] md:min-h-[22rem] flex-col md:grid md:grid-rows-subgrid md:row-span-4 rounded-2xl lg:rounded-3xl p-7 md:p-10 xl:p-12 text-black has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-orange',
                 door.fill,
               ]}
               data-tilt
             >
-              <p class="max-w-md text-2xl font-medium leading-snug">{door.question}</p>
-              <p class="mt-4 text-base md:text-lg">{door.text}</p>
+              <p class="max-w-[22ch] text-2xl xl:text-[28px] font-medium leading-snug text-balance">{t(door.question)}</p>
+              <p class="mt-4 text-base md:text-lg text-pretty">{t(door.text)}</p>
               <a
                 href="#contact"
                 data-from={door.from}
-                class="mt-auto pt-10 inline-flex items-center gap-3 self-start font-clash font-bold text-2xl lg:text-3xl leading-tight outline-none after:absolute after:inset-0 after:rounded-[inherit]"
+                class="mt-auto pt-10 md:mt-0 md:pt-8 md:row-start-4 md:self-end self-start font-clash font-bold text-2xl lg:text-3xl xl:text-[2rem] leading-tight text-balance outline-none after:absolute after:inset-0 after:rounded-[inherit]"
               >
-                {door.action}
+                {t(door.action)}
                 <span
-                  class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black text-grey transition-transform duration-200 ease-out group-hover:translate-x-1 group-has-[:focus-visible]:translate-x-1 [&>svg]:h-5 [&>svg]:w-5"
+                  class="ml-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black text-grey align-middle transition-transform duration-200 ease-out group-hover:translate-x-1 group-has-[:focus-visible]:translate-x-1 [&>svg]:h-5 [&>svg]:w-5"
                   aria-hidden="true"
                 >
                   <Icon name="arrow-right" />

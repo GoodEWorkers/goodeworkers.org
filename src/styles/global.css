@@ -77,6 +77,12 @@ h2 {
   text-wrap: balance;
 }
 
+/* ClashDisplay's word space is 0.14em, so a label set in it reads "Goback home". Open it to Inter's weight of space where it
+   carries words (semibold names, bold labels). A single word, like the wordmark's letters, has no space to open. */
+.font-clash:is(.font-semibold, .font-bold) {
+  word-spacing: 0.1em;
+}
+
 /* SplitText line masks clip at the line box: give descenders room without moving the layout. */
 .split-line {
   padding-bottom: 0.08em;
@@ -110,7 +116,9 @@ html.lenis body {
 }
 
 /* The lamp: warm light on the dark ground. The engine writes --lamp-x / --lamp-y on #lamp itself; with no JS
-   or reduced motion the glow just rests at the fallbacks. Under ~10% alpha so the ground still reads #111. */
+   or reduced motion the glow just rests at the fallbacks. An amber heart (11%) that falls off through orange: orange alone, at any
+   strength, dries to brown on #111 and reads as a stain, where amber reads as light. Away from the heart the ground is still #111;
+   on the lit heart ashgray text keeps over 11:1 (80% ashgray over 8:1). */
 #lamp {
   position: fixed;
   inset: 0;
@@ -118,8 +126,9 @@ html.lenis body {
   pointer-events: none;
   background: radial-gradient(
     60vmax circle at var(--lamp-x, 50%) var(--lamp-y, 40%),
-    rgb(253 94 9 / 0.09),
-    rgb(253 201 89 / 0.04) 40%,
+    rgb(253 190 100 / 0.11),
+    rgb(253 94 9 / 0.07) 30%,
+    rgb(253 94 9 / 0.03) 52%,
     transparent 70%
   );
 }

@@ -8,15 +8,16 @@ interface Props {
 const { heading } = Astro.props;
 ---
 
-<!-- Split page header on the night ground: the H1 at left, the lede at right,
-     bottom-aligned from lg (the layout of the job boards header). -->
+<!-- Split page header on the night ground: the H1 at left, the lede at right, bottom-aligned from lg (the layout of the
+     job boards header). The lede column starts where a charter's second tile starts (the grid is the values page's: a label
+     column, then two equal columns), so the lede, that tile and the value rows' text all hang from one line. -->
 <header
-  class="pt-10 md:pt-14 lg:pt-16 text-grey lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] lg:items-end lg:gap-16"
+  class="pt-10 md:pt-14 lg:pt-16 text-grey lg:grid lg:grid-cols-[minmax(0,1fr)_calc((100%-11rem-2.5rem)/2)] xl:grid-cols-[minmax(0,1fr)_calc((100%-14rem-2.5rem)/2)] lg:items-end lg:gap-x-5"
 >
-  <h1 class="text-5xl/tight md:text-6xl/tight lg:text-7xl/tight xl:text-8xl/tight font-medium" data-split="lines">
+  <h1 class="text-[3.5rem]/[1.05] md:text-6xl/tight lg:text-7xl/tight xl:text-8xl/tight font-medium" data-split="lines">
     <CircledText text={heading} />
   </h1>
   <div class="mt-6 md:mt-8 lg:mt-0 lg:pb-3" data-reveal="up" data-delay="0.15">
-    <p class="max-w-2xl text-base leading-[1.6875] text-ashgray"><slot /></p>
+    <p class="max-w-2xl text-base leading-[1.6875] text-ashgray text-pretty"><slot /></p>
   </div>
 </header>
