@@ -46,8 +46,8 @@ why:
 
 about:
   titlePart1: "A community of "
-  titleBold: "expert and complementary"
-  titlePart2: " remote workers"
+  titleBold: "experts"
+  titlePart2: ""
   intro: "It's hard to be both an expert and versatile! That's why we bring together people with varied profiles. Freelancers or employees, technical, graphic or semantic experts, all have decided to make a gesture for"
   introBold: " a fairer and more humane world by joining the GoodEWorkers community."
   text2: "We form a new team for each project based on the established specifications and the availability of our volunteers."
@@ -93,6 +93,7 @@ values:
     - id: solidarity
       name: "Solidarity"
       text: "We put our skills behind organisations serving essential needs, so limited resources do not mean limited access to good technology."
-  cta: "Read our values"
+  ctaSmall: "Read"
+  cta: "our values"
   initiativesCta: "Explore our initiatives"
 ---

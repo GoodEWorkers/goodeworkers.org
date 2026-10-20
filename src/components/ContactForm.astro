@@ -23,10 +23,10 @@ const fieldClass =
 // where author colours are overridden and the placeholder reappears directly on
 // top of the identically-worded label.
 const labelClass =
-  'absolute left-0 top-1 text-base text-gray-500 cursor-text transition-all ' +
-  'peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600 ' +
+  'absolute left-0 top-1 text-base text-black/60 cursor-text transition-[top,font-size,color] ' +
+  'peer-focus:-top-5 peer-focus:text-sm peer-focus:text-black/70 ' +
   'peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-sm ' +
-  'peer-[:not(:placeholder-shown)]:text-gray-600';
+  'peer-[:not(:placeholder-shown)]:text-black/70';
 ---
 
 <form
@@ -42,8 +42,8 @@ const labelClass =
     <input type="hidden" name="locale" value={lang} />
 
     <!-- Records which CTA the visitor arrived from. Populated by the script at
-         the bottom of this file from the ?from= query parameter; simply stays
-         empty when absent or when JS is unavailable. -->
+         the bottom of this file from the ?from= query parameter or the clicked
+         link's data-from; simply stays empty when absent or without JS. -->
     <input type="hidden" name="source" value="" data-source-field />
 
     <!-- Honeypot. Bots fill every field they find; humans never see this one. -->
@@ -93,7 +93,7 @@ const labelClass =
     <!-- GDPR Art. 13 notice at the point of collection. Replying to an inbound
          enquiry rests on legitimate interest, so a consent checkbox is not
          strictly required — but informing the visitor is. -->
-    <p class="mt-8 text-xs text-gray-600 max-w-prose">
+    <p class="mt-8 text-sm text-black/70 max-w-prose">
       {form.gdprNotice} <a
         href={routes.legal[lang]}
         class="underline">{form.gdprLinkLabel}</a
@@ -124,7 +124,7 @@ const labelClass =
       type="submit"
       class="w-full max-w-[336px] bg-orange text-white-pure px-7 py-5 rounded-full
              flex flex-col items-center hover:scale-105
-             transition-transform ease-in
+             transition-transform ease-out
              focus-visible:outline focus-visible:outline-2
              focus-visible:outline-offset-2 focus-visible:outline-black"
     >
@@ -136,7 +136,7 @@ const labelClass =
     </button>
 
     {form.replyNote && (
-      <p class="mt-4 text-sm text-gray-600 max-w-[336px] text-center md:text-left">
+      <p class="mt-4 text-sm text-black/70 max-w-[336px] text-center md:text-left">
         {form.replyNote}
       </p>
     )}
@@ -153,6 +153,14 @@ const labelClass =
     const from = new URLSearchParams(window.location.search).get('from');
     if (from) field.value = from.slice(0, 64);
   }
+
+  // Same-page CTAs link to #contact and carry the source on the link, so the
+  // page scrolls to the form instead of reloading on a changed query string.
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest('a[data-from]');
+    const field = document.querySelector<HTMLInputElement>('[data-source-field]');
+    if (link instanceof HTMLAnchorElement && field) field.value = link.dataset.from!.slice(0, 64);
+  });
 
   setupSourceField();
   document.addEventListener('astro:page-load', setupSourceField);

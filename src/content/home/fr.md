@@ -46,8 +46,8 @@ why:
       text: "Sans bureaux, nos coûts d'infrastructure sont quasi nuls. C'est cette économie qui garde le travail abordable."
 
 about:
-  titlePart1: "Une communauté de télétravailleurs "
-  titleBold: "experts et complémentaires"
+  titlePart1: "Une communauté "
+  titleBold: "d'experts"
   titlePart2: ""
   intro: "Difficile d'être à la fois expert et polyvalent ! C'est pourquoi nous réunissons des profils variés. Freelances ou salariés, experts techniques, graphiques ou sémantiques, tous ont décidé d'agir pour"
   introBold: " un monde plus juste et plus humain en rejoignant la communauté GoodEWorkers."
@@ -95,6 +95,7 @@ values:
     - id: solidarity
       name: "Solidarité"
       text: "Nous mettons nos compétences au service des organisations qui répondent à des besoins essentiels, pour que des moyens limités ne riment pas avec un accès limité à une bonne technologie."
-  cta: "Lire nos valeurs"
+  ctaSmall: "Lire"
+  cta: "nos valeurs"
   initiativesCta: "Découvrir nos initiatives"
 ---
