@@ -13,10 +13,10 @@ const { heading } = Astro.props;
 <header
   class="pt-10 md:pt-14 lg:pt-16 text-grey lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] lg:items-end lg:gap-16"
 >
-  <h1 class="text-5xl/tight md:text-6xl/tight lg:text-7xl/tight xl:text-8xl/tight font-medium">
+  <h1 class="text-5xl/tight md:text-6xl/tight lg:text-7xl/tight xl:text-8xl/tight font-medium" data-split="lines">
     <CircledText text={heading} />
   </h1>
-  <div class="mt-6 md:mt-8 lg:mt-0 lg:pb-3">
+  <div class="mt-6 md:mt-8 lg:mt-0 lg:pb-3" data-reveal="up" data-delay="0.15">
     <p class="max-w-2xl text-base leading-[1.6875] text-ashgray"><slot /></p>
   </div>
 </header>

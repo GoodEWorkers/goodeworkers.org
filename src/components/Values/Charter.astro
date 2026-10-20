@@ -24,8 +24,9 @@ const rows = [
 <section
   aria-label={content.charterLabel}
   class="mt-10 md:mt-14 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden"
+  data-reveal="up"
 >
-  <p class="max-w-4xl text-xl md:text-2xl xl:text-[28px] font-medium leading-snug">
+  <p class="max-w-4xl text-xl md:text-2xl xl:text-[28px] font-medium leading-snug" data-split="lines">
     <Rich text={content.pairs} />
   </p>
 
@@ -34,15 +35,16 @@ const rows = [
       rows.map((row) => (
         <div class="lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)] lg:gap-5">
           <p class="text-xl md:text-2xl font-medium leading-tight lg:pt-7 xl:pt-8">{row.label}</p>
-          <ul class="mt-3 lg:mt-0 grid sm:grid-cols-2 gap-3 md:gap-5">
+          <ul class="mt-3 lg:mt-0 grid sm:grid-cols-2 gap-3 md:gap-5" data-stagger>
             {row.values.map((value) => {
               const style = valueStyles[value.id];
               return (
                 <li>
                   <a
                     href={`#${value.id}`}
+                    data-tilt
                     class:list={[
-                      'group relative flex h-full min-h-[19rem] transition-transform duration-200 ease-in hover:scale-[1.02] sm:min-h-[22rem] xl:min-h-[25rem] flex-col overflow-hidden rounded-2xl lg:rounded-3xl p-6 md:p-8 xl:p-10',
+                      'group relative flex h-full min-h-[19rem] sm:min-h-[22rem] xl:min-h-[25rem] flex-col overflow-hidden rounded-2xl lg:rounded-3xl p-6 md:p-8 xl:p-10',
                       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
                       style.tile,
                     ]}
@@ -54,7 +56,7 @@ const rows = [
                       {value.tagline}
                     </span>
                     <span
-                      class="relative z-10 mt-auto inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-current transition-transform duration-200 ease-out group-hover:translate-y-1 [&>svg]:h-5 [&>svg]:w-5"
+                      class="relative z-10 mt-auto inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-current transition-transform duration-200 ease-out group-hover:translate-y-1 group-focus-visible:translate-y-1 [&>svg]:h-5 [&>svg]:w-5"
                       aria-hidden="true"
                     >
                       <Icon name="arrow-down" />
@@ -64,7 +66,7 @@ const rows = [
                       alt=""
                       width={style.tileDoodle.width}
                       height={style.tileDoodle.height}
-                      class="absolute bottom-0 right-0 w-[52%] max-w-[21rem] max-h-[64%] object-contain object-right-bottom translate-x-[4%] translate-y-[4%] transition-transform duration-300 ease-out group-hover:-translate-y-[1%] group-hover:-rotate-2"
+                      class="absolute bottom-0 right-0 w-[52%] max-w-[21rem] max-h-[64%] object-contain object-right-bottom translate-x-[4%] translate-y-[4%] transition-transform duration-300 ease-out group-hover:-translate-y-[1%] group-hover:-rotate-2 group-focus-visible:-translate-y-[1%] group-focus-visible:-rotate-2"
                     />
                   </a>
                 </li>
@@ -85,5 +87,6 @@ const rows = [
     height={community.height}
     loading="lazy"
     class="mt-14 md:mt-20 mx-auto block h-48 w-full object-cover object-bottom sm:h-auto max-w-5xl"
+    data-reveal="up"
   />
 </section>

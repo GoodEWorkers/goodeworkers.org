@@ -110,6 +110,8 @@ export function initPage({ hold = false }: { hold?: boolean } = {}) {
     each('[data-split]', split);
     each('[data-reveal]', reveal);
     each('[data-stagger]', stagger, (el) => [...el.children]);
+    each('svg[data-draw]', draw);
+    each('[data-wipe]', wipe);
     each('[data-parallax]', parallax);
     each('[data-roll]', roll);
     if (!isTouch()) each('[data-tilt]', tilt);
@@ -214,7 +216,12 @@ export function scrollToTarget(target: string | number | HTMLElement, immediate 
   if (to === null) return;
   if (lenis) {
     lenis.resize(); // it learns a new page height 250 ms late, and would clamp a jump made right after a swap to the old one
-    lenis.scrollTo(to, { immediate, force: true });
+    // An element becomes a whole number here: Lenis ends a glide when the rounded position meets the rounded target, so one
+    // that lands on x.5 never ends and keeps pushing the page back for seconds. It honours the element's scroll-margin and
+    // aims at where its reveal leaves it: a data-reveal target that has not played sits low by the reveal's offset.
+    const low = typeof to !== 'number' && to.hasAttribute('data-reveal') ? Number(gsap.getProperty(to, 'y')) || 0 : 0;
+    const at = typeof to === 'number' ? to : to.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(to).scrollMarginTop) || 0) - low;
+    lenis.scrollTo(Math.round(at), { immediate, force: true });
   } else if (typeof to === 'number') scrollTo({ top: to, behavior: 'instant' });
   else to.scrollIntoView();
 }
@@ -373,6 +380,12 @@ function split(el: HTMLElement) {
   // SplitText would cut a wrapped <a> into two (two tab stops, announced twice) and its masks would clip the
   // focus ring: text that holds links, buttons or fields just fades up instead.
   if (el.querySelector('a, button, input, select, textarea')) return reveal(el);
+  // Held behind a curtain with the page already scrolled past it (a hash link): nobody sees it play, and splitting it only
+  // moves what lies below, the row the link is for, in a browser that wraps the split text a little differently.
+  if (holds(el, 0.85) && el.getBoundingClientRect().bottom <= 0) {
+    gsap.set(el, { opacity: 1 });
+    return;
+  }
   const kind = (el.dataset.split || 'lines') as keyof typeof SPLIT;
   const { type, duration, stagger } = SPLIT[kind] ?? SPLIT.lines;
   const delay = num(el.dataset.delay, 0);
@@ -428,42 +441,61 @@ const REVEAL: Record<string, [gsap.TweenVars, gsap.TweenVars, number]> = {
   ],
 };
 
-function reveal(el: HTMLElement) {
-  const [from, to, duration] = REVEAL[el.dataset.reveal || 'up'] ?? REVEAL.up;
-  const hold = holds(el, 0.85);
-  const tween = gsap.fromTo(el, from, {
+// The shape of every scroll-once reveal (data-reveal, data-stagger, data-draw): a tween that plays when `el` reaches its line, or
+// with the page intro when it is held (see holds). The data-pop marks inside it (a station dot) wait small and scale in as it starts;
+// a mark belongs to the nearest reveal around it, not to the sheet that holds that one. A tween, not a timeline: ScrollTrigger
+// starts a timeline's trigger a tick late, and a `once` trigger already past its end then kills itself in the middle of the
+// next trigger's refresh, which throws.
+function onScroll(el: HTMLElement, fraction: number, targets: gsap.TweenTarget, from: gsap.TweenVars, to: gsap.TweenVars) {
+  const hold = holds(el, fraction);
+  const pops = [...el.querySelectorAll('[data-pop]')].filter((mark) => mark.closest('[data-reveal], [data-stagger]') === el);
+  if (pops.length) gsap.set(pops, { scale: 0.6 });
+  const tween = gsap.fromTo(targets, from, {
     ...to,
-    duration,
-    delay: num(el.dataset.delay, 0),
-    ease: ease.out,
     paused: hold,
-    scrollTrigger: hold ? undefined : { trigger: el, start: startAt(el, 0.85), once: true },
+    scrollTrigger: hold ? undefined : { trigger: el, start: startAt(el, fraction), once: true },
+    onStart: () => pops.length && ctx?.add(() => gsap.to(pops, { scale: 1, duration: 0.8, delay: 0.2, stagger: 0.06, ease: ease.out })),
   });
   if (hold) withIntro(() => tween.play());
   finishOnFocus(el, tween);
+}
+
+function reveal(el: HTMLElement) {
+  // What a hash link points at is placed by the scroll position, the browser's own jump included (Safari's comes late, and would
+  // align the row at its offset): it fades in where it is.
+  const [from, to, duration] = REVEAL[el.id && location.hash === `#${el.id}` ? 'fade' : el.dataset.reveal || 'up'] ?? REVEAL.up;
+  onScroll(el, 0.85, el, from, { ...to, duration, delay: num(el.dataset.delay, 0), ease: ease.out });
 }
 
 // data-stagger: the children of a grid reveal one after another. Explicit ends: CSS holds them at opacity 0,
 // which a from() tween would read as its end value.
 function stagger(el: HTMLElement) {
   if (!el.children.length) return;
-  const hold = holds(el, 0.8);
-  const tween = gsap.fromTo(
-    el.children,
-    { y: 32, scale: 0.96, opacity: 0 },
-    {
-      y: 0,
-      scale: 1,
-      opacity: 1,
-      duration: 1,
-      stagger: 0.06,
-      ease: ease.out,
-      paused: hold,
-      scrollTrigger: hold ? undefined : { trigger: el, start: startAt(el, 0.8), once: true },
-    },
+  onScroll(el, 0.8, el.children, { y: 32, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 1, stagger: 0.06, ease: ease.out });
+}
+
+// data-draw on an <svg>: each path.draw[pathLength] (the stroke inside a mask; pathLength 1 makes its dash unit the whole
+// path) draws in, one after another, as the figure comes into view. Without motion nothing touches it: no dash, a whole stroke.
+function draw(svg: HTMLElement) {
+  const paths = svg.querySelectorAll('path.draw[pathLength]');
+  if (!paths.length) return;
+  onScroll(
+    svg,
+    0.8,
+    paths,
+    { strokeDasharray: 1, strokeDashoffset: 1 },
+    { strokeDashoffset: 0, clearProps: 'strokeDasharray,strokeDashoffset', duration: 1.2, stagger: 0.12, ease: ease.out },
   );
-  if (hold) withIntro(() => tween.play());
-  finishOnFocus(el, tween);
+}
+
+// data-wipe: a line that draws down as its parent passes through the viewport (scrubbed). A clip, not a scaleY: scaled,
+// a dashed line would squash its dashes.
+function wipe(el: HTMLElement) {
+  gsap.fromTo(
+    el,
+    { clipPath: 'inset(0% 0% 100% 0%)' },
+    { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { trigger: el.parentElement ?? el, start: 'top 80%', end: 'bottom 55%', scrub: true } },
+  );
 }
 
 // data-parallax="0.15": y drifts from -n to +n viewport heights across the element's pass (negative n reverses).

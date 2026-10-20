@@ -52,12 +52,11 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
   .motion [data-title] {
     overflow-x: clip;
   }
-  /* The card glow lights a card from behind its text, so the text keeps its contrast under the pointer. */
-  .motion [data-tilt=''] {
-    isolation: isolate;
-  }
-  .motion [data-tilt='']::after {
-    z-index: -1;
+  /* Split into inline-block words, a title can break its line between a circled word and the joiner after it (see
+     Encircled.astro) and strand the ring on a zero-width fragment: a bar instead of a circle. Circled words are single
+     words, so this only keeps the ring with its word. */
+  .motion [data-title] .encircled {
+    white-space: nowrap;
   }
   /* The hero sheet starts as a closed window, so the first paint is not the open sheet snapping shut once the script
      runs. These are the insets heroWindow() starts from: capped where the sheet's content starts (about 5rem from the top

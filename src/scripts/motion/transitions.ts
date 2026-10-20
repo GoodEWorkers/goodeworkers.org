@@ -5,10 +5,12 @@
  * built held (initPage({ hold })): what is on its first screen plays with the page intro, as the sheet clears, not unseen under it.
  * A page that does not arrive in SLOW ms, or cannot be swapped in (offline, another origin, not HTML), is handed back to the browser.
  * No sheet for back/forward or without html.motion: those swap at once. A link to the page you are on
- * (?from=...#contact) keeps the page as it is, since a swap would replay every reveal and wipe the form, and only scrolls.
+ * (?from=...#contact) keeps the page as it is, since a swap would replay every reveal and wipe the form, and only scrolls;
+ * so does a link to a place on the page (#openness), which Astro leaves to the browser's jump: it glides there instead.
  * Registered once per full load by index.ts, and only when the engine is alive.
  */
 import { gsap } from 'gsap';
+import { navigate } from 'astro:transitions/client';
 import { cleanupPage, ease, initPage, motionOn, playIntro, scrollToTarget, startScroll, stopScroll } from './engine';
 
 const COVER = 0.8; // the sheet slides up over the old page
@@ -41,15 +43,36 @@ const park = () => {
 };
 
 // The id is user input (the URL): no throwing on a malformed escape.
-function hashTarget() {
+function hashTarget(hash = location.hash) {
   try {
-    return document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    return document.getElementById(decodeURIComponent(hash.slice(1)));
   } catch {
     return null;
   }
 }
 
 export function transitions() {
+  // A link inside the page to a place on it (the charter tiles). Astro would push the entry and jump: let it keep the
+  // history (entry, hash, :target, Back), then put the scroll back where it was and glide. In the capture phase, before
+  // Astro's own click handler, which then leaves the prevented event alone. Skip links outside <main> keep jumping.
+  document.addEventListener(
+    'click',
+    (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a') : null;
+      if (!link?.hash || !link.closest('main') || !motionOn() || event.defaultPrevented) return;
+      if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (link.origin !== location.origin || link.pathname !== location.pathname || link.search !== location.search) return;
+      const target = hashTarget(link.hash);
+      if (!target) return;
+      event.preventDefault();
+      const was = scrollY;
+      void navigate(link.href); // synchronous for a same-page hash: the entry is pushed and the browser has jumped
+      scrollTo({ top: was, behavior: 'instant' });
+      scrollToTarget(target);
+    },
+    true,
+  );
+
   document.addEventListener('astro:before-preparation', (event) => {
     const { from, to, navigationType, formData } = event;
     if (formData) return;

@@ -128,9 +128,10 @@ function titles() {
 }
 
 // The arrow is drawn by a mask path swept along it (see why_arrow.svg): a dash offset on the dashed path itself
-// would only slide its dash pattern. The head fades in at the end.
+// would only slide its dash pattern. The head fades in at the end. Scrubbed, so unlike the engine's svg[data-draw]
+// (drawn once, on view) it keeps its own marker, on the path.
 function whyArrow() {
-  const draw = $<SVGGeometryElement>('[data-draw]');
+  const draw = $<SVGGeometryElement>('path[data-draw]');
   const svg = draw?.ownerSVGElement;
   if (!draw || !svg) return;
   const length = draw.getTotalLength();

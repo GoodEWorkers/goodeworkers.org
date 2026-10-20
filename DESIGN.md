@@ -288,7 +288,7 @@ There is one shared column. It is max 1536px wide, centred, with 16px gutters (3
 
 ## Elevation & Depth
 
-The system is flat. Depth comes from the two grounds, from panels overlapping (hero pills sit over the sheet's top edge with a negative top margin), from offset photos, from a 105% scale on CTA hover, and from a gentler 102% scale on value tiles and door cards. The one addition is light, not shadow: the lamp is a warm glow on the #111 ground, kept under 10% alpha so the ground still reads #111 (see Motion). `BRAND.md` records this explicitly, and issue #46 removed the shadows.
+The system is flat. Depth comes from the two grounds, from panels overlapping (hero pills sit over the sheet's top edge with a negative top margin), from offset photos, from a 105% scale on CTA hover, and from the pointer tilt on the cards, value tiles and door cards (no CSS scale on them). The one addition is light, not shadow: the lamp is a warm glow on the #111 ground, kept under 10% alpha so the ground still reads #111 (see Motion). `BRAND.md` records this explicitly, and issue #46 removed the shadows.
 
 ### Shadow Vocabulary
 - **Stuck toolbar hairline** (`box-shadow: 0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45)`): Appears only while the job-board toolbar is stuck over scrolling rows, fading in over 200ms ease-out. It shows state (content is passing underneath) and isn't used as decoration.
@@ -340,11 +340,15 @@ The engine in `src/scripts/motion/engine.ts` reads these:
 - `data-split-intro`: plays the split in the page intro instead of on scroll. No markup uses it yet.
 - `data-reveal="up|fade|clip|scale"`, with `data-delay`: one element reveals on scroll (1.0–1.4s, `expo.out`).
 - `data-stagger`: the children of a grid reveal one after another, 60ms apart.
+- `data-pop`: a mark inside a reveal or stagger, such as a value's dot, that grows from 60% to full size as its container plays (0.8s, 0.2s delay, 60ms apart).
+- `data-draw` (on an `<svg>`): each `path.draw[pathLength]` draws in once, when the figure's top reaches 80% of the viewport (1.2s, `expo.out`, 120ms apart). The Why arrow's own `path[data-draw]` is scrubbed by `home.ts` instead.
+- `data-wipe`: a line that wipes down from its top as its parent passes through the viewport, scrubbed from the parent's top at 80% to its bottom at 55%. It is a clip, not a scale, so dashes keep their shape.
 - `data-parallax="0.15"`: the element drifts through its pass by up to that fraction of the viewport height in each direction. Put it on a wrapper.
 - `data-tilt`: a pointer tilt of up to 2.5 degrees, with a light that follows the pointer. `data-tilt="glow"` is the light alone. Skipped on touch.
 - `data-roll`: letter roll on a text link or button (CSS, 0.5s). The engine adds an `aria-hidden` second row.
 - `data-navbar` and `data-nav-static`: the floating nav hides on scroll down past 80px and returns on scroll up. The static flag, set on the job boards `<main>`, keeps it from hiding.
 - `data-logo`: the logo's star burst turns while the pointer or focus is on the logo.
+- `data-title`: the 3D word swing on a homepage H2, read by `home.ts` (see Homepage choreography). A ringed word inside it never wraps.
 - `#lamp`: the lamp layer, moved through `--lamp-x` and `--lamp-y`.
 
 ### Homepage choreography
@@ -353,7 +357,7 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 
 - **Intro.** One timeline that starts when the fonts are ready (600ms at most) and runs 1.3s at most. The wordmark's letters rise first (0.8s). The second line of the H1 rises from 0.3s, and the orange ring draws around its word from 0.6s. The two lede paragraphs fade up from 0.45s, the CTA pills settle in (up 24px, scale .96 to 1) from 0.5s, and the nav fades in last.
 - **Hero window.** The sheet closes to an inset window: 14% of its height from the top, 6% of its width at each side and 10% of its height at the bottom. On desktop each inset stops where the content starts, so the heading, lede and cards are never clipped. Below 640px it closes to 6% at the top and sides and 4% at the bottom, with 24px corners (40px above). It opens to the sheet's own corner radius. The scrub runs from the sheet's top reaching 90% of the viewport to its top reaching 35%. The CTA pills sit outside the sheet, so they are never clipped.
-- **3D titles.** The four section titles (hero, Why, About and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring fades in last.
+- **3D titles.** The five section titles (hero, Why, About, the values section and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring fades in last.
 - **Cards.** The service cards and the Why cards are `data-stagger` grids. Each card rises 32px and scales up from .96 over 1s, 60ms apart, once the grid's top reaches 80% of the viewport. Each card is also `data-tilt`.
 - **Why arrow.** The arrow is inline SVG. Its white mask path (`data-draw`) sweeps along the dashed arrow as the arrow scrolls from 80% to 40% of the viewport, and the head (`data-head`) fades in last.
 - **About.** The inset card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
@@ -364,6 +368,10 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 
 - **Job boards.** Table rows rise as a batch as soon as any of them is on screen (24px, 40ms apart, once). A filter change stops waiting for scroll, and only the rows it newly shows rise (12px, 20ms apart, 0.4s, `power3.out`), so typing never re-fades the rows that stay; the page re-measures once typing pauses. The page sets `data-nav-static` on `<main>`, so the nav stays put above the sticky toolbar at 101px. The H1 splits into lines, the lede rises, and the join heading splits into words.
 - **404, thanks and legal pages.** The headings split into lines and the panels rise (`data-reveal="up"`). The 404 opens with a giant `404` in ClashDisplay bold, one brand accent per digit (`data-split="chars"`, `aria-hidden`), and its text and button rise 0.15s and 0.3s after the heading. The legal copy's four-space blocks are set as prose, not as code boxes.
+
+### Values and initiatives
+
+The homepage values section, between Why and About, is a paper sheet that rises into view. Its ringed H2 takes the 3D word swing like the other homepage titles, the lead rises 0.1s later, and each pair of values rises one item after another, 60ms apart, with a dot that pops beside each name. On the values page, the charter's pairs sentence splits into lines and each row of tiles rises in turn. Each tile tilts toward the pointer (`data-tilt`) and has no CSS hover scale, so GSAP owns its transform. Each value row rises, its station dot pops and its dashed line wipes down as the row passes through the viewport. The interchange heading splits into words, and its four value lines draw in once, converging on the orange pill. On the initiatives page, the focus sheet rises, its pulse line draws in and the illustration scales in. The two door cards stagger in and tilt, and a focused door link gives its card the same ring and highlight (`:has(:focus-visible)`). A link to a row on the same page, such as a charter tile, keeps its Back entry, glides there with Lenis (honouring the row's scroll margin), and the row takes a `:target` tint (`#1D1D1D`) once it arrives. Back restores the previous place without a glide, and skip links stay native. A link from another page, such as the homepage's `/values/#openness`, lands under the curtain, and the row fades in place rather than rising.
 
 ### Page transitions
 
@@ -381,6 +389,10 @@ Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8
 - Hidden states use opacity, never `visibility` or `display`. A link that is still hidden stays in the tab order, and focus on it plays its reveal at once (and so for the form's field wipe and the job-board rows), even when it is already on screen below the trigger line, so its ring is never invisible. Whatever sits on the first screen at load is revealed at load.
 - Decorative layers are `aria-hidden`: the lamp, the letter roll's second row and the Why arrow. Split headings keep their text as an accessible name.
 - The mobile menu keeps Escape and the scroll lock (Lenis stops while it is open), and the nav never hides while the menu is open or focus is inside it.
+
+### Named Rules
+
+**The Hyphen Rule.** A hyphenated word that wraps at its hyphen reflows when the split reverts. Check the heading at both widths, or use a reveal instead. The French initiatives help heading ("Aidez-nous") was measured stable at 1440 and 390, so it keeps its split.
 
 ## Components
 
@@ -427,7 +439,7 @@ A whole value, as one fat colour field you can press.
 - **Field:** the value's colour fill (Value Colour Rule), 16px → 24px corners, 24–40px padding. Labels are #111, pure white on pantone.
 - **Content:** the value name in ClashDisplay 600 (36–60px), an Inter bold tagline (16–18px, max ~13–17rem), and a 44px outlined arrow-down circle pinned to the bottom-left. The whole tile is the link and jumps to the value's row.
 - **Doodle:** the value's CC0 doodle in #111 line with a paper accent, bottom-right, about half the tile wide and nudged 4% past the corner so the field clips it.
-- **Hover:** the tile scales to 102% (200ms ease-in), the arrow drops 4px, and the doodle lifts 1% and tilts −2° (300ms ease-out). Focus is the 2px orange outline, 2px offset.
+- **Hover:** the tile tilts toward the pointer (`data-tilt`: up to 2.5 degrees at 97% size over 0.3s, with a soft light under the pointer, behind the text) and has no CSS scale. The arrow drops 4px, and the doodle lifts 1% and tilts −2° (300ms ease-out). Focus shows the same light and the 2px orange outline, 2px offset.
 
 ### Value Row
 - A 20px station (3px ring in the value colour, #111 fill) at the row's top-left, with a 2px dashed line in the same colour running from it to the row's bottom edge. Consecutive rows read as one continuous line per value.
@@ -435,12 +447,12 @@ A whole value, as one fat colour field you can press.
 
 ### Interchange (drawn lines)
 - Four dashed value lines leave four stations (r 5, #111 fill, 3px ring) and curve together onto the orange pill directly below, under a ringed, centred headline.
-- **Draw-on-view:** each line is revealed through an SVG mask whose stroke has `pathLength="1"` and animates `stroke-dashoffset` 1 → 0 over 1400ms `cubic-bezier(0.16, 1, 0.3, 1)`, staggered 120ms per line, when half the figure is in view. The lines are drawn by default: only a figure still below the fold is hidden first, so without JS, with reduced motion, or when the page loads past it, the lines simply show.
+- **Draw on view:** each line is revealed through an SVG mask whose stroke is a `path.draw` with `pathLength="1"`. The figure carries `data-draw`, and the engine animates `stroke-dashoffset` 1 → 0 once, over 1.2s `expo.out`, 120ms apart, when the figure's top reaches 80% of the viewport. Only the engine hides the lines, so without JS or with reduced motion they simply show.
 - The Initiatives focus card reuses the same mechanism for an orange dashed heartbeat line on its yellow field. Any future drawn line uses this mechanism, not a second one.
 
 ### Door Card
 - A yellow (organisations) or lavender (contributors) colour field, echoing the homepage's two path pills. #111 text: an Inter 500 question at 24–30px, an Inter line at 16–18px, then at the foot the ClashDisplay 700 action with a 44px black arrow-right circle.
-- The action link is stretched over the whole card; the card shows the orange focus outline (`focus-within`), scales to 102% on hover, and the arrow slides 4px right.
+- The action link is stretched over the whole card. The card tilts toward the pointer like a value tile (`data-tilt`, no CSS scale) and the arrow slides 4px right. The card is not focusable, so a keyboard-focused link gives it the 2px orange outline and the same light (`:has(:focus-visible)`).
 
 ### Illustrations
 - **Sources:** Open Doodles (one per value) and Open Peeps (the community lineup, the two-person Initiatives scene), both by Pablo Stanley, CC0 1.0.
@@ -456,13 +468,13 @@ A whole value, as one fat colour field you can press.
 - **Do** put a text label next to every kind dot.
 - **Do** use a 2px orange outline (or ring) with a 2px offset on every focusable element.
 - **Do** keep ClashDisplay for the brand name, CTA labels, the footer contact heading, and names a visitor clicks.
-- **Do** show hover with scale (CTAs) or fill (#ECECEC on the sheet, orange on the nav pill), with transitions of 150–200ms.
+- **Do** show hover with scale (CTAs), fill (#ECECEC on the sheet, orange on the nav pill) or the pointer tilt (cards), and keep CSS transitions to 150–200ms.
 - **Do** keep `prefers-reduced-motion` switching off smooth scroll and transitions, and keep drawn lines fully drawn and static under it.
 - **Do** keep one clock. Everything runs on `gsap.ticker`: Lenis, ScrollTrigger and the lamp. Add no `requestAnimationFrame` loop and no `scroll` listener of your own; use ScrollTrigger or Lenis callbacks.
 - **Do** gate every hidden state on `html.motion`, and hide it with opacity, never `visibility`.
 - **Do** give each value its own colour everywhere it appears, and keep the four roles fixed.
 - **Do** set labels on a pantone fill in pure white, and on every other value fill in #111.
-- **Do** draw value lines dashed, and reveal drawn lines with the shared draw-on-view mask.
+- **Do** draw value lines dashed, and reveal drawn lines with a masked `path.draw` inside an `svg[data-draw]`.
 - **Do** source new illustrations from Open Doodles or Open Peeps, recolour them to #111 line plus one token accent, self-host them, and put a provenance comment in the file.
 
 ### Don't:

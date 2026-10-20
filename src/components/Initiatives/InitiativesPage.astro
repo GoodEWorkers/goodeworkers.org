@@ -4,7 +4,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SplitHeader from '../Common/SplitHeader.astro';
 import CircledText from '../JobBoards/CircledText.astro';
-import DrawOnView from '../Common/DrawOnView.astro';
 import Icon from '../icons/Icon.astro';
 import health from '../../assets/illustrations/health.svg';
 import { valueStyles } from '../Values/valueStyles';
@@ -39,7 +38,11 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
 
     <!-- The values, each phrase linked to its row on the values page and
          underlined in its colour. -->
-    <p class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl xl:text-4xl font-medium leading-snug md:leading-snug xl:leading-snug text-grey">
+    <p
+      class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl xl:text-4xl font-medium leading-snug md:leading-snug xl:leading-snug text-grey"
+      data-reveal="up"
+      data-delay="0.3"
+    >
       <span class="text-ashgray">{content.valuesLead}</span>
       {' '}{
         content.valuesLine.map((piece) =>
@@ -59,15 +62,16 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
     <section
       aria-labelledby="focus-title"
       class="mt-14 md:mt-20 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 pb-4 md:pb-8 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+      data-reveal="up"
     >
-      <h2 id="focus-title" class="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight">{focus.title}</h2>
+      <h2 id="focus-title" class="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight" data-split="lines">{focus.title}</h2>
       <div class="mt-6 md:mt-10 grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16">
         <div class="lg:col-span-7 lg:pb-8 lg:self-center">
-          <h3 class="max-w-2xl text-4xl md:text-5xl font-medium leading-[1.1] [text-wrap:balance]">
+          <h3 class="max-w-2xl text-4xl md:text-5xl font-medium leading-[1.1] [text-wrap:balance]" data-reveal="up">
             {focus.name}
           </h3>
           <div class="mt-6 max-w-2xl space-y-4 text-sm md:text-base leading-[1.6875] text-black/80">
-            {focus.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            {focus.paragraphs.map((paragraph, i) => <p data-reveal="up" data-delay={(i + 1) * 0.08}>{paragraph}</p>)}
           </div>
         </div>
         <div
@@ -106,6 +110,7 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
             height={health.height}
             loading="lazy"
             class="relative w-[86%] max-w-md"
+            data-reveal="scale"
           />
         </div>
       </div>
@@ -115,17 +120,19 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
       <h2
         id="help-title"
         class="text-center mx-auto max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+        data-split="lines"
       >
         <CircledText text={help.title} />
       </h2>
-      <ul class="mt-10 md:mt-14 grid md:grid-cols-2 gap-3 md:gap-5">
+      <ul class="mt-10 md:mt-14 grid md:grid-cols-2 gap-3 md:gap-5" data-stagger>
         {
           doors.map((door) => (
             <li
               class:list={[
-                'group relative flex min-h-[18rem] md:min-h-[22rem] flex-col rounded-2xl lg:rounded-3xl p-7 md:p-10 xl:p-12 text-black transition-transform duration-200 ease-in hover:scale-[1.02] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-orange',
+                'door group relative flex min-h-[18rem] md:min-h-[22rem] flex-col rounded-2xl lg:rounded-3xl p-7 md:p-10 xl:p-12 text-black has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-orange',
                 door.fill,
               ]}
+              data-tilt
             >
               <p class="max-w-md text-2xl md:text-3xl font-medium leading-tight">{door.question}</p>
               <p class="mt-4 text-base md:text-lg">{door.text}</p>
@@ -135,7 +142,7 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
               >
                 {door.action}
                 <span
-                  class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black text-grey transition-transform duration-200 ease-out group-hover:translate-x-1 [&>svg]:h-5 [&>svg]:w-5"
+                  class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-black text-grey transition-transform duration-200 ease-out group-hover:translate-x-1 group-has-[:focus-visible]:translate-x-1 [&>svg]:h-5 [&>svg]:w-5"
                   aria-hidden="true"
                 >
                   <Icon name="arrow-right" />
@@ -146,6 +153,20 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
         }
       </ul>
     </section>
-    <DrawOnView />
   </main>
 </BaseLayout>
+
+<style>
+  /* The pointer highlight lights the card from behind its text, like the pills, so the arrow button and label stay crisp. */
+  .door {
+    isolation: isolate;
+  }
+  .door::after {
+    z-index: -1;
+  }
+  /* The card is not focusable (its link is), so the engine's [data-tilt]:focus-visible twin never matches here.
+     .motion for the same specificity as the engine's hover rule, which beats its resting opacity. */
+  :global(.motion) .door:has(:focus-visible)::after {
+    opacity: 1;
+  }
+</style>

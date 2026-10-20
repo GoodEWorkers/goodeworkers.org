@@ -218,19 +218,9 @@
         "purpose": "Mobile menu overlay."
       },
       {
-        "name": "tile-scale",
-        "value": "transform scale(1.02), 200ms ease-in",
-        "purpose": "Value tile and door card hover; no shadow."
-      },
-      {
         "name": "nudge",
         "value": "translate 4px (arrow) or -1% plus -2deg (doodle), 200-300ms ease-out",
         "purpose": "Arrow circle and doodle respond inside a hovered tile or door."
-      },
-      {
-        "name": "draw-on-view",
-        "value": "stroke-dashoffset 1 to 0 on a pathLength=1 mask stroke, 1400ms cubic-bezier(0.16, 1, 0.3, 1), 120ms stagger, IntersectionObserver threshold 0.5",
-        "purpose": "Interchange value lines and the Initiatives pulse line. Drawn by default; only armed below the fold; skipped under reduced motion."
       },
       {
         "name": "toolbar-stuck",
@@ -300,7 +290,32 @@
       {
         "name": "letter-roll",
         "value": "translate 0 to -105% on hover or focus, 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)",
-        "purpose": "Letter roll on the nav Contact label, the language switcher and the footer email (data-roll)."
+        "purpose": "Letter roll on the nav Initiatives link and Contact pill, the language switcher and the footer email (data-roll)."
+      },
+      {
+        "name": "path-draw",
+        "value": "stroke-dashoffset 1 to 0 on each path.draw[pathLength] in an svg[data-draw], 1.2s expo.out, 0.12s stagger, once when the top reaches 80%",
+        "purpose": "Interchange value lines and the Initiatives pulse line draw in once as the figure comes into view. Without motion they are simply drawn. The Why arrow keeps its own scrubbed draw (home.ts)."
+      },
+      {
+        "name": "mark-pop",
+        "value": "scale 0.6 to 1, 0.8s expo.out, 0.2s delay, 0.06s stagger, starts with the nearest reveal or stagger",
+        "purpose": "Marks such as value and station dots (data-pop) grow in with the item they belong to."
+      },
+      {
+        "name": "line-wipe",
+        "value": "clip-path inset 100% to 0% from the top, scrubbed from the parent top at 80% to its bottom at 55%",
+        "purpose": "The dashed station line of each value row wipes down as its row passes through the viewport (data-wipe). A clip rather than a scale, so the dashes keep their shape."
+      },
+      {
+        "name": "tile-tilt",
+        "value": "data-tilt on the charter tiles and door cards: rotate up to 2.5deg, scale 0.97, 0.3s, ease-soft; no CSS hover scale on the element",
+        "purpose": "Value tiles and Initiatives door cards tilt toward the pointer and show the same highlight on focus. Skipped on touch."
+      },
+      {
+        "name": "hash-glide",
+        "value": "same-page #hash link: Astro keeps the history entry, scroll restored, then a Lenis glide to the target (scroll-margin honoured); :target tint #1D1D1D on the row",
+        "purpose": "A charter tile glides to its value row on the same page, which then shows its tint. Back restores the place without a glide. Skip links stay native."
       }
     ],
     "breakpoints": [
@@ -403,9 +418,9 @@
       "name": "Value Tile",
       "kind": "card",
       "refersTo": "value-tile-solidarity",
-      "description": "Signature: one value as a colour field link. ClashDisplay name, Inter bold tagline, outlined arrow-down circle, CC0 doodle bottom-right; scales to 102% on hover. Pantone tile shown (pure-white labels).",
+      "description": "Signature: one value as a colour field link. ClashDisplay name, Inter bold tagline, outlined arrow-down circle, CC0 doodle bottom-right; tilts toward the pointer with a light behind the text (data-tilt, no CSS scale; the preview shows a fixed lean). Pantone tile shown (pure-white labels).",
       "html": "<div class=\"ds-tiles\"><a class=\"ds-tile\" style=\"background:#FDC959;color:#111111\" href=\"#\"><span class=\"ds-tile-name\">Openness</span><span class=\"ds-tile-tag\">We work in the open.</span><span class=\"ds-tile-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3V13M3.75 8.75L8 13L12.25 8.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tile-doodle\"></span></a><a class=\"ds-tile\" style=\"background:#6667AB;color:#FFFFFF\" href=\"#\"><span class=\"ds-tile-name\">Solidarity</span><span class=\"ds-tile-tag\">We stand with each other.</span><span class=\"ds-tile-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3V13M3.75 8.75L8 13L12.25 8.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tile-doodle\"></span></a></div>",
-      "css": ".ds-tiles{display:grid;grid-template-columns:1fr 1fr;gap:20px;background:#F8F8F8;padding:24px;} .ds-tile{position:relative;display:flex;flex-direction:column;min-height:22rem;overflow:hidden;border-radius:24px;padding:32px;text-decoration:none;transition:transform 200ms ease-in;} .ds-tile:hover{transform:scale(1.02);} .ds-tile:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-tile-name{position:relative;z-index:1;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:48px;line-height:1;} .ds-tile-tag{position:relative;z-index:1;margin-top:16px;max-width:15rem;font-family:Inter, Arial, sans-serif;font-weight:700;font-size:18px;line-height:1.375;} .ds-tile-arrow{position:relative;z-index:1;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:2px solid currentColor;border-radius:9999px;transition:transform 200ms ease-out;} .ds-tile:hover .ds-tile-arrow{transform:translateY(4px);} .ds-tile-doodle{position:absolute;right:-4%;bottom:-4%;width:52%;height:55%;border:2px solid #111111;border-radius:40% 40% 0 0;background:#F8F8F8;transition:transform 300ms ease-out;} .ds-tile:hover .ds-tile-doodle{transform:translateY(-1%) rotate(-2deg);}"
+      "css": ".ds-tiles{display:grid;grid-template-columns:1fr 1fr;gap:20px;background:#F8F8F8;padding:24px;} .ds-tile{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:22rem;overflow:hidden;border-radius:24px;padding:32px;text-decoration:none;outline:1px solid transparent;transition:transform 300ms cubic-bezier(0.165,0.84,0.44,1);} .ds-tile::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity 300ms;background:radial-gradient(circle at 70% 70%,rgb(255 255 255 / .35),transparent 60%);} .ds-tile:hover{transform:perspective(700px) rotateX(1.2deg) rotateY(-1.2deg) scale(0.97);} .ds-tile:hover::after,.ds-tile:focus-visible::after{opacity:1;} .ds-tile:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-tile-name{position:relative;z-index:1;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:48px;line-height:1;} .ds-tile-tag{position:relative;z-index:1;margin-top:16px;max-width:15rem;font-family:Inter, Arial, sans-serif;font-weight:700;font-size:18px;line-height:1.375;} .ds-tile-arrow{position:relative;z-index:1;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:2px solid currentColor;border-radius:9999px;transition:transform 200ms ease-out;} .ds-tile:hover .ds-tile-arrow,.ds-tile:focus-visible .ds-tile-arrow{transform:translateY(4px);} .ds-tile-doodle{position:absolute;right:-4%;bottom:-4%;width:52%;height:55%;border:2px solid #111111;border-radius:40% 40% 0 0;background:#F8F8F8;transition:transform 300ms ease-out;} .ds-tile:hover .ds-tile-doodle,.ds-tile:focus-visible .ds-tile-doodle{transform:translateY(-1%) rotate(-2deg);}"
     },
     {
       "name": "Value Row",
@@ -419,17 +434,17 @@
       "name": "Interchange",
       "kind": "custom",
       "refersTo": "",
-      "description": "Four dashed value lines converge on the orange pill; drawn in on view (static under reduced motion). Preview approximates the mask reveal with a clip.",
+      "description": "Four dashed value lines converge on the orange pill; each line draws in once as the figure comes into view (1.2s expo.out, 120ms apart; always drawn without JS or under reduced motion). The preview approximates the mask reveal with a clip.",
       "html": "<section class=\"ds-ix\"><svg class=\"ds-ix-svg\" viewBox=\"0 0 800 216\" aria-hidden=\"true\"><path d=\"M120 4 C120 120, 400 96, 400 212\" fill=\"none\" stroke=\"#FDC959\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-dasharray=\"8 10\" class=\"ds-draw\" style=\"animation-delay:0ms\"/><path d=\"M306 4 C306 120, 400 96, 400 212\" fill=\"none\" stroke=\"#B3A0CF\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-dasharray=\"8 10\" class=\"ds-draw\" style=\"animation-delay:120ms\"/><path d=\"M494 4 C494 120, 400 96, 400 212\" fill=\"none\" stroke=\"#FD5E09\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-dasharray=\"8 10\" class=\"ds-draw\" style=\"animation-delay:240ms\"/><path d=\"M680 4 C680 120, 400 96, 400 212\" fill=\"none\" stroke=\"#6667AB\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-dasharray=\"8 10\" class=\"ds-draw\" style=\"animation-delay:360ms\"/><circle cx=\"120\" cy=\"6\" r=\"5\" fill=\"#111111\" stroke=\"#FDC959\" stroke-width=\"3\"/><circle cx=\"306\" cy=\"6\" r=\"5\" fill=\"#111111\" stroke=\"#B3A0CF\" stroke-width=\"3\"/><circle cx=\"494\" cy=\"6\" r=\"5\" fill=\"#111111\" stroke=\"#FD5E09\" stroke-width=\"3\"/><circle cx=\"680\" cy=\"6\" r=\"5\" fill=\"#111111\" stroke=\"#6667AB\" stroke-width=\"3\"/></svg><a class=\"ds-ix-pill\" href=\"#\">See our initiatives</a></section>",
-      "css": ".ds-ix{background:#111111;padding:24px;text-align:center;} .ds-ix-svg{display:block;width:100%;max-width:48rem;margin:0 auto;} .ds-draw{animation:ds-reveal 1400ms cubic-bezier(0.16,1,0.3,1) both;clip-path:inset(0 0 100% 0);} @keyframes ds-reveal{to{clip-path:inset(0 0 0 0);}} @media (prefers-reduced-motion:reduce){.ds-draw{animation:none;clip-path:none;}} .ds-ix-pill{display:inline-flex;margin-top:-4px;padding:20px 48px;border-radius:9999px;background:#FD5E09;color:#FFFFFF;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:36px;line-height:1.1;text-decoration:none;transition:transform 150ms ease-in;} .ds-ix-pill:hover{transform:scale(1.05);} .ds-ix-pill:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;}"
+      "css": ".ds-ix{background:#111111;padding:24px;text-align:center;} .ds-ix-svg{display:block;width:100%;max-width:48rem;margin:0 auto;} .ds-draw{animation:ds-reveal 1200ms cubic-bezier(0.19,1,0.22,1) both;clip-path:inset(0 0 100% 0);} @keyframes ds-reveal{to{clip-path:inset(0 0 0 0);}} @media (prefers-reduced-motion:reduce){.ds-draw{animation:none;clip-path:none;}} .ds-ix-pill{display:inline-flex;margin-top:-4px;padding:20px 48px;border-radius:9999px;background:#FD5E09;color:#FFFFFF;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:36px;line-height:1.1;text-decoration:none;transition:transform 150ms ease-in;} .ds-ix-pill:hover{transform:scale(1.05);} .ds-ix-pill:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;}"
     },
     {
       "name": "Door Card",
       "kind": "card",
       "refersTo": "door-card-yellow",
-      "description": "A way in: yellow (organisations) or lavender (contributors) field, stretched link, ClashDisplay action with a black arrow circle.",
+      "description": "A way in: yellow (organisations) or lavender (contributors) field, stretched link, ClashDisplay action with a black arrow circle. The card tilts toward the pointer with a light behind the text (data-tilt, no CSS scale; the preview shows a fixed lean) and shows its ring when the link has keyboard focus.",
       "html": "<ul class=\"ds-doors\"><li class=\"ds-door\" style=\"background:#FDC959\"><p class=\"ds-door-q\">Are you a health organisation?</p><p class=\"ds-door-t\">Tell us what you need.</p><a class=\"ds-door-a\" href=\"#\">Write to us<span class=\"ds-door-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 8H13M8.75 3.75L13 8L8.75 12.25\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></a></li><li class=\"ds-door\" style=\"background:#B3A0CF\"><p class=\"ds-door-q\">Want to lend your skills?</p><p class=\"ds-door-t\">Tell us what you can do.</p><a class=\"ds-door-a\" href=\"#\">Offer your help<span class=\"ds-door-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 8H13M8.75 3.75L13 8L8.75 12.25\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></a></li></ul>",
-      "css": ".ds-doors{display:grid;grid-template-columns:1fr 1fr;gap:20px;list-style:none;margin:0;background:#111111;padding:24px;} .ds-door{position:relative;display:flex;flex-direction:column;min-height:18rem;border-radius:24px;padding:40px;color:#111111;font-family:Inter, Arial, sans-serif;transition:transform 200ms ease-in;} .ds-door:hover{transform:scale(1.02);} .ds-door:focus-within{outline:2px solid #FD5E09;outline-offset:2px;} .ds-door-q{margin:0;font-weight:500;font-size:30px;line-height:1.25;} .ds-door-t{margin:16px 0 0;font-size:18px;} .ds-door-a{margin-top:auto;padding-top:40px;display:inline-flex;align-items:center;gap:12px;align-self:flex-start;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:30px;line-height:1.25;color:#111111;text-decoration:none;outline:none;} .ds-door-a::after{content:'';position:absolute;inset:0;border-radius:inherit;} .ds-door-arrow{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:9999px;background:#111111;color:#ECECEC;transition:transform 200ms ease-out;} .ds-door:hover .ds-door-arrow{transform:translateX(4px);}"
+      "css": ".ds-doors{display:grid;grid-template-columns:1fr 1fr;gap:20px;list-style:none;margin:0;background:#111111;padding:24px;} .ds-door{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:18rem;border-radius:24px;padding:40px;color:#111111;font-family:Inter, Arial, sans-serif;outline:1px solid transparent;transition:transform 300ms cubic-bezier(0.165,0.84,0.44,1);} .ds-door::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity 300ms;background:radial-gradient(circle at 70% 70%,rgb(255 255 255 / .35),transparent 60%);} .ds-door:hover{transform:perspective(700px) rotateX(1.2deg) rotateY(-1.2deg) scale(0.97);} .ds-door:hover::after,.ds-door:has(:focus-visible)::after{opacity:1;} .ds-door:has(:focus-visible){outline:2px solid #FD5E09;outline-offset:2px;} .ds-door-q{margin:0;font-weight:500;font-size:30px;line-height:1.25;} .ds-door-t{margin:16px 0 0;font-size:18px;} .ds-door-a{margin-top:auto;padding-top:40px;display:inline-flex;align-items:center;gap:12px;align-self:flex-start;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:30px;line-height:1.25;color:#111111;text-decoration:none;outline:none;} .ds-door-a::after{content:'';position:absolute;inset:0;border-radius:inherit;} .ds-door-arrow{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:9999px;background:#111111;color:#ECECEC;transition:transform 200ms ease-out;} .ds-door:hover .ds-door-arrow,.ds-door:has(:focus-visible) .ds-door-arrow{transform:translateX(4px);}"
     }
   ],
   "narrative": {
@@ -483,7 +498,7 @@
       },
       {
         "name": "The Flat At Rest Rule",
-        "body": "Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar does. Hover is shown with scale, colour fill, or a small nudge of an arrow or doodle.",
+        "body": "Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar does. Hover is shown with scale (CTAs), colour fill, the pointer tilt and highlight on cards, or a small nudge of an arrow or doodle.",
         "section": "elevation"
       }
     ],
@@ -494,11 +509,11 @@
       "Do put a text label next to every kind dot.",
       "Do use a 2px orange outline (or ring) with a 2px offset on every focusable element.",
       "Do keep ClashDisplay for the brand name, CTA labels, the footer contact heading, and names a visitor clicks.",
-      "Do show hover with scale (CTAs) or fill (#ECECEC on the sheet, orange on the nav pill), with transitions of 150–200ms.",
+      "Do show hover with scale (CTAs), fill (#ECECEC on the sheet, orange on the nav pill) or the pointer tilt (cards), and keep CSS transitions to 150–200ms.",
       "Do keep `prefers-reduced-motion` switching off smooth scroll and transitions, and keep drawn lines fully drawn and static under it.",
       "Do give each value its own colour everywhere it appears, and keep the four roles fixed.",
       "Do set labels on a pantone fill in pure white, and on every other value fill in #111.",
-      "Do draw value lines dashed, and reveal drawn lines with the shared draw-on-view mask.",
+      "Do draw value lines dashed, and reveal drawn lines with a masked `path.draw` inside an `svg[data-draw]`.",
       "Do source new illustrations from Open Doodles or Open Peeps, recolour them to #111 line plus one token accent, self-host them, and put a provenance comment in the file."
     ],
     "donts": [
