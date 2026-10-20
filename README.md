@@ -114,3 +114,7 @@ smoke` fails on any outbound link without the new tab, `noopener` or
 ## Deployment
 
 Hosted on Netlify. Build command `npm run build`, publish dir `dist/`. The contact form uses Netlify Forms (`data-netlify="true"`).
+
+## Motion
+
+Motion runs on GSAP and Lenis, from `src/scripts/motion/`, on one clock (`gsap.ticker`). Hidden states are gated on `html.motion`, so content shows without JS and under reduced motion. The Playwright helpers in `scripts/` emulate reduced motion, so their screenshots capture settled frames.

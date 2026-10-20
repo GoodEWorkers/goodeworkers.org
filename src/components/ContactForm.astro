@@ -29,6 +29,7 @@ const labelClass =
   'peer-[:not(:placeholder-shown)]:text-gray-600';
 ---
 
+<!-- data-astro-reload: Netlify Forms wants a real browser POST and a full load of the thank-you page, not the router's fetch. -->
 <form
   class="flex flex-col md:flex-row md:space-x-20"
   name="contact"
@@ -36,6 +37,7 @@ const labelClass =
   action={thanksAction}
   data-netlify="true"
   data-netlify-honeypot="bot-field"
+  data-astro-reload
 >
   <div class="flex flex-col md:flex-1">
     <input type="hidden" name="form-name" value="contact" />
@@ -63,6 +65,7 @@ const labelClass =
         placeholder=" "
         autocomplete="name"
         required
+        data-rule
       />
       <label for="name" class={labelClass}>{form.name}</label>
     </div>
@@ -76,6 +79,7 @@ const labelClass =
         placeholder=" "
         autocomplete="email"
         required
+        data-rule
       />
       <label for="email" class={labelClass}>{form.email}</label>
     </div>
@@ -86,7 +90,8 @@ const labelClass =
         name="message"
         id="message"
         placeholder=" "
-        required></textarea>
+        required
+        data-rule></textarea>
       <label for="message" class={`${labelClass} top-5`}>{form.message}</label>
     </div>
 
@@ -147,11 +152,13 @@ const labelClass =
   // Carry the originating CTA through to the submission. Every CTA on the site
   // points at the localized #contact anchor, so without this there is no way
   // to tell them apart.
+  // Idempotent, so the direct call (a browser without the router never fires astro:page-load) and the listener may
+  // both run. Assigns even when empty: Back from ?from=... on the same, unswapped page must clear it.
   function setupSourceField() {
     const field = document.querySelector<HTMLInputElement>('[data-source-field]');
     if (!field) return;
     const from = new URLSearchParams(window.location.search).get('from');
-    if (from) field.value = from.slice(0, 64);
+    field.value = from ? from.slice(0, 64) : '';
   }
 
   setupSourceField();

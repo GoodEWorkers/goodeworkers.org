@@ -111,6 +111,18 @@ components:
     backgroundColor: "{colors.grey}"
     textColor: "{colors.black}"
     rounded: "{rounded.card}"
+motion:
+  ease:
+    out: "expo.out"
+    inOut: "expo.inOut"
+    soft: "power3.out"
+  timing:
+    hover: "0.25-0.5s, soft"
+    lineReveal: "1.0-1.3s, stagger 0.06-0.1, out"
+    clipReveal: "1.2-1.6s, out"
+    curtain: "0.8-1.1s, inOut"
+    scrollLinked: "scrub: true, linear to scroll"
+    stagger: "20-80ms"
 ---
 
 # Design System: GoodEWorkers
@@ -182,7 +194,9 @@ Text on the sheet steps down by alpha on black: 80% for supporting prose, 70% fo
 - **Label** (Inter 700, 12px → 14px): Nav, filter pills, field labels, and table headers.
 
 ### Named Rules
-**The Brand Voice Rule.** ClashDisplay appears only for the brand name, CTA pill labels, the footer contact heading, and names a visitor clicks to leave (board and tool names). Headings and UI are set in Inter.
+**The Brand Voice Rule.** ClashDisplay appears only for the brand name (the H1 wordmark and the footer's closing band), CTA pill labels, the footer contact heading, the 404 numeral, and names a visitor clicks to leave (board and tool names). Headings and UI are set in Inter.
+
+**The Balanced Headings Rule.** H1s and H2s are set with `text-wrap: balance`, so none ends on a lone word. The homepage H1 is the exception: SplitText keeps it split for good, and a layout balanced before the split is not the one its lines end up in. The Encircled wrapper ends in a zero-width joiner (`.encircled::after`) so Chromium's balanced breaking keeps the ring with its word.
 
 **The Hollow Bold Rule (known gap).** The system intends Inter at 500 and 700. But `src/styles/global.css` maps the single `Inter-Regular.ttf` to weights 400–700, so every Inter `font-medium` and `font-bold` currently renders at 400. Record and design to the intended weights. Don't retune sizes or colours to make up for the missing weight. This is pre-existing drift, reported to the owner, and not fixed here.
 
@@ -204,13 +218,14 @@ There is one shared column. It is max 1536px wide, centred, with 16px gutters (3
 
 ## Elevation & Depth
 
-The system is flat. Depth comes from the two grounds, from panels overlapping (hero pills sit over the sheet's top edge with a negative top margin), from offset photos, and from a 105% scale on CTA hover. `BRAND.md` records this explicitly, and issue #46 removed the shadows.
+The system is flat. Depth comes from the two grounds, from panels overlapping (hero pills sit over the sheet's top edge with a negative top margin), from offset photos, and from a 105% scale on CTA hover. The one addition is light, not shadow: the lamp is a warm glow on the #111 ground, kept under 10% alpha so the ground still reads #111 (see Motion). `BRAND.md` records this explicitly, and issue #46 removed the shadows.
 
 ### Shadow Vocabulary
 - **Stuck toolbar hairline** (`box-shadow: 0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45)`): Appears only while the job-board toolbar is stuck over scrolling rows, fading in over 200ms ease-out. It shows state (content is passing underneath) and isn't used as decoration.
+- **Floating nav hairline** (`box-shadow: 0 1px 0 rgb(248 248 248 / 0.08)`): Appears once the page has scrolled and the nav floats over the content. It shows state and isn't used as decoration.
 
 ### Named Rules
-**The Flat At Rest Rule.** Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar does. Hover is shown with scale or colour fill.
+**The Flat At Rest Rule.** Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar and the floating nav do. Hover is shown with scale, colour fill, or the pointer tilt and highlight on cards.
 
 ## Shapes
 
@@ -220,6 +235,79 @@ The system is flat. Depth comes from the two grounds, from panels overlapping (h
 - **Circles:** 10px kind dots, and the encircled-word ring (1px, 2px from `md`) drawn as a fully rounded orange outline covering the lower ~62% of the word.
 - **Fields** have no radius and no box, only a 2px bottom rule.
 - **Borders** are 2px black on the light sheet (pills, field rule, table header rule), 2px orange for the nav Contact, and 1px black/10% for row hairlines.
+
+## Motion
+
+The motion comes from one concept. Its card:
+
+```
+Idea:        A lit window at night. The site is a dark room; the warm paper sheet is the window where work happens.
+Metaphor:    Late-evening remote work: one lit window on a dark street. The visitor's pointer is the lamp.
+Signature:   (1) The hero paper sheet opens like a window as you scroll into it (clip-path scrub).
+             (2) A warm lamp glow follows the pointer and drifts at rest on the dark ground (one driver variable).
+Emotion:     Warm, calm, handmade. Nothing bounces, nothing glows neon.
+Motion verb: "settle like paper". Sheets slide and settle (expo.out). Big things move slower than small things.
+Screenshot:  The hero mid-scroll with the window half open, pills overlapping the sheet edge.
+```
+
+**The motion verb is "settle like paper".** Sheets slide in and settle on `expo.out`, and big things move slower than small things. Every animation is a variant of it. Lenis smooths the scroll. Lenis, ScrollTrigger and the lamp all run on `gsap.ticker`. The timings and ease names are in the frontmatter, and new motion uses those names. Three existing effects are exceptions: the 3D title swing (`power2.inOut`), the About photo tilt (`power1.inOut`) and the letter roll's CSS curve (`cubic-bezier(0.165, 0.84, 0.44, 1)`).
+
+### Signatures
+
+The motion has two signatures.
+
+- **Hero window.** The hero sheet (`data-window`) starts as a closed window and opens as you scroll into it. The clip is scrubbed to the scroll. The insets are under Homepage choreography.
+- **Lamp.** `#lamp` is a fixed layer behind the content, with no pointer events and `aria-hidden`. It paints a warm radial glow on the #111 ground, under 10% alpha, so the ground still reads #111. The centre eases toward the pointer, scrolling nudges it a few percent, and it drifts once the pointer has rested. On touch there is no pointer, so the glow moves down the page with the scroll. It pauses while the tab is hidden.
+
+### Data attributes
+
+The engine in `src/scripts/motion/engine.ts` reads these:
+
+- `data-split="lines|words|chars"`: masked text reveal on scroll, lines by default. Text that holds a link, button or field fades up instead, so no link is split.
+- `data-split-intro`: plays the split in the page intro instead of on scroll. No markup uses it yet.
+- `data-reveal="up|fade|clip|scale"`, with `data-delay`: one element reveals on scroll (1.0–1.4s, `expo.out`).
+- `data-stagger`: the children of a grid reveal one after another, 60ms apart.
+- `data-parallax="0.15"`: the element drifts through its pass by up to that fraction of the viewport height in each direction. Put it on a wrapper.
+- `data-tilt`: a pointer tilt of up to 2.5 degrees, with a light that follows the pointer. `data-tilt="glow"` is the light alone. Skipped on touch.
+- `data-roll`: letter roll on a text link or button (CSS, 0.5s). The engine adds an `aria-hidden` second row.
+- `data-navbar` and `data-nav-static`: the floating nav hides on scroll down past 80px and returns on scroll up. The static flag, set on the job boards `<main>`, keeps it from hiding.
+- `data-logo`: the logo's star burst turns while the pointer or focus is on the logo.
+- `#lamp`: the lamp layer, moved through `--lamp-x` and `--lamp-y`.
+
+### Homepage choreography
+
+Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-window`, `data-title`, `data-draw`, `data-head`, `data-story` and `data-rule`.
+
+- **Intro.** One timeline that starts when the fonts are ready (600ms at most) and runs 1.3s at most. The wordmark's letters rise first (0.8s). The second line of the H1 rises from 0.3s, and the orange ring draws around its word from 0.6s. The two lede paragraphs fade up from 0.45s, the CTA pills settle in (up 24px, scale .96 to 1) from 0.5s, and the nav fades in last.
+- **Hero window.** The sheet closes to an inset window: 14% of its height from the top, 6% of its width at each side and 10% of its height at the bottom. On desktop each inset stops where the content starts, so the heading, lede and cards are never clipped. Below 640px it closes to 6% at the top and sides and 4% at the bottom, with 24px corners (40px above). It opens to the sheet's own corner radius. The scrub runs from the sheet's top reaching 90% of the viewport to its top reaching 35%. The CTA pills sit outside the sheet, so they are never clipped.
+- **3D titles.** The four section titles (hero, Why, About and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring fades in last.
+- **Cards.** The service cards and the Why cards are `data-stagger` grids. Each card rises 32px and scales up from .96 over 1s, 60ms apart, once the grid's top reaches 80% of the viewport. Each card is also `data-tilt`.
+- **Why arrow.** The arrow is inline SVG. Its white mask path (`data-draw`) sweeps along the dashed arrow as the arrow scrolls from 80% to 40% of the viewport, and the head (`data-head`) fades in last.
+- **About.** The inset card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
+- **CTA pills.** `data-tilt="glow"` adds the pointer light with no rotation. The press (`:active`) scales the pill to 97%, on top of the existing 105% hover.
+- **Footer.** The email's local part and domain each roll on hover and focus (`data-roll`). Each contact field's bottom rule wipes in from the left, one after another (1.2s, 80ms apart), once the form's top reaches 80% of the viewport (`data-rule`). The contact sheet has the hero sheet's rounded corners (12, 16 and 24px) on both ends, and on every page a closing band below it on the dark ground sets the H1's wordmark at `clamp(2rem, 11vw, 12rem)`, centred and `aria-hidden`. Its letters rise through a mask as the band comes into view (`data-split="chars"`, 0.9s, `expo.out`, 0.35s across all letters).
+
+### Other pages
+
+- **Job boards.** Table rows rise as a batch as soon as any of them is on screen (24px, 40ms apart, once). A filter change stops waiting for scroll, and only the rows it newly shows rise (12px, 20ms apart, 0.4s, `power3.out`), so typing never re-fades the rows that stay; the page re-measures once typing pauses. The page sets `data-nav-static` on `<main>`, so the nav stays put above the sticky toolbar at 101px. The H1 splits into lines, the lede rises, and the join heading splits into words.
+- **404, thanks and legal pages.** The headings split into lines and the panels rise (`data-reveal="up"`). The 404 opens with a giant `404` in ClashDisplay bold, one brand accent per digit (`data-split="chars"`, `aria-hidden`), and its text and button rise 0.15s and 0.3s after the heading. The legal copy's four-space blocks are set as prose, not as code boxes.
+
+### Page transitions
+
+Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8F8 sheet with 24px top corners, `aria-hidden`): it slides up over the page while the next one loads (0.8s, `expo.inOut`), the engine is torn down and rebuilt under it, then it lifts off (0.9s, `expo.inOut`) and the page intro starts at 55% of that lift. Back and forward and reduced motion swap at once with no sheet, the Netlify form post keeps a full browser load, and a link to the page you are on, such as the `?from=...#contact` pills, does not swap: it updates history and glides to the hash. The lamp and the curtain persist across swaps, and links prefetch on hover.
+
+### Reduced motion and no JS
+
+`html.motion` is set before first paint by an inline script in `<head>`, and only when JS runs and reduced motion is off. Everything that starts hidden is hidden by CSS gated on that class, by opacity, so without JS or under reduced motion the page is complete and still. Under reduced motion the engine skips its motion: no Lenis, scrubs, intro, tilts, logo spin, letter roll or lamp motion. The lamp rests as a still glow at 50% across and 40% down, and hover colours, underlines and the CTA scale stay. A failsafe covers an engine that never boots: after 4s the inline script sets `data-engine="off"` and removes `motion`, so content cannot stay hidden. It also covers a homepage chunk that fails alone: `home.ts` sets `data-home` on load, and a page with `[data-intro]` but no `data-home` after 4s loses `motion` too. The nav's transparent top state (the lamp shows through the bar) holds in every mode that has JS, reduced motion included, since the engine toggles `is-floating` in all of them. Without JS, or once the failsafe has switched the engine off, the bar stays solid.
+
+### Accessibility
+
+- Hover effects also run on focus: the card highlight, the letter roll, the logo spin and the CTA scale. The focus ring itself does not change.
+- The cursor is the native one. There is no custom cursor.
+- The motion's hover rules sit inside `@media (hover: hover)`, and so do Tailwind's `hover:` utilities (`future.hoverOnlyWhenSupported`), so a tap never leaves a hover state stuck. Touch devices get no tilt, and the lamp follows the scroll.
+- Hidden states use opacity, never `visibility` or `display`. A link that is still hidden stays in the tab order, and focus on it plays its reveal at once (and so for the form's field wipe and the job-board rows), even when it is already on screen below the trigger line, so its ring is never invisible. Whatever sits on the first screen at load is revealed at load.
+- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row and the Why arrow. Split headings keep their text as an accessible name.
+- The mobile menu keeps Escape and the scroll lock (Lenis stops while it is open), and the nav never hides while the menu is open or focus is inside it.
 
 ## Components
 
@@ -269,12 +357,16 @@ A single word in a heading is wrapped in a fully rounded orange outline, with 6p
 - **Do** keep ClashDisplay for the brand name, CTA labels, the footer contact heading, and names a visitor clicks.
 - **Do** show hover with scale (CTAs) or fill (#ECECEC on the sheet, orange on the nav pill), with transitions of 150–200ms.
 - **Do** keep `prefers-reduced-motion` switching off smooth scroll and transitions.
+- **Do** keep one clock. Everything runs on `gsap.ticker`: Lenis, ScrollTrigger and the lamp. Add no `requestAnimationFrame` loop and no `scroll` listener of your own; use ScrollTrigger or Lenis callbacks.
+- **Do** gate every hidden state on `html.motion`, and hide it with opacity, never `visibility`.
 
 ### Don't:
-- **Don't** add resting shadows. The only shadow in the system is the state hairline on a stuck toolbar.
+- **Don't** add resting shadows. The only shadows in the system are the state hairlines on a stuck toolbar and the floating nav.
 - **Don't** place the logo, or any surface, on a mid-value ground (`BRAND.md`).
 - **Don't** set small text in white on orange. Below large-bold size, labels on orange are black.
 - **Don't** use Tailwind's stock palette (gray-500/600/900, indigo-600) or stock UI recipes. Use the brand tokens and black alpha steps.
 - **Don't** add a second horizontal padding layer inside the shared column.
 - **Don't** use glyph or emoji icons. Icons are inline SVG line icons from `src/assets/icons/`, drawn in `currentColor`.
 - **Don't** add small uppercase labels above headings. The system has no eyebrow or kicker device.
+- **Don't** put a CSS `transform` on an element GSAP animates. Put Tailwind offsets on a wrapper, as the About photos do.
+- **Don't** add a second signature moment. The hero window and the lamp are the two.

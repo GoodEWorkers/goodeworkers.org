@@ -1,28 +1,40 @@
 ---
 import { getLangFromPath, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
+import BigRoundedLinkBtn from './Common/BigRoundedLinkBtn.astro';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const { notFound } = t(lang);
+// One digit per brand accent, in the order of the wordmark.
+const digitColour = ['text-yellow', 'text-orange', 'text-purple'];
 ---
 
+{/* A dim room: the dark ground with the lamp (#lamp) still on, and one orange way back. The pill sits in
+    its own wrapper so the reveal's transform never meets the pill's hover scale. The block is centred in the screen
+    below the nav (66, 101 and 165px tall by breakpoint), so the pill is never under the fold. The numeral is display
+    type, not text: the heading below says what happened, so it is hidden from assistive tech. */}
 <main
   id="main-content"
-  class="grid min-h-full h-screen before:place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8"
+  class="grid min-h-[calc(100svh-66px)] md:min-h-[calc(100svh-101px)] lg:min-h-[calc(100svh-165px)] place-items-center px-6 py-24 sm:py-32 lg:px-8"
 >
   <div class="text-center">
-    <p class="text-base font-semibold text-indigo-600">{notFound.code}</p>
-    <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+    <p
+      class="font-clash font-bold leading-[0.9] text-[clamp(6rem,24vw,18rem)]"
+      aria-hidden="true"
+      data-split="chars"
+    >
+      {[...notFound.code].map((digit, i) => <span class={digitColour[i % digitColour.length]}>{digit}</span>)}
+    </p>
+    <h1 class="mt-6 md:mt-8 text-4xl/tight md:text-5xl/tight lg:text-6xl/tight font-medium text-grey" data-split="lines">
       {notFound.title}
     </h1>
-    <p class="mt-6 text-base leading-7 text-gray-600">{notFound.text}</p>
-    <div class="mt-10 flex items-center justify-center gap-x-6">
-      <a
+    <p class="mt-6 text-base leading-[1.6875] text-ashgray" data-reveal="up" data-delay="0.15">{notFound.text}</p>
+    <div class="mt-10" data-reveal="up" data-delay="0.3">
+      <BigRoundedLinkBtn
+        bigBtmText={notFound.cta}
         href={routes.home[lang]}
-        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        {notFound.cta}
-      </a>
+        class="mx-auto bg-orange text-white-pure sm:w-fit sm:max-w-none sm:px-12"
+      />
     </div>
   </div>
 </main>

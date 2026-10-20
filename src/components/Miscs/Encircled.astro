@@ -7,4 +7,14 @@ interface Props {
 const { text, class: className } = Astro.props;
 ---
 
-<span class="relative"><span class={`z-10 relative px-1.5 ${className ?? ''}`}>{text}</span><span class="absolute inset-x-0 top-[25%] rounded-full z-0 border-orange border md:border-2 h-[62%]"></span></span>
+<span class="relative encircled"><span class={`z-10 relative px-1.5 ${className ?? ''}`}>{text}</span><span class="absolute inset-x-0 top-[25%] rounded-full z-0 border-orange border md:border-2 h-[62%]"></span></span>
+
+<style is:global>
+  /* Under text-wrap: balance (global.css) Chromium can strand the ring's placeholder on the line after the word when that
+     line ends right there, and the ring is then sized from the stray fragment instead of from the word. A zero-width
+     joiner after the ring keeps it with the word; the alt text keeps it out of the heading's accessible name. */
+  .encircled::after {
+    content: '\2060';
+    content: '\2060' / '';
+  }
+</style>

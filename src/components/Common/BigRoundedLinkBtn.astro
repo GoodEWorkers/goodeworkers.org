@@ -11,7 +11,8 @@ const { upperSmallText, bigBtmText, href, class: className } = Astro.props;
 
 <a
   href={href}
-  class={`w-full max-w-[336px] px-7 py-5 rounded-full flex flex-col items-center hover:scale-105 transition-transform ease-in ${className ?? ''}`}
+  class={`w-full max-w-[336px] px-7 py-5 rounded-full flex flex-col items-center hover:scale-105 focus-visible:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange transition-transform ease-in ${className ?? ''}`}
+  data-tilt="glow"
 >
   {
     upperSmallText && (
@@ -22,3 +23,22 @@ const { upperSmallText, bigBtmText, href, class: className } = Astro.props;
     {bigBtmText}
   </span>
 </a>
+
+<style>
+  /* The press uses the scale property, so it stacks on Tailwind's hover transform instead of replacing it. */
+  a {
+    transition-property: transform, scale;
+    isolation: isolate;
+  }
+  a:active {
+    scale: 0.97;
+  }
+  /* The pointer glow lights the pill from behind its label, so the label stays crisp. */
+  a::after {
+    z-index: -1;
+  }
+  /* White light on the orange fill would pull its white label under 3:1, so that pill glows darker. */
+  a.bg-orange::after {
+    background: radial-gradient(circle at var(--px, 50%) var(--py, 50%), rgb(17 17 17 / 0.14), transparent 60%);
+  }
+</style>

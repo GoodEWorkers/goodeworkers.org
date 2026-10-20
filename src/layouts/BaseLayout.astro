@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import {
@@ -172,9 +173,20 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang={languages[lang].htmlLang}>
+<html lang={languages[lang].htmlLang} transition:animate="none">
   <head>
     <meta charset="utf-8" />
+    <!-- Before any CSS. The hidden-before-reveal rules in global.css are gated on
+         html.motion, so content stays visible without JS and under reduced motion.
+         Failsafe: if the engine never boots (a stale hashed chunk after a deploy, a blocked
+         request) those rules would keep the page blank. boot() sets data-engine="1"; without it
+         after 4 s, motion is switched off for good (data-engine="off", which boot() then honours). A homepage whose own
+         chunk failed (home.ts sets data-home) loses motion the same way. -->
+    <script is:inline>(function(h){h.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');setTimeout(function(){if(!h.dataset.engine){h.dataset.engine='off';h.classList.remove('motion')}else if(!h.dataset.home&&document.querySelector('[data-intro]'))h.classList.remove('motion')},4000)})(document.documentElement)</script>
+    <!-- Client-side navigation. The page change is the curtain in motion/transitions.ts, not the browser's
+         cross-fade (transition:animate="none" on <html>). fallback="none": a browser without the View
+         Transitions API keeps plain page loads, and the engine boots on each of them. -->
+    <ViewTransitions fallback="none" />
     <title>{pageTitle}</title>
     <!-- `maximum-scale` / `user-scalable=no` removed: they blocked pinch-zoom on
          Android Chrome and in-app webviews (WCAG 1.4.4). The layout is already
@@ -246,6 +258,8 @@ const structuredData = {
     >
       {strings.nav.skipToContent}
     </a>
+    <!-- The lamp: warm light on the dark ground, painted by global.css and moved by the motion engine. -->
+    <div id="lamp" aria-hidden="true" transition:persist="lamp"></div>
     <Navbar />
     <!--
       The shared content column. Every page sits in the same box as the navbar
@@ -268,5 +282,11 @@ const structuredData = {
       <slot />
     </div>
     <Footer contact={contact} />
+    <!-- The page-change sheet (motion/transitions.ts). It persists across swaps so it can cover the old page and
+         lift off the new one. -->
+    <div id="curtain" aria-hidden="true" transition:persist="curtain"></div>
+    <script>
+      import '../scripts/motion/index.ts';
+    </script>
   </body>
 </html>

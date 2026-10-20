@@ -213,12 +213,21 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
   .toolbar[data-stuck] {
     box-shadow: 0 1px 0 rgb(17 17 17 / 0.1), 0 10px 18px -16px rgb(17 17 17 / 0.45);
   }
+
+  /* Rows wait for the reveal in the motion script below. Opacity, not visibility: the row links stay
+     focusable, so a keyboard user can tab into rows that have not scrolled in yet. */
+  :global(.motion) [data-board-list] tbody tr {
+    opacity: 0;
+  }
 </style>
 
 <script>
+  // Runs for the table in the page, once per navigation: this module is evaluated only once per full load, so a
+  // second visit through the router is served by the astro:page-load listener below. data-bound: never bound twice.
   function setupBoardTable() {
     const root = document.querySelector<HTMLElement>('[data-board-table]');
-    if (!root) return;
+    if (!root || root.hasAttribute('data-bound')) return;
+    root.setAttribute('data-bound', '');
 
     const rows = [...root.querySelectorAll<HTMLTableRowElement>('tbody tr')];
     const pills = [...root.querySelectorAll<HTMLButtonElement>('[data-kind-filter]')];
@@ -258,7 +267,7 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
 
     const apply = () => {
       const terms = fold(search?.value ?? '').split(/\s+/).filter(Boolean).map(stem);
-      let shown = 0;
+      const visible: HTMLTableRowElement[] = [];
       for (const row of rows) {
         const text = row.dataset.text ?? '';
         const match =
@@ -268,8 +277,9 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
         // Inline style, not `hidden`: the rows are `display: grid` on small
         // screens, and a utility class outranks the [hidden] rule.
         row.style.display = match ? '' : 'none';
-        if (match) shown += 1;
+        if (match) visible.push(row);
       }
+      const shown = visible.length;
       if (count) {
         count.textContent = template
           .replace('{shown}', String(shown))
@@ -277,6 +287,7 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
       }
       if (empty) empty.hidden = shown > 0;
       revealResults();
+      root.dispatchEvent(new CustomEvent('board:filtered', { detail: visible }));
     };
 
     const select = (next: string) => {
@@ -314,5 +325,77 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
     }
   }
 
+  // The direct call is the first visit (this module runs as the page arrives); the listener serves every later one,
+  // and a browser without the router never fires it (BaseLayout: fallback="none").
   setupBoardTable();
+  document.addEventListener('astro:page-load', setupBoardTable);
+</script>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { ease, onPage, withIntro } from '../../scripts/motion/engine';
+
+  // Rows scroll in as a batch; a filter rises only the rows it newly shows. Every tween has explicit ends and
+  // clears its transform, so a row hidden by a filter and shown again never keeps a stale state.
+  onPage(({ signal }) => {
+    const root = document.querySelector<HTMLElement>('[data-board-table]');
+    const rows = root ? [...root.querySelectorAll<HTMLElement>('tbody tr')] : [];
+    if (!root || !rows.length) return;
+
+    const rise = (targets: gsap.TweenTarget, y: number, vars: gsap.TweenVars) =>
+      gsap.fromTo(targets, { y, opacity: 0 }, { y: 0, opacity: 1, clearProps: 'transform', ...vars });
+
+    // A row rises the moment any of it is on screen, so no visible row is still hidden. After a page change that is
+    // behind the curtain: the first batch waits for the page intro, which starts as the curtain clears. A row that
+    // focus or a filter showed in the meantime (inline opacity) is left alone.
+    const waiting = ScrollTrigger.batch(rows, {
+      start: 'top bottom',
+      once: true,
+      onEnter: (batch) =>
+        withIntro(() => {
+          const todo = batch.filter((row) => (row as HTMLElement).style.opacity === '');
+          if (todo.length) rise(todo, 24, { duration: 0.9, stagger: 0.04, ease: ease.out });
+        }),
+    });
+
+    // Tab can still reach a row ahead of its trigger, and its ring would be invisible: show it at once.
+    // A tween leaves opacity 1 inline when it ends, so that marks a row as done.
+    root.addEventListener(
+      'focusin',
+      (event) => {
+        const row = (event.target as Element).closest<HTMLElement>('tbody tr');
+        if (!row || row.style.opacity === '1') return;
+        waiting[rows.indexOf(row)]?.kill();
+        gsap.killTweensOf(row);
+        gsap.set(row, { y: 0, opacity: 1, clearProps: 'transform' });
+      },
+      { capture: true, signal },
+    );
+
+    let shown = rows;
+    let refresh: gsap.core.Tween | undefined;
+    root.addEventListener(
+      'board:filtered',
+      (event) => {
+        const next = (event as CustomEvent<HTMLElement[]>).detail;
+        if (next.length === shown.length && next.every((row, i) => row === shown[i])) return;
+        // Only rows the list did not show before rise, plus any that never played (no inline opacity yet): typing
+        // must not re-fade the rows that stay.
+        const fresh = next.filter((row) => !shown.includes(row) || row.style.opacity === '');
+        shown = next;
+        waiting.forEach((trigger) => trigger.kill()); // the list was just reshaped: show it now, not on scroll
+        // The page got shorter or taller: the sections below must re-measure, once typing pauses.
+        refresh?.kill();
+        refresh = gsap.delayedCall(0.15, () => ScrollTrigger.refresh());
+        if (fresh.length) rise(fresh, 12, { duration: 0.4, stagger: 0.02, ease: ease.soft, overwrite: true });
+      },
+      { signal },
+    );
+
+    return () => {
+      gsap.killTweensOf(rows);
+      refresh?.kill();
+    };
+  });
 </script>

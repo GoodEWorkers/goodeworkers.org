@@ -13,8 +13,8 @@ header:
   titlePart1: "Aider les"
   titleEncircled:  "associations"
   titlePart2: "via le télétravail"
-  intro: "Nous sommes une communauté de télétravailleurs. Nous construisons pour les associations, publions ce que nous créons en open source. La plupart des organisations voient le travail à distance comme une concession.Pour nous, c'est un atout et nous en sommes la preuve."
-  introBold: "Si vous êtes à la tête d'une association ou vous souhaitez contribuer depuis chez vous c'est par ici"
+  intro: "Nous sommes une communauté de télétravailleurs. Nous construisons pour les associations, publions ce que nous créons en open source. La plupart des organisations voient le travail à distance comme une concession. Pour nous, c'est un atout et nous en sommes la preuve."
+  introBold: "Si vous êtes à la tête d'une association ou vous souhaitez contribuer depuis chez vous, c'est par ici."
 
 hero:
   ctaNonprofitSmall: "Je suis une"
@@ -34,9 +34,9 @@ hero:
 why:
   titlePart1: "Faire de la distance un "
   titleEncircled: "atout"
-  textBold: "Nous fonctionnons à distance et en asynchrone"
-  textMiddle: "Chaque projet, décision et réunion se fait à distance : nous ne défendons pas une idée que nous n'avons pas éprouvée. "
-  textEnd: "Vous disposez d'un interlocuteur dédié pendant toute la durée du projet, joignable e-mail, visio ou messagerie."
+  textBold: "Nous fonctionnons à distance et en asynchrone."
+  textMiddle: " Chaque projet, décision et réunion se fait à distance : nous ne défendons pas une idée que nous n'avons pas éprouvée. "
+  textEnd: "Vous disposez d'un interlocuteur dédié pendant toute la durée du projet, joignable par e-mail, visio ou messagerie."
   cards:
     - title: "Aucune restriction \ngéographique"
       text: "Nous ne sommes pas une association locale. Nos membres viennent de partout : la bonne personne pour une tâche n'est jamais écartée à cause de son lieu de vie."
@@ -68,6 +68,6 @@ about:
     after: "."
   # Court pour que le bouton tienne sur une ligne, comme « Join Us » en anglais.
   cta: "Nous rejoindre"
-  roleFounder: "Cofondation"
+  roleFounder: "Cofondateur"
   roleDirector: "Direction générale"
 ---

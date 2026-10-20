@@ -14,6 +14,7 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
   -->
   <h1
     class="text-4xl/tight md:text-5xl/tight lg:text-7xl/tight xl:text-[74px]/[83px] text-center"
+    data-intro="title"
   >
     <span class="text-yellow font-clash font-medium">Good</span><span class="text-orange font-clash font-semibold">e</span><span class="text-purple font-clash font-medium">Workers</span>
     <br />
@@ -21,12 +22,57 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
   </h1>
   <p
     class="mt-8 md:mt-12 lg:mt-16 px-4 sm:px-16 max-w-screen-md mx-auto text-sm md:text-base text-center leading-[1.6875]"
+    data-intro="lede"
   >
     {header.intro}
   </p>
   <p
     class="mt-4 px-4 sm:px-16 max-w-screen-md mx-auto text-sm md:text-base font-bold text-center leading-[1.6875]"
+    data-intro="lede"
   >
     {header.introBold}
   </p>
 </header>
+
+<style is:global>
+  /* Home-only motion CSS for src/scripts/motion/home.ts. Every rule is gated on html.motion like the engine's own,
+     so without JS, under reduced motion, or once the failsafe drops html.motion, everything is simply there. */
+
+  /* Hidden until home.ts builds the intro and the 3D titles. By opacity, not visibility: the pills (and any link) stay
+     reachable with Tab. The words and the ring are the parts of a title that arrive last; the nav is the last of the intro. */
+  .motion [data-intro],
+  .motion [data-title],
+  .motion [data-title] div,
+  .motion [data-title] span.relative > span:last-child:empty,
+  .motion [data-navbar] {
+    opacity: 0;
+  }
+  /* A title's words swing in from the side: until they land (home.ts lifts this) the heading clips them
+     instead of widening the page. */
+  .motion [data-title] {
+    overflow-x: clip;
+  }
+  /* The card glow lights a card from behind its text, so the text keeps its contrast under the pointer. */
+  .motion [data-tilt=''] {
+    isolation: isolate;
+  }
+  .motion [data-tilt='']::after {
+    z-index: -1;
+  }
+  /* The hero sheet starts as a closed window, so the first paint is not the open sheet snapping shut once the script
+     runs. These are the insets heroWindow() starts from: capped where the sheet's content starts (about 5rem from the top
+     below 1024px, 2rem from the sides from 1024px), so the window only ever trims padding. */
+  .motion [data-window] {
+    clip-path: inset(min(14%, 5rem) 6% 10% 6% round 40px);
+  }
+  @media (min-width: 1024px) {
+    .motion [data-window] {
+      clip-path: inset(14% min(6%, 2rem) 10% min(6%, 2rem) round 40px);
+    }
+  }
+  @media (max-width: 639px) {
+    .motion [data-window] {
+      clip-path: inset(6% 6% 4% 6% round 24px);
+    }
+  }
+</style>

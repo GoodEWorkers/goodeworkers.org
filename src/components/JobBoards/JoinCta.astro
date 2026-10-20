@@ -20,10 +20,11 @@ const href = `${Astro.url.pathname}?from=job-boards#contact`;
   <h2
     id="join-title"
     class="mx-auto max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+    data-split="words"
   >
     <CircledText text={join.title} />
   </h2>
-  <p class="mt-8 md:mt-10 mx-auto max-w-2xl px-2 text-sm md:text-base leading-[1.6875] text-ashgray">
+  <p class="mt-8 md:mt-10 mx-auto max-w-2xl px-2 text-sm md:text-base leading-[1.6875] text-ashgray" data-reveal="up">
     {join.text}
   </p>
   <BigRoundedLinkBtn

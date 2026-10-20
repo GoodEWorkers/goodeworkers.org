@@ -218,6 +218,66 @@
         "name": "reduced-motion",
         "value": "transitions 0.01ms, scroll-behavior auto",
         "purpose": "prefers-reduced-motion override in global.css."
+      },
+      {
+        "name": "ease-out",
+        "value": "expo.out",
+        "purpose": "GSAP ease for reveals, split lines and staggered grids. Big things move slower than small ones."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "expo.inOut",
+        "purpose": "GSAP ease for the page curtain (designed, not yet built)."
+      },
+      {
+        "name": "ease-soft",
+        "value": "power3.out",
+        "purpose": "Hovers and small settles: card tilt (0.3s), nav hide (0.25s), refiltered job rows (0.4s)."
+      },
+      {
+        "name": "line-reveal",
+        "value": "1.0-1.3s, stagger 0.06-0.1, ease-out (data-split lines: 1.2s, 0.08)",
+        "purpose": "Masked text lines rising into view on scroll (data-split)."
+      },
+      {
+        "name": "clip-reveal",
+        "value": "1.2-1.6s, ease-out, clip-path inset 100% to 0% (data-reveal clip and scale: 1.4s)",
+        "purpose": "Clip-path reveal. The clip is cleared at the end so focus rings are not cut."
+      },
+      {
+        "name": "curtain",
+        "value": "0.8-1.1s, ease-in-out (leave 0.8s, enter 0.9s)",
+        "purpose": "Paper sheet (#curtain, #F8F8F8, 24px top corners) that covers the page between navigations. Designed, not yet built."
+      },
+      {
+        "name": "hero-window",
+        "value": "clip-path inset, scrubbed, linear to scroll, from clamp(top 90%) to top 35%",
+        "purpose": "Signature 1: the hero sheet opens like a window as it scrolls into view."
+      },
+      {
+        "name": "lamp",
+        "value": "radial-gradient 60vmax at the pointer: rgb(253 94 9 / 0.09), rgb(253 201 89 / 0.04) at 40%, transparent at 70%",
+        "purpose": "Signature 2: a warm glow on the #111 ground that follows the pointer (the scroll on touch). Under 10% alpha."
+      },
+      {
+        "name": "nav-hide",
+        "value": "yPercent -100 and opacity 0 over 0.25s, ease-soft",
+        "purpose": "Floating nav hides on scroll down past 80px and returns on scroll up. Off on pages with data-nav-static."
+      },
+      {
+        "name": "title-3d",
+        "value": "translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg) to rest, power2.inOut, stagger 0.02",
+        "purpose": "3D word swing on the section titles (data-title)."
+      },
+      {
+        "name": "card-tilt",
+        "value": "rotate up to 2.5deg, scale 0.97, 0.3s, ease-soft",
+        "purpose": "Pointer tilt and highlight on service and Why cards (data-tilt). Skipped on touch."
+      },
+      {
+        "name": "letter-roll",
+        "value": "translate 0 to -105% on hover or focus, 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)",
+        "purpose": "Letter roll on the nav Contact label, the language switcher and the footer email (data-roll)."
       }
     ],
     "breakpoints": [

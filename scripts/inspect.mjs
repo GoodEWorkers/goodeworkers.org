@@ -6,7 +6,8 @@ const TARGETS = [
 ];
 
 const browser = await chromium.launch();
-const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+// Animations are gated on prefers-reduced-motion; capture the settled frame.
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
 for (const t of TARGETS) {
   const page = await ctx.newPage();
   await page.goto(t.url, { waitUntil: 'networkidle' });

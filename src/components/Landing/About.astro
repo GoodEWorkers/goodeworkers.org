@@ -14,6 +14,7 @@ const { about } = await homeContent(lang);
 <section id="who-are-we">
   <div
     class="bg-black-light rounded-xl lg:rounded-2xl text-grey font-medium text-sm md:text-base pt-10 px-6 md:px-8 mb-36 sm:mb-56 lg:mb-20 xl:mb-28"
+    data-reveal="up"
   >
     <div
       class="lg:flex lg:items-center lg:space-x-8 xl:space-x-16 lg:justify-between max-w-screen-2xl mx-auto"
@@ -21,21 +22,22 @@ const { about } = await homeContent(lang);
       <div class="flex flex-col max-w-screen-md lg:py-16">
         <h2
           class="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[54px] font-medium leading-[1.2] md:leading-tight lg:leading-tight 2xl:leading-[63px]"
+          data-title
         >
           {about.titlePart1}
           <span class="font-bold">{about.titleBold}</span>
           {about.titlePart2}
         </h2>
-        <p class="mt-7 sm:mt-10 md:mt-14 lg:mt-10 leading-[1.6875]">
+        <p class="mt-7 sm:mt-10 md:mt-14 lg:mt-10 leading-[1.6875]" data-split="lines">
           {about.intro}
           <span class="font-bold">{about.introBold}</span>
         </p>
-        <p class="mt-4 leading-[1.6875]">{about.text2}</p>
-        <p class="mt-4 leading-[1.6875]">{about.text3}</p>
-        <h3 class="mt-8 font-bold text-purple uppercase">{about.benefitsTitle}</h3>
+        <p class="mt-4 leading-[1.6875]" data-split="lines">{about.text2}</p>
+        <p class="mt-4 leading-[1.6875]" data-split="lines">{about.text3}</p>
+        <h3 class="mt-8 font-bold text-purple uppercase" data-split="lines">{about.benefitsTitle}</h3>
         <ul class="mt-8 space-y-6 leading-[1.6875] list-disc pl-5">
-          {about.benefits.map((benefit) => <li>{benefit}</li>)}
-          <li>
+          {about.benefits.map((benefit, index) => <li data-reveal="up" data-delay={index * 0.06}>{benefit}</li>)}
+          <li data-reveal="up" data-delay={about.benefits.length * 0.06}>
             {about.benefitOpenSource}{' '}
             <ExternalLink href="https://github.com/GoodEWorkers" class="underline hover:text-orange"
               >{about.githubCta}</ExternalLink
@@ -44,7 +46,7 @@ const { about } = await homeContent(lang);
         </ul>
         <!-- The section already speaks to freelancers, students and people
              between jobs, so this is where the job boards list belongs. -->
-        <p class="mt-8 leading-[1.6875]">
+        <p class="mt-8 leading-[1.6875]" data-split="lines">
           {about.jobBoards.before}<a
             href={routes.jobBoards[lang]}
             class="underline hover:text-orange">{about.jobBoards.link}</a
@@ -59,32 +61,37 @@ const { about } = await homeContent(lang);
         />
         <div
           class="relative mt-6 sm:mt-16 lg:mt-0 h-72 sm:h-80 lg:h-72 w-full flex justify-center items-center"
+          data-story
         >
           <div class="w-40 sm:w-56 flex-shrink-0 translate-x-3 sm:translate-x-5 relative">
-            <Image
-              src={Richard}
-              alt=""
-              width={240}
-              height={240}
-              class="rounded-2xl w-full aspect-square"
-            />
-            <p class="text-xs sm:text-sm absolute -bottom-6 left-0">
-              Richard, <span class="font-semibold">{about.roleFounder}</span>
-            </p>
+            <div class="relative" data-parallax="0.08">
+              <Image
+                src={Richard}
+                alt=""
+                width={240}
+                height={240}
+                class="rounded-2xl w-full aspect-square"
+              />
+              <p class="text-xs sm:text-sm absolute -bottom-6 left-0">
+                Richard, <span class="font-semibold">{about.roleFounder}</span>
+              </p>
+            </div>
           </div>
           <div
             class="w-40 sm:w-56 flex-shrink-0 -translate-x-3 sm:-translate-x-5 translate-y-32 sm:translate-y-44 relative"
           >
-            <Image
-              src={Alice}
-              alt=""
-              width={240}
-              height={240}
-              class="rounded-2xl w-full aspect-square"
-            />
-            <p class="text-xs sm:text-sm -bottom-6 absolute left-0">
-              Alice, <span class="font-semibold">{about.roleDirector}</span>
-            </p>
+            <div class="relative" data-parallax="-0.08">
+              <Image
+                src={Alice}
+                alt=""
+                width={240}
+                height={240}
+                class="rounded-2xl w-full aspect-square"
+              />
+              <p class="text-xs sm:text-sm -bottom-6 absolute left-0">
+                Alice, <span class="font-semibold">{about.roleDirector}</span>
+              </p>
+            </div>
           </div>
         </div>
         <div class="hidden lg:block xl:relative xl:-left-56">
