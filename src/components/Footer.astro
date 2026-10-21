@@ -35,7 +35,8 @@ const logo = logoSvg.replace('<svg', '<svg aria-hidden="true" focusable="false" 
     id="contact"
   >
   </div>
-  {/* The contact sheet: the hero's rounded paper again, on the column box, so it ends where the hero sheet does. */}
+  {/* The contact sheet: the hero's rounded paper again. It sits outside the column, so instead of breaking out of it (`.sheet`) it is the
+      column's own box, max 1536px, centred, with the same gutters: its edges are every sheet's edges at every width. */}
   <div
     class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-10 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
   >

@@ -23,12 +23,12 @@ const rows = [
 ];
 ---
 
-<!-- The charter: the four values at a glance on the dark card (inset in the column, like the About card), two pairs in
+<!-- The charter: the four values at a glance on the dark card (a `.sheet`, the column's width like every surface), two pairs in
      two rows. Each tile jumps to its value's text further down. Its grid (a label column, then two equal columns) is the
      one the page header and the value rows hang from. -->
 <section
   aria-label={content.charterLabel}
-  class="mt-10 md:mt-14 px-6 md:px-8 py-8 md:py-12 bg-black-light text-grey rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden"
+  class="sheet mt-10 md:mt-14 py-8 md:py-12 bg-black-light text-grey overflow-hidden"
   data-reveal="up"
 >
   <!-- One weight of Inter, so the two pairs are told by brightness: the sentence rests, its key words light up. -->

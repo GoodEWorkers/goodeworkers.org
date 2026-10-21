@@ -279,11 +279,10 @@ const structuredData = {
         * Do not add a second layer of horizontal padding. A panel with its own
           `px-8` inside this `px-8` pushes its content 32px past the logotype,
           which is the bug #45 reported.
-        * A surface that must span wider than the column (the hero's white
-          panel) breaks out and re-applies the padding — `-mx-4 md:-mx-8
-          px-4 md:px-8` — so the panel bleeds but its content stays on the
-          column. A *card* that sits within the column (the About panel, the
-          legal panel) keeps its own padding and is deliberately inset.
+        * Every surface, paper or dark, is a `.sheet` (global.css): it breaks
+          out of the column and re-applies the padding (`-mx-4 md:-mx-8
+          px-4 md:px-8`), so it is as wide as the footer's contact sheet while
+          its content stays on the logotype's line. Nothing is inset.
     -->
     <div class="max-w-screen-2xl mx-auto px-4 md:px-8">
       <slot />

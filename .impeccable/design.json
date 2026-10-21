@@ -424,7 +424,7 @@
       "name": "Light Sheet",
       "kind": "card",
       "refersTo": "panel-light",
-      "description": "The #F8F8F8 working surface, rounded and broken out to the column edges on the #111 ground.",
+      "description": "The #F8F8F8 working surface: a `.sheet`, rounded and broken out to the column edges on the #111 ground, the same width as every dark card and the footer's contact sheet.",
       "html": "<div class=\"ds-ground\"><section class=\"ds-sheet\"><h2 class=\"ds-sheet-title\">All 29 boards</h2><p class=\"ds-sheet-text\">Working content sits on the sheet; statements sit on the ground.</p></section></div>",
       "css": ".ds-ground{background:#111111;padding:32px 0;} .ds-sheet{background:#F8F8F8;color:#111111;border-radius:24px;padding:48px 32px 56px;font-family:Inter, Arial, sans-serif;} .ds-sheet-title{font-weight:500;font-size:36px;line-height:1.25;margin:0;} .ds-sheet-text{margin-top:16px;font-size:16px;line-height:1.6875;color:rgb(17 17 17 / .8);}"
     },
@@ -448,7 +448,7 @@
       "name": "Value Tile",
       "kind": "card",
       "refersTo": "value-tile-solidarity",
-      "description": "Signature: one value as a colour field link, set in the charter's dark inset card. ClashDisplay name (fluid), Inter bold tagline, outlined arrow-down circle, window at night (Windows at night series, black pen, paper light) bottom-right, 52% of the tile and 4% past the corner. It draws itself in and breathes; pointed at, its light holds at full and its motion doubles. Tilts toward the pointer (data-tilt, tilt only, no CSS scale; the preview shows a fixed lean). Pantone tile shown (pure-white labels). No community row.",
+      "description": "Signature: one value as a colour field link, set in the charter's dark card. ClashDisplay name (fluid), Inter bold tagline, outlined arrow-down circle, window at night (Windows at night series, black pen, paper light) bottom-right, 52% of the tile and 4% past the corner. It draws itself in and breathes; pointed at, its light holds at full and its motion doubles. Tilts toward the pointer (data-tilt, tilt only, no CSS scale; the preview shows a fixed lean). Pantone tile shown (pure-white labels). No community row.",
       "html": "<section class=\"ds-charter\"><div class=\"ds-tiles\"><a class=\"ds-tile\" style=\"background:#FDC959;color:#111111\" href=\"#\"><span class=\"ds-tile-name\">Openness</span><span class=\"ds-tile-tag\">We work in the open.</span><span class=\"ds-tile-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3V13M3.75 8.75L8 13L12.25 8.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tile-art\"></span></a><a class=\"ds-tile\" style=\"background:#6667AB;color:#FFFFFF\" href=\"#\"><span class=\"ds-tile-name\">Solidarity</span><span class=\"ds-tile-tag\">We stand with each other.</span><span class=\"ds-tile-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3V13M3.75 8.75L8 13L12.25 8.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tile-art\"></span></a></div></section>",
       "css": ".ds-charter{background:#1D1D1D;color:#ECECEC;padding:32px 24px;border-radius:16px;} .ds-tiles{display:grid;grid-template-columns:1fr 1fr;gap:20px;} .ds-tile{position:relative;display:flex;flex-direction:column;min-height:22rem;overflow:hidden;border-radius:24px;padding:32px;text-decoration:none;outline:1px solid transparent;transform:perspective(700px) rotateX(1.2deg) rotateY(-1.2deg);transition:transform 300ms cubic-bezier(0.165,0.84,0.44,1);} .ds-tile:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-tile-name{position:relative;z-index:1;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:clamp(2.25rem,4.2vw,3.75rem);line-height:1;} .ds-tile-tag{position:relative;z-index:1;margin-top:12px;max-width:14rem;font-family:Inter, Arial, sans-serif;font-weight:700;font-size:18px;line-height:1.375;} .ds-tile-arrow{position:relative;z-index:1;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:2px solid currentColor;border-radius:9999px;transition:transform 200ms ease-out;} .ds-tile:hover .ds-tile-arrow,.ds-tile:focus-visible .ds-tile-arrow{transform:translateY(4px);} .ds-tile-art{position:absolute;right:-4%;bottom:-4%;width:52%;height:55%;border:2px solid #111111;border-radius:40% 40% 0 0;background:#F8F8F8;}"
     },
@@ -456,7 +456,7 @@
       "name": "Value Row",
       "kind": "custom",
       "refersTo": "",
-      "description": "A value as text on the night ground: a ClashDisplay name in the value's ink, an Inter bold tagline and Ash prose. No stations, dashed lines or hairlines. From lg the value's window at night sits under the tagline, in a 288x207 box one step up on the night (#1D1D1D, #111 on a targeted row) that clips its light. A row a tile links to takes a #1D1D1D card that fades in (:target).",
+      "description": "A value as text on the night ground: a ClashDisplay name in the value's ink, an Inter bold tagline and Ash prose. No stations, dashed lines or hairlines. From lg the value's window at night sits under the tagline, in a 288x207 box one step up on the night (#1D1D1D, #111 on a targeted row) that clips its light. A row a tile links to takes a #1D1D1D card with the charter's own edges that fades in (:target).",
       "html": "<div class=\"ds-rows\"><article class=\"ds-vrow\"><h3 class=\"ds-vrow-name\" style=\"color:#B3A0CF\">Autonomy</h3><p class=\"ds-vrow-tag\">We trust people to own their work.</p><p class=\"ds-vrow-text\">Prose in Ash, at most 42rem wide.</p></article><article class=\"ds-vrow ds-vrow-target\"><h3 class=\"ds-vrow-name\" style=\"color:#8E8ED0\">Solidarity</h3><p class=\"ds-vrow-tag\">We stand with each other.</p><p class=\"ds-vrow-text\">Prose in Ash, at most 42rem wide.</p></article></div>",
       "css": ".ds-rows{background:#111111;color:#ECECEC;padding:24px;font-family:Inter, Arial, sans-serif;} .ds-vrow{padding:40px 32px;border-radius:24px;} .ds-vrow-target{background:#1D1D1D;} .ds-vrow-name{margin:0;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:64px;line-height:1;} .ds-vrow-tag{margin:16px 0 0;font-weight:700;font-size:24px;line-height:1.375;} .ds-vrow-text{margin:24px 0 0;max-width:42rem;font-size:16px;line-height:1.6875;color:#E0E0E0;}"
     },
@@ -488,7 +488,7 @@
       "name": "404 Card",
       "kind": "card",
       "refersTo": "",
-      "description": "The 404 page: a dark inset card with About's radius and side padding. The numeral is ClashDisplay 700 in orange, 27vw capped at 25rem, bleeding off the card's right and bottom edges (aria-hidden). The words sit on the card's padding. The pill's focus ring is white, as on the thanks page.",
+      "description": "The 404 page: a dark card, a `.sheet` like every surface (the column's width, the gutter as its side padding). The numeral is ClashDisplay 700 in orange, 27vw capped at 25rem, bleeding off the card's right and bottom edges (aria-hidden). The words sit on the card's padding. The pill's focus ring is white, as on the thanks page.",
       "html": "<div class=\"ds-404\"><p class=\"ds-404-num\" aria-hidden=\"true\">404</p><div class=\"ds-404-words\"><h1 class=\"ds-404-title\">Page not found</h1><p class=\"ds-404-text\">Sorry, we couldn't find the page you're looking for.</p><a class=\"ds-404-pill\" href=\"#\">Go back home</a></div></div>",
       "css": ".ds-404{position:relative;overflow:hidden;background:#1D1D1D;color:#FFFFFF;border-radius:24px;padding:48px 32px;min-height:26rem;font-family:Inter, Arial, sans-serif;} .ds-404-num{position:absolute;right:-0.07em;bottom:-0.25em;margin:0;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:clamp(15rem,27vw,25rem);line-height:1;color:#FD5E09;white-space:nowrap;user-select:none;} .ds-404-words{position:relative;max-width:26rem;} .ds-404-title{margin:0;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:48px;line-height:1.1;} .ds-404-text{margin:24px 0 0;font-size:18px;color:#E0E0E0;} .ds-404-pill{display:inline-block;margin-top:48px;padding:20px 32px;border-radius:9999px;background:#FD5E09;color:#FFFFFF;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:24px;line-height:1.25;text-decoration:none;} .ds-404-pill:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}"
     }
@@ -509,7 +509,7 @@
     "rules": [
       {
         "name": "The Two Grounds Rule",
-        "body": "Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D insets on dark and #ECECEC cards on light. Don't use a mid-value ground.",
+        "body": "Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D cards on dark and #ECECEC cards on light. Don't use a mid-value ground.",
         "section": "colors"
       },
       {
@@ -539,7 +539,7 @@
       },
       {
         "name": "The Shared Column Rule",
-        "body": "Content aligns to the logotype. Paper sheets break out with `-mx` and re-pad; dark cards stay inset with their own padding. Never pad twice.",
+        "body": "Every surface spans the column width, and its content aligns to the logotype. `.sheet` is the recipe: break out with `-mx-4 md:-mx-8`, re-pad with `px-4 md:px-8`. Nothing is inset, and nothing pads twice.",
         "section": "layout"
       },
       {
@@ -549,7 +549,7 @@
       }
     ],
     "dos": [
-      "Do alternate the #111 ground and the #F8F8F8 sheet, and break the sheet out to the column edge with `-mx-4 md:-mx-8 px-4 md:px-8`.",
+      "Do alternate the #111 ground and the #F8F8F8 sheet, and put every surface, paper or dark, on `.sheet` so that it spans the column width with its content on the logotype's line.",
       "Do give each view one orange action, and use a pure-white label only on the large CTA pill.",
       "Do encircle at most one word per heading, and pick it in the copy.",
       "Do put a text label next to every kind dot.",
@@ -567,7 +567,7 @@
       "Don't place the logo, or any surface, on a mid-value ground (`BRAND.md`).",
       "Don't set small text in white on orange. Below large-bold size, labels on orange are black.",
       "Don't use Tailwind's stock palette (gray-500/600/900, indigo-600) or stock UI recipes. Use the brand tokens and black alpha steps.",
-      "Don't add a second horizontal padding layer inside the shared column.",
+      "Don't add a second horizontal padding layer inside the shared column, and don't inset a card (`px-6`, `mx-4`, a narrower box). A surface is a `.sheet`.",
       "Don't use glyph or emoji icons. Icons are inline SVG from `src/assets/icons/`, drawn in `currentColor`: line arrows, and filled shapes on the feature cards.",
       "Don't add small uppercase labels above headings. The system has no eyebrow or kicker device.",
       "Don't hotlink or rasterise illustrations, add a gradient, filter or shadow to one, or mix in drawings from another illustration style.",

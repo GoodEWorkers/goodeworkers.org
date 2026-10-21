@@ -128,7 +128,7 @@ components:
     backgroundColor: "{colors.black-light}"
     textColor: "{colors.grey}"
     rounded: "12px → 24px (stepped at sm and lg)"
-    padding: "40px top, 24px sides (32px from md), as About"
+    padding: "40px top (About), 16px sides (32px from md): the column gutter, as every sheet"
   feature-card:
     backgroundColor: "{colors.grey}"
     textColor: "{colors.black}"
@@ -234,7 +234,7 @@ A warm three-accent palette on near-black, with off-white as the working surface
 Text on the sheet steps down by alpha on black: 80% for supporting prose, 70% for meta and table secondary columns, 60% for placeholders, counts, and visited links. `BRAND.md` lists two reserve tokens, `primary` (#DEB36F) and `background` (#2B0E45). Both are in the Tailwind config but nothing uses them yet.
 
 ### Named Rules
-**The Two Grounds Rule.** Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D insets on dark and #ECECEC cards on light. Don't use a mid-value ground.
+**The Two Grounds Rule.** Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D cards on dark and #ECECEC cards on light. Don't use a mid-value ground.
 
 **The Orange Label Rule.** A label on an orange fill is pure white only at large bold sizes (ClashDisplay 700 from 24px up, as on the CTA pills and the 404 button). Smaller text on orange is black, as on the two-line pill.
 
@@ -274,22 +274,22 @@ Text on the sheet steps down by alpha on black: 80% for supporting prose, 70% fo
 
 ## Layout
 
-There is one shared column. It is max 1536px wide, centred, with 16px gutters (32px from `md`), and it is the same column the navbar and footer use. Content inside it never adds a second layer of horizontal padding. A surface that has to be wider than the column (the hero sheet, the job-board sheet, the Initiatives focus sheet) breaks out with negative margins of the same size and re-applies them as padding. The panel bleeds to the column edge, but its content stays aligned with the logotype. A card that sits *within* the column (About, the charter and homepage values card, legal, thanks and 404) keeps its own padding and is inset on purpose.
+There is one shared column. It is max 1536px wide, centred, with 16px gutters (32px from `md`), and it is the same column the navbar and footer use. Every surface in it, paper or dark, spans that full width: the hero sheet, the job-board sheet, the Initiatives focus sheet, the About, charter, homepage values, legal, thanks, 404, contributors and projects cards, and the footer's contact sheet all have the same left and right edges, and each one's content aligns with the logotype. `.sheet`, in `src/styles/global.css`, is the recipe: negative margins of the gutter's size break the surface out to the column edge (`-mx-4 md:-mx-8`), the same size comes back as padding (`px-4 md:px-8`), and the stepped radius (12, 16 and 24px) comes with it. Nothing is inset, and content never adds a second layer of horizontal padding. The footer's contact sheet sits outside the column, so it is the column's own box (`max-w-screen-2xl mx-auto px-4 md:px-8`) with the same radius, and its edges are every sheet's edges at every width. A text measure may be centred inside a sheet (legal, thanks, the profile pages), but the sheet itself is never narrower than the column.
 
 - **Navbar:** sticky at the top, #111, 101px tall once stuck at `lg` (with a 64px top margin before sticking).
 - **Split page header** (job-boards, values, initiatives): on the dark ground, the H1 sits left and the lede sits right, bottom-aligned from `lg`, in a column one charter tile wide (the second of two equal columns after an 11rem label column, 14rem from `xl`). So the lede lines up with the charter's second tile and the value rows' text. Below `lg` they stack. This lets the sheet below start inside the first viewport. Values and initiatives share one `SplitHeader` component; the job-boards page still carries its own copy of the layout at a smaller H1 scale (see Typography).
-- **Charter** (values): a dark inset card (`bg-black-light`, About's side padding and stepped radius, no breakout) holding the four value tiles as two rows of two, under the pairs sentence. From `lg` each row has a label column (11rem, 14rem from `xl`) beside a two-up tile grid with 12px gaps (20px from `md`). Tiles are at least 19rem tall (22rem from `sm`, 24rem from `md`, 25rem from `xl`). There is no community row.
-- **Value rows** (values): on the night ground, each group gets an Inter headline, then one row per value with no stations, dashed lines or hairlines. Each row has the charter's side padding and stepped radius, and 40px of vertical padding (56px from `md`, 64px at `xl`). From `lg` the name, tagline and window figure hang from the first tile's left edge, and the prose from the second's. The prose has no max width in that column, so its measure grows with the screen (about 340px at 1024px wide, 440px at 1280px), and is capped at 38rem below `lg`. A row that a tile's link points at takes a #1D1D1D card that fades in over 0.7s.
-- **Homepage values section:** a dark inset card between Why and About, the same width and radius as the About card, inset with no breakout. From `xl` it has two columns. At the left sit the ringed headline, the bold lead (max 26rem), the two-line orange pill ("Read / our values") and the underlined "Explore our initiatives" link. At the right, the four values sit as a two-by-two register, each pair's names in a two-column grid from `sm`. Each name is ClashDisplay semibold, 36px (40px from `xl`), in the value's ink, and its 2px underline draws in on hover or focus over 0.5s. Under each name sits the value's text in Ash, 16px. There are no dots. On a phone the pairs stack, with 24px from each pair's label to its names, 36px between names and 88px between the pairs.
+- **Charter** (values): a dark card (`bg-black-light`, a `.sheet`) holding the four value tiles as two rows of two, under the pairs sentence. From `lg` each row has a label column (11rem, 14rem from `xl`) beside a two-up tile grid with 12px gaps (20px from `md`). Tiles are at least 19rem tall (22rem from `sm`, 24rem from `md`, 25rem from `xl`). There is no community row.
+- **Value rows** (values): on the night ground, each group gets an Inter headline, then one row per value with no stations, dashed lines or hairlines. Each row is a `.sheet` like the charter, so its content sits on the logotype's line under the headline, and it has 40px of vertical padding (56px from `md`, 64px at `xl`). From `lg` the name, tagline and window figure hang from the first tile's left edge, and the prose from the second's. The prose has no max width in that column, so its measure grows with the screen (about 370px at 1024px wide, 480px at 1280px), and is capped at 38rem below `lg`. A row that a tile's link points at takes a #1D1D1D card with the charter's own edges, which fades in over 0.7s.
+- **Homepage values section:** a dark card between Why and About, a `.sheet` like the About card, so the two have the same edges. From `xl` it has two columns. At the left sit the ringed headline, the bold lead (max 26rem), the two-line orange pill ("Read / our values") and the underlined "Explore our initiatives" link. At the right, the four values sit as a two-by-two register, each pair's names in a two-column grid from `sm`. Each name is ClashDisplay semibold, 36px (40px from `xl`), in the value's ink, and its 2px underline draws in on hover or focus over 0.5s. Under each name sits the value's text in Ash, 16px. There are no dots. On a phone the pairs stack, with 24px from each pair's label to its names, 36px between names and 88px between the pairs.
 - **Doors** (initiatives): under a left-aligned ringed headline, two colour cards side by side from `md`, 12px apart (20px from `md`), at least 18rem tall (22rem from `md`). From `md` the two cards share their rows through subgrid, so the questions, sublines and actions line up across them.
-- **Focus sheet** (initiatives): a paper sheet that breaks out to the column edge, on the same two-column grid as the split header from `lg`. The heading sits at the top left, the focus name and its text at the bottom left, and the hospital at night, drawn on the paper, as tall as the sheet, at the right.
-- **Sticky toolbar:** from `lg`, a filter-and-search toolbar on the light sheet sticks at `top: 101px`, just under the stuck navbar. It uses the same break-out recipe as the sheet, so its paper background spans the sheet edge to edge.
+- **Focus sheet** (initiatives): a paper `.sheet`, on the same two-column grid as the split header from `lg`. The heading sits at the top left, the focus name and its text at the bottom left, and the hospital at night, drawn on the paper, as tall as the sheet, at the right.
+- **Sticky toolbar:** from `lg`, a filter-and-search toolbar on the light sheet sticks at `top: 101px`, just under the stuck navbar. It repeats the `.sheet` break-out (`-mx-4 md:-mx-8 px-4 md:px-8`) inside the sheet's own padding, so its paper background spans the sheet edge to edge.
 - **Dense table:** one row per item. Headers are Inter bold 14px over a 2px black rule, and rows are separated by 1px black/10% hairlines with 20px vertical padding. Below `md`, each row becomes a two-column grid: name and kind on top, then the note, then the host. The header is hidden visually but kept for screen readers.
 - **Closing section:** centred on the dark ground with generous margins (96–128px above, 80–112px below). A headline with one encircled word, a ≤42rem lede, then the orange pill.
 - **Breakpoints:** Tailwind defaults (640 / 768 / 1024 / 1280 / 1536), plus local one-offs at 360, 580 and 1200px in homepage components.
 
 ### Named Rules
-**The Shared Column Rule.** Content aligns to the logotype. Paper sheets break out with `-mx` and re-pad; dark cards stay inset with their own padding. Never pad twice.
+**The Shared Column Rule.** Every surface spans the column width, and its content aligns to the logotype. `.sheet` is the recipe: break out with `-mx-4 md:-mx-8`, re-pad with `px-4 md:px-8`. Nothing is inset, and nothing pads twice.
 
 ## Elevation & Depth
 
@@ -305,7 +305,7 @@ The system is flat. Depth comes from the two grounds, from panels overlapping (h
 ## Shapes
 
 - **Pills** (fully rounded): Every button and filter, including the big CTAs, the nav Contact outline, the kind filters, and the Thanks-page back button.
-- **Sheets** (12px → 16px → 24px, stepping up at `sm` and `lg`): The light sheet and the dark inset cards.
+- **Sheets** (12px → 16px → 24px, stepping up at `sm` and `lg`): Every surface, paper or dark, through `.sheet`, and the footer's contact sheet with the same steps.
 - **Cards** (16px): Square-aspect feature cards and team photos.
 - **Colour fields** (16px → 24px from `lg`): value tiles and door cards. A tile clips its illustration.
 - **Arrow circles** (44px, fully round): a 2px `currentColor` outline on value tiles, a solid black disc on door cards, each holding a 20px SVG arrow.
@@ -366,7 +366,7 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 - **3D titles.** The five section titles (hero, Why, About, the values section and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring fades in last.
 - **Cards.** The service cards and the Why cards are `data-stagger` grids. Each card rises 32px and scales up from .96 over 1s, 60ms apart, once the grid's top reaches 80% of the viewport. Each card is also `data-tilt`.
 - **Why arrow.** The arrow is inline SVG. Its white mask path (`data-draw`) sweeps along the dashed arrow as the arrow scrolls from 80% to 40% of the viewport, and the head (`data-head`) fades in last.
-- **About.** The inset card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
+- **About.** The card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
 - **CTA pills.** No `data-tilt` and no pointer light: the 105% hover scale is all they show. The press (`:active`) scales the pill to 97%, on top of that hover.
 - **Footer.** The email's local part and domain each roll on hover and focus (`data-roll`). Each contact field's bottom rule wipes in from the left, one after another (1.2s, 80ms apart), once the form's top reaches 80% of the viewport (`data-rule`). The contact sheet has the hero sheet's rounded corners (12, 16 and 24px) on both ends, and on every page a closing band below it on the dark ground closes with the logotype itself, on one line: the inline `goodeworkers-line.svg`, the logo's own shapes with its two lines set on one baseline ("Go d" with the star burst for its second o, then "eWorkers", a word space apart: 0.4 of the cap height; nothing redrawn, no font), centred, `min(100%, 72rem)` wide (about 9:1, so about 130px tall at 72rem and 40px on a phone) and `aria-hidden`, since the copyright line spells the name. Its five paths are the engine's stagger (`data-stagger` on the `<svg>`): each rises out of the svg's bottom edge (32 units, more than the lockup is tall, so the edge is its mask), scales up from .96 and fades in over 1s (`expo.out`), 60ms apart in file order (the orange e, Workers, the lavender k, Good, and the yellow star burst last), once the logo's top reaches 80% of the viewport. The star burst turns on hover (`data-logo` on its wrapper, 6s a turn, hover only). The night street lies behind the logo, held at 75% (see Generative drawings).
 
@@ -427,8 +427,9 @@ Big pill buttons are made to be pressed with the whole hand.
 - **State:** hover fills #ECECEC. When pressed (`aria-pressed="true"`), the pill fills black, the text turns grey, and the count turns grey/70. Pills are toggle buttons in a labelled group, and only one kind is active at a time.
 
 ### Cards / Containers
-- **Light sheet:** paper ground, black text, 12→16→24px corners, bleeds to the column edges. No border, no shadow.
-- **Dark inset card:** #1D1D1D, grey text, 12 → 16 → 24px corners (stepping at `sm` and `lg`), About's padding (40px top, 24px sides, 32px from `md`). Inset in the column, never broken out. The About, charter, homepage values, legal, thanks and 404 cards all use it.
+- **Sheet:** the recipe for every top-level surface (`.sheet`): the column's width, the gutter as its side padding (16px, 32px from `md`) so that its content sits on the logotype's line, and 12 → 16 → 24px corners (stepping at `sm` and `lg`). No border, no shadow. Never inset.
+- **Light sheet:** a sheet on the paper ground (#F8F8F8) with black text: the hero, the job-board table, the Initiatives focus sheet and the footer's contact sheet, which sits outside the column and so carries the column's own box instead of the breakout.
+- **Dark card:** a sheet on #1D1D1D with grey text: the About, charter, homepage values, legal, thanks, 404, contributors and projects cards, and a value row that a link points at. Its vertical padding is its own (About has 40px at the top).
 - **Feature cards:** square, 16px corners, a #ECECEC fill (or orange, yellow, or purple for highlighted cards), a filled SVG icon at 20–24px that grows in with the card (`data-pop`), and a bold Inter label.
 
 ### Inputs / Fields
@@ -452,8 +453,8 @@ A single word in a heading is wrapped in a fully rounded orange outline, with 6p
 - The host is shown with a 14px `arrow-up-right` SVG to mark an external link that opens in a new tab. A screen-reader-only "new tab" note sits inside the link.
 
 ### Value Tile (signature)
-A whole value, as one fat colour field you can press. The tiles sit in the charter's dark inset card.
-- **Card:** the charter is a dark inset card (`bg-black-light`, About's side padding, 12 → 16 → 24px corners, no breakout) holding the four tiles as two rows of two. There is no community row.
+A whole value, as one fat colour field you can press. The tiles sit in the charter's dark card.
+- **Card:** the charter is a dark card (`bg-black-light`, a `.sheet`: the column's width, 12 → 16 → 24px corners) holding the four tiles as two rows of two. There is no community row.
 - **Field:** the value's colour fill (Value Colour Rule), 16px → 24px corners (from `lg`), 24px → 32px → 40px padding. Labels are #111, pure white on pantone.
 - **Content:** the value name in ClashDisplay 600 (36px, 32px at `sm`, 40px from `lg`, and fluid from 48px to 60px at `xl`), an Inter bold tagline at 18px (20px from `md`, max 14rem, 16rem from `md`, balanced), and a 44px outlined arrow-down circle pinned to the bottom-left. The whole tile is the link and jumps to the value's row.
 - **Illustration:** the value's window at night (`tile` context: black pen, paper light), at the bottom-right, 52% of the tile's width (max 21rem) and nudged 4% past the corner so the field clips it. It draws itself in when it comes into view and then breathes.
@@ -465,7 +466,7 @@ A value as text on the night ground: a ClashDisplay name in the value's ink, an 
 - **Tagline:** Inter bold, 20px (24px from `md`), balanced, max 22rem.
 - **Prose:** Ash at 16px and 1.6875 line-height, in the third grid column from `lg` (see Layout).
 - **Figure:** from `lg`, the value's window at night in small (18rem wide, 25:18, `night` context) sits 40px under the tagline, in a rounded box one night step up (#1D1D1D, #111 when the row is targeted) that clips what spills over its edge, so it reads as a window into the night.
-- **Target:** a row that a tile's link points at takes a #1D1D1D card, which fades in over 0.7s.
+- **Target:** a row that a tile's link points at takes a #1D1D1D card with the charter's own edges, which fades in over 0.7s.
 
 ### Interchange
 The closing statement, set like the page header. The H2 sits at the left edge, capped at 40rem so it breaks to two lines at the larger sizes, with its words split in on view. The copy sits in the right column, one charter tile wide, and the orange pill sits below it in that column.
@@ -481,7 +482,7 @@ A way in: a yellow (organisations) or lavender (contributors) colour field, echo
 - **Focus:** the card is not focusable, so a keyboard-focused link gives it the 2px orange outline (`:has(:focus-visible)`).
 
 ### 404 Card
-The 404 page is a dark inset card in the column, with About's radius and side padding. Its picture is the numeral, `404`, which is `aria-hidden`.
+The 404 page is a dark card, a `.sheet` like every surface. Its picture is the numeral, `404`, which is `aria-hidden`.
 - **Numeral:** ClashDisplay 700 in orange, at 27vw between 15rem and 25rem from `lg`. There it sits at the right and bleeds 0.07em off the card's right edge and 0.25em off its bottom edge, and the card clips it. Below `lg` it sits above the words at about 140px on phones (less on the narrowest screens), 176px from `sm` and 224px from `md`.
 - **Words:** on the card's own padding, the H1 in ClashDisplay 700 (30px, 36px from `sm`, 48px at `xl`), then the copy in Ash, then the orange pill ("Go back home") with a pure-white ClashDisplay 700 label at 24px.
 - **Focus:** the pill's focus outline is white, as on the thanks page's pill, because it sits on the dark card. It is the exception to the orange outline.
@@ -502,7 +503,7 @@ The "Windows at night" series: one drawing per value and one for the Initiatives
 ## Do's and Don'ts
 
 ### Do:
-- **Do** alternate the #111 ground and the #F8F8F8 sheet, and break the sheet out to the column edge with `-mx-4 md:-mx-8 px-4 md:px-8`.
+- **Do** alternate the #111 ground and the #F8F8F8 sheet, and put every surface, paper or dark, on `.sheet` so that it spans the column width with its content on the logotype's line.
 - **Do** give each view one orange action, and use a pure-white label only on the large CTA pill.
 - **Do** encircle at most one word per heading, and pick it in the copy.
 - **Do** put a text label next to every kind dot.
@@ -522,7 +523,7 @@ The "Windows at night" series: one drawing per value and one for the Initiatives
 - **Don't** place the logo, or any surface, on a mid-value ground (`BRAND.md`).
 - **Don't** set small text in white on orange. Below large-bold size, labels on orange are black.
 - **Don't** use Tailwind's stock palette (gray-500/600/900, indigo-600) or stock UI recipes. Use the brand tokens and black alpha steps.
-- **Don't** add a second horizontal padding layer inside the shared column.
+- **Don't** add a second horizontal padding layer inside the shared column, and don't inset a card (`px-6`, `mx-4`, a narrower box). A surface is a `.sheet`.
 - **Don't** use glyph or emoji icons. Icons are inline SVG from `src/assets/icons/`, drawn in `currentColor`: line arrows, and filled shapes on the feature cards.
 - **Don't** add small uppercase labels above headings. The system has no eyebrow or kicker device.
 - **Don't** put a CSS `transform` on an element GSAP animates. Put Tailwind offsets on a wrapper, as the About photos do.

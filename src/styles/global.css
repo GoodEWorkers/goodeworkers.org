@@ -29,6 +29,16 @@
   }
 }
 
+/* The sheet: every top-level surface, paper or dark, is one. It spans the column box (the page column's gutters, 16px and 32px
+   from md, are taken back with a negative margin and given again as padding), so every sheet is as wide as the footer's contact
+   sheet and its content starts on the logotype's line. Nothing is inset, and nothing pads twice. The contact sheet sits outside
+   the column, so it is the column's own box (max 1536px, centred, the same gutters) with this radius. */
+@layer components {
+  .sheet {
+    @apply -mx-4 md:-mx-8 px-4 md:px-8 rounded-xl sm:rounded-2xl lg:rounded-3xl;
+  }
+}
+
 html,
 body {
   scroll-behavior: smooth;

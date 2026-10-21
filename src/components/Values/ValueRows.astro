@@ -24,8 +24,8 @@ const groups = [
 
 <!-- Each value as one row on the night ground. Its name carries the colour and face of its tile above, and from lg the row
      sits on the charter's grid: the name and its small tile hang from the first tile's left edge, the text from the second's.
-     A row a link points at takes the dark card: the charter's own (inset in the column, the same padding), so its edges are
-     the charter's and its content stays where it was. -->
+     Each row is a `.sheet`, clear until a link points at it: it then takes the dark card with the charter's own edges, and its
+     content stays where it was, on the logotype's line. -->
 <div class="mt-20 md:mt-28 space-y-16 md:space-y-24 text-grey">
   {
     groups.map((group) => (
@@ -45,7 +45,7 @@ const groups = [
                 id={value.id}
                 aria-labelledby={`${value.id}-title`}
                 data-reveal="up"
-                class="group px-6 md:px-8 py-10 md:py-14 xl:py-16 rounded-xl sm:rounded-2xl lg:rounded-3xl scroll-mt-24 lg:scroll-mt-32 target:bg-black-light transition-colors duration-700 ease-out lg:grid lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-5"
+                class="sheet group py-10 md:py-14 xl:py-16 scroll-mt-24 lg:scroll-mt-32 target:bg-black-light transition-colors duration-700 ease-out lg:grid lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-5"
               >
                 <div class="lg:col-start-2">
                   <h3
