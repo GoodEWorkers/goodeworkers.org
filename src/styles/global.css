@@ -89,25 +89,6 @@ h2 {
   margin-bottom: -0.08em;
 }
 
-/* The pen of a circled word goes a little beyond the word's box (Encircled.astro): on a line that starts or ends with the word, beyond
-   the edge of the line's mask as well, which would cut it for as long as the heading reveals. The mask only has to clip the vertical
-   slide, so where a ring sits its horizontal clip is lifted (!important: SplitText writes overflow: clip inline). */
-.split-line-mask:has(.encircled) {
-  overflow-x: visible !important;
-}
-
-/* The hand-circled word draws itself (Encircled.astro, ring() in engine.ts). Its pen stroke is revealed through a mask: a thick
-   stroke swept along the same path, normalised by pathLength to one unit and dashed 1 on, 2 off, so a dashoffset of 1 hides all of
-   it and 0 shows all of it. (The visible ring cannot be the dashed path: with vector-effect: non-scaling-stroke the dashes count
-   screen pixels but pathLength scales them by the user-space length, so the pen would stop short or never start.) --ring, 1
-   hidden to 0 drawn, lives on the heading: SplitText rebuilds every node inside a heading when it reverts, and a node's own state
-   would be lost. Without it the ring is hidden, so a heading that has not been revealed yet shows none. Gated on html.motion like
-   every hidden state here: no JS, reduced motion and the og-image script see the whole ring. */
-.motion :is(h1, h2, h3, h4, h5, h6) svg[data-ring] mask path {
-  stroke-dasharray: 1 2;
-  stroke-dashoffset: var(--ring, 1);
-}
-
 /* Lenis owns smooth scrolling when motion is on; the rule at the top stays for the no-JS case.
    The rest is lenis/dist/lenis.css, minus the autoToggle rule (that option is off). */
 html.motion {

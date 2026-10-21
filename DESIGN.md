@@ -201,7 +201,7 @@ The system is flat. It builds depth from the contrast between the two grounds, f
 
 **Key Characteristics:**
 - Two grounds: #111 near-black and the #F8F8F8 rounded sheet, alternating down the page.
-- One hand-drawn orange ring around one word per heading.
+- One orange ring around one word per heading.
 - Accents work as fills (pills, cards, value tiles, door cards), as dots and lines, or as a state (hover, current page). They never set reading text.
 - Four value colours with fixed roles: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone.
 - A series of windows at night (one drawing per value, plus the hospital): pen line and one light, inline SVG that draws itself in and breathes at rest.
@@ -309,7 +309,7 @@ The system is flat. Depth comes from the two grounds, from panels overlapping (h
 - **Cards** (16px): Square-aspect feature cards and team photos.
 - **Colour fields** (16px → 24px from `lg`): value tiles and door cards. A tile clips its illustration.
 - **Arrow circles** (44px, fully round): a 2px `currentColor` outline on value tiles, a solid black disc on door cards, each holding a 20px SVG arrow.
-- **Circles:** 10px kind dots, and the encircled-word ring: a hand-drawn orange pen loop around the word, 2px wide (1.5px below `md`). See Components.
+- **Circles:** 10px kind dots, and the encircled-word ring (1px, 2px from `md`) drawn as a fully rounded orange outline covering the lower ~62% of the word.
 - **Fields** have no radius and no box, only a 2px bottom rule.
 - **Borders** are 2px black on the light sheet (pills, field rule, table header rule), 2px orange for the nav Contact, 1px black/10% for row hairlines on paper.
 - **Drawn line:** the hospital's heartbeat is the one orange line on the surfaces: a solid 4-unit stroke in the drawing's own scale, square at its two ends, drawn in once by `data-draw`, with a bolder short segment that travels along it (see Illustrations).
@@ -354,7 +354,6 @@ The engine in `src/scripts/motion/engine.ts` reads these:
 - `data-navbar` and `data-nav-static`: the floating nav hides on scroll down past 80px and returns on scroll up. The static flag, set on the job boards `<main>`, keeps it from hiding.
 - `data-logo`: the logo's star burst turns while the pointer or focus is on the logo. The footer logo wears it on its wrapper: that logo is decorative and takes no focus, so its star turns on hover only.
 - `data-title`: the 3D word swing on a homepage H2, read by `home.ts` (see Homepage choreography). A ringed word inside it never wraps.
-- `data-ring` (on the `<svg>` inside an Encircled word): the word's pen loop draws itself as it comes into view, and again on pointer enter or focus. See Generative drawings.
 - `#lamp`: the lamp layer, moved through `--lamp-x` and `--lamp-y`.
 - `data-street` (on the `<svg>` of the night street behind the footer logo): `street.ts` lights and flickers its windows, and the street follows `--lamp-x`. See Generative drawings.
 
@@ -364,7 +363,7 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 
 - **Intro.** One timeline that starts when the fonts are ready (600ms at most) and runs 1.3s at most. The wordmark's letters rise first (0.8s). The second line of the H1 rises from 0.3s, and the orange ring draws around its word from 0.6s. The two lede paragraphs fade up from 0.45s, the CTA pills settle in (up 24px, scale .96 to 1) from 0.5s, and the nav fades in last.
 - **Hero window.** The sheet closes to an inset window: 14% of its height from the top, 6% of its width at each side and 10% of its height at the bottom. On desktop each inset stops where the content starts, so the heading, lede and cards are never clipped. Below 640px it closes to 6% at the top and sides and 4% at the bottom, with 24px corners (40px above). It opens to the sheet's own corner radius. The scrub runs from the sheet's top reaching 90% of the viewport to its top reaching 35%. The CTA pills sit outside the sheet, so they are never clipped.
-- **3D titles.** The five section titles (hero, Why, About, the values section and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring draws last, starting 0.2s before the last word lands.
+- **3D titles.** The five section titles (hero, Why, About, the values section and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring fades in last.
 - **Cards.** The service cards and the Why cards are `data-stagger` grids. Each card rises 32px and scales up from .96 over 1s, 60ms apart, once the grid's top reaches 80% of the viewport. Each card is also `data-tilt`.
 - **Why arrow.** The arrow is inline SVG. Its white mask path (`data-draw`) sweeps along the dashed arrow as the arrow scrolls from 80% to 40% of the viewport, and the head (`data-head`) fades in last.
 - **About.** The inset card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
@@ -386,25 +385,24 @@ Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8
 
 ### Generative drawings
 
-Two drawings are generated by code rather than stored: the hand-circled word and the night street. `src/lib/gen.ts` is the toolkit: a seeded generator (an FNV-1a hash of the seed text, then xorshift32), triangular draws, 1D value noise, jitter, a hand-drawn `loop` (with `start` and `power` options), a pen brush (`penD`) and Catmull-Rom curves (`smoothD`, `polylineD`). No stored art: the same seed draws the same picture.
+One drawing is generated by code rather than stored: the night street. `src/lib/gen.ts` is the toolkit: a seeded generator (an FNV-1a hash of the seed text, then xorshift32), triangular draws, 1D value noise, jitter, a hand-drawn `loop` (with `start` and `power` options), a pen brush (`penD`) and Catmull-Rom curves (`smoothD`, `polylineD`). No stored art: the same seed draws the same picture.
 
-- **Ring.** `Encircled.astro` builds each word's loop from the word, so the same word always gets the same ring, and EN and FR differ. The engine's `ring()` draws it once, as its heading comes into view, 0.35s after the words start to rise (0.6s, `expo.out`). Pointer enter or focus inside the heading redraws it (0.8s) once it is drawn; the pointer does nothing on touch. The home H1 draws on the intro at 0.6s, and the title rings draw 0.2s before their last word lands. Without JS, under reduced motion and in the social card the ring is drawn whole.
 - **Street.** `NightStreet.astro` draws the skyline behind the footer logo once at build time, seeded by the page path, so each page has its own: 11 to 16 buildings, 3 to 9 floors, 10 by 14 windows with 12 to 18% lit (yellow, one or two orange), rooftop details, a 1px ashgray pen at 18%, and at most 208 elements. The footer holds the whole drawing at 75%, so the brightest window reads 42% and the street stays quiet behind the logo's grey letters. `street.ts` runs one ticker callback while the band is on screen: a slow flicker, the lamp warming the windows near it (within 12% of the viewport width at most; touch follows the scroll), and one window changing every 20 to 40s, written in 0.05 steps. Static under reduced motion and without JS.
 - **Icons.** The hero and Why card icons are stored filled SVG shapes, and `data-pop` grows each from 60% to full size with its card.
 
-The ring and the street are not part of the Windows at night series (see Illustrations), so that series' drawing rules do not apply to them: the ring is revealed by a mask and a dash offset, as drawn lines are, and the street has its own 1px pen.
+The street is not part of the Windows at night series (see Illustrations), so that series' drawing rules do not apply to it: it has its own 1px pen.
 
 ### Reduced motion and no JS
 
-`html.motion` is set before first paint by an inline script in `<head>`, and only when JS runs and reduced motion is off. Everything that starts hidden is hidden by CSS gated on that class, by opacity, so without JS or under reduced motion the page is complete and still. Under reduced motion the engine skips its motion: no Lenis, scrubs, intro, tilts, logo spin, letter roll or lamp motion. The lamp rests as a still glow at 50% across and 40% down, and hover colours, underlines and the CTA scale stay. A failsafe covers an engine that never boots: after 4s the inline script sets `data-engine="off"` and removes `motion`, so content cannot stay hidden. It also covers a homepage chunk that fails alone: `home.ts` sets `data-home` on load, and a page with `[data-intro]` but no `data-home` after 4s loses `motion` too. The illustrations follow the same gate: with motion off a drawing shows whole (frames drawn, light on, nothing moving), and a drawing whose script fails shows itself whole. The ring and the street follow the same gate: the ring shows whole, and the street keeps its static drawing. The nav's transparent top state (the lamp shows through the bar) holds in every mode that has JS, reduced motion included, since the engine toggles `is-floating` in all of them. Without JS, or once the failsafe has switched the engine off, the bar stays solid.
+`html.motion` is set before first paint by an inline script in `<head>`, and only when JS runs and reduced motion is off. Everything that starts hidden is hidden by CSS gated on that class, by opacity, so without JS or under reduced motion the page is complete and still. Under reduced motion the engine skips its motion: no Lenis, scrubs, intro, tilts, logo spin, letter roll or lamp motion. The lamp rests as a still glow at 50% across and 40% down, and hover colours, underlines and the CTA scale stay. A failsafe covers an engine that never boots: after 4s the inline script sets `data-engine="off"` and removes `motion`, so content cannot stay hidden. It also covers a homepage chunk that fails alone: `home.ts` sets `data-home` on load, and a page with `[data-intro]` but no `data-home` after 4s loses `motion` too. The illustrations follow the same gate: with motion off a drawing shows whole (frames drawn, light on, nothing moving), and a drawing whose script fails shows itself whole. The street follows the same gate: it keeps its static drawing. The nav's transparent top state (the lamp shows through the bar) holds in every mode that has JS, reduced motion included, since the engine toggles `is-floating` in all of them. Without JS, or once the failsafe has switched the engine off, the bar stays solid.
 
 ### Accessibility
 
-- Hover effects also run on focus: the card highlight, the letter roll, the logo spin, the ring's redraw and the CTA scale. The focus ring itself does not change.
+- Hover effects also run on focus: the card highlight, the letter roll, the logo spin and the CTA scale. The focus ring itself does not change.
 - The cursor is the native one. There is no custom cursor.
 - The motion's hover rules sit inside `@media (hover: hover)`, and so do Tailwind's `hover:` utilities (`future.hoverOnlyWhenSupported`), so a tap never leaves a hover state stuck. Touch devices get no tilt, and the lamp follows the scroll.
 - Hidden states use opacity, never `visibility` or `display`. A link that is still hidden stays in the tab order, and focus on it plays its reveal at once (and so for the form's field rules and the job-board rows), even when it is already on screen below the trigger line, so its ring is never invisible. Whatever sits on the first screen at load is revealed at load.
-- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row, the Why arrow, the ring's pen, the night street and the footer's closing logo. Split headings keep their text as an accessible name.
+- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row, the Why arrow, the night street and the footer's closing logo. Split headings keep their text as an accessible name.
 - The mobile menu keeps Escape and the scroll lock (Lenis stops while it is open), and the nav never hides while the menu is open or focus is inside it.
 
 ### Named Rules
@@ -444,7 +442,7 @@ Big pill buttons are made to be pressed with the whole hand.
 - **Footer logo:** the page ends on the logotype itself, drawn and not set: the inline `goodeworkers-line.svg`, the logo's own shapes on one line (it carries its provenance in a comment; the navbar keeps the two-line `goodeworkers.svg`), on the #111 ground (`BRAND.md`: black or white grounds only, so the night street behind it stays a faint pen and dim windows). Centred, `min(100%, 72rem)` wide at about 9:1, `aria-hidden`. Its five paths stagger in on view and the star burst turns on hover (see Motion).
 
 ### Encircled Word (signature)
-A single word in a heading is ringed by a hand-drawn orange pen loop, with 6px horizontal padding and the word set bold. The loop is drawn from the word itself (see Generative drawings), 2px wide (1.5px below `md`) at any size. In the social card (`scripts/og-image.mjs`) the pen is drawn whole and its width scales with the type. The job-boards content model stores each heading as `before / encircled / after`, so the circled word is chosen in copy and not hard-coded.
+A single word in a heading is wrapped in a fully rounded orange outline, with 6px horizontal padding and the word set bold. The job-boards content model stores each heading as `before / encircled / after`, so the circled word is chosen in copy and not hard-coded.
 
 ### Comparison Table Row (job-boards)
 - The name is ClashDisplay 600 at 18–20px. It underlines on hover (4px offset, 2px decoration) and dims to black/60 once `:visited`, so the reader sees where they stopped.

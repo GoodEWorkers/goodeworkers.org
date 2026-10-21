@@ -16,9 +16,9 @@ document.documentElement.dataset.home = '1';
 const $ = <T extends Element = HTMLElement>(selector: string, root: ParentNode = document) => root.querySelector<T>(selector);
 const $$ = (selector: string) => [...document.querySelectorAll<HTMLElement>(selector)];
 
-// A heading's hand-drawn ring is drawn by --ring on the heading, 1 to 0 (see ring() in engine.ts, which also redraws it on hover).
-const hasRing = (el: HTMLElement) => !!$('svg[data-ring]', el);
-const drawRing = () => ({ '--ring': 0, duration: 0.6, ease: ease.out });
+// The Encircled ring is the last, empty child of its span.relative (the Why arrow shares a wrapper but holds an svg).
+const ringOf = (el: HTMLElement) => $('span.relative > span:last-child:empty', el);
+const RING = { off: 'inset(0% 100% 0% 0% round 9999px)', on: 'inset(0% 0% 0% 0% round 9999px)' };
 
 onPage(({ intro, signal }) => {
   // A page fn runs on every page the router lands on, and only the homepage has this markup.
@@ -53,20 +53,18 @@ function pageIntro(intro: gsap.core.Timeline) {
       onSplit(self) {
         gsap.set(h1, { opacity: 1 }); // the chars wait below their line masks
         if (done) return;
+        const ring = ringOf(h1);
         const title = gsap
           .timeline({ onComplete: () => (done = true) })
-          // the wordmark's chars first, then the words of the second line (the ring draws around its word right after, below)
+          // the wordmark's chars first, then the words of the second line, then the ring draws around its word
           .from(self.chars.filter((c) => c.closest('.font-clash')), { yPercent: 110, duration: 0.8, stagger: { amount: 0.3 }, ease: ease.out }, 0)
           .from(self.words.filter((w) => !w.closest('.font-clash')), { yPercent: 110, duration: 0.7, stagger: { amount: 0.2 }, ease: ease.out }, 0.3);
+        if (ring) title.fromTo(ring, { clipPath: RING.off }, { clipPath: RING.on, duration: 0.55, ease: ease.out, clearProps: 'clipPath' }, 0.6);
         intro.add(title, 0);
         return title; // SplitText reverts it on a re-split and carries its progress over
       },
     });
   }
-
-  // On the intro itself, not in the title above: SplitText reverts that one on every re-split (a resize after the intro, say), which
-  // would take the drawn ring back to undrawn. The words of the second line have mostly landed by 0.6 s.
-  if (h1 && hasRing(h1)) intro.fromTo(h1, { '--ring': 1 }, drawRing(), 0.6);
 
   const ledes = $$('[data-intro="lede"]');
   const pills = $$('[data-intro="cta"]');
@@ -115,15 +113,16 @@ function heroWindow() {
 }
 
 // Zentry's title: the words swing in from the side in 3D. Perspective rides on each word (nested spans would
-// stop a perspective on the heading from reaching them). CSS keeps the words at opacity 0 and the ring undrawn until their tween.
+// stop a perspective on the heading from reaching them). CSS keeps the words and the ring at opacity 0 until their tween.
 function titles() {
   for (const h of $$('[data-title]')) {
+    const ring = ringOf(h);
     const { words } = SplitText.create(h, { type: 'words' });
     gsap.set(h, { opacity: 1 });
     gsap.set(words, { x: 10, y: 51, z: -60, rotationY: 60, rotationX: -40, transformOrigin: '50% 50% -150px', transformPerspective: 1000 });
     const tl = gsap.timeline({ scrollTrigger: { trigger: h, start: '100 bottom', end: 'center bottom', toggleActions: 'play none none reverse' } });
     tl.to(words, { opacity: 1, x: 0, y: 0, z: 0, rotationX: 0, rotationY: 0, ease: 'power2.inOut', stagger: 0.02 });
-    if (hasRing(h)) tl.fromTo(h, { '--ring': 1 }, drawRing(), '-=0.2');
+    if (ring) tl.to(ring, { opacity: 1, duration: 0.6, ease: ease.soft }, '-=0.2');
     tl.set(h, { overflowX: 'visible' }); // landed: stop clipping, so the Why arrow may overhang the heading
   }
 }

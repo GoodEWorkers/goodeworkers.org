@@ -111,7 +111,6 @@ export function initPage({ hold = false }: { hold?: boolean } = {}) {
     each('[data-reveal]', reveal);
     each('[data-stagger]', stagger, (el) => [...el.children]);
     each('svg[data-draw]', draw);
-    each('svg[data-ring]', ring);
     each('[data-parallax]', parallax);
     each('[data-roll]', roll);
     if (!isTouch()) each('[data-tilt]', tilt);
@@ -486,41 +485,6 @@ function draw(svg: HTMLElement) {
     { strokeDasharray: 1, strokeDashoffset: 1 },
     { strokeDashoffset: 0, clearProps: 'strokeDasharray,strokeDashoffset', duration: 1.2, stagger: 0.12, ease: ease.out },
   );
-}
-
-// svg[data-ring] (Encircled.astro): a hand-circled word draws itself, as --ring on its heading goes from 1 (hidden) to 0 (drawn);
-// the CSS in global.css turns that into the pen stroke. The heading carries it, not the svg: SplitText rebuilds every node inside a
-// heading when it reverts or re-splits, the heading itself stays. The home intro and the 3D titles draw their rings on their own
-// timelines (home.ts); any other heading draws it once, when the ring reaches the reveal line and a beat after its words (they rise
-// over 1.2 s, mostly in the first half). Pointing at the heading, or focus moving into it, draws the ring again, once per visit
-// and only once it has been drawn.
-function ring(svg: HTMLElement) {
-  const heading = svg.closest<HTMLElement>('h1, h2, h3, h4, h5, h6');
-  if (!heading) return;
-  if (!heading.matches('[data-title], [data-intro]')) {
-    const pen = () => heading.querySelector<HTMLElement>('svg[data-ring]') ?? heading; // looked up again: a re-split replaces the svg
-    const hold = holds(pen(), 0.85);
-    const tween = gsap.fromTo(
-      heading,
-      { '--ring': 1 },
-      {
-        '--ring': 0,
-        duration: 0.6,
-        delay: 0.35,
-        ease: ease.out,
-        paused: hold,
-        scrollTrigger: hold ? undefined : { trigger: heading, start: () => startAt(pen(), 0.85)(), once: true },
-      },
-    );
-    if (hold) withIntro(() => tween.play());
-  }
-  const again = () => {
-    if (parseFloat(getComputedStyle(heading).getPropertyValue('--ring')) === 0) {
-      gsap.fromTo(heading, { '--ring': 1 }, { '--ring': 0, duration: 0.8, ease: ease.out, overwrite: 'auto' });
-    }
-  };
-  if (!isTouch()) listen(heading, 'pointerenter', again);
-  listen(heading, 'focusin', again);
 }
 
 // data-parallax="0.15": y drifts from -n to +n viewport heights across the element's pass (negative n reverses).
