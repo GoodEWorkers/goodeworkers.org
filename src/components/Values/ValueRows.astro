@@ -1,0 +1,82 @@
+---
+import ExternalLink from '../ExternalLink.astro';
+import ValueIllustration from '../Illustrations/ValueIllustration.astro';
+import { typeset } from '../Common/typeset';
+import { getLangFromPath } from '../../i18n/routes';
+import { bandLink, valueStyles } from './valueStyles';
+import type { ValuesContent } from '../../i18n/pages';
+
+interface Props {
+  content: ValuesContent;
+}
+
+const { content } = Astro.props;
+const lang = getLangFromPath(Astro.url.pathname);
+const t = (text: string) => typeset(text, lang);
+// The page's own copy file, where a change to these values would be made.
+const sourceUrl = `https://github.com/GoodEWorkers/goodeworkers.org/blob/main/src/content/values/${lang}.md`;
+
+const groups = [
+  { id: 'how-we-work', title: content.groups.work, values: content.values.slice(0, 2) },
+  { id: 'whom-we-care-for', title: content.groups.care, values: content.values.slice(2) },
+];
+---
+
+<!-- Each value as one row on the night ground. Its name carries the colour and face of its tile above, and from lg the row
+     sits on the charter's grid: the name and its small tile hang from the first tile's left edge, the text from the second's.
+     Each row is a `.sheet`, clear until a link points at it: it then takes the dark card with the charter's own edges, and its
+     content stays where it was, on the logotype's line. -->
+<div class="mt-20 md:mt-28 space-y-16 md:space-y-24 text-grey">
+  {
+    groups.map((group) => (
+      <section aria-labelledby={group.id}>
+        <h2
+          id={group.id}
+          class="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+          data-split="lines"
+        >
+          {t(group.title)}
+        </h2>
+        <div class="mt-6 md:mt-8">
+          {group.values.map((value) => {
+            const style = valueStyles[value.id];
+            return (
+              <article
+                id={value.id}
+                aria-labelledby={`${value.id}-title`}
+                data-reveal="up"
+                class="sheet group py-10 md:py-14 xl:py-16 scroll-mt-24 lg:scroll-mt-32 target:bg-black-light transition-colors duration-700 ease-out lg:grid lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-5"
+              >
+                <div class="lg:col-start-2">
+                  <h3
+                    id={`${value.id}-title`}
+                    class="font-clash font-semibold text-4xl md:text-5xl xl:text-[4rem] 2xl:text-7xl leading-none"
+                    style={`color: ${style.ink}`}
+                  >
+                    {value.name}
+                  </h3>
+                  <p class="mt-3 md:mt-4 max-w-[22rem] text-xl md:text-2xl font-bold leading-snug text-balance">{t(value.tagline)}</p>
+                  {/* The value's window at night in small, from lg. Its box is the night one step up, a window into it: it clips the light
+                       that pours off the bottom of Openness's drawing, and turns back to the ground's black when the row is targeted. */}
+                  <div class="mt-10 hidden lg:block w-72 aspect-[25/18] overflow-hidden rounded-2xl bg-black-light group-target:bg-black transition-colors duration-700 ease-out">
+                    <ValueIllustration value={value.id} context="night" class="block h-full w-full" />
+                  </div>
+                </div>
+                <div class="mt-6 lg:mt-0 lg:col-start-3 max-w-[38rem] lg:max-w-none space-y-4 text-base leading-[1.6875] text-ashgray text-pretty">
+                  {value.paragraphs.map((paragraph) => (
+                    <p>{t(paragraph)}</p>
+                  ))}
+                  {value.id === 'openness' && (
+                    <p class="pt-2 font-bold text-grey">
+                      {t(content.openSource.before)}<ExternalLink href={sourceUrl} campaign="values" class={bandLink} style={`--c: ${style.ink}`}>{content.openSource.link}</ExternalLink>{content.openSource.after}
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    ))
+  }
+</div>

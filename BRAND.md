@@ -83,6 +83,8 @@ The brand word "Goode**W**orkers" always renders the "e" in `font-semibold` (Cla
 - Mobile menu: slide + fade `100ms ease-in`
 - Scroll: `scroll-behavior: smooth`
 
+The motion verb is "settle like paper": sheets slide in and settle on `expo.out` (`expo.inOut` for the page curtain, `power3.out` for hovers), and big things move slower than small things. Two signatures carry it: the hero sheet opens like a window as you scroll into it, and a warm lamp glow follows the pointer across the dark ground. The full system, with the ease names, timings and data attributes, is under "Motion" in DESIGN.md.
+
 ---
 
 ## 6. Brand Values → Visual Choices

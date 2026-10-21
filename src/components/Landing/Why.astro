@@ -1,6 +1,7 @@
 ---
 import Encircled from '../Miscs/Encircled.astro';
 import Icon from '../icons/Icon.astro';
+import arrowSvg from '../../assets/images/why_arrow.svg?raw';
 import { getLangFromPath } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
@@ -18,27 +19,30 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
   <div class="mt-10 sm:mt-16 md:mt-32 text-white text-center">
     <h2
       class="text-3xl sm:text-4xl md:text-5xl xl:text-[54px] text-grey font-medium leading-[1.2] md:leading-tight lg:leading-tight xl:leading-[63px]"
+      data-title
     >
       {why.titlePart1}
       <br class="min-[1200px]:hidden" />
       <span class="inline-block relative">
         <Encircled text={why.titleEncircled} class="font-bold" />
         <span
-          class="block absolute top-[5px] sm:top-[10px] md:top-[15px] lg:top-[-5px] xl:top-[5px] right-[-85px] sm:right-[-105px] md:right-[-130px] lg:right-[-200px] w-[120px] sm:w-[142px] md:w-[175px] lg:w-[250px] h-[72px] sm:h-[85px] md:h-[105px] lg:h-[150px] bg-[url('/src/assets/images/why_arrow.svg')] bg-no-repeat bg-center bg-contain"
+          class="block absolute top-[5px] sm:top-[10px] md:top-[15px] lg:top-[-5px] xl:top-[5px] right-[-85px] sm:right-[-105px] md:right-[-130px] lg:right-[-200px] w-[120px] sm:w-[142px] md:w-[175px] lg:w-[250px] h-[72px] sm:h-[85px] md:h-[105px] lg:h-[150px] [&>svg]:w-full [&>svg]:h-full"
+          set:html={arrowSvg}
         ></span>
       </span>
     </h2>
     <p
-      class="mt-8 sm:mt-12 md:mt-12 lg:mt-12 px-8 sm:px-12 max-w-md sm:max-w-screen-md mx-auto text-sm md:text-base text-ashgray leading-[1.6875]"
+      class="mt-8 sm:mt-12 md:mt-12 lg:mt-12 px-8 sm:px-12 max-w-md sm:max-w-screen-md mx-auto text-base text-ashgray leading-[1.6875] text-balance"
     >
       <span class="font-bold">{why.textBold}</span>
       <span class="font-medium">{why.textMiddle}</span>
-      <br class="hidden lg:block" />
-      {why.textEnd}
+      {/* A block from lg up, where a <br> used to be: balance does not reach past a forced break, a block is balanced on its own. */}
+      <span class="lg:block">{why.textEnd}</span>
     </p>
   </div>
   <div
     class="mt-12 flex flex-wrap justify-center gap-1.5 sm:gap-3 md:gap-5 px-2 sm:px-4"
+    data-stagger
   >
     {
       why.cards.map((whyCard, index) => (
@@ -47,14 +51,15 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
             'aspect-square min-[580px]:basis-60 md:basis-80 flex-grow max-w-80 min-[580px]:max-w-[48%] md:max-w-[360px] flex flex-col items-center justify-center text-center px-8 min-[580px]:px-4 sm:px-8 rounded-2xl',
             cardStyles[index].classNames,
           ]}
+          data-tilt
         >
-          <div class="[&>*]:w-6 [&>*]:h-6">
+          <div class="[&>*]:w-6 [&>*]:h-6" data-pop>
             <Icon name={cardStyles[index].icon} />
           </div>
           <p class="mt-4 whitespace-pre-line font-bold leading-tight">
             {whyCard.title}
           </p>
-          <p class="mt-4 text-sm md:text-base md:leading-tight font-medium leading-tight">
+          <p class="mt-4 text-base md:leading-tight font-medium leading-tight">
             {whyCard.text}
           </p>
         </div>

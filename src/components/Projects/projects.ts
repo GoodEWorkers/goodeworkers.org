@@ -39,3 +39,12 @@ export function markColorClass(color: 'orange' | 'yellow' | 'purple'): string {
       return 'text-orange';
   }
 }
+
+/**
+ * Width in em that the longest word of a title needs in the wordmark that stands in for a logo (Clash Display Bold runs about
+ * 0.72em a letter, 0.75 leaves some air). The tile divides its own width by it, so that word is never cut off: see the font-size
+ * on the wordmark in ProjectCard and ProjectProfile.
+ */
+export function wordmarkFit(title: string): number {
+  return Math.max(1, ...title.split(/\s+/).map((word) => word.length)) * 0.75;
+}

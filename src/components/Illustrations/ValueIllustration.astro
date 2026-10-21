@@ -1,0 +1,20 @@
+---
+// The value's piece of the "Windows at night" series, by id. The map lives here, not in valueStyles.ts: a .ts file cannot
+// import an .astro component (tsc has no module for it).
+import type { ValueId } from '../Values/valueStyles';
+import Openness from './Openness.astro';
+import Autonomy from './Autonomy.astro';
+import Care from './Care.astro';
+import Solidarity from './Solidarity.astro';
+
+interface Props {
+  value: ValueId;
+  context?: 'tile' | 'night';
+  class?: string;
+}
+
+const { value, ...props } = Astro.props;
+const Piece = { openness: Openness, autonomy: Autonomy, care: Care, solidarity: Solidarity }[value];
+---
+
+<Piece {...props} />

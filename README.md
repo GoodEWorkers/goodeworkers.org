@@ -60,6 +60,14 @@ French slugs are translated (`/fr/mentions-legales`, not `/fr/legal-notice`),
 except for contributor and project pages, where the slug is shared across
 languages so a person's or project's English and French pages always pair up
 (`/contributors/alice-perchaud/` ↔ `/fr/contributeurs/alice-perchaud/`).
+There is deliberately **no** automatic redirect based on browser language —
+it hides one language from crawlers and traps users on the wrong version.
+
+Regenerate the social sharing card after a brand change:
+
+```bash
+npm run og-image  # writes public/og-image.png (1200x630)
+```
 
 ## Contributors
 
@@ -82,14 +90,6 @@ project's `title` in ClashDisplay under a theme accent colour (`markColor`), so
 "no logo" is a deliberate treatment. Each project lists its contributors by slug,
 which resolve to links back to the contributors pages. To add a project, drop a
 YAML file in that folder.
-There is deliberately **no** automatic redirect based on browser language —
-it hides one language from crawlers and traps users on the wrong version.
-
-Regenerate the social sharing card after a brand change:
-
-```bash
-npm run og-image  # writes public/og-image.png (1200x630)
-```
 
 ## Remote job boards list
 
@@ -141,3 +141,7 @@ smoke` fails on any outbound link without the new tab, `noopener` or
 ## Deployment
 
 Hosted on Netlify. Build command `npm run build`, publish dir `dist/`. The contact form uses Netlify Forms (`data-netlify="true"`).
+
+## Motion
+
+Motion runs on GSAP and Lenis, from `src/scripts/motion/`, on one clock (`gsap.ticker`). Hidden states are gated on `html.motion`, so content shows without JS and under reduced motion. The Playwright helpers in `scripts/` emulate reduced motion, so their screenshots capture settled frames.

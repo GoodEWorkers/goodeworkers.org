@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { projectPath, type Lang } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
-import { formatStartMonth, markColorClass, type Project } from './projects';
+import { formatStartMonth, markColorClass, wordmarkFit, type Project } from './projects';
 
 interface Props {
   project: Project;
@@ -18,10 +18,11 @@ const statusLabel = strings.statusLabels[project.data.status];
 <a
   href={projectPath(lang, project.id)}
   aria-label={strings.projectLabel(project.data.title)}
+  data-tilt
   class="group block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange"
 >
   <div
-    class="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-xl bg-white/5 transition-transform duration-200 ease-in group-hover:scale-[1.02]"
+    class="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-xl bg-white/5 [container-type:inline-size] transition-transform duration-200 ease-in group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
   >
     {
       project.data.logo ? (
@@ -35,8 +36,9 @@ const statusLabel = strings.statusLabels[project.data.status];
       ) : (
         <div
           aria-hidden="true"
+          style={{ '--fit': wordmarkFit(project.data.title) }}
           class:list={[
-            'px-4 text-center font-clash font-bold text-2xl md:text-3xl leading-tight',
+            'px-2 text-center font-clash font-bold leading-tight text-[length:min(1.5rem,calc((100cqw_-_1rem)/var(--fit)))] md:text-[length:min(1.875rem,calc((100cqw_-_1rem)/var(--fit)))]',
             markColorClass(project.data.markColor),
           ]}
         >
@@ -46,7 +48,7 @@ const statusLabel = strings.statusLabels[project.data.status];
     }
   </div>
   <h2
-    class="mt-4 font-clash font-bold text-xl md:text-2xl leading-tight text-grey transition-colors duration-200 group-hover:text-orange"
+    class="mt-4 font-clash font-bold text-xl md:text-2xl leading-tight text-grey transition-colors duration-200 group-hover:text-orange group-focus-visible:text-orange"
   >
     {project.data.title}
   </h2>
