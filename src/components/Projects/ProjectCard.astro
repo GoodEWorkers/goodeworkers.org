@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import { projectPath, type Lang } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import { formatStartMonth, markColorClass, type Project } from './projects';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const strings = t(lang).projects;
+const started = formatStartMonth(project.data.startedOn, lang);
+const statusLabel = strings.statusLabels[project.data.status];
+---
+
+<a
+  href={projectPath(lang, project.id)}
+  aria-label={strings.projectLabel(project.data.title)}
+  class="group block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange"
+>
+  <div
+    class="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-xl bg-white/5 transition-transform duration-200 ease-in group-hover:scale-[1.02]"
+  >
+    {
+      project.data.logo ? (
+        <Image
+          src={project.data.logo}
+          alt=""
+          width={480}
+          height={360}
+          class="max-h-[70%] w-auto max-w-[80%] object-contain"
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          class:list={[
+            'px-4 text-center font-clash font-bold text-2xl md:text-3xl leading-tight',
+            markColorClass(project.data.markColor),
+          ]}
+        >
+          {project.data.title}
+        </div>
+      )
+    }
+  </div>
+  <h2
+    class="mt-4 font-clash font-bold text-xl md:text-2xl leading-tight text-grey transition-colors duration-200 group-hover:text-orange"
+  >
+    {project.data.title}
+  </h2>
+  <div class="mt-2 flex flex-wrap items-center gap-2">
+    <span
+      class:list={[
+        'inline-block rounded-full px-3 py-1 text-xs font-bold',
+        project.data.status === 'ongoing'
+          ? 'bg-yellow text-black'
+          : 'bg-white/10 text-grey',
+      ]}
+    >
+      {statusLabel}
+    </span>
+    <span class="text-xs text-ashgray">
+      <span class="sr-only">{strings.startedOnLabel}: </span>{started}
+    </span>
+  </div>
+</a>

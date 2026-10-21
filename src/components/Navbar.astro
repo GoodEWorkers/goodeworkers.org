@@ -2,13 +2,27 @@
 import logoSvg from '../assets/images/goodeworkers.svg?raw';
 import Hamburger from './Miscs/Hamburger.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { contactAnchor, getLangFromPath, routes } from '../i18n/routes';
+import {
+  contactAnchor,
+  getContributorSlug,
+  getLangFromPath,
+  getProjectSlug,
+  getRouteKey,
+  routes,
+} from '../i18n/routes';
 import { t } from '../i18n/ui';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
 
 const homeHref = routes.home[lang];
+// Highlight "Contributors" on its index and individual pages, same for Projects.
+const isContributors =
+  getRouteKey(Astro.url.pathname) === 'contributors' ||
+  getContributorSlug(Astro.url.pathname) !== undefined;
+const isProjects =
+  getRouteKey(Astro.url.pathname) === 'projects' ||
+  getProjectSlug(Astro.url.pathname) !== undefined;
 ---
 
 <div class="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50" data-navbar>
@@ -23,6 +37,30 @@ const homeHref = routes.home[lang];
     </a>
     <div class="hidden md:flex md:items-center md:space-x-8">
       <ul class="flex space-x-12 font-bold">
+        <li class="flex items-center">
+          <a
+            href={routes.contributors[lang]}
+            aria-current={isContributors ? 'page' : undefined}
+            class:list={[
+              'transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
+              isContributors ? 'text-orange' : 'text-grey',
+            ]}
+          >
+            {strings.nav.contributors}
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a
+            href={routes.projects[lang]}
+            aria-current={isProjects ? 'page' : undefined}
+            class:list={[
+              'transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
+              isProjects ? 'text-orange' : 'text-grey',
+            ]}
+          >
+            {strings.nav.projects}
+          </a>
+        </li>
         <li>
           <a
             href={contactAnchor(lang, 'nav')}
@@ -50,6 +88,26 @@ const homeHref = routes.home[lang];
       data-menu-panel
     >
       <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
+        <li class="pl-16 pr-4 py-3">
+          <a
+            href={routes.contributors[lang]}
+            class="hover:text-orange block w-full h-full"
+            aria-current={isContributors ? 'page' : undefined}
+            data-menu-link
+          >
+            {strings.nav.contributors}
+          </a>
+        </li>
+        <li class="pl-16 pr-4 py-3">
+          <a
+            href={routes.projects[lang]}
+            class="hover:text-orange block w-full h-full"
+            aria-current={isProjects ? 'page' : undefined}
+            data-menu-link
+          >
+            {strings.nav.projects}
+          </a>
+        </li>
         <li class="pl-16 pr-4 py-3">
           <a
             href={contactAnchor(lang, 'nav-mobile')}
