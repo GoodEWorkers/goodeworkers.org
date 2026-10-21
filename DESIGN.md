@@ -217,7 +217,7 @@ A warm three-accent palette on near-black, with off-white as the working surface
 - **Signal Orange** (orange): The one action per view: the Join and Send pills, the values page "Explore our initiatives" pill, the nav Contact outline, the encircled-word ring, focus rings and outlines, the search caret, and link hover. Also the "e" of the wordmark, Care's value colour, and the solid heartbeat line on the Initiatives focus card, and one or two lit windows on the footer street.
 
 ### Secondary
-- **Marigold** (yellow): The "I am a nonprofit" pill, a Why card fill, the skip-link background, text selection on the job-boards, values and initiatives pages, the job-board `:target` row tint (at 30%), the "remote-only" kind dot, the current-page state of the nav Initiatives link, the organisations door card, and the lit windows on the footer street (one or two are orange). Openness's value colour.
+- **Marigold** (yellow): The "I am a nonprofit" pill, a Why card fill, the skip-link background, text selection on the job-boards, values and initiatives pages, the job-board `:target` row tint (at 30%), the "remote-only" kind dot, the current-page state of the nav text links (Initiatives, Contributors, Projects), the organisations door card, and the lit windows on the footer street (one or two are orange). Openness's value colour.
 
 ### Tertiary
 - **Lavender** (purple): The "I want to help" pill, a Why card fill, the About list heading, the "startups and niches" kind dot, and the contributors door card. Autonomy's value colour.
@@ -374,6 +374,7 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 
 - **Job boards.** Table rows rise as a batch as soon as any of them is on screen (24px, 40ms apart, once). A filter change stops waiting for scroll, and only the rows it newly shows rise (12px, 20ms apart, 0.4s, `power3.out`), so typing never re-fades the rows that stay; the page re-measures once typing pauses. The page sets `data-nav-static` on `<main>`, so the nav stays put above the sticky toolbar at 101px. The H1 splits into lines, the lede rises, and the join heading splits into words.
 - **404, thanks and legal pages.** The headings split into lines and the panels rise (`data-reveal="up"`). On the 404 the orange numeral splits into characters (`data-split="chars"`, `aria-hidden`), and its copy rises 0.15s after the card. The pill has no reveal of its own. The legal copy's four-space blocks are set as prose, not as code boxes.
+- **Contributors and projects.** On both galleries the H1 splits into lines, the lede rises 0.15s later and the grid is a `data-stagger` list. Each card is `data-tilt` on its link (no CSS transform of its own); the portrait or logo tile inside it keeps its hover zoom (105%, 102%) as a child, and that zoom and the name's orange both have `:focus-visible` twins. A person's page and a project's page split the H1, then rise the role line, the fact sheet and the sections in 0.08s steps (0.24s at most); the social pills and the contributors' pills are `data-stagger`. Neither page sets `data-nav-static`: nothing sticks under the nav.
 
 ### Values and initiatives
 
@@ -435,8 +436,8 @@ Big pill buttons are made to be pressed with the whole hand.
 - **Focus:** the bottom rule turns orange and a 2px orange ring with a 1px offset appears. The ring must stay visible (see the WCAG 2.4.7 note in `ContactForm.astro`).
 
 ### Navigation
-- **Style:** sticky #111 bar holding the logotype (110px wide, 160px from `md`), the Initiatives text link, the Contact pill, and the EN/FR switcher, 32px apart. Text is Inter bold, grey.
-- **Text link (Initiatives):** a 2px transparent bottom border with 4px padding below. Hover turns the text orange (200ms). On the current page (`aria-current="page"`) the text and border are yellow.
+- **Style:** sticky #111 bar holding the logotype (110px wide, 160px from `md`), the Initiatives, Contributors and Projects text links, the Contact pill, and the EN/FR switcher, 32px apart. Text is Inter bold, grey.
+- **Text links (Initiatives, Contributors, Projects):** a 2px transparent bottom border with 4px padding below, each with the letter roll (`data-roll`). Hover turns the text orange (200ms). On the current page (`aria-current="page"`) the text and border are yellow; Contributors and Projects stay lit on a person's or a project's own page. The nav is rebuilt on every page change, so the state always belongs to the page you are on.
 - **Mobile:** a hamburger opens a full-height #111 overlay that slides and fades in over 100ms ease-in and locks page scroll. Escape closes it. The current page's link is yellow there too.
 - **Footer:** Values and Initiatives join the centred small links (above Job boards) that underline on hover.
 - **Footer logo:** the page ends on the logotype itself, drawn and not set: the inline `goodeworkers-line.svg`, the logo's own shapes on one line (it carries its provenance in a comment; the navbar keeps the two-line `goodeworkers.svg`), on the #111 ground (`BRAND.md`: black or white grounds only, so the night street behind it stays a faint pen and dim windows). Centred, `min(100%, 72rem)` wide at about 9:1, `aria-hidden`. Its five paths stagger in on view and the star burst turns on hover (see Motion).

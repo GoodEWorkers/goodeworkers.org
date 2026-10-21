@@ -55,6 +55,19 @@ check_page "/fr/offres-emploi-teletravail/" "200" "Filtrer par mot-clé"
 check_page "/fr/valeurs/"           "200" "Bienveillance"
 check_page "/fr/initiatives/"       "200" "Notre priorité pour 2026"
 
+# Contributors: gallery + one profile, in both languages
+check_page "/contributors/"               "200" "Contributors"
+check_page "/contributors/r-ichard/"      "200" "Richard"
+check_page "/fr/contributeurs/"           "200" "Contributeurs"
+check_page "/fr/contributeurs/r-ichard/"  "200" "Richard"
+
+# Projects: gallery + one profile, in both languages
+check_page "/projects/"                            "200" "Projects"
+check_page "/projects/goodeworkers-website/"       "200" "GoodEWorkers Website"
+check_page "/projects/yoon-crm/"                   "200" "Yoon CRM"
+check_page "/fr/projets/"                          "200" "Projets"
+check_page "/fr/projets/goodeworkers-website/"     "200" "GoodEWorkers Website"
+
 # SEO wiring: every indexable page declares both language variants
 check_page "/"                      "200" 'hreflang="fr" href="https://goodeworkers.org/fr/"'
 check_page "/fr/"                   "200" 'hreflang="en" href="https://goodeworkers.org/"'
@@ -66,6 +79,12 @@ check_page "/remote-job-boards/"    "200" '"@type":"ItemList"'
 check_page "/values/"               "200" 'hreflang="fr" href="https://goodeworkers.org/fr/valeurs/"'
 check_page "/fr/initiatives/"       "200" 'rel="canonical" href="https://goodeworkers.org/fr/initiatives/"'
 check_page "/values/"               "200" '"@type":"AboutPage"'
+check_page "/contributors/"         "200" 'hreflang="fr" href="https://goodeworkers.org/fr/contributeurs/"'
+check_page "/contributors/r-ichard/" "200" 'hreflang="fr" href="https://goodeworkers.org/fr/contributeurs/r-ichard/"'
+check_page "/fr/contributeurs/r-ichard/" "200" 'rel="canonical" href="https://goodeworkers.org/fr/contributeurs/r-ichard/"'
+check_page "/projects/"                            "200" 'hreflang="fr" href="https://goodeworkers.org/fr/projets/"'
+check_page "/projects/goodeworkers-website/"       "200" 'hreflang="fr" href="https://goodeworkers.org/fr/projets/goodeworkers-website/"'
+check_page "/fr/projets/goodeworkers-website/"     "200" 'rel="canonical" href="https://goodeworkers.org/fr/projets/goodeworkers-website/"'
 # Google tricks rows: the search URL is built from `query` and `searchPeriod`
 check_page "/remote-job-boards/"    "200" 'google.com/search?q=%22remote%22+site%3Agreenhouse.io&tbs=qdr%3Ad'
 check_page "/fr/offres-emploi-teletravail/" "200" 'Les quatre, via Google'

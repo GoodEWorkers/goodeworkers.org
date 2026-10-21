@@ -29,3 +29,8 @@ screenshots/
 
 # tasteskill inspector output
 .taste-skill/
+
+# editor / agent tooling
+.claude/
+.cursor/
+.idea/

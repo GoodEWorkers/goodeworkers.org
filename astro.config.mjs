@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 import {
   SITE,
   absoluteUrl,
+  getContributorAlternateLinks,
+  getProjectAlternateLinks,
   langCodes,
   languages,
   normalizePath,
@@ -50,7 +52,13 @@ export default defineConfig({
         !normalizePath(page).endsWith('/404/') && !page.includes('/thanks'),
       serialize: (item) => ({
         ...item,
-        links: alternatesByUrl.get(normalizePath(item.url)),
+        // Static routes come from the pre-computed map; contributor and
+        // project pages are dynamic (shared slug across languages) and fall
+        // back to the helpers.
+        links:
+          alternatesByUrl.get(normalizePath(item.url)) ??
+          getContributorAlternateLinks(item.url) ??
+          getProjectAlternateLinks(item.url),
       }),
     }),
   ],

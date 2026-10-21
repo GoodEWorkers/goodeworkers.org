@@ -2,15 +2,39 @@
 import logoSvg from '../assets/images/goodeworkers.svg?raw';
 import Hamburger from './Miscs/Hamburger.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { contactAnchor, getLangFromPath, normalizePath, routes } from '../i18n/routes';
+import {
+  contactAnchor,
+  getContributorSlug,
+  getLangFromPath,
+  getProjectSlug,
+  getRouteKey,
+  routes,
+} from '../i18n/routes';
 import { t } from '../i18n/ui';
 
 const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
 
 const homeHref = routes.home[lang];
-const initiativesHref = routes.initiatives[lang];
-const onInitiatives = normalizePath(Astro.url.pathname) === initiativesHref;
+const path = Astro.url.pathname;
+// Contributors and Projects stay lit on their individual pages too.
+const links = [
+  {
+    href: routes.initiatives[lang],
+    label: strings.nav.initiatives,
+    current: getRouteKey(path) === 'initiatives',
+  },
+  {
+    href: routes.contributors[lang],
+    label: strings.nav.contributors,
+    current: getRouteKey(path) === 'contributors' || getContributorSlug(path) !== undefined,
+  },
+  {
+    href: routes.projects[lang],
+    label: strings.nav.projects,
+    current: getRouteKey(path) === 'projects' || getProjectSlug(path) !== undefined,
+  },
+];
 ---
 
 <div class="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50" data-navbar>
@@ -25,19 +49,23 @@ const onInitiatives = normalizePath(Astro.url.pathname) === initiativesHref;
     </a>
     <div class="hidden md:flex md:items-center md:space-x-8">
       <ul class="flex items-center space-x-8 font-bold">
-        <li>
-          <a
-            href={initiativesHref}
-            data-roll
-            aria-current={onInitiatives ? 'page' : undefined}
-            class:list={[
-              'block pb-1 border-b-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
-              onInitiatives ? 'text-yellow border-yellow' : 'border-transparent hover:text-orange',
-            ]}
-          >
-            {strings.nav.initiatives}
-          </a>
-        </li>
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                data-roll
+                aria-current={link.current ? 'page' : undefined}
+                class:list={[
+                  'block pb-1 border-b-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
+                  link.current ? 'text-yellow border-yellow' : 'border-transparent hover:text-orange',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
         <li>
           <a
             href={contactAnchor(lang, 'nav')}
@@ -67,16 +95,20 @@ const onInitiatives = normalizePath(Astro.url.pathname) === initiativesHref;
       data-lenis-prevent
     >
       <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
-        <li class="pl-16 pr-4 py-3">
-          <a
-            href={initiativesHref}
-            aria-current={onInitiatives ? 'page' : undefined}
-            class:list={['hover:text-orange block w-full h-full', onInitiatives && 'text-yellow']}
-            data-menu-link
-          >
-            {strings.nav.initiatives}
-          </a>
-        </li>
+        {
+          links.map((link) => (
+            <li class="pl-16 pr-4 py-3">
+              <a
+                href={link.href}
+                aria-current={link.current ? 'page' : undefined}
+                class:list={['hover:text-orange block w-full h-full', link.current && 'text-yellow']}
+                data-menu-link
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
         <li class="pl-16 pr-4 py-3">
           <a
             href={contactAnchor(lang, 'nav-mobile')}

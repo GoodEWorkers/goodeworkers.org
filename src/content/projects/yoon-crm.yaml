@@ -1,0 +1,18 @@
+# Yoon — CRM selection and configuration. Slug: /projects/yoon-crm/
+title: Yoon CRM
+logo: ./yoon.png
+status: ongoing
+startedOn: "2026-01"
+url: https://yoonfrance.com
+description:
+  en: |-
+    GoodEWorkers helped Yoon, a French nonprofit, pick and set up a CRM that fits how they work, so the team can manage contacts without spreadsheets getting in the way.
+  fr: |-
+    GoodEWorkers a accompagné Yoon, une association française, dans le choix et la configuration d'un CRM adapté à leur façon de travailler, pour gérer les contacts sans que les tableurs s'en mêlent.
+why:
+  en: |-
+    A nonprofit's contacts are its real capital. Lose them to a broken spreadsheet and you bleed slowly. Pick the right tool once, set it up to match how the team works, and you save months of friction.
+  fr: |-
+    Les contacts d'une association sont son vrai capital. Les perdre dans un tableur défaillant, c'est saigner lentement. Choisir le bon outil une fois, le configurer pour coller au fonctionnement de l'équipe, et on gagne des mois de friction en moins.
+contributors:
+  - r-ichard
