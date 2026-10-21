@@ -194,41 +194,11 @@ html.lenis body {
   translate: 0 0;
 }
 
-/* Pointer highlight for [data-tilt]; the engine writes --px / --py. :where() keeps position: relative
-   weaker than any Tailwind position utility on the element. */
-:where([data-tilt]) {
-  position: relative;
-}
-.motion [data-tilt]::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-  background: radial-gradient(circle at var(--px, 50%) var(--py, 50%), rgb(255 255 255 / 0.35), transparent 60%);
-}
-@media (hover: hover) {
-  .motion [data-tilt]:hover::after {
-    opacity: 1;
-  }
-}
-.motion [data-tilt]:focus-visible::after {
-  opacity: 1;
-}
-/* A card's glow lights it from behind its content, so the text keeps its contrast under the pointer. */
-.motion [data-tilt=''] {
-  isolation: isolate;
-}
 /* A tilted card is a layer at an angle, and the compositor does not smooth the edge of such a layer: its straight sides step by a pixel or
    two. A transparent 1px outline puts that edge in empty pixels, so the card's own painted, anti-aliased edge is what shows. :where() keeps
    it weaker than the focus-ring utilities on the cards (a forced-colors theme draws it as a hairline, which suits a card with no fill). */
 :where(.motion [data-tilt='']) {
   outline: 1px solid transparent;
-}
-.motion [data-tilt='']::after {
-  z-index: -1;
 }
 
 /* Orange selection. Weaker than Tailwind's selection: variants, so the job boards page keeps its yellow. */

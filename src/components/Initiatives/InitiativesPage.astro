@@ -127,18 +127,3 @@ const doors = help.doors.map((door, index) => ({
 <script>
   import '../../scripts/motion/illos.ts';
 </script>
-
-<style>
-  /* The pointer highlight lights the card from behind its text, like the pills, so the arrow button and label stay crisp. */
-  .door {
-    isolation: isolate;
-  }
-  .door::after {
-    z-index: -1;
-  }
-  /* The card is not focusable (its link is), so the engine's [data-tilt]:focus-visible twin never matches here.
-     .motion for the same specificity as the engine's hover rule, which beats its resting opacity. */
-  :global(.motion) .door:has(:focus-visible)::after {
-    opacity: 1;
-  }
-</style>

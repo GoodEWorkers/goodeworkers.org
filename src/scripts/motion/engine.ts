@@ -118,6 +118,11 @@ export function initPage({ hold = false }: { hold?: boolean } = {}) {
   });
   ready = motionOn();
   if (ready) [...pageFns].forEach(run); // a copy: a page fn may register another
+  // Every start above was measured with the fonts the page had at that moment. A router swap can replace the <style> that
+  // declares them (always in dev): the page then reflows a few ms later, and a start clamped to the old last scroll position
+  // (the footer logo's) would lie past the new one and never fire. A full load needs the same re-measure, so it lives here.
+  const page = ctx;
+  void document.fonts.ready.then(() => page === ctx && ScrollTrigger.refresh());
 }
 
 /** Revert everything initPage() made (tweens, ScrollTriggers, splits, listeners, onPage cleanups). Call it
@@ -180,7 +185,6 @@ export function boot() {
     }
     initPage();
     void playIntro();
-    void document.fonts.ready.then(() => ScrollTrigger.refresh());
     return true;
   } catch (e) {
     // A broken engine must never leave content hidden by the html.motion rules.
@@ -501,20 +505,16 @@ function parallax(el: HTMLElement) {
   );
 }
 
-// data-tilt: Zentry bento tilt plus a pointer-following highlight (--px/--py, painted by CSS).
-// data-tilt="glow": the highlight only, no movement (the CTA pills keep their CSS scale).
+// data-tilt: Zentry bento tilt. It moves the card and paints nothing over it (no pointer highlight).
 function tilt(el: HTMLElement) {
-  const glow = el.dataset.tilt === 'glow';
   const settle = { duration: 0.3, ease: ease.soft, overwrite: 'auto' } as const;
   listen(el, 'pointermove', (e) => {
     const box = el.getBoundingClientRect();
     const x = (e.clientX - box.left) / box.width;
     const y = (e.clientY - box.top) / box.height;
-    el.style.setProperty('--px', `${x * 100}%`);
-    el.style.setProperty('--py', `${y * 100}%`);
-    if (!glow) gsap.to(el, { rotateX: (y - 0.5) * 5, rotateY: (x - 0.5) * -5, scale: 0.97, transformPerspective: 700, ...settle });
+    gsap.to(el, { rotateX: (y - 0.5) * 5, rotateY: (x - 0.5) * -5, scale: 0.97, transformPerspective: 700, ...settle });
   });
-  if (!glow) listen(el, 'pointerleave', () => gsap.to(el, { rotateX: 0, rotateY: 0, scale: 1, ...settle }));
+  listen(el, 'pointerleave', () => gsap.to(el, { rotateX: 0, rotateY: 0, scale: 1, ...settle }));
 }
 
 // data-roll: letter roll. The label gets a clipped two-row stack (itself plus an aria-hidden copy);
