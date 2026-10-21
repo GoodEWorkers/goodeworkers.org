@@ -150,12 +150,13 @@ const links = [
     if (!toggle || !panel || !hamburger || toggle.hasAttribute('data-bound')) return;
     toggle.setAttribute('data-bound', '');
 
+    const root = document.documentElement;
     const close = () => {
       panel.classList.add('hidden');
       panel.classList.remove('is-open');
       hamburger.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.removeProperty('overflow');
+      root.style.removeProperty('overflow');
       startScroll();
     };
     const open = () => {
@@ -164,9 +165,10 @@ const links = [
       requestAnimationFrame(() => panel.classList.add('is-open'));
       hamburger.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
-      // Stop the page scrolling behind the full-screen overlay. Lenis scrolls with scrollTo(), which
-      // overflow: hidden does not stop, so it is paused as well.
-      document.body.style.overflow = 'hidden';
+      // Stop the page scrolling behind the full-screen overlay. Lock <html>, never <body>: Lenis clips <html> while it is stopped, and a
+      // <body> with overflow of its own then stops being the viewport's and becomes a scroll container, which unpins the sticky bar
+      // (the menu is inside it) to the top of the page, out of view. Lenis scrolls with scrollTo(), which overflow does not stop: pause it too.
+      root.style.overflow = 'hidden';
       stopScroll();
     };
 

@@ -293,7 +293,7 @@ function lamp() {
 
 function nav(bar: HTMLElement) {
   const canHide = motionOn() && !document.querySelector('[data-nav-static]');
-  const menuToggle = bar.querySelector('[data-menu-toggle]');
+  const menuToggle = bar.querySelector<HTMLElement>('[data-menu-toggle]');
   let shown = true;
   const show = (on: boolean) => {
     if (on === shown) return;
@@ -311,8 +311,10 @@ function nav(bar: HTMLElement) {
       if (canHide) show(self.direction < 0 || y <= 80 || menuToggle?.getAttribute('aria-expanded') === 'true' || bar.matches(':focus-within'));
     },
   });
-  // A keyboard user tabbing into a hidden bar brings it back.
+  // A keyboard user tabbing into a hidden bar brings it back. So does a tap on the menu button: the menu lives in the bar, and the
+  // tap can land while the bar is still sliding away.
   listen(bar, 'focusin', () => show(true));
+  if (menuToggle) listen(menuToggle, 'click', () => show(true));
 }
 
 // Logo star burst: a slow spin while the pointer or focus is on the logo link.
