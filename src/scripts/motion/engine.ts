@@ -369,7 +369,7 @@ function showFocused(e: FocusEvent) {
 const SPLIT = {
   lines: { type: 'lines', duration: 1.2, stagger: 0.08 },
   words: { type: 'lines,words', duration: 1, stagger: 0.06 },
-  // An amount, not a step: a three-digit numeral and a twelve-letter wordmark both cascade over 0.35 s (the intro's chars take 0.3 s).
+  // An amount, not a step: however many chars there are (the 404's three-digit numeral), they cascade over 0.35 s (the intro's chars take 0.3 s).
   chars: { type: 'lines,chars', duration: 0.9, stagger: { amount: 0.35 } },
 } as const;
 

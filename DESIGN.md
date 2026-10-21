@@ -260,7 +260,7 @@ Text on the sheet steps down by alpha on black: 80% for supporting prose, 70% fo
 - **Label** (Inter 700, 12px → 14px): Nav, filter pills, field labels, and table headers.
 
 ### Named Rules
-**The Brand Voice Rule.** ClashDisplay appears only for the brand name (the H1 wordmark and the footer's closing band), CTA pill labels, the footer contact heading, the 404 numeral and heading, value names (on tiles, in the homepage list and as value-row headings), and names or actions a visitor clicks (board and tool names, door-card actions). Other headings, taglines, prose and UI are set in Inter.
+**The Brand Voice Rule.** ClashDisplay appears only for the brand name (the H1 wordmark; the footer closes with the logotype itself, drawn and not set), CTA pill labels, the footer contact heading, the 404 numeral and heading, value names (on tiles, in the homepage list and as value-row headings), and names or actions a visitor clicks (board and tool names, door-card actions). Other headings, taglines, prose and UI are set in Inter.
 
 **The Balanced Headings Rule.** H1s and H2s are set with `text-wrap: balance`, so none ends on a lone word. The homepage H1 is the exception: SplitText keeps it split for good, and a layout balanced before the split is not the one its lines end up in. The Encircled wrapper ends in a zero-width joiner (`.encircled::after`) so Chromium's balanced breaking keeps the ring with its word.
 
@@ -344,7 +344,7 @@ The engine in `src/scripts/motion/engine.ts` reads these:
 - `data-split="lines|words|chars"`: masked text reveal on scroll, lines by default. Text that holds a link, button or field fades up instead, so no link is split.
 - `data-split-intro`: plays the split in the page intro instead of on scroll. No markup uses it yet.
 - `data-reveal="up|fade|clip|scale"`, with `data-delay`: one element reveals on scroll (1.0–1.4s, `expo.out`).
-- `data-stagger`: the children of a grid reveal one after another, 60ms apart.
+- `data-stagger`: the children of a grid reveal one after another, 60ms apart. The footer logo's `<svg>` wears it too, so its five paths rise in file order.
 - `data-pop`: a mark inside a reveal or stagger grows from 60% to full size as its container plays (0.8s, 0.2s delay, 60ms apart). The hero and Why card icons use it, so each icon grows in with its card.
 - `data-draw` (on an `<svg>`): each `path.draw[pathLength]` draws in once, when the figure's top reaches 80% of the viewport (1.2s, `expo.out`, 120ms apart). On the surfaces only the hospital's heartbeat uses it. The Why arrow's own `path[data-draw]` is scrubbed by `home.ts` instead.
 - `data-illo` (on an `<svg>`, its value the piece's name): the drawing draws itself in, then lives at rest, in `illos.ts`, which the values and initiatives pages import. The rules are under Illustrations.
@@ -352,11 +352,11 @@ The engine in `src/scripts/motion/engine.ts` reads these:
 - `data-tilt`: a pointer tilt of up to 2.5 degrees, with a light that follows the pointer. `data-tilt="glow"` is the light alone. Skipped on touch.
 - `data-roll`: letter roll on a text link or button (CSS, 0.5s). The engine adds an `aria-hidden` second row.
 - `data-navbar` and `data-nav-static`: the floating nav hides on scroll down past 80px and returns on scroll up. The static flag, set on the job boards `<main>`, keeps it from hiding.
-- `data-logo`: the logo's star burst turns while the pointer or focus is on the logo.
+- `data-logo`: the logo's star burst turns while the pointer or focus is on the logo. The footer logo wears it on its wrapper: that logo is decorative and takes no focus, so its star turns on hover only.
 - `data-title`: the 3D word swing on a homepage H2, read by `home.ts` (see Homepage choreography). A ringed word inside it never wraps.
 - `data-ring` (on the `<svg>` inside an Encircled word): the word's pen loop draws itself as it comes into view, and again on pointer enter or focus. See Generative drawings.
 - `#lamp`: the lamp layer, moved through `--lamp-x` and `--lamp-y`.
-- `data-street` (on the `<svg>` of the night street behind the footer wordmark): `street.ts` lights and flickers its windows, and the street follows `--lamp-x`. See Generative drawings.
+- `data-street` (on the `<svg>` of the night street behind the footer logo): `street.ts` lights and flickers its windows, and the street follows `--lamp-x`. See Generative drawings.
 
 ### Homepage choreography
 
@@ -369,7 +369,7 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 - **Why arrow.** The arrow is inline SVG. Its white mask path (`data-draw`) sweeps along the dashed arrow as the arrow scrolls from 80% to 40% of the viewport, and the head (`data-head`) fades in last.
 - **About.** The inset card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
 - **CTA pills.** `data-tilt="glow"` adds the pointer light with no rotation. The press (`:active`) scales the pill to 97%, on top of the existing 105% hover.
-- **Footer.** The email's local part and domain each roll on hover and focus (`data-roll`). Each contact field's bottom rule wipes in from the left, one after another (1.2s, 80ms apart), once the form's top reaches 80% of the viewport (`data-rule`). The contact sheet has the hero sheet's rounded corners (12, 16 and 24px) on both ends, and on every page a closing band below it on the dark ground sets the H1's wordmark at `clamp(2rem, 11vw, 12rem)`, centred and `aria-hidden`. Its letters rise through a mask as the band comes into view (`data-split="chars"`, 0.9s, `expo.out`, 0.35s across all letters). The night street lies behind the wordmark (see Generative drawings).
+- **Footer.** The email's local part and domain each roll on hover and focus (`data-roll`). Each contact field's bottom rule wipes in from the left, one after another (1.2s, 80ms apart), once the form's top reaches 80% of the viewport (`data-rule`). The contact sheet has the hero sheet's rounded corners (12, 16 and 24px) on both ends, and on every page a closing band below it on the dark ground closes with the logotype itself, on one line: the inline `goodeworkers-line.svg`, the logo's own shapes with its two lines set on one baseline ("Go d" with the star burst for its second o, then "eWorkers", a word space apart: 0.4 of the cap height; nothing redrawn, no font), centred, `min(100%, 72rem)` wide (about 9:1, so about 130px tall at 72rem and 40px on a phone) and `aria-hidden`, since the copyright line spells the name. Its five paths are the engine's stagger (`data-stagger` on the `<svg>`): each rises out of the svg's bottom edge (32 units, more than the lockup is tall, so the edge is its mask), scales up from .96 and fades in over 1s (`expo.out`), 60ms apart in file order (the orange e, Workers, the lavender k, Good, and the yellow star burst last), once the logo's top reaches 80% of the viewport. The star burst turns on hover (`data-logo` on its wrapper, 6s a turn, hover only). The night street lies behind the logo, held at 75% (see Generative drawings).
 
 ### Other pages
 
@@ -389,7 +389,7 @@ Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8
 Two drawings are generated by code rather than stored: the hand-circled word and the night street. `src/lib/gen.ts` is the toolkit: a seeded generator (an FNV-1a hash of the seed text, then xorshift32), triangular draws, 1D value noise, jitter, a hand-drawn `loop` (with `start` and `power` options), a pen brush (`penD`) and Catmull-Rom curves (`smoothD`, `polylineD`). No stored art: the same seed draws the same picture.
 
 - **Ring.** `Encircled.astro` builds each word's loop from the word, so the same word always gets the same ring, and EN and FR differ. The engine's `ring()` draws it once, as its heading comes into view, 0.35s after the words start to rise (0.6s, `expo.out`). Pointer enter or focus inside the heading redraws it (0.8s) once it is drawn; the pointer does nothing on touch. The home H1 draws on the intro at 0.6s, and the title rings draw 0.2s before their last word lands. Without JS, under reduced motion and in the social card the ring is drawn whole.
-- **Street.** `NightStreet.astro` draws the skyline behind the footer wordmark once at build time, seeded by the page path, so each page has its own: 11 to 16 buildings, 3 to 9 floors, 10 by 14 windows with 12 to 18% lit (yellow, one or two orange), rooftop details, a 1px ashgray pen at 18%, and at most 208 elements. `street.ts` runs one ticker callback while the band is on screen: a slow flicker, the lamp warming the windows near it (within 12% of the viewport width at most; touch follows the scroll), and one window changing every 20 to 40s, written in 0.05 steps. Static under reduced motion and without JS.
+- **Street.** `NightStreet.astro` draws the skyline behind the footer logo once at build time, seeded by the page path, so each page has its own: 11 to 16 buildings, 3 to 9 floors, 10 by 14 windows with 12 to 18% lit (yellow, one or two orange), rooftop details, a 1px ashgray pen at 18%, and at most 208 elements. The footer holds the whole drawing at 75%, so the brightest window reads 42% and the street stays quiet behind the logo's grey letters. `street.ts` runs one ticker callback while the band is on screen: a slow flicker, the lamp warming the windows near it (within 12% of the viewport width at most; touch follows the scroll), and one window changing every 20 to 40s, written in 0.05 steps. Static under reduced motion and without JS.
 - **Icons.** The hero and Why card icons are stored filled SVG shapes, and `data-pop` grows each from 60% to full size with its card.
 
 The ring and the street are not part of the Windows at night series (see Illustrations), so that series' drawing rules do not apply to them: the ring is revealed by a mask and a dash offset, as drawn lines are, and the street has its own 1px pen.
@@ -404,7 +404,7 @@ The ring and the street are not part of the Windows at night series (see Illustr
 - The cursor is the native one. There is no custom cursor.
 - The motion's hover rules sit inside `@media (hover: hover)`, and so do Tailwind's `hover:` utilities (`future.hoverOnlyWhenSupported`), so a tap never leaves a hover state stuck. Touch devices get no tilt, and the lamp follows the scroll.
 - Hidden states use opacity, never `visibility` or `display`. A link that is still hidden stays in the tab order, and focus on it plays its reveal at once (and so for the form's field rules and the job-board rows), even when it is already on screen below the trigger line, so its ring is never invisible. Whatever sits on the first screen at load is revealed at load.
-- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row, the Why arrow, the ring's pen and the night street. Split headings keep their text as an accessible name.
+- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row, the Why arrow, the ring's pen, the night street and the footer's closing logo. Split headings keep their text as an accessible name.
 - The mobile menu keeps Escape and the scroll lock (Lenis stops while it is open), and the nav never hides while the menu is open or focus is inside it.
 
 ### Named Rules
@@ -441,6 +441,7 @@ Big pill buttons are made to be pressed with the whole hand.
 - **Text link (Initiatives):** a 2px transparent bottom border with 4px padding below. Hover turns the text orange (200ms). On the current page (`aria-current="page"`) the text and border are yellow.
 - **Mobile:** a hamburger opens a full-height #111 overlay that slides and fades in over 100ms ease-in and locks page scroll. Escape closes it. The current page's link is yellow there too.
 - **Footer:** Values and Initiatives join the centred small links (above Job boards) that underline on hover.
+- **Footer logo:** the page ends on the logotype itself, drawn and not set: the inline `goodeworkers-line.svg`, the logo's own shapes on one line (it carries its provenance in a comment; the navbar keeps the two-line `goodeworkers.svg`), on the #111 ground (`BRAND.md`: black or white grounds only, so the night street behind it stays a faint pen and dim windows). Centred, `min(100%, 72rem)` wide at about 9:1, `aria-hidden`. Its five paths stagger in on view and the star burst turns on hover (see Motion).
 
 ### Encircled Word (signature)
 A single word in a heading is ringed by a hand-drawn orange pen loop, with 6px horizontal padding and the word set bold. The loop is drawn from the word itself (see Generative drawings), 2px wide (1.5px below `md`) at any size. In the social card (`scripts/og-image.mjs`) the pen is drawn whole and its width scales with the type. The job-boards content model stores each heading as `before / encircled / after`, so the circled word is chosen in copy and not hard-coded.

@@ -2,6 +2,7 @@
 import ContactForm from './ContactForm.astro';
 import ExternalLink from './ExternalLink.astro';
 import NightStreet from './NightStreet.astro';
+import logoSvg from '../assets/images/goodeworkers-line.svg?raw';
 import { getLangFromPath, languages, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
@@ -23,6 +24,9 @@ const goodEWorkersEmail = 'hello@goodeworkers.org';
 const emailLocalPart = 'hello';
 const emailDomainPart = '@goodeworkers.org';
 const githubUrl = 'https://github.com/GoodEWorkers';
+// The logotype closes the page, on one line: goodeworkers-line.svg is the logo's own shapes, recomposed. Decorative (the copyright line
+// spells the name), and `data-stagger` has the engine rise its five paths one after another, in file order.
+const logo = logoSvg.replace('<svg', '<svg aria-hidden="true" focusable="false" data-stagger');
 ---
 
 <footer class="relative z-10 font-inter">
@@ -87,19 +91,15 @@ const githubUrl = 'https://github.com/GoodEWorkers';
       <li>{footer.copyright(currentYear)}</li>
     </ul>
   </div>
-  {/* The closing band: the H1's wordmark, as wide as the column allows. The word is 7.3em wide, so 11vw leaves it a
-      fifth of the screen spare; the 2rem floor only matters below 290px (a 3rem floor overflows under 380px). Decorative,
-      so it is hidden from assistive tech: the name is in the copyright line above. The night street lies behind it, edge to
-      edge of the screen (the wordmark's box stays the column). */}
-  <div class="relative isolate">
+  {/* The closing band: the logotype itself on one line, centred, as wide as 72rem (about 9:1, so about 130px tall there) and the whole
+      column on a phone. Decorative, so the svg is hidden from assistive tech: the name is spelled in the copyright line above. The star burst
+      turns under the pointer (data-logo; nothing here takes focus). The night street lies behind it, edge to edge of the screen (the logo's
+      box stays the column), held at 75% so that its lit windows stay quiet next to the logo's big grey letters (the brightest reads 42%,
+      the orange 'e' is 100%). */}
+  <div class="relative isolate [&>svg]:opacity-75">
     <NightStreet />
-    <div class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-12" aria-hidden="true">
-      <div
-        class="text-center font-clash leading-[0.9] tracking-[-0.02em] text-nowrap text-[clamp(2rem,11vw,12rem)]"
-        data-split="chars"
-      >
-        <span class="text-yellow font-medium">Good</span><span class="text-orange font-semibold">e</span><span class="text-purple font-medium">Workers</span>
-      </div>
+    <div class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-12">
+      <div class="mx-auto w-[min(100%,72rem)] [&>svg]:block [&>svg]:w-full [&>svg]:h-auto" data-logo set:html={logo} />
     </div>
   </div>
 </footer>

@@ -314,8 +314,13 @@
       },
       {
         "name": "street-life",
-        "value": "one gsap.ticker callback while the footer band is on screen: flicker of ±0.15 opacity, capped at 0.8 inside a 70% group (the brightest window reads 56%); the lamp warms windows within 12% of the viewport width at most over 0.6s (scroll-driven on touch); one window lights or goes out every 20 to 40s; writes only on 0.05 steps",
-        "purpose": "Life at rest for the footer night street: a skyline drawn once per page from its path (11 to 16 buildings, 3 to 9 floors, at most 208 elements), static under reduced motion and without JS."
+        "value": "one gsap.ticker callback while the footer band is on screen: flicker of ±0.15 opacity, capped at 0.8 inside a 70% group that the footer holds at 75% (the brightest window reads 42%); the lamp warms windows within 12% of the viewport width at most over 0.6s (scroll-driven on touch); one window lights or goes out every 20 to 40s; writes only on 0.05 steps",
+        "purpose": "Life at rest for the night street behind the footer logo: a skyline drawn once per page from its path (11 to 16 buildings, 3 to 9 floors, at most 208 elements), static under reduced motion and without JS."
+      },
+      {
+        "name": "footer-logo",
+        "value": "svg[data-stagger] on the inline one-line logotype (goodeworkers-line.svg) in the footer band: each of its five paths rises 32 units (more than the lockup is tall, so the svg's own edge masks it), scales up from .96 and fades in, 1s expo.out, 0.06s apart in file order (orange e, Workers, lavender k, Good, star burst last), once the logo's top reaches 80% of the viewport; data-logo on its wrapper turns the star burst 360deg in 6s, linear and repeating, on hover only (none on touch)",
+        "purpose": "The footer closes with the logotype itself, on one line, staggered in, the star spinning on hover: a decorative, aria-hidden finale at min(100%, 72rem), about 9:1, over the night street. Whole without JS and under reduced motion."
       },
       {
         "name": "mark-pop",
