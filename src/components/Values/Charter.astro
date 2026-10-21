@@ -1,6 +1,7 @@
 ---
 import Icon from '../icons/Icon.astro';
 import Rich from '../Common/Rich.astro';
+import ValueIllustration from '../Illustrations/ValueIllustration.astro';
 import { typeset } from '../Common/typeset';
 import { getLangFromPath } from '../../i18n/routes';
 import { valueStyles } from './valueStyles';
@@ -37,7 +38,7 @@ const rows = [
 
   <div class="mt-8 md:mt-12 space-y-8 lg:space-y-5">
     {
-      rows.map((row, rowIndex) => (
+      rows.map((row) => (
         <div class="lg:grid lg:grid-cols-[11rem_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)] lg:gap-5">
           <p class="text-xl md:text-2xl font-medium leading-tight text-balance lg:pt-7 xl:pt-8">{t(row.label)}</p>
           <ul class="mt-3 lg:mt-0 grid sm:grid-cols-2 gap-3 md:gap-5" data-stagger>
@@ -66,14 +67,11 @@ const rows = [
                     >
                       <Icon name="arrow-down" />
                     </span>
-                    <img
-                      src={style.tileDoodle.src}
-                      alt=""
-                      width={style.tileDoodle.width}
-                      height={style.tileDoodle.height}
-                      loading={rowIndex ? 'lazy' : undefined}
-                      class="absolute bottom-0 right-0 w-[52%] max-w-[21rem] max-h-[64%] object-contain object-right-bottom translate-x-[4%] translate-y-[4%] transition-transform duration-300 ease-out group-hover:-translate-y-[1%] group-hover:-rotate-2 group-focus-visible:-translate-y-[1%] group-focus-visible:-rotate-2"
-                    />
+                    {/* The value's window at night, bottom right: 52% of the tile, nudged 4% past the corner so the tile clips it. The nudge is
+                         on this wrapper: the drawing's own root takes no transform (it moves only through its inner groups). */}
+                    <div class="absolute bottom-0 right-0 w-[52%] max-w-[21rem] translate-x-[4%] translate-y-[4%]">
+                      <ValueIllustration value={value.id} context="tile" class="block h-auto w-full" />
+                    </div>
                   </a>
                 </li>
               );

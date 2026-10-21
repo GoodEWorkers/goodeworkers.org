@@ -1,13 +1,23 @@
 ---
+import { loop, seedFrom, smoothD } from '../../lib/gen';
+
 interface Props {
   text: string;
   class?: string;
 }
 
 const { text, class: className } = Astro.props;
+
+// The ring is a pen stroke made here from the word, so the server HTML already holds the finished path: no script is needed to see
+// it, the same word always gets the same ring and another word another one. The pen starts at the left (a little off, per word),
+// circles a little more than once and lifts off outward.
+const rand = seedFrom(text);
+const d = smoothD(loop(100, 40, 98, 38, rand, { start: Math.PI + (rand() - 0.5) * 0.6, power: 2.6, steps: 40 }));
+// The drawing mask needs an id of its own: from the word, so it is stable between builds and loads.
+const id = `ring-${seedFrom(text)().toString(36).slice(2, 8)}`;
 ---
 
-<span class="relative encircled"><span class={`z-10 relative px-1.5 ${className ?? ''}`}>{text}</span><span class="absolute inset-x-0 top-[25%] rounded-full z-0 border-orange border md:border-2 h-[62%]"></span></span>
+<span class="relative encircled"><span class={`z-10 relative px-1.5 ${className ?? ''}`}>{text}</span><span class="absolute inset-x-0 top-[25%] z-0 h-[62%]"><svg data-ring viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true" focusable="false"><mask id={id}><path d={d} pathLength="1" fill="none" stroke="#fff" stroke-width="10"/></mask><path d={d} pathLength="1" fill="none" stroke="#FD5E09" stroke-linecap="round" vector-effect="non-scaling-stroke" mask={`url(#${id})`}/></svg></span></span>
 
 <style is:global>
   /* Under text-wrap: balance (global.css) Chromium can strand the ring's placeholder on the line after the word when that
@@ -16,5 +26,27 @@ const { text, class: className } = Astro.props;
   .encircled::after {
     content: '\2060';
     content: '\2060' / '';
+  }
+  /* The ring is drawn in the span's box, a little larger on every side: a pen goes round a word, so a loop as wide as the word
+     would cut through its first and last letters. The overshoot is in em, so it scales with the type and stays inside the space
+     between words; the pen's lift may leave the box too. Nothing here moves the heading: the span is out of flow. */
+  .encircled svg {
+    position: absolute;
+    top: -8%;
+    left: -0.12em;
+    display: block;
+    width: calc(100% + 0.24em);
+    height: 116%;
+    overflow: visible;
+    pointer-events: none; /* it reaches over the neighbouring words: they stay selectable and clickable */
+  }
+  /* The pen stays 2px on screen however the box stretches (vector-effect on the path); 1.5px on small screens. */
+  .encircled svg > path {
+    stroke-width: 1.5px;
+  }
+  @media (min-width: 768px) {
+    .encircled svg > path {
+      stroke-width: 2px;
+    }
   }
 </style>

@@ -195,16 +195,16 @@ The site is a near-black room with one bright, warm sheet laid on it. The dark g
 
 It feels made by people, not by a template. Photos overlap at offset angles, the card grid is irregular, and the CTAs are fat pills with a heavy geometric label that grow slightly when hovered. Density depends on the ground: statements on the dark ground are centred and roomy, while working content on the light sheet can be dense, down to one line per row, because that is where the visitor gets things done.
 
-Four colours also stand for the four values (Openness, Autonomy, Care, Solidarity) and keep that meaning wherever a value appears: the tile fill, the value's name on the dark ground, and the underline under its phrase in the Initiatives statement. The illustrations are hand-drawn CC0 line doodles and people, recoloured to the palette, so the "made by people" feeling carries into the pictures.
+Four colours also stand for the four values (Openness, Autonomy, Care, Solidarity) and keep that meaning wherever a value appears: the tile fill, the value's name on the dark ground, and the underline under its phrase in the Initiatives statement. The illustrations are drawn for the site: one small window at night per value, in pen line with one light colour, so the "made by people" feeling carries into the pictures.
 
 The system is flat. It builds depth from the contrast between the two grounds, from panels overlapping, and from scale on hover. Shadows are not part of it.
 
 **Key Characteristics:**
 - Two grounds: #111 near-black and the #F8F8F8 rounded sheet, alternating down the page.
-- One orange ring around one word per heading.
+- One hand-drawn orange ring around one word per heading.
 - Accents work as fills (pills, cards, value tiles, door cards), as dots and lines, or as a state (hover, current page). They never set reading text.
 - Four value colours with fixed roles: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone.
-- CC0 line illustrations (Open Doodles, Open Peeps) in #111 line, recoloured to tokens, self-hosted as SVG.
+- A series of windows at night (one drawing per value, plus the hospital): pen line and one light, inline SVG that draws itself in and breathes at rest.
 - Fat rounded pill CTAs with a ClashDisplay bold label; `hover` scales them to 105%.
 - Flat surfaces; no resting shadows.
 - Inter for reading and UI; ClashDisplay for the brand name, names you click, value names, the 404 numeral and heading, and CTA labels.
@@ -214,10 +214,10 @@ The system is flat. It builds depth from the contrast between the two grounds, f
 A warm three-accent palette on near-black, with off-white as the working surface.
 
 ### Primary
-- **Signal Orange** (orange): The one action per view: the Join and Send pills, the values page "Explore our initiatives" pill, the nav Contact outline, the encircled-word ring, focus rings and outlines, the search caret, and link hover. Also the "e" of the wordmark, Care's value colour, and the dashed heartbeat line on the Initiatives focus card.
+- **Signal Orange** (orange): The one action per view: the Join and Send pills, the values page "Explore our initiatives" pill, the nav Contact outline, the encircled-word ring, focus rings and outlines, the search caret, and link hover. Also the "e" of the wordmark, Care's value colour, and the solid heartbeat line on the Initiatives focus card, and one or two lit windows on the footer street.
 
 ### Secondary
-- **Marigold** (yellow): The "I am a nonprofit" pill, a Why card fill, the skip-link background, text selection on the job-boards, values and initiatives pages, the job-board `:target` row tint (at 30%), the "remote-only" kind dot, the current-page state of the nav Initiatives link, and the organisations door card. Openness's value colour.
+- **Marigold** (yellow): The "I am a nonprofit" pill, a Why card fill, the skip-link background, text selection on the job-boards, values and initiatives pages, the job-board `:target` row tint (at 30%), the "remote-only" kind dot, the current-page state of the nav Initiatives link, the organisations door card, and the lit windows on the footer street (one or two are orange). Openness's value colour.
 
 ### Tertiary
 - **Lavender** (purple): The "I want to help" pill, a Why card fill, the About list heading, the "startups and niches" kind dot, and the contributors door card. Autonomy's value colour.
@@ -240,7 +240,7 @@ Text on the sheet steps down by alpha on black: 80% for supporting prose, 70% fo
 
 **The Dot Never Speaks Alone Rule.** A kind dot (10px circle) always sits beside its text label. The yellow dot on paper is well under 3:1, so the dot is only a wayfinding echo and can't be the only signal. Kind colours: remote-only yellow, vetted orange, startups and niches purple, freelance black, search engines pantone. On a pressed black pill, the dot gets a 1px grey ring so the black dot stays visible.
 
-**The Value Colour Rule.** Each value owns one colour, everywhere it appears: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone. The colour fills its tile, sets its name on the dark ground (Solidarity uses its lighter ink, see Pantone), and underlines its phrase in the Initiatives statement. A tile's doodle keeps a black line and a paper accent. Never swap or reuse a value colour for a different value. Care's orange tile is a value field, not an action: on a page with the Care tile, the orange pill is still the only orange action.
+**The Value Colour Rule.** Each value owns one colour, everywhere it appears: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone. The colour fills its tile, sets its name on the dark ground (Solidarity uses its lighter ink, see Pantone), and underlines its phrase in the Initiatives statement. A tile's drawing keeps a black pen and a paper light; on the night ground the value's colour is the light that spills. Never swap or reuse a value colour for a different value. Care's orange tile is a value field, not an action: on a page with the Care tile, the orange pill is still the only orange action.
 
 ## Typography
 
@@ -278,11 +278,11 @@ There is one shared column. It is max 1536px wide, centred, with 16px gutters (3
 
 - **Navbar:** sticky at the top, #111, 101px tall once stuck at `lg` (with a 64px top margin before sticking).
 - **Split page header** (job-boards, values, initiatives): on the dark ground, the H1 sits left and the lede sits right, bottom-aligned from `lg`, in a column one charter tile wide (the second of two equal columns after an 11rem label column, 14rem from `xl`). So the lede lines up with the charter's second tile and the value rows' text. Below `lg` they stack. This lets the sheet below start inside the first viewport. Values and initiatives share one `SplitHeader` component; the job-boards page still carries its own copy of the layout at a smaller H1 scale (see Typography).
-- **Charter** (values): a dark inset card (`bg-black-light`, About's side padding and stepped radius, no breakout) holding the four value tiles as two rows of two, under the pairs sentence. From `lg` each row has a label column (11rem, 14rem from `xl`) beside a two-up tile grid with 12px gaps (20px from `md`). Tiles are at least 19rem tall (22rem from `sm`, 24rem from `md`, 25rem from `xl`). There is no community row and no Open Peeps lineup.
-- **Value rows** (values): on the night ground, each group gets an Inter headline, then one row per value with no stations, dashed lines or hairlines. Each row has the charter's side padding and stepped radius, and 40px of vertical padding (56px from `md`, 64px at `xl`). From `lg` the name, tagline and tile figure hang from the first tile's left edge, and the prose from the second's. The prose has no max width in that column, so its measure grows with the screen (about 340px at 1024px wide, 440px at 1280px), and is capped at 38rem below `lg`. A row that a tile's link points at takes a #1D1D1D card that fades in over 0.7s.
+- **Charter** (values): a dark inset card (`bg-black-light`, About's side padding and stepped radius, no breakout) holding the four value tiles as two rows of two, under the pairs sentence. From `lg` each row has a label column (11rem, 14rem from `xl`) beside a two-up tile grid with 12px gaps (20px from `md`). Tiles are at least 19rem tall (22rem from `sm`, 24rem from `md`, 25rem from `xl`). There is no community row.
+- **Value rows** (values): on the night ground, each group gets an Inter headline, then one row per value with no stations, dashed lines or hairlines. Each row has the charter's side padding and stepped radius, and 40px of vertical padding (56px from `md`, 64px at `xl`). From `lg` the name, tagline and window figure hang from the first tile's left edge, and the prose from the second's. The prose has no max width in that column, so its measure grows with the screen (about 340px at 1024px wide, 440px at 1280px), and is capped at 38rem below `lg`. A row that a tile's link points at takes a #1D1D1D card that fades in over 0.7s.
 - **Homepage values section:** a dark inset card between Why and About, the same width and radius as the About card, inset with no breakout. From `xl` it has two columns. At the left sit the ringed headline, the bold lead (max 26rem), the two-line orange pill ("Read / our values") and the underlined "Explore our initiatives" link. At the right, the four values sit as a two-by-two register, each pair's names in a two-column grid from `sm`. Each name is ClashDisplay semibold, 36px (40px from `xl`), in the value's ink, and its 2px underline draws in on hover or focus over 0.5s. Under each name sits the value's text in Ash, 16px. There are no dots. On a phone the pairs stack, with 24px from each pair's label to its names, 36px between names and 88px between the pairs.
 - **Doors** (initiatives): under a left-aligned ringed headline, two colour cards side by side from `md`, 12px apart (20px from `md`), at least 18rem tall (22rem from `md`). From `md` the two cards share their rows through subgrid, so the questions, sublines and actions line up across them.
-- **Focus sheet** (initiatives): a paper sheet that breaks out to the column edge, on the same two-column grid as the split header from `lg`. The heading sits at the top left, the focus name and its text at the bottom left, and the yellow card with the two people, as tall as the sheet, at the right.
+- **Focus sheet** (initiatives): a paper sheet that breaks out to the column edge, on the same two-column grid as the split header from `lg`. The heading sits at the top left, the focus name and its text at the bottom left, and the hospital at night, drawn on the paper, as tall as the sheet, at the right.
 - **Sticky toolbar:** from `lg`, a filter-and-search toolbar on the light sheet sticks at `top: 101px`, just under the stuck navbar. It uses the same break-out recipe as the sheet, so its paper background spans the sheet edge to edge.
 - **Dense table:** one row per item. Headers are Inter bold 14px over a 2px black rule, and rows are separated by 1px black/10% hairlines with 20px vertical padding. Below `md`, each row becomes a two-column grid: name and kind on top, then the note, then the host. The header is hidden visually but kept for screen readers.
 - **Closing section:** centred on the dark ground with generous margins (96–128px above, 80–112px below). A headline with one encircled word, a ≤42rem lede, then the orange pill.
@@ -300,19 +300,19 @@ The system is flat. Depth comes from the two grounds, from panels overlapping (h
 - **Floating nav hairline** (`box-shadow: 0 1px 0 rgb(248 248 248 / 0.08)`): Appears once the page has scrolled and the nav floats over the content. It shows state and isn't used as decoration.
 
 ### Named Rules
-**The Flat At Rest Rule.** Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar and the floating nav do. Hover is shown with scale, colour fill, the pointer tilt and highlight on cards, or a small nudge of an arrow or doodle.
+**The Flat At Rest Rule.** Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar and the floating nav do. Hover is shown with scale, colour fill, the pointer tilt and highlight on cards, or a small nudge of an arrow or a drawing's light.
 
 ## Shapes
 
 - **Pills** (fully rounded): Every button and filter, including the big CTAs, the nav Contact outline, the kind filters, and the Thanks-page back button.
 - **Sheets** (12px → 16px → 24px, stepping up at `sm` and `lg`): The light sheet and the dark inset cards.
 - **Cards** (16px): Square-aspect feature cards and team photos.
-- **Colour fields** (16px → 24px from `lg`): value tiles, door cards and the Initiatives focus card. They clip their illustration.
+- **Colour fields** (16px → 24px from `lg`): value tiles and door cards. A tile clips its illustration.
 - **Arrow circles** (44px, fully round): a 2px `currentColor` outline on value tiles, a solid black disc on door cards, each holding a 20px SVG arrow.
-- **Circles:** 10px kind dots, and the encircled-word ring (1px, 2px from `md`) drawn as a fully rounded orange outline covering the lower ~62% of the word.
+- **Circles:** 10px kind dots, and the encircled-word ring: a hand-drawn orange pen loop around the word, 2px wide (1.5px below `md`). See Components.
 - **Fields** have no radius and no box, only a 2px bottom rule.
 - **Borders** are 2px black on the light sheet (pills, field rule, table header rule), 2px orange for the nav Contact, 1px black/10% for row hairlines on paper.
-- **Drawn line:** the Initiatives heartbeat is the one drawn line on the surfaces: a 4px orange stroke with a 10px dash and 9px gap, round-capped and non-scaling, revealed by `data-draw`.
+- **Drawn line:** the hospital's heartbeat is the one orange line on the surfaces: a solid 4-unit stroke in the drawing's own scale, square at its two ends, drawn in once by `data-draw`, with a bolder short segment that travels along it (see Illustrations).
 
 ## Motion
 
@@ -345,15 +345,18 @@ The engine in `src/scripts/motion/engine.ts` reads these:
 - `data-split-intro`: plays the split in the page intro instead of on scroll. No markup uses it yet.
 - `data-reveal="up|fade|clip|scale"`, with `data-delay`: one element reveals on scroll (1.0–1.4s, `expo.out`).
 - `data-stagger`: the children of a grid reveal one after another, 60ms apart.
-- `data-pop`: unused. No markup sets it now, but the engine still reads it: a mark inside a reveal or stagger grows from 60% to full size as its container plays (0.8s, 0.2s delay, 60ms apart).
-- `data-draw` (on an `<svg>`): each `path.draw[pathLength]` draws in once, when the figure's top reaches 80% of the viewport (1.2s, `expo.out`, 120ms apart). On the surfaces only the Initiatives heartbeat uses it. The Why arrow's own `path[data-draw]` is scrubbed by `home.ts` instead.
+- `data-pop`: a mark inside a reveal or stagger grows from 60% to full size as its container plays (0.8s, 0.2s delay, 60ms apart). The hero and Why card icons use it, so each icon grows in with its card.
+- `data-draw` (on an `<svg>`): each `path.draw[pathLength]` draws in once, when the figure's top reaches 80% of the viewport (1.2s, `expo.out`, 120ms apart). On the surfaces only the hospital's heartbeat uses it. The Why arrow's own `path[data-draw]` is scrubbed by `home.ts` instead.
+- `data-illo` (on an `<svg>`, its value the piece's name): the drawing draws itself in, then lives at rest, in `illos.ts`, which the values and initiatives pages import. The rules are under Illustrations.
 - `data-parallax="0.15"`: the element drifts through its pass by up to that fraction of the viewport height in each direction. Put it on a wrapper.
 - `data-tilt`: a pointer tilt of up to 2.5 degrees, with a light that follows the pointer. `data-tilt="glow"` is the light alone. Skipped on touch.
 - `data-roll`: letter roll on a text link or button (CSS, 0.5s). The engine adds an `aria-hidden` second row.
 - `data-navbar` and `data-nav-static`: the floating nav hides on scroll down past 80px and returns on scroll up. The static flag, set on the job boards `<main>`, keeps it from hiding.
 - `data-logo`: the logo's star burst turns while the pointer or focus is on the logo.
 - `data-title`: the 3D word swing on a homepage H2, read by `home.ts` (see Homepage choreography). A ringed word inside it never wraps.
+- `data-ring` (on the `<svg>` inside an Encircled word): the word's pen loop draws itself as it comes into view, and again on pointer enter or focus. See Generative drawings.
 - `#lamp`: the lamp layer, moved through `--lamp-x` and `--lamp-y`.
+- `data-street` (on the `<svg>` of the night street behind the footer wordmark): `street.ts` lights and flickers its windows, and the street follows `--lamp-x`. See Generative drawings.
 
 ### Homepage choreography
 
@@ -361,12 +364,12 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 
 - **Intro.** One timeline that starts when the fonts are ready (600ms at most) and runs 1.3s at most. The wordmark's letters rise first (0.8s). The second line of the H1 rises from 0.3s, and the orange ring draws around its word from 0.6s. The two lede paragraphs fade up from 0.45s, the CTA pills settle in (up 24px, scale .96 to 1) from 0.5s, and the nav fades in last.
 - **Hero window.** The sheet closes to an inset window: 14% of its height from the top, 6% of its width at each side and 10% of its height at the bottom. On desktop each inset stops where the content starts, so the heading, lede and cards are never clipped. Below 640px it closes to 6% at the top and sides and 4% at the bottom, with 24px corners (40px above). It opens to the sheet's own corner radius. The scrub runs from the sheet's top reaching 90% of the viewport to its top reaching 35%. The CTA pills sit outside the sheet, so they are never clipped.
-- **3D titles.** The five section titles (hero, Why, About, the values section and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring fades in last.
+- **3D titles.** The five section titles (hero, Why, About, the values section and the footer contact) split into words that start turned in 3D (`translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg)`) and settle with `power2.inOut`, 0.02s apart. They play as the heading comes up from the bottom of the viewport and reverse when it scrolls back past. The Encircled ring draws last, starting 0.2s before the last word lands.
 - **Cards.** The service cards and the Why cards are `data-stagger` grids. Each card rises 32px and scales up from .96 over 1s, 60ms apart, once the grid's top reaches 80% of the viewport. Each card is also `data-tilt`.
 - **Why arrow.** The arrow is inline SVG. Its white mask path (`data-draw`) sweeps along the dashed arrow as the arrow scrolls from 80% to 40% of the viewport, and the head (`data-head`) fades in last.
 - **About.** The inset card rises (`data-reveal="up"`), the paragraphs split into lines, and the benefits rise one after another. The two photos drift in opposite directions on their own wrappers (`data-parallax` 0.08 and -0.08). The photo pair (`data-story`) tilts up to 10 degrees toward the pointer over 0.3s (`power1.inOut`) and levels again on leave. Touch skips the tilt.
 - **CTA pills.** `data-tilt="glow"` adds the pointer light with no rotation. The press (`:active`) scales the pill to 97%, on top of the existing 105% hover.
-- **Footer.** The email's local part and domain each roll on hover and focus (`data-roll`). Each contact field's bottom rule wipes in from the left, one after another (1.2s, 80ms apart), once the form's top reaches 80% of the viewport (`data-rule`). The contact sheet has the hero sheet's rounded corners (12, 16 and 24px) on both ends, and on every page a closing band below it on the dark ground sets the H1's wordmark at `clamp(2rem, 11vw, 12rem)`, centred and `aria-hidden`. Its letters rise through a mask as the band comes into view (`data-split="chars"`, 0.9s, `expo.out`, 0.35s across all letters).
+- **Footer.** The email's local part and domain each roll on hover and focus (`data-roll`). Each contact field's bottom rule wipes in from the left, one after another (1.2s, 80ms apart), once the form's top reaches 80% of the viewport (`data-rule`). The contact sheet has the hero sheet's rounded corners (12, 16 and 24px) on both ends, and on every page a closing band below it on the dark ground sets the H1's wordmark at `clamp(2rem, 11vw, 12rem)`, centred and `aria-hidden`. Its letters rise through a mask as the band comes into view (`data-split="chars"`, 0.9s, `expo.out`, 0.35s across all letters). The night street lies behind the wordmark (see Generative drawings).
 
 ### Other pages
 
@@ -375,23 +378,33 @@ Home only, in `src/scripts/motion/home.ts`, with the hooks `data-intro`, `data-w
 
 ### Values and initiatives
 
-Both pages' headers split their H1 into lines and rise their lede 0.15s later. The homepage values card rises into view. Its ringed H2 takes the 3D word swing, the lead rises 0.1s later, and each pair's names rise one after another, 60ms apart. On the values page, the charter's pairs sentence splits into lines, the card rises, and its tiles rise in turn. Each tile tilts toward the pointer (`data-tilt`) and has no CSS hover scale, so GSAP owns its transform. Each value row rises as it passes through the viewport. The interchange heading splits into words, its copy rises 0.1s later, and its pill glows under the pointer without tilting (`data-tilt="glow"`). On the initiatives page, the values statement rises, and each phrase has a 3px underline in its value's ink, drawn without skipping descenders (`text-decoration-skip-ink: none`). On hover or focus the underline rises into a band of that ink over 0.5s, and the text goes black on the band. The focus sheet rises, its heading splits into lines, the two people scale in, and the heartbeat draws in once. The two door cards stagger in and tilt, and a focused door link gives its card the same ring and highlight (`:has(:focus-visible)`). A link to a row on the same page, such as a charter tile, keeps its Back entry, glides there with Lenis (honouring the row's scroll margin), and the row takes a `:target` tint (`#1D1D1D`) that fades in over 0.7s. Back restores the previous place without a glide, and skip links stay native. A link from another page, such as the homepage's `/values/#openness`, lands under the curtain, and the row fades in place rather than rising.
+Both pages' headers split their H1 into lines and rise their lede 0.15s later. The homepage values card rises into view. Its ringed H2 takes the 3D word swing, the lead rises 0.1s later, and each pair's names rise one after another, 60ms apart. On the values page, the charter's pairs sentence splits into lines, the card rises, and its tiles rise in turn. Each tile tilts toward the pointer (`data-tilt`) and has no CSS hover scale, so GSAP owns its transform; its drawing, a child of the tile, moves only through its own inner groups. Each value row rises as it passes through the viewport. The interchange heading splits into words, its copy rises 0.1s later, and its pill glows under the pointer without tilting (`data-tilt="glow"`). On the initiatives page, the values statement rises, and each phrase has a 3px underline in its value's ink, drawn without skipping descenders (`text-decoration-skip-ink: none`). On hover or focus the underline rises into a band of that ink over 0.5s, and the text goes black on the band. The focus sheet rises, its heading splits into lines, and the hospital draws itself in, its heartbeat once. The two door cards stagger in and tilt, and a focused door link gives its card the same ring and highlight (`:has(:focus-visible)`). A link to a row on the same page, such as a charter tile, keeps its Back entry, glides there with Lenis (honouring the row's scroll margin), and the row takes a `:target` tint (`#1D1D1D`) that fades in over 0.7s. Back restores the previous place without a glide, and skip links stay native. A link from another page, such as the homepage's `/values/#openness`, lands under the curtain, and the row fades in place rather than rising.
 
 ### Page transitions
 
 Navigation uses Astro view transitions with a paper curtain (`#curtain`, a #F8F8F8 sheet with 24px top corners, `aria-hidden`): it slides up over the page while the next one loads (0.8s, `expo.inOut`), the engine is torn down and rebuilt under it, then it lifts off (0.9s, `expo.inOut`) and the page intro starts at 55% of that lift. Back and forward and reduced motion swap at once with no sheet, the Netlify form post keeps a full browser load, and a link to the page you are on, such as the CTA pills (`#contact`, with the source in `data-from`) or the nav's `/?from=nav#contact`, does not swap: it updates history and glides to the hash. The lamp and the curtain persist across swaps, and links prefetch on hover.
 
+### Generative drawings
+
+Two drawings are generated by code rather than stored: the hand-circled word and the night street. `src/lib/gen.ts` is the toolkit: a seeded generator (an FNV-1a hash of the seed text, then xorshift32), triangular draws, 1D value noise, jitter, a hand-drawn `loop` (with `start` and `power` options), a pen brush (`penD`) and Catmull-Rom curves (`smoothD`, `polylineD`). No stored art: the same seed draws the same picture.
+
+- **Ring.** `Encircled.astro` builds each word's loop from the word, so the same word always gets the same ring, and EN and FR differ. The engine's `ring()` draws it once, as its heading comes into view, 0.35s after the words start to rise (0.6s, `expo.out`). Pointer enter or focus inside the heading redraws it (0.8s) once it is drawn; the pointer does nothing on touch. The home H1 draws on the intro at 0.6s, and the title rings draw 0.2s before their last word lands. Without JS, under reduced motion and in the social card the ring is drawn whole.
+- **Street.** `NightStreet.astro` draws the skyline behind the footer wordmark once at build time, seeded by the page path, so each page has its own: 11 to 16 buildings, 3 to 9 floors, 10 by 14 windows with 12 to 18% lit (yellow, one or two orange), rooftop details, a 1px ashgray pen at 18%, and at most 208 elements. `street.ts` runs one ticker callback while the band is on screen: a slow flicker, the lamp warming the windows near it (within 12% of the viewport width at most; touch follows the scroll), and one window changing every 20 to 40s, written in 0.05 steps. Static under reduced motion and without JS.
+- **Icons.** The hero and Why card icons are stored filled SVG shapes, and `data-pop` grows each from 60% to full size with its card.
+
+The ring and the street are not part of the Windows at night series (see Illustrations), so that series' drawing rules do not apply to them: the ring is revealed by a mask and a dash offset, as drawn lines are, and the street has its own 1px pen.
+
 ### Reduced motion and no JS
 
-`html.motion` is set before first paint by an inline script in `<head>`, and only when JS runs and reduced motion is off. Everything that starts hidden is hidden by CSS gated on that class, by opacity, so without JS or under reduced motion the page is complete and still. Under reduced motion the engine skips its motion: no Lenis, scrubs, intro, tilts, logo spin, letter roll or lamp motion. The lamp rests as a still glow at 50% across and 40% down, and hover colours, underlines and the CTA scale stay. A failsafe covers an engine that never boots: after 4s the inline script sets `data-engine="off"` and removes `motion`, so content cannot stay hidden. It also covers a homepage chunk that fails alone: `home.ts` sets `data-home` on load, and a page with `[data-intro]` but no `data-home` after 4s loses `motion` too. The nav's transparent top state (the lamp shows through the bar) holds in every mode that has JS, reduced motion included, since the engine toggles `is-floating` in all of them. Without JS, or once the failsafe has switched the engine off, the bar stays solid.
+`html.motion` is set before first paint by an inline script in `<head>`, and only when JS runs and reduced motion is off. Everything that starts hidden is hidden by CSS gated on that class, by opacity, so without JS or under reduced motion the page is complete and still. Under reduced motion the engine skips its motion: no Lenis, scrubs, intro, tilts, logo spin, letter roll or lamp motion. The lamp rests as a still glow at 50% across and 40% down, and hover colours, underlines and the CTA scale stay. A failsafe covers an engine that never boots: after 4s the inline script sets `data-engine="off"` and removes `motion`, so content cannot stay hidden. It also covers a homepage chunk that fails alone: `home.ts` sets `data-home` on load, and a page with `[data-intro]` but no `data-home` after 4s loses `motion` too. The illustrations follow the same gate: with motion off a drawing shows whole (frames drawn, light on, nothing moving), and a drawing whose script fails shows itself whole. The ring and the street follow the same gate: the ring shows whole, and the street keeps its static drawing. The nav's transparent top state (the lamp shows through the bar) holds in every mode that has JS, reduced motion included, since the engine toggles `is-floating` in all of them. Without JS, or once the failsafe has switched the engine off, the bar stays solid.
 
 ### Accessibility
 
-- Hover effects also run on focus: the card highlight, the letter roll, the logo spin and the CTA scale. The focus ring itself does not change.
+- Hover effects also run on focus: the card highlight, the letter roll, the logo spin, the ring's redraw and the CTA scale. The focus ring itself does not change.
 - The cursor is the native one. There is no custom cursor.
 - The motion's hover rules sit inside `@media (hover: hover)`, and so do Tailwind's `hover:` utilities (`future.hoverOnlyWhenSupported`), so a tap never leaves a hover state stuck. Touch devices get no tilt, and the lamp follows the scroll.
 - Hidden states use opacity, never `visibility` or `display`. A link that is still hidden stays in the tab order, and focus on it plays its reveal at once (and so for the form's field rules and the job-board rows), even when it is already on screen below the trigger line, so its ring is never invisible. Whatever sits on the first screen at load is revealed at load.
-- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row and the Why arrow. Split headings keep their text as an accessible name.
+- Decorative layers are `aria-hidden`: the lamp, the letter roll's second row, the Why arrow, the ring's pen and the night street. Split headings keep their text as an accessible name.
 - The mobile menu keeps Escape and the scroll lock (Lenis stops while it is open), and the nav never hides while the menu is open or focus is inside it.
 
 ### Named Rules
@@ -417,7 +430,7 @@ Big pill buttons are made to be pressed with the whole hand.
 ### Cards / Containers
 - **Light sheet:** paper ground, black text, 12→16→24px corners, bleeds to the column edges. No border, no shadow.
 - **Dark inset card:** #1D1D1D, grey text, 12 → 16 → 24px corners (stepping at `sm` and `lg`), About's padding (40px top, 24px sides, 32px from `md`). Inset in the column, never broken out. The About, charter, homepage values, legal, thanks and 404 cards all use it.
-- **Feature cards:** square, 16px corners, a #ECECEC fill (or orange, yellow, or purple for highlighted cards), an SVG line icon at 20–24px, and a bold Inter label.
+- **Feature cards:** square, 16px corners, a #ECECEC fill (or orange, yellow, or purple for highlighted cards), a filled SVG icon at 20–24px that grows in with the card (`data-pop`), and a bold Inter label.
 
 ### Inputs / Fields
 - **Style:** a form-field line with a transparent or paper background, no side or top border, a 2px black bottom rule, no horizontal padding, and 16px text. The contact form floats the label up from the placeholder position. The job-board search uses a fixed bold 14px label above the field, black/60 placeholder, and an orange caret.
@@ -430,7 +443,7 @@ Big pill buttons are made to be pressed with the whole hand.
 - **Footer:** Values and Initiatives join the centred small links (above Job boards) that underline on hover.
 
 ### Encircled Word (signature)
-A single word in a heading is wrapped in a fully rounded orange outline, with 6px horizontal padding and the word set bold. The job-boards content model stores each heading as `before / encircled / after`, so the circled word is chosen in copy and not hard-coded.
+A single word in a heading is ringed by a hand-drawn orange pen loop, with 6px horizontal padding and the word set bold. The loop is drawn from the word itself (see Generative drawings), 2px wide (1.5px below `md`) at any size. In the social card (`scripts/og-image.mjs`) the pen is drawn whole and its width scales with the type. The job-boards content model stores each heading as `before / encircled / after`, so the circled word is chosen in copy and not hard-coded.
 
 ### Comparison Table Row (job-boards)
 - The name is ClashDisplay 600 at 18–20px. It underlines on hover (4px offset, 2px decoration) and dims to black/60 once `:visited`, so the reader sees where they stopped.
@@ -443,15 +456,15 @@ A whole value, as one fat colour field you can press. The tiles sit in the chart
 - **Card:** the charter is a dark inset card (`bg-black-light`, About's side padding, 12 → 16 → 24px corners, no breakout) holding the four tiles as two rows of two. There is no community row.
 - **Field:** the value's colour fill (Value Colour Rule), 16px → 24px corners (from `lg`), 24px → 32px → 40px padding. Labels are #111, pure white on pantone.
 - **Content:** the value name in ClashDisplay 600 (36px, 32px at `sm`, 40px from `lg`, and fluid from 48px to 60px at `xl`), an Inter bold tagline at 18px (20px from `md`, max 14rem, 16rem from `md`, balanced), and a 44px outlined arrow-down circle pinned to the bottom-left. The whole tile is the link and jumps to the value's row.
-- **Doodle:** the value's CC0 doodle in black line with a paper accent, at the bottom-right, 52% of the tile's width (max 21rem) and nudged 4% past the corner so the field clips it.
-- **Hover:** the tile tilts toward the pointer (`data-tilt`: up to 2.5 degrees at 97% size over 0.3s, with a soft light under the pointer, behind the text), with no CSS scale. The arrow drops 4px, and the doodle lifts 1% and tilts −2° (300ms ease-out). Focus shows the same light and a 2px orange outline, 2px offset.
+- **Illustration:** the value's window at night (`tile` context: black pen, paper light), at the bottom-right, 52% of the tile's width (max 21rem) and nudged 4% past the corner so the field clips it. It draws itself in when it comes into view and then breathes.
+- **Hover:** the tile tilts toward the pointer (`data-tilt`: up to 2.5 degrees at 97% size over 0.3s, with a soft light under the pointer, behind the text), with no CSS scale. The arrow drops 4px, and the drawing's light holds at full while its swell and its moving parts double, eased over about half a second. Focus shows the same light and a 2px orange outline, 2px offset, and the same drawing.
 
 ### Value Row
 A value as text on the night ground: a ClashDisplay name in the value's ink, an Inter bold tagline and Ash prose. There are no stations, dashed lines or hairlines.
 - **Name:** ClashDisplay 600 at line-height 1: 36px, 48px from `md`, 64px at `xl`, 72px at `2xl`. Solidarity uses its lighter ink.
 - **Tagline:** Inter bold, 20px (24px from `md`), balanced, max 22rem.
 - **Prose:** Ash at 16px and 1.6875 line-height, in the third grid column from `lg` (see Layout).
-- **Figure:** from `lg`, the value's tile in small (18rem wide, 25:18, the same crop) sits 40px under the tagline, on its own colour, so the doodle's black line stays visible.
+- **Figure:** from `lg`, the value's window at night in small (18rem wide, 25:18, `night` context) sits 40px under the tagline, in a rounded box one night step up (#1D1D1D, #111 when the row is targeted) that clips what spills over its edge, so it reads as a window into the night.
 - **Target:** a row that a tile's link points at takes a #1D1D1D card, which fades in over 0.7s.
 
 ### Interchange
@@ -475,9 +488,16 @@ The 404 page is a dark inset card in the column, with About's radius and side pa
 - **Motion:** the numeral splits into characters, the copy rises 0.15s after the card, and the pill has no reveal of its own.
 
 ### Illustrations
-- **Sources:** Open Doodles (one per value, on its tile) and Open Peeps (the two-person Initiatives scene), both by Pablo Stanley, CC0 1.0.
-- **Colour:** line and solid shapes in #111; one accent colour, either paper (#F8F8F8) when the drawing sits on a colour field, or the value's colour when it sits on the paper sheet. No other colours.
-- **Delivery:** self-hosted SVG in `src/assets/illustrations/` (the CSP allows only same-origin images), each file opening with a provenance comment naming the source drawing, author and licence. Illustrations are decorative (`alt=""`); they never stand for a real partner or project.
+The "Windows at night" series: one drawing per value and one for the Initiatives focus, in one hand. Each is a window at night with a small scene that says the value, and light tells it: what is lit, where it spills, who shares it. Drawn for GoodEWorkers in 2026, as SVG by hand.
+- **Subjects:** Openness, a window thrown wide on bare ground, pages lifting into the night and the light pouring out under the sill. Autonomy, one window lit at an hour of its own (lamp, plant, clock, moon) between two that sleep. Care, a mug handed from one window to the next across one shared pool of light. Solidarity, a facade whose windows light up one after another, the cross window last and brightest. Health, the hospital as a dark silhouette with lit windows and a heartbeat across the sky, the one orange line.
+- **Drawing rules:** viewBox 400x300 (the hospital 800x400), a 4-unit pen with round caps and joins, no fill but light, flat: no gradient, filter, shadow, clip path, mask, text or raster. Under 6 KB and 60 elements each. The window (120x150, radius 14), the sill and the margin (every stroke 12 units inside the box, but for the light under Openness) are shared by all five. Frames stay straight; the hand shows in scribbles, steam, stems, hands and the heartbeat.
+- **Layers, as classes (a page shows each value twice, so no drawing carries an id):** `.frame` (every path is one stroke with `pathLength="1"`, in reveal order), `.light` (the spill, the panes and `.stars`; `.idle-glow` is the spill), `.idle-*` (parts that move at rest), `.late` (fades in with the light), `.pulse` with `.draw` (the heartbeat's line) and `.beat` (its travelling segment).
+- **Grounds, as custom properties set by the component's `context` prop (`illustration.css`; each drawing carries a default for every property):** `tile`, on a value's colour: `--ink` #111, `--light` #F8F8F8, `--spill` paper at 60%, `--dim` .75. `night`, on #111 or #1D1D1D: `--ink` #ECECEC, `--light` #F8F8F8, `--dim` .6, and the value's colour spills (the default). `paper`, the hospital on the sheet: `--light` yellow, `--spill` yellow at 55%, `--star` transparent, `--dim` .6. Over a lit shape the pen is #111 on every ground, and `--dim` is the only opacity a line has (unlit things).
+- **Where each lives:** inline SVG components in `src/components/Illustrations/` on one `Illustration` root (`Openness`, `Autonomy`, `Care`, `Solidarity`, `Health`; `ValueIllustration` picks one by value id). The charter tile: bottom right, `tile` context. The value row, from `lg`: a 288x207 box in `night` context. The focus sheet: the hospital on the paper itself, `paper` context, the width of its column. The homepage values section has no illustration.
+- **Reveal (`data-illo`):** when the drawing's top reaches 85% of the viewport (at load if it is on the first screen, held for the page intro behind a curtain) the `.frame` paths draw in document order, so the window frame comes first: `stroke-dashoffset` 1 to 0, 1.1s, `expo.out`, 0.04s apart. `.light` and the `.late` parts fade in over 0.6s (`power3.out`), from 70% of the draw. Solidarity's windows then switch on from the bottom, 1.2s each and 3s in all. Once only. Hidden states are in `illustration.css`, gated on `html.motion`.
+- **Life at rest:** from the end of the reveal, one `gsap.ticker` callback per drawing that is on screen, added and removed by a ScrollTrigger and idle while the tab is hidden. Every motion is a function of the ticker's time, eases in over 2s, and is written through `gsap.quickSetter` only when its value, rounded to what the eye can tell apart, has changed (under one write per frame in practice, three at most). The spill breathes (opacity 0.9 to 1 and a 2.5% swell, 4 to 6s; the phase comes from the piece's name, so a tile and the row of one value breathe together). Openness: the pages lift 2 to 6 units and tilt up to 2 degrees, 5s. Autonomy: the moon drifts 2 units over 20s, the leaf sways 2 degrees about its stem in 4s. Care: the two curls of steam rise 2 units and thin to 60%, 3s, half a cycle apart. Solidarity: one window blinks off and on (0.8s) every 25 to 40s. Health: a bold short segment leaves the heartbeat's left end every 2.4s and crosses in two thirds of that, and one window flickers twice every 20s.
+- **Hover and focus (tiles):** pointing at the tile, or keyboard focus on it, holds the light at full and doubles the swell and the moving parts, eased; leaving eases them back. Touch has the same life at rest and no hover.
+- **Accessibility:** decorative: `aria-hidden`, `focusable="false"`, no role, no `<img>`.
 
 ## Do's and Don'ts
 
@@ -494,8 +514,8 @@ The 404 page is a dark inset card in the column, with About's radius and side pa
 - **Do** gate every hidden state on `html.motion`, and hide it with opacity, never `visibility`.
 - **Do** give each value its own colour everywhere it appears, and keep the four roles fixed.
 - **Do** set labels on a pantone fill in pure white, and on every other value fill in #111.
-- **Do** reveal drawn lines with a masked `path.draw` inside an `svg[data-draw]`.
-- **Do** source new illustrations from Open Doodles or Open Peeps, recolour them to #111 line plus one token accent, self-host them, and put a provenance comment in the file.
+- **Do** reveal a drawn line with `path.draw[pathLength]` inside an `svg[data-draw]`, and a whole drawing with `svg[data-illo]`.
+- **Do** draw a new illustration in the Windows at night series: the shared window, the 4-unit pen, the layer classes and the three grounds, inline in a component that says it was drawn for GoodEWorkers.
 
 ### Don't:
 - **Don't** add resting shadows. The only shadows in the system are the state hairlines on a stuck toolbar and the floating nav.
@@ -503,9 +523,9 @@ The 404 page is a dark inset card in the column, with About's radius and side pa
 - **Don't** set small text in white on orange. Below large-bold size, labels on orange are black.
 - **Don't** use Tailwind's stock palette (gray-500/600/900, indigo-600) or stock UI recipes. Use the brand tokens and black alpha steps.
 - **Don't** add a second horizontal padding layer inside the shared column.
-- **Don't** use glyph or emoji icons. Icons are inline SVG line icons from `src/assets/icons/`, drawn in `currentColor`.
+- **Don't** use glyph or emoji icons. Icons are inline SVG from `src/assets/icons/`, drawn in `currentColor`: line arrows, and filled shapes on the feature cards.
 - **Don't** add small uppercase labels above headings. The system has no eyebrow or kicker device.
 - **Don't** put a CSS `transform` on an element GSAP animates. Put Tailwind offsets on a wrapper, as the About photos do.
 - **Don't** add a second signature moment. The hero window and the lamp are the two.
-- **Don't** hotlink or rasterise illustrations, or mix in drawings from another illustration style.
+- **Don't** hotlink or rasterise illustrations, add a gradient, filter or shadow to one, or mix in drawings from another illustration style.
 - **Don't** colour prose or taglines with a value colour. Values show their colour as fills, as the ink of their names, and as underlines.

@@ -177,9 +177,10 @@ const structuredData = {
          html.motion, so content stays visible without JS and under reduced motion.
          Failsafe: if the engine never boots (a stale hashed chunk after a deploy, a blocked
          request) those rules would keep the page blank. boot() sets data-engine="1"; without it
-         after 4 s, motion is switched off for good (data-engine="off", which boot() then honours). A homepage whose own
-         chunk failed (home.ts sets data-home) loses motion the same way. -->
-    <script is:inline>(function(h){h.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');setTimeout(function(){if(!h.dataset.engine){h.dataset.engine='off';h.classList.remove('motion')}else if(!h.dataset.home&&document.querySelector('[data-intro]'))h.classList.remove('motion')},4000)})(document.documentElement)</script>
+         after 4 s, motion is switched off for good (data-engine="off", which boot() then honours). A page whose own
+         chunk failed (home.ts sets data-home, illos.ts data-illos) loses motion the same way. The timer is armed once per full load:
+         a chunk that fails on a later client-side navigation is not caught. -->
+    <script is:inline>(function(h){h.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');setTimeout(function(){if(!h.dataset.engine){h.dataset.engine='off';h.classList.remove('motion')}else if(!h.dataset.home&&document.querySelector('[data-intro]')||!h.dataset.illos&&document.querySelector('[data-illo]'))h.classList.remove('motion')},4000)})(document.documentElement)</script>
     <!-- Client-side navigation. The page change is the curtain in motion/transitions.ts, not the browser's
          cross-fade (transition:animate="none" on <html>). fallback="none": a browser without the View
          Transitions API keeps plain page loads, and the engine boots on each of them. -->

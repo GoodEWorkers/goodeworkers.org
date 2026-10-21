@@ -39,11 +39,11 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
      so without JS, under reduced motion, or once the failsafe drops html.motion, everything is simply there. */
 
   /* Hidden until home.ts builds the intro and the 3D titles. By opacity, not visibility: the pills (and any link) stay
-     reachable with Tab. The words and the ring are the parts of a title that arrive last; the nav is the last of the intro. */
+     reachable with Tab. The words are the part of a title that arrives last (its ring is undrawn until then, see global.css);
+     the nav is the last of the intro. */
   .motion [data-intro],
   .motion [data-title],
   .motion [data-title] div,
-  .motion [data-title] span.relative > span:last-child:empty,
   .motion [data-navbar] {
     opacity: 0;
   }

@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SplitHeader from '../Common/SplitHeader.astro';
 import CircledText from '../JobBoards/CircledText.astro';
 import Icon from '../icons/Icon.astro';
-import health from '../../assets/illustrations/health.svg';
+import Health from '../Illustrations/Health.astro';
 import { typeset } from '../Common/typeset';
 import { bandLink, valueStyles } from '../Values/valueStyles';
 import { getLangFromPath, routes } from '../../i18n/routes';
@@ -25,10 +25,6 @@ const doors = help.doors.map((door, index) => ({
   fill: index === 0 ? 'bg-yellow' : 'bg-purple',
   from: index === 0 ? 'initiatives-health' : 'initiatives-skills',
 }));
-
-// A heartbeat drawn in the dashed line of the values page, spiking in the gap
-// between the two people.
-const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
 ---
 
 <BaseLayout
@@ -64,8 +60,8 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
       }
     </p>
 
-    <!-- The focus sheet, the page's lit window: its heading at the top left, the focus and its text at the bottom left,
-         and the yellow card with the two people as tall as the sheet. -->
+    <!-- The focus sheet, the page's lit window: its heading at the top left, the focus and its text at the bottom left, and
+         the hospital at night, drawn on the paper itself, as tall as the sheet. Its heartbeat is the page's one drawn line. -->
     <section
       aria-labelledby="focus-title"
       class="mt-14 md:mt-20 -mx-4 md:-mx-8 px-4 md:px-8 pt-8 md:pt-12 pb-8 md:pb-12 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl lg:grid lg:grid-cols-[minmax(0,1fr)_calc((100%-11rem-2.5rem)/2)] xl:grid-cols-[minmax(0,1fr)_calc((100%-14rem-2.5rem)/2)] lg:grid-rows-[auto_1fr] lg:gap-x-5"
@@ -80,48 +76,8 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
           {focus.paragraphs.map((paragraph, i) => <p data-reveal="up" data-delay={(i + 1) * 0.08}>{t(paragraph)}</p>)}
         </div>
       </div>
-      <div
-        class="relative mt-8 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 min-h-[20rem] lg:min-h-[28rem] overflow-hidden rounded-2xl lg:rounded-3xl bg-yellow flex items-end justify-center pt-12"
-      >
-        <!-- The heartbeat is set against the people (a share of their picture, not of the card), so it keeps
-             its place between their hands at any card height. -->
-        <div class="relative flex w-full justify-center">
-          <svg
-            viewBox="0 0 400 220"
-            preserveAspectRatio="none"
-            class="absolute inset-x-0 top-[12.5%] w-full h-[40%]"
-            aria-hidden="true"
-            data-draw
-          >
-            <defs>
-              <mask id="pulse-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="220">
-                <path d={pulse} pathLength="1" fill="none" stroke="#fff" stroke-width="14" class="draw" />
-              </mask>
-            </defs>
-            <path
-              d={pulse}
-              mask="url(#pulse-mask)"
-              fill="none"
-              stroke="#FD5E09"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-dasharray="10 9"
-              vector-effect="non-scaling-stroke"
-            />
-          </svg>
-          <!-- Open Peeps by Pablo Stanley (CC0): two people in conversation.
-               Decorative: nothing here stands for a real partner. -->
-          <img
-            src={health.src}
-            alt=""
-            width={health.width}
-            height={health.height}
-            loading="lazy"
-            class="relative w-[86%] max-w-md"
-            data-reveal="scale"
-          />
-        </div>
+      <div class="mt-8 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 flex items-end">
+        <Health context="paper" class="h-auto w-full" />
       </div>
     </section>
 
@@ -167,6 +123,10 @@ const pulse = 'M0 112 H182 L198 112 L212 52 L230 168 L246 82 L258 112 H400';
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  import '../../scripts/motion/illos.ts';
+</script>
 
 <style>
   /* The pointer highlight lights the card from behind its text, like the pills, so the arrow button and label stay crisp. */

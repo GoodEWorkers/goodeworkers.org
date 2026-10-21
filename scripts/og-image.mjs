@@ -18,7 +18,7 @@ const W = 1200, H = 630, SCALE = 2;
 // The header's own lg values, used to keep every ratio identical as type scales.
 const BASE_FONT = 72;   // lg:text-7xl
 const BASE_GAP = 48;    // lg:mt-12 between wordmark and tagline
-const BASE_BORDER = 2;  // md:border-2 on the Encircled outline
+const BASE_BORDER = 2;  // the Encircled pen's width at md and up
 
 // Leave margins; a social card is cropped and letterboxed by every platform.
 const MAX_INK_W = W * 0.86;
@@ -55,8 +55,9 @@ const measure = (fontSize) => page.evaluate((args) => {
   // scale the gap and the outline so their ratio to the type never changes
   const tagline = h1.querySelector(':scope > span');
   if (tagline) tagline.style.marginTop = `${BASE_GAP * k}px`;
-  const ring = h1.querySelector('span.relative > span:last-child');
-  if (ring) ring.style.borderWidth = `${BASE_BORDER * k}px`;
+  // the pen is an svg path whose vector-effect keeps it 2px at any size: scale it with the type instead
+  const pen = h1.querySelector('span.relative > span:last-child svg > path');
+  if (pen) pen.style.strokeWidth = `${BASE_BORDER * k}px`;
 
   const r = document.createRange();
   r.selectNodeContents(h1);

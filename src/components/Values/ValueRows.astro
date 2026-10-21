@@ -1,5 +1,6 @@
 ---
 import ExternalLink from '../ExternalLink.astro';
+import ValueIllustration from '../Illustrations/ValueIllustration.astro';
 import { typeset } from '../Common/typeset';
 import { getLangFromPath } from '../../i18n/routes';
 import { bandLink, valueStyles } from './valueStyles';
@@ -44,7 +45,7 @@ const groups = [
                 id={value.id}
                 aria-labelledby={`${value.id}-title`}
                 data-reveal="up"
-                class="px-6 md:px-8 py-10 md:py-14 xl:py-16 rounded-xl sm:rounded-2xl lg:rounded-3xl scroll-mt-24 lg:scroll-mt-32 target:bg-black-light transition-colors duration-700 ease-out lg:grid lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-5"
+                class="group px-6 md:px-8 py-10 md:py-14 xl:py-16 rounded-xl sm:rounded-2xl lg:rounded-3xl scroll-mt-24 lg:scroll-mt-32 target:bg-black-light transition-colors duration-700 ease-out lg:grid lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-5"
               >
                 <div class="lg:col-start-2">
                   <h3
@@ -55,20 +56,10 @@ const groups = [
                     {value.name}
                   </h3>
                   <p class="mt-3 md:mt-4 max-w-[22rem] text-xl md:text-2xl font-bold leading-snug text-balance">{t(value.tagline)}</p>
-                  <!-- The value's tile in small, the same crop (right and bottom bleed): it stands on the tile's own colour,
-                       since the doodle's black line would vanish on the night ground. -->
-                  <div
-                    class:list={['relative mt-10 hidden lg:block w-72 aspect-[25/18] overflow-hidden rounded-2xl', style.tile]}
-                    aria-hidden="true"
-                  >
-                    <img
-                      src={style.tileDoodle.src}
-                      alt=""
-                      width={style.tileDoodle.width}
-                      height={style.tileDoodle.height}
-                      loading="lazy"
-                      class="absolute bottom-0 right-0 w-[64%] max-h-[86%] object-contain object-right-bottom translate-x-[4%] translate-y-[4%]"
-                    />
+                  {/* The value's window at night in small, from lg. Its box is the night one step up, a window into it: it clips the light
+                       that pours off the bottom of Openness's drawing, and turns back to the ground's black when the row is targeted. */}
+                  <div class="mt-10 hidden lg:block w-72 aspect-[25/18] overflow-hidden rounded-2xl bg-black-light group-target:bg-black transition-colors duration-700 ease-out">
+                    <ValueIllustration value={value.id} context="night" class="block h-full w-full" />
                   </div>
                 </div>
                 <div class="mt-6 lg:mt-0 lg:col-start-3 max-w-[38rem] lg:max-w-none space-y-4 text-base leading-[1.6875] text-ashgray text-pretty">
