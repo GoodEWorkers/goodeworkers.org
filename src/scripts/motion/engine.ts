@@ -415,8 +415,13 @@ function split(el: HTMLElement) {
         ease: ease.out,
         paused: inIntro && !started,
         // Played out, the text is plain markup again, byte for byte: no masks left to clip a focus ring, no
-        // autoSplit to re-slice it on resize.
-        onComplete: () => self.revert(),
+        // autoSplit to re-slice it on resize. The masked lines were a little taller, so the page is shorter now: measure it
+        // again, or a start clamped to the old last scroll position (the footer logo's) lies past the new one and never fires.
+        // refresh(true) waits for the scroll to rest and restarts one 0.2 s timer, so a burst of reverts measures once.
+        onComplete: () => {
+          self.revert();
+          ScrollTrigger.refresh(true);
+        },
         scrollTrigger: inIntro ? undefined : { trigger: el, start: startAt(el, 0.85), once: true },
       });
       return finishOnFocus(el, tween);
