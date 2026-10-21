@@ -50,7 +50,8 @@ const rows = [
                     href={`#${value.id}`}
                     data-tilt
                     class:list={[
-                      'group relative flex h-full min-h-[19rem] sm:min-h-[22rem] md:min-h-[24rem] xl:min-h-[25rem] flex-col overflow-hidden rounded-2xl lg:rounded-3xl p-6 md:p-8 xl:p-10',
+                      // 22rem from 440px, not from sm: the drawing grows with the tile's width, and below that a three-line French tagline would meet it.
+                      'group relative flex h-full min-h-[19rem] min-[440px]:min-h-[22rem] md:min-h-[24rem] xl:min-h-[25rem] flex-col overflow-hidden rounded-2xl lg:rounded-3xl p-6 md:p-8 xl:p-10',
                       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
                       style.tile,
                     ]}

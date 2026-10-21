@@ -105,7 +105,7 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
         <th scope="col" class="py-3 pr-6 font-bold">{table.goodFor}</th>
         <th scope="col" class="py-3 pr-6 font-bold md:w-48 lg:w-56">{table.kind}</th>
         <th scope="col" class="py-3 pr-6 font-bold md:w-36 lg:w-40">{table.access}</th>
-        <th scope="col" class="py-3 font-bold md:w-40 lg:w-48">{table.site}</th>
+        <th scope="col" class="py-3 font-bold md:w-48">{table.site}</th>
       </tr>
     </thead>
     <tbody>
@@ -157,10 +157,12 @@ const accessIcon = { direct: 'M7 11V7a5 5 0 0 1 9.9-1', login: 'M7 11V7a5 5 0 0 
                 {table.accessLabels[board.access]}
               </span>
             </td>
-            <td class="py-5 align-top text-sm text-black/70 max-md:row-start-5 max-md:p-0">
-              <span class="inline-flex items-center gap-1">
+            <td class="py-5 align-top text-sm text-black/70 max-md:row-start-5 max-md:p-0 md:max-lg:min-w-32">
+              {/* Below lg a long host may break anywhere (the tablet table has no room for it whole; min-w-32 keeps the column from
+                   collapsing), and the arrow sits on its last line: h-5 is one text-sm line, so on one line it is centred as before. */}
+              <span class="inline-flex items-end gap-1 max-lg:[overflow-wrap:anywhere]">
                 {boardHost(board.url)}
-                <span class="[&>svg]:w-3.5 [&>svg]:h-3.5" aria-hidden="true">
+                <span class="flex h-5 items-center [&>svg]:w-3.5 [&>svg]:h-3.5" aria-hidden="true">
                   <Icon name="arrow-up-right" />
                 </span>
               </span>
