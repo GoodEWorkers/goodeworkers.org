@@ -3,24 +3,28 @@
  * that asks for it (?pick, ?illo=...) or a browser that stored a choice (localStorage.illoPick); for everyone else the slots keep
  * the default style they were built with and no panel exists.
  *
- * A choice is a style per subject, written ?illo=openness:strings,care:grid (all:strings for every subject; a later entry wins).
+ * A choice is a style per subject, written ?illo=openness:pictogram,care:cutout (all:pictogram for every subject; a later entry wins).
  * The URL wins over storage and is then stored. Every [data-illo-slot] gets the chosen style's drawing, fetched from
  * /illustrations/<subject>/<style>.svg, and a panel (the template in IllustrationPicker.astro) lets the designer choose, copy the
- * link or reset. Applied again after every client-side navigation: the router swaps the whole body, panel included.
+ * link or reset. Applied again after every client-side navigation: the router swaps the whole body, panel included. A style whose file
+ * is missing (a set not synced yet) is a disabled thumbnail, and a slot that asks for it by link keeps the drawing it has.
  */
 import { gsap } from 'gsap';
 import grounds from '../../styles/illustrations.css?inline'; // the thumbnails need the grounds' properties on a page with no slot of its own
 import { ease, motionOn } from './engine';
 
 const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
-// The styles in the order the panel shows them; the first is the default, the one Illustration.astro inlines.
+// The styles in the order the panel shows them; the first is the default, the one Illustration.astro inlines. Round 1's abstract sets
+// are retired but for bands; the rest are round 2's figurative ones (scripts/sync-illustrations.mjs), and the last two may not have landed.
 const STYLES: Record<string, string> = {
   bands: 'Warped bands',
-  strings: 'String art',
-  partition: 'Partition',
-  circles: 'Circles',
-  grid: 'Grid and disorder',
-  isometric: 'Isometric',
+  pictogram: 'Pictogram',
+  leaded: 'Leaded window',
+  cutout: 'Paper cut-out',
+  halftone: 'Halftone',
+  monoline: 'One line',
+  isoscene: 'Isometric scene',
+  brush: 'Brush ink',
 };
 const STYLE_IDS = Object.keys(STYLES);
 const DEFAULT = STYLE_IDS[0];
@@ -172,15 +176,15 @@ function mount() {
         <div class="flex flex-wrap gap-1">${STYLE_IDS.map(
           (style) => `
           <button type="button" data-pick="${subject}:${style}" aria-pressed="false" aria-label="${name(subject)}: ${STYLES[style]}" title="${STYLES[style]}"
-            class="h-12 w-12 shrink-0 rounded-lg outline-offset-2 aria-pressed:outline aria-pressed:outline-2 aria-pressed:outline-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+            class="h-12 w-12 shrink-0 rounded-lg outline-offset-2 aria-pressed:outline aria-pressed:outline-2 aria-pressed:outline-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-40">
             <span data-illo-thumb="${subject}" class="illo illo-tile block h-full w-full overflow-hidden rounded-lg bg-[var(--subject)]"></span>
           </button>`,
         ).join('')}</div>
       </div>`,
   ).join('');
   el.addEventListener('click', (event) => {
-    const button = (event.target as Element).closest<HTMLElement>('button');
-    if (!button) return;
+    const button = (event.target as Element).closest<HTMLButtonElement>('button');
+    if (!button || button.disabled) return;
     const { pick, act } = button.dataset;
     if (pick) {
       const [subject, style] = pick.split(':');
@@ -198,10 +202,15 @@ function mount() {
   });
   document.body.append(el);
   mark();
-  // The thumbnails are the drawings themselves, in the tile context, so they fill in as the files arrive.
+  // The thumbnails are the drawings themselves, in the tile context, so they fill in as the files arrive. A file that is not there
+  // (a set not synced yet) leaves a disabled thumbnail: nothing to choose, and the panel is whole without it.
   for (const thumb of el.querySelectorAll<HTMLElement>('[data-illo-thumb]')) {
-    const [subject, style] = thumb.closest<HTMLElement>('[data-pick]')!.dataset.pick!.split(':');
-    load(subject, style).then((drawing) => (thumb.innerHTML = drawing), console.error);
+    const button = thumb.closest<HTMLButtonElement>('[data-pick]')!;
+    const [subject, style] = button.dataset.pick!.split(':');
+    load(subject, style).then(
+      (drawing) => (thumb.innerHTML = drawing),
+      () => Object.assign(button, { disabled: true, title: `${STYLES[style]}: no drawing yet` }),
+    );
   }
 }
 
