@@ -3,8 +3,10 @@ import '../styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
 import clashDisplay from '../assets/fonts/ClashDisplay-Variable.woff2';
 import interRegular from '../assets/fonts/Inter-Regular.woff2';
+import interBold from '../assets/fonts/Inter-Bold.woff2';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import IllustrationPicker from '../components/IllustrationPicker.astro';
 import {
   SITE,
   absoluteUrl,
@@ -178,9 +180,9 @@ const structuredData = {
          Failsafe: if the engine never boots (a stale hashed chunk after a deploy, a blocked
          request) those rules would keep the page blank. boot() sets data-engine="1"; without it
          after 4 s, motion is switched off for good (data-engine="off", which boot() then honours). A page whose own
-         chunk failed (home.ts sets data-home, illos.ts data-illos) loses motion the same way. The timer is armed once per full load:
+         chunk failed (home.ts sets data-home) loses motion the same way. The timer is armed once per full load:
          a chunk that fails on a later client-side navigation is not caught. -->
-    <script is:inline>(function(h){h.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');setTimeout(function(){if(!h.dataset.engine){h.dataset.engine='off';h.classList.remove('motion')}else if(!h.dataset.home&&document.querySelector('[data-intro]')||!h.dataset.illos&&document.querySelector('[data-illo]'))h.classList.remove('motion')},4000)})(document.documentElement)</script>
+    <script is:inline>(function(h){h.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');setTimeout(function(){if(!h.dataset.engine){h.dataset.engine='off';h.classList.remove('motion')}else if(!h.dataset.home&&document.querySelector('[data-intro]'))h.classList.remove('motion')},4000)})(document.documentElement)</script>
     <!-- Client-side navigation. The page change is the curtain in motion/transitions.ts, not the browser's
          cross-fade (transition:animate="none" on <html>). fallback="none": a browser without the View
          Transitions API keeps plain page loads, and the engine boots on each of them. -->
@@ -197,10 +199,13 @@ const structuredData = {
     <!-- body is #111, so without this Android Chrome keeps light browser chrome
          against a near-black page. -->
     <meta name="theme-color" content="#111111" />
-    <!-- Both faces render in the first viewport of every page. `crossorigin`
-         is required for font preloads even on the same origin. -->
+    <!-- ClashDisplay and Inter Regular render in the first viewport of every
+         page. Inter Bold only on the home page (the Why card titles, font-extrabold),
+         so elsewhere its preload goes unused. shortcut: preloaded on every page,
+         scope it to the home page if the 28 KB matters. `crossorigin` is
+         required for font preloads even on the same origin. -->
     {
-      [clashDisplay, interRegular].map((href) => (
+      [clashDisplay, interRegular, interBold].map((href) => (
         <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
       ))
     }
@@ -294,5 +299,7 @@ const structuredData = {
     <script>
       import '../scripts/motion/index.ts';
     </script>
+    <!-- The illustration picker: an inert template, and a script that wakes only for ?pick, ?illo= or a stored choice. -->
+    <IllustrationPicker />
   </body>
 </html>

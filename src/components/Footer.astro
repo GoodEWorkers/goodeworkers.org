@@ -1,7 +1,6 @@
 ---
 import ContactForm from './ContactForm.astro';
 import ExternalLink from './ExternalLink.astro';
-import NightStreet from './NightStreet.astro';
 import logoSvg from '../assets/images/goodeworkers-line.svg?raw';
 import { getLangFromPath, languages, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
@@ -41,15 +40,15 @@ const logo = logoSvg.replace('<svg', '<svg aria-hidden="true" focusable="false" 
     class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-10 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
   >
     <div class="flex flex-col">
-      <h2 class="text-3xl sm:text-4xl font-clash font-bold" data-title>
+      <h2 class="text-4xl sm:text-5xl font-clash font-bold" data-title>
         {contact.title}
       </h2>
       <div class="mt-6">
         <a
           href={`mailto:${goodEWorkersEmail}?subject=${encodeURIComponent(contact.mailSubject)}`}
-          class="text-3xl min-[360px]:text-4xl sm:text-5xl font-bold leading-[1.1] hover:underline focus-visible:underline"
+          class="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold leading-[1.1] hover:underline focus-visible:underline"
         >
-          <span data-roll>{emailLocalPart}</span><br /><span data-roll>{emailDomainPart}</span>
+          {emailLocalPart}<br />{emailDomainPart}
         </a>
       </div>
       <ContactForm />
@@ -92,27 +91,10 @@ const logo = logoSvg.replace('<svg', '<svg aria-hidden="true" focusable="false" 
       <li>{footer.copyright(currentYear)}</li>
     </ul>
   </div>
-  {/* The closing band: the logotype itself on one line, centred, as wide as 72rem (about 9:1, so about 130px tall there) and the whole
-      column on a phone. Decorative, so the svg is hidden from assistive tech: the name is spelled in the copyright line above. The star burst
-      turns under the pointer (data-logo; nothing here takes focus). The night street lies behind it, edge to edge of the screen (the logo's
-      box stays the column), held at 75% so that its lit windows stay quiet next to the logo's big grey letters (the brightest reads 42%,
-      the orange 'e' is 100%). */}
-  <div class="relative isolate [&>svg]:opacity-75">
-    <NightStreet />
-    <div class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-12">
-      <div class="mx-auto w-[min(100%,72rem)] [&>svg]:block [&>svg]:w-full [&>svg]:h-auto" data-logo set:html={logo} />
-    </div>
+  {/* The closing band: the logotype itself on one line, as wide as the column (the contact sheet's content width, about 9:1, so about
+      150px tall on a 1440px screen and 40px on a phone). Decorative, so the svg is hidden from assistive tech: the name is spelled in the copyright
+      line above. The star burst turns under the pointer (data-logo; nothing here takes focus). */}
+  <div class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-12">
+    <div class="w-full [&>svg]:block [&>svg]:w-full [&>svg]:h-auto" data-logo set:html={logo} />
   </div>
 </footer>
-
-<script>
-  import '../scripts/motion/street.ts';
-</script>
-
-<style is:global>
-  /* The address is big and tight (line-height 1.1): the roll's clip needs room below it for the g and the @. */
-  a[href^='mailto:'] [data-roll-clip] {
-    padding-bottom: 0.15em;
-    margin-bottom: -0.15em;
-  }
-</style>

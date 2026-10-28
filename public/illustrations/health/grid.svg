@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none" stroke="var(--ink, #111111)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<desc>Grid with growing disorder, one accent cell (illustrator 03). After B017 Irregular Census (Molnar/Nees grid, one red cell) and B067 Repetition with Fatigue (domain repetition, size by cell index (7i+3j) mod 9). Health and hospitals. 24x5 squares (an hour a column), pitch 30, side 20, no disorder but the top row (lifted 8): its squares step evenly along a heartbeat (P 0.32; R 5 pitches high on 1.5+1.5 columns, 5+3 squares; S -0.4; T 0.52), turned to the line, and rejoin their columns; the R peak is the accent, 1.6x, turned 45 deg into the spike's tip. Pen 3. Seed rng("03-health-and-hospitals").</desc>
+<g class="frame">
+<path pathLength="1" d="M45 230h20v20h-20zM75 230h20v20h-20zM105 230h20v20h-20zM135 230h20v20h-20zM165 230h20v20h-20zM195 230h20v20h-20zM225 230h20v20h-20zM255 230h20v20h-20zM285 230h20v20h-20zM315 230h20v20h-20zM345 230h20v20h-20zM375 230h20v20h-20zM405 230h20v20h-20zM435 230h20v20h-20zM465 230h20v20h-20zM495 230h20v20h-20zM525 230h20v20h-20zM555 230h20v20h-20zM585 230h20v20h-20zM615 230h20v20h-20zM645 230h20v20h-20zM675 230h20v20h-20zM705 230h20v20h-20zM735 230h20v20h-20z"/>
+<path pathLength="1" d="M45 260h20v20h-20zM75 260h20v20h-20zM105 260h20v20h-20zM135 260h20v20h-20zM165 260h20v20h-20zM195 260h20v20h-20zM225 260h20v20h-20zM255 260h20v20h-20zM285 260h20v20h-20zM315 260h20v20h-20zM345 260h20v20h-20zM375 260h20v20h-20zM405 260h20v20h-20zM435 260h20v20h-20zM465 260h20v20h-20zM495 260h20v20h-20zM525 260h20v20h-20zM555 260h20v20h-20zM585 260h20v20h-20zM615 260h20v20h-20zM645 260h20v20h-20zM675 260h20v20h-20zM705 260h20v20h-20zM735 260h20v20h-20z"/>
+<path pathLength="1" d="M45 290h20v20h-20zM75 290h20v20h-20zM105 290h20v20h-20zM135 290h20v20h-20zM165 290h20v20h-20zM195 290h20v20h-20zM225 290h20v20h-20zM255 290h20v20h-20zM285 290h20v20h-20zM315 290h20v20h-20zM345 290h20v20h-20zM375 290h20v20h-20zM405 290h20v20h-20zM435 290h20v20h-20zM465 290h20v20h-20zM495 290h20v20h-20zM525 290h20v20h-20zM555 290h20v20h-20zM585 290h20v20h-20zM615 290h20v20h-20zM645 290h20v20h-20zM675 290h20v20h-20zM705 290h20v20h-20zM735 290h20v20h-20z"/>
+<path pathLength="1" d="M45 320h20v20h-20zM75 320h20v20h-20zM105 320h20v20h-20zM135 320h20v20h-20zM165 320h20v20h-20zM195 320h20v20h-20zM225 320h20v20h-20zM255 320h20v20h-20zM285 320h20v20h-20zM315 320h20v20h-20zM345 320h20v20h-20zM375 320h20v20h-20zM405 320h20v20h-20zM435 320h20v20h-20zM465 320h20v20h-20zM495 320h20v20h-20zM525 320h20v20h-20zM555 320h20v20h-20zM585 320h20v20h-20zM615 320h20v20h-20zM645 320h20v20h-20zM675 320h20v20h-20zM705 320h20v20h-20zM735 320h20v20h-20z"/>
+<path pathLength="1" d="M45 192h20v20h-20z"/>
+<path pathLength="1" d="M75 192h20v20h-20z"/>
+<path pathLength="1" d="M105 192h20v20h-20z"/>
+<path pathLength="1" d="M135 192h20v20h-20z"/>
+<path pathLength="1" d="M165 192h20v20h-20z"/>
+<path pathLength="1" d="M195 192h20v20h-20z"/>
+<path pathLength="1" d="M225 192h20v20h-20z"/>
+<path pathLength="1" d="M252.8 190.1l19.4-5 5 19.4-19.4 5z"/>
+<path pathLength="1" d="M286 181.5l19.9 1.9-1.9 19.9-19.9-1.9z"/>
+<path pathLength="1" d="M317.8 185.1l19.4 5-5 19.4-19.4-5z"/>
+<path pathLength="1" d="M345 192h20v20h-20z"/>
+<path pathLength="1" d="M375 192h20v20h-20z"/>
+<path pathLength="1" d="M418.6 191l19.3 5.2-5.1 19.3-19.4-5.2z"/>
+<path pathLength="1" d="M427.9 176.3l5.6-19.2 19.2 5.7-5.6 19.1z"/>
+<path pathLength="1" d="M439.4 137.1l5.7-19.2 19.2 5.7-5.7 19.2z"/>
+<path pathLength="1" d="M451 97.9l5.7-19.2 19.2 5.7-5.7 19.2z"/>
+<path pathLength="1" d="M497 93.7l5.3 19.3-19.3 5.3-5.3-19.3z"/>
+<path pathLength="1" d="M512 147.7l5.3 19.3-19.3 5.3-5.3-19.3z"/>
+<path pathLength="1" d="M510 204h20v20h-20z"/>
+<path pathLength="1" d="M555 192h20v20h-20z"/>
+<path pathLength="1" d="M582.8 189.8l19.2-5.6 5.6 19.2-19.2 5.6z"/>
+<path pathLength="1" d="M613.5 180.9l19.8-3.1 3.1 19.8-19.8 3z"/>
+<path pathLength="1" d="M646.7 176.8l19.9 2.7-2.7 19.8-19.8-2.7z"/>
+<path pathLength="1" d="M678.6 182.2l19.1 6-6 19.1-19-6z"/>
+<path pathLength="1" d="M705 192h20v20h-20z"/>
+<path pathLength="1" d="M735 192h20v20h-20z"/>
+</g>
+<g class="idle" data-o="475 52"><g class="light" stroke="none"><path fill="var(--light, #F8F8F8)" d="M475 29.4l22.6 22.6-22.6 22.6-22.6-22.6z"/><path fill="var(--spill, #FDC959)" d="M475 29.4l22.6 22.6-22.6 22.6-22.6-22.6z"/></g><g class="frame"><path pathLength="1" d="M475 29.4l22.6 22.6-22.6 22.6-22.6-22.6z"/></g></g>
+</svg>

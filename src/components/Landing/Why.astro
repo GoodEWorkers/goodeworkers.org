@@ -8,7 +8,7 @@ import { homeContent } from '../../i18n/home';
 // Presentation stays here, copy comes from the content file — zipped by index.
 const cardStyles = [
   { icon: 'map', classNames: 'bg-yellow text-black-light' },
-  { icon: 'calendar', classNames: 'bg-orange text-black' },
+  { icon: 'calendar', classNames: 'bg-orange text-white-pure' },
   { icon: 'dollar', classNames: 'bg-purple text-black-light' },
 ] as const;
 
@@ -56,7 +56,7 @@ const { why } = await homeContent(getLangFromPath(Astro.url.pathname));
           <div class="[&>*]:w-6 [&>*]:h-6" data-pop>
             <Icon name={cardStyles[index].icon} />
           </div>
-          <p class="mt-4 whitespace-pre-line font-bold leading-tight">
+          <p class="mt-4 whitespace-pre-line text-xl md:text-2xl font-extrabold leading-tight">
             {whyCard.title}
           </p>
           <p class="mt-4 text-base md:leading-tight font-medium leading-tight">

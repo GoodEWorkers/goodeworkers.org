@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "smoke": "./scripts/smoke.sh",
     "check-links": "node scripts/check-links.mjs",
+    "e2e": "node tests/e2e/run.mjs",
     "og-image": "node scripts/og-image.mjs",
     "verify": "astro build && echo '\\nbuild OK — start dev server in another terminal then run: npm run smoke'",
     "astro": "astro"

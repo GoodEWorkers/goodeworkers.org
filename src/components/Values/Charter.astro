@@ -1,7 +1,7 @@
 ---
 import Icon from '../icons/Icon.astro';
 import Rich from '../Common/Rich.astro';
-import ValueIllustration from '../Illustrations/ValueIllustration.astro';
+import Illustration from '../Illustration.astro';
 import { typeset } from '../Common/typeset';
 import { getLangFromPath } from '../../i18n/routes';
 import { valueStyles } from './valueStyles';
@@ -31,7 +31,7 @@ const rows = [
   class="sheet mt-10 md:mt-14 py-8 md:py-12 bg-black-light text-grey overflow-hidden"
   data-reveal="up"
 >
-  <!-- One weight of Inter, so the two pairs are told by brightness: the sentence rests, its key words light up. -->
+  <!-- The two pairs are told by brightness and weight: the sentence rests in Regular, dimmed, and its key words light up in Bold and white. -->
   <p class="max-w-4xl text-xl md:text-2xl xl:text-[28px] font-medium leading-snug text-pretty text-grey/75 [&_strong]:text-white" data-split="lines">
     <Rich text={t(content.pairs)} />
   </p>
@@ -68,11 +68,9 @@ const rows = [
                     >
                       <Icon name="arrow-down" />
                     </span>
-                    {/* The value's window at night, bottom right: 52% of the tile, nudged 4% past the corner so the tile clips it. The nudge is
-                         on this wrapper: the drawing's own root takes no transform (it moves only through its inner groups). */}
-                    <div class="absolute bottom-0 right-0 w-[52%] max-w-[21rem] translate-x-[4%] translate-y-[4%]">
-                      <ValueIllustration value={value.id} context="tile" class="block h-auto w-full" />
-                    </div>
+                    {/* The value's illustration, bottom right: 52% of the tile, in the corner. Not nudged past it: every style keeps its own
+                         margin (a frame or a dust of dots would be cut by the tile's edge and rounded corner). */}
+                    <Illustration subject={value.id} context="tile" class="absolute bottom-0 right-0 w-[52%] max-w-[21rem]" />
                   </a>
                 </li>
               );

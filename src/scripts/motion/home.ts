@@ -82,7 +82,8 @@ function heroWindow() {
   if (!sheet) return;
   const content = [...sheet.querySelectorAll('h2, p, [data-stagger]')];
   // Closed, the window trims the sheet's padding and nothing else: each inset stops where the content starts, so the
-  // heading, the lede and the cards are never cut at any scroll position (on a desktop that caps the sides at 32px, not 6%).
+  // heading, the lede and the cards are never cut at any scroll position (from lg that caps the sides at 32px, which leaves the
+  // window flush with the content). From xl the hero's row adds 96px of its own: the sides are 96px, 32px short of the content.
   const closed = () => {
     const box = sheet.getBoundingClientRect();
     const rects = content.map((el) => el.getBoundingClientRect());
@@ -94,7 +95,8 @@ function heroWindow() {
     ];
     const small = innerWidth < 640; // the sheet is tall there and its text sits further in: no cap needed
     const [top, side, bottom] = small ? [0.06, 0.06, 0.04] : [0.14, 0.06, 0.1]; // shares of the sheet's height / width / height
-    const want = [top * box.height, side * box.width, bottom * box.height, side * box.width];
+    const wide = innerWidth >= 1280 ? 96 : side * box.width; // 6rem from xl, as in the first-paint CSS
+    const want = [top * box.height, wide, bottom * box.height, wide];
     const inset = want.map((v, i) => (small ? v : Math.max(0, Math.min(v, room[i]))));
     return `inset(${inset.map((v) => `${v}px`).join(' ')} round ${small ? 24 : 40}px)`;
   };

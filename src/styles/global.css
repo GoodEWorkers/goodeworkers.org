@@ -16,16 +16,29 @@
     font-style: normal;
   }
 
-  /* Inter: one face, declared over 400-700 on purpose. The site was designed
-     and approved with Inter at a single weight, so `font-medium` and
-     `font-bold` resolve to Regular with no synthetic bold. Keep it that way
-     unless the design changes. */
+  /* Inter: two static faces. Regular is declared over 400-700 by design, so
+     `font-medium`, `font-semibold` and `font-bold` all resolve to it, as the
+     site was approved. The Bold file serves 800-900, for the Why card titles
+     only: use `font-extrabold` to opt in. No weight is ever synthesised. */
   @font-face {
     font-family: 'Inter';
     src: url('../assets/fonts/Inter-Regular.woff2') format('woff2');
     font-weight: 400 700;
     font-display: swap;
     font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Bold.woff2') format('woff2');
+    font-weight: 800 900;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  /* Makes "no weight is ever synthesised" true: no browser fakes a bold (or an italic) from Regular. */
+  html {
+    font-synthesis: none;
   }
 }
 

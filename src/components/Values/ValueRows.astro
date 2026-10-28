@@ -1,6 +1,6 @@
 ---
 import ExternalLink from '../ExternalLink.astro';
-import ValueIllustration from '../Illustrations/ValueIllustration.astro';
+import Illustration from '../Illustration.astro';
 import { typeset } from '../Common/typeset';
 import { getLangFromPath } from '../../i18n/routes';
 import { bandLink, valueStyles } from './valueStyles';
@@ -56,10 +56,10 @@ const groups = [
                     {value.name}
                   </h3>
                   <p class="mt-3 md:mt-4 max-w-[22rem] text-xl md:text-2xl font-bold leading-snug text-balance">{t(value.tagline)}</p>
-                  {/* The value's window at night in small, from lg. Its box is the night one step up, a window into it: it clips the light
-                       that pours off the bottom of Openness's drawing, and turns back to the ground's black when the row is targeted. */}
+                  {/* The value's illustration in small, from lg. Its box is the night one step up: it clips what spills over the
+                       drawing's edge, and turns back to the ground's black when the row is targeted. */}
                   <div class="mt-10 hidden lg:block w-72 aspect-[25/18] overflow-hidden rounded-2xl bg-black-light group-target:bg-black transition-colors duration-700 ease-out">
-                    <ValueIllustration value={value.id} context="night" class="block h-full w-full" />
+                    <Illustration subject={value.id} context="night" class="h-full w-full" />
                   </div>
                 </div>
                 <div class="mt-6 lg:mt-0 lg:col-start-3 max-w-[38rem] lg:max-w-none space-y-4 text-base leading-[1.6875] text-ashgray text-pretty">
@@ -68,7 +68,7 @@ const groups = [
                   ))}
                   {value.id === 'openness' && (
                     <p class="pt-2 font-bold text-grey">
-                      {t(content.openSource.before)}<ExternalLink href={sourceUrl} campaign="values" class={bandLink} style={`--c: ${style.ink}`}>{content.openSource.link}</ExternalLink>{content.openSource.after}
+                      {t(content.openSource.before)}<ExternalLink href={sourceUrl} campaign="values" class={bandLink} style={`--c: ${style.ink}; --on: ${style.on}`}>{content.openSource.link}</ExternalLink>{content.openSource.after}
                     </p>
                   )}
                 </div>

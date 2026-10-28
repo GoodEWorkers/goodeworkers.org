@@ -50,13 +50,15 @@ const { hero } = await homeContent(lang);
     class="sheet bg-white relative -mt-12 pt-20 lg:pt-32 pb-6 md:pb-16 lg:pb-28 lg:justify-between"
     data-window
   >
-    <div class="flex flex-col lg:flex-row lg:gap-16 xl:gap-24">
+    {/* From xl the row pads again, the hero's one exception to the sheet's single layer of padding: home.ts closes the window 32px short of this room. */}
+    <div class="flex flex-col lg:flex-row lg:gap-16 xl:gap-24 xl:px-24">
       <div class="px-4 sm:px-16 lg:px-0 max-w-screen-md mx-auto lg:mx-0 lg:flex-1">
         <h2
           class="text-3xl leading-tight sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight xl:text-[54px] xl:leading-[63px]"
           data-title
         >
-          <span class="font-clash font-medium">
+          {/* nowrap: the split words are inline-blocks, and a narrow column would break the wordmark between them. */}
+          <span class="font-clash font-medium whitespace-nowrap">
             Good<span class="font-semibold">e</span>Workers
           </span>
           <span class="font-inter font-medium">
@@ -78,7 +80,7 @@ const { hero } = await homeContent(lang);
                 cardGridPlacement[index],
                 // On the two-column phone grid the odd fifth card would be orphaned: it takes the whole row.
                 index === hero.cards.length - 1
-                  ? 'bg-orange text-black max-sm:col-span-2 max-sm:aspect-[2/1]'
+                  ? 'bg-orange text-white-pure max-sm:col-span-2 max-sm:aspect-[2/1]'
                   : 'bg-grey',
               ]}
               data-tilt

@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SplitHeader from '../Common/SplitHeader.astro';
 import CircledText from '../JobBoards/CircledText.astro';
 import Icon from '../icons/Icon.astro';
-import Health from '../Illustrations/Health.astro';
+import Illustration from '../Illustration.astro';
 import { typeset } from '../Common/typeset';
 import { bandLink, valueStyles } from '../Values/valueStyles';
 import { getLangFromPath, routes } from '../../i18n/routes';
@@ -51,7 +51,7 @@ const doors = help.doors.map((door, index) => ({
             <a
               href={`${routes.values[lang]}#${piece.value}`}
               class:list={[bandLink, piece.text.length <= 30 && 'lg:whitespace-nowrap']}
-              style={`--c: ${valueStyles[piece.value].ink}`}
+              style={`--c: ${valueStyles[piece.value].ink}; --on: ${valueStyles[piece.value].on}`}
             >{t(index === lastLink ? piece.text.replace(/ (\S+)$/, '\u00a0$1') : piece.text)}</a>
           ) : (
             t(piece.text)
@@ -61,7 +61,7 @@ const doors = help.doors.map((door, index) => ({
     </p>
 
     <!-- The focus sheet, the page's lit window: its heading at the top left, the focus and its text at the bottom left, and
-         the hospital at night, drawn on the paper itself, as tall as the sheet. Its heartbeat is the page's one drawn line. -->
+         the health illustration (a slot, on the paper itself) filling the right column, at the sheet's foot. -->
     <section
       aria-labelledby="focus-title"
       class="sheet mt-14 md:mt-20 pt-8 md:pt-12 pb-8 md:pb-12 bg-white text-black lg:grid lg:grid-cols-[minmax(0,1fr)_calc((100%-11rem-2.5rem)/2)] xl:grid-cols-[minmax(0,1fr)_calc((100%-14rem-2.5rem)/2)] lg:grid-rows-[auto_1fr] lg:gap-x-5"
@@ -77,7 +77,7 @@ const doors = help.doors.map((door, index) => ({
         </div>
       </div>
       <div class="mt-8 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 flex items-end">
-        <Health context="paper" class="h-auto w-full" />
+        <Illustration subject="health" context="paper" class="w-full" />
       </div>
     </section>
 
@@ -123,7 +123,3 @@ const doors = help.doors.map((door, index) => ({
     </section>
   </main>
 </BaseLayout>
-
-<script>
-  import '../../scripts/motion/illos.ts';
-</script>

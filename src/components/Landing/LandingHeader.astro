@@ -60,13 +60,19 @@ const { header } = await homeContent(getLangFromPath(Astro.url.pathname));
   }
   /* The hero sheet starts as a closed window, so the first paint is not the open sheet snapping shut once the script
      runs. These are the insets heroWindow() starts from: capped where the sheet's content starts (about 5rem from the top
-     below 1024px, 2rem from the sides from 1024px), so the window only ever trims padding. */
+     below 1024px, 2rem from the sides from 1024px), so the window only ever trims padding. From 1280px the hero's row has
+     6rem of padding of its own: the sides are 6rem, which keeps 2rem clear of the content. */
   .motion [data-window] {
     clip-path: inset(min(14%, 5rem) 6% 10% 6% round 40px);
   }
   @media (min-width: 1024px) {
     .motion [data-window] {
       clip-path: inset(14% min(6%, 2rem) 10% min(6%, 2rem) round 40px);
+    }
+  }
+  @media (min-width: 1280px) {
+    .motion [data-window] {
+      clip-path: inset(14% 6rem 10% 6rem round 40px);
     }
   }
   @media (max-width: 639px) {
