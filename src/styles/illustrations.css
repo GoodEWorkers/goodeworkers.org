@@ -1,0 +1,45 @@
+/* Illustration slots (src/components/Illustration.astro, DESIGN.md Illustrations). A drawing paints its strokes with --ink, its lit
+   parts with --light and its tinted parts with --spill, and carries a default for each (var(--ink, #111111)), so a ground sets only
+   these three. --subject is the subject's own colour, set on the slot (and on the picker's thumbnails); a ground may use it. */
+.illo > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* On a value's colour tile: black ink, paper light, and the spill a paper tint. */
+.illo-tile {
+  --ink: #111;
+  --light: #f8f8f8;
+  --spill: rgb(248 248 248 / 0.6);
+}
+/* On the night ground (#111, or #1D1D1D on a targeted row): pale ink, and the subject's colour spills. */
+.illo-night {
+  --ink: #ececec;
+  --light: #f8f8f8;
+  --spill: var(--subject);
+}
+/* On the paper sheet: black ink, the subject's colour as the light, and 55% of it as the spill. */
+.illo-paper {
+  --ink: #111;
+  --light: var(--subject);
+  --spill: color-mix(in srgb, var(--subject) 55%, transparent);
+}
+
+/* The subject colours are the value tiles' (openness and health yellow, autonomy lavender, care orange, solidarity periwinkle). */
+[data-illo-slot],
+[data-illo-thumb] {
+  --subject: #fdc959;
+}
+[data-illo-slot='autonomy'],
+[data-illo-thumb='autonomy'] {
+  --subject: #b3a0cf;
+}
+[data-illo-slot='care'],
+[data-illo-thumb='care'] {
+  --subject: #fd5e09;
+}
+[data-illo-slot='solidarity'],
+[data-illo-thumb='solidarity'] {
+  --subject: #6667ab;
+}

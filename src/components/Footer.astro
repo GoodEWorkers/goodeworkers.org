@@ -1,6 +1,7 @@
 ---
 import ContactForm from './ContactForm.astro';
 import ExternalLink from './ExternalLink.astro';
+import logoSvg from '../assets/images/goodeworkers-line.svg?raw';
 import { getLangFromPath, languages, routes } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
@@ -22,23 +23,30 @@ const goodEWorkersEmail = 'hello@goodeworkers.org';
 const emailLocalPart = 'hello';
 const emailDomainPart = '@goodeworkers.org';
 const githubUrl = 'https://github.com/GoodEWorkers';
+// The logotype closes the page, on one line: goodeworkers-line.svg is the logo's own shapes, recomposed. Decorative (the copyright line
+// spells the name), and `data-stagger` has the engine rise its five paths one after another, in file order.
+const logo = logoSvg.replace('<svg', '<svg aria-hidden="true" focusable="false" data-stagger');
 ---
 
-<footer class="relative z-10 bg-white text-black font-inter">
+<footer class="relative z-10 font-inter">
   <div
-    class="absolute -z-50 bg-transparent w-px h-px transform -translate-y-12"
+    class="absolute -z-50 bg-transparent w-0 h-0 scroll-mt-24 lg:scroll-mt-32"
     id="contact"
   >
   </div>
-  <div class="max-w-screen-2xl mx-auto px-4 md:px-8 mb-4 pt-12 pb-10">
+  {/* The contact sheet: the hero's rounded paper again. It sits outside the column, so instead of breaking out of it (`.sheet`) it is the
+      column's own box, max 1536px, centred, with the same gutters: its edges are every sheet's edges at every width. */}
+  <div
+    class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-10 bg-white text-black rounded-xl sm:rounded-2xl lg:rounded-3xl"
+  >
     <div class="flex flex-col">
-      <h2 class="text-3xl sm:text-4xl font-clash font-bold">
+      <h2 class="text-4xl sm:text-5xl font-clash font-bold" data-title>
         {contact.title}
       </h2>
       <div class="mt-6">
         <a
           href={`mailto:${goodEWorkersEmail}?subject=${encodeURIComponent(contact.mailSubject)}`}
-          class="text-3xl min-[360px]:text-4xl sm:text-5xl font-bold leading-[1.1] hover:underline"
+          class="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold leading-[1.1] hover:underline focus-visible:underline"
         >
           {emailLocalPart}<br />{emailDomainPart}
         </a>
@@ -48,12 +56,22 @@ const githubUrl = 'https://github.com/GoodEWorkers';
     <ul
       class="mt-24 md:mt-40 xl:mt-60 flex flex-col items-center text-sm space-y-2"
     >
-      <li class="hover:underline">
+      <li class="hover:underline has-[:focus-visible]:underline">
+        <a href={routes.values[lang]} hreflang={languages[lang].htmlLang}>
+          {footer.valuesLink}
+        </a>
+      </li>
+      <li class="hover:underline has-[:focus-visible]:underline">
+        <a href={routes.initiatives[lang]} hreflang={languages[lang].htmlLang}>
+          {footer.initiativesLink}
+        </a>
+      </li>
+      <li class="hover:underline has-[:focus-visible]:underline">
         <a href={routes.jobBoards[lang]} hreflang={languages[lang].htmlLang}>
           {footer.jobBoardsLink}
         </a>
       </li>
-      <li class="hover:underline">
+      <li class="hover:underline has-[:focus-visible]:underline">
         <a href={routes.legal[lang]} hreflang={languages[lang].htmlLang}>
           {footer.legalLink}
         </a>
@@ -61,16 +79,22 @@ const githubUrl = 'https://github.com/GoodEWorkers';
       <li>
         <!-- "Open source" is claimed repeatedly across the site; this is the
              first link that lets anyone verify it. -->
-        {footer.openSource} <ExternalLink class="hover:underline" href={githubUrl}
+        {footer.openSource} <ExternalLink class="hover:underline focus-visible:underline" href={githubUrl}
           >GitHub</ExternalLink
         >
       </li>
       <li>
-        {footer.poweredBy} <ExternalLink class="hover:underline" href="https://www.netlify.com/"
+        {footer.poweredBy} <ExternalLink class="hover:underline focus-visible:underline" href="https://www.netlify.com/"
           >Netlify</ExternalLink
         >
       </li>
       <li>{footer.copyright(currentYear)}</li>
     </ul>
+  </div>
+  {/* The closing band: the logotype itself on one line, as wide as the column (the contact sheet's content width, about 9:1, so about
+      150px tall on a 1440px screen and 40px on a phone). Decorative, so the svg is hidden from assistive tech: the name is spelled in the copyright
+      line above. The star burst turns under the pointer (data-logo; nothing here takes focus). */}
+  <div class="max-w-screen-2xl mx-auto px-4 md:px-8 pt-12 pb-8 lg:pt-20 lg:pb-12">
+    <div class="w-full [&>svg]:block [&>svg]:w-full [&>svg]:h-auto" data-logo set:html={logo} />
   </div>
 </footer>

@@ -7,7 +7,7 @@ import {
   contributorName,
   type Contributor,
 } from '../Contributors/contributors';
-import { formatStartMonth, markColorClass, type Project } from './projects';
+import { formatStartMonth, markColorClass, wordmarkFit, type Project } from './projects';
 
 interface Props {
   project: Project;
@@ -45,8 +45,8 @@ const factRows: { label: string; value: string }[] = [
 ];
 ---
 
-<div class="font-inter text-white bg-black-light mx-4 md:mx-8 my-10 rounded-3xl">
-  <main id="main-content" class="max-w-screen-2xl mx-auto px-4 py-16 md:py-24">
+<div class="sheet font-inter text-white bg-black-light my-10">
+  <main id="main-content" class="py-16 md:py-24">
     <div class="max-w-screen-lg mx-auto">
       <a
         href={routes.projects[lang]}
@@ -66,7 +66,7 @@ const factRows: { label: string; value: string }[] = [
       <div class="mt-10 md:mt-14 md:flex md:items-start md:gap-12 lg:gap-16">
         <div class="w-40 shrink-0 md:w-64">
           <div
-            class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-white/5"
+            class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-white/5 [container-type:inline-size]"
           >
             {
               project.data.logo ? (
@@ -80,8 +80,9 @@ const factRows: { label: string; value: string }[] = [
               ) : (
                 <div
                   aria-hidden="true"
+                  style={{ '--fit': wordmarkFit(project.data.title) }}
                   class:list={[
-                    'px-4 text-center font-clash font-bold text-2xl md:text-3xl leading-tight',
+                    'px-2 text-center font-clash font-bold leading-tight text-[length:min(1.5rem,calc((100cqw_-_1rem)/var(--fit)))] md:text-[length:min(1.875rem,calc((100cqw_-_1rem)/var(--fit)))]',
                     markColorClass(project.data.markColor),
                   ]}
                 >
@@ -93,11 +94,15 @@ const factRows: { label: string; value: string }[] = [
         </div>
 
         <div class="mt-8 md:mt-0">
-          <h1 class="font-clash font-bold text-4xl md:text-5xl leading-tight">
+          <h1 class="font-clash font-bold text-4xl md:text-5xl leading-tight" data-split="lines">
             {project.data.title}
           </h1>
 
-          <dl class="mt-6 divide-y divide-white/10 overflow-hidden rounded-xl border border-white/10">
+          <dl
+            class="mt-6 divide-y divide-white/10 overflow-hidden rounded-xl border border-white/10"
+            data-reveal="up"
+            data-delay="0.08"
+          >
             {
               factRows.map((row) => (
                 <div class="flex items-baseline gap-3 bg-white/5 px-4 py-3">
@@ -121,7 +126,7 @@ const factRows: { label: string; value: string }[] = [
                       href={project.data.url}
                       target="_blank"
                       rel="noopener"
-                      class="inline-flex items-center gap-2 font-medium text-grey transition-colors duration-200 hover:text-orange"
+                      class="inline-flex items-center gap-2 font-medium text-grey transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
                     >
                       {linkText}
                       <svg
@@ -145,10 +150,10 @@ const factRows: { label: string; value: string }[] = [
             }
           </dl>
 
-          <h2 class="mt-10 font-clash font-bold text-2xl md:text-3xl">
+          <h2 class="mt-10 font-clash font-bold text-2xl md:text-3xl" data-reveal="up" data-delay="0.16">
             {strings.descriptionLabel}
           </h2>
-          <div class="max-w-prose">
+          <div class="max-w-prose" data-reveal="up" data-delay="0.16">
             {
               descriptionParagraphs.map((paragraph) => (
                 <p class="mt-4 text-sm md:text-base leading-relaxed text-ashgray">
@@ -158,10 +163,10 @@ const factRows: { label: string; value: string }[] = [
             }
           </div>
 
-          <h2 class="mt-10 font-clash font-bold text-2xl md:text-3xl">
+          <h2 class="mt-10 font-clash font-bold text-2xl md:text-3xl" data-reveal="up" data-delay="0.24">
             {strings.whyLabel}
           </h2>
-          <div class="max-w-prose">
+          <div class="max-w-prose" data-reveal="up" data-delay="0.24">
             {
               whyParagraphs.map((paragraph) => (
                 <p class="mt-4 text-sm md:text-base leading-relaxed text-ashgray">
@@ -171,12 +176,12 @@ const factRows: { label: string; value: string }[] = [
             }
           </div>
 
-          <h2 class="mt-12 font-clash font-bold text-2xl md:text-3xl">
+          <h2 class="mt-12 font-clash font-bold text-2xl md:text-3xl" data-reveal="up">
             {strings.contributorsLabel}
           </h2>
           {
             team.length > 0 ? (
-              <ul class="mt-5 flex flex-wrap gap-3">
+              <ul class="mt-5 flex flex-wrap gap-3" data-stagger>
                 {team.map((contributor) => (
                   <li>
                     <a
@@ -189,7 +194,7 @@ const factRows: { label: string; value: string }[] = [
                 ))}
               </ul>
             ) : (
-              <p class="mt-4 text-sm text-ashgray">{strings.noContributors}</p>
+              <p class="mt-4 text-sm text-ashgray" data-reveal="up">{strings.noContributors}</p>
             )
           }
         </div>

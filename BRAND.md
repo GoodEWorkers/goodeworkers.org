@@ -40,7 +40,7 @@ The logotype combines three distinct elements:
 | Role | Family | Weight | Size range |
 |---|---|---|---|
 | Display / Headings | **ClashDisplay** (variable) | 500–700 | 30px → 54px |
-| Body / UI labels | **Inter** | 400–700 | 12px → 16px |
+| Body / UI labels | **Inter** (Regular 400–700, Bold 800–900 for card titles only) | 400–800 | 12px → 16px |
 
 - `font-clash font-medium` → section headings
 - `font-clash font-bold` → large CTA buttons, stat numbers
@@ -59,15 +59,16 @@ The brand word "Goode**W**orkers" always renders the "e" in `font-semibold` (Cla
 - Layout: small label on top, large ClashDisplay bold text below
 - Hover: `scale-105`, no shadow
 - Variants: `bg-yellow` (nonprofit), `bg-purple` (help/volunteer), `bg-orange` (join CTA)
-- On `bg-orange` the label is `text-white-pure` (`#FFF`), not the brand off-white:
+- On `bg-orange` the label and the icon are `text-white-pure` (`#FFF`) at every size, not the brand off-white:
   `#F8F8F8` on `#FD5E09` is 2.92:1, under the 3:1 large-text floor; `#FFF` is 3.10:1.
-  Small text (< 18.66px bold) on orange stays `text-black` — no white passes 4.5:1 there.
+  That ratio clears the large-text floor and not the 4.5:1 for small text. White on every orange
+  surface is the designer's decision (review of 28 Oct 2026), recorded here with its 3.1:1.
 
 ### Service / Feature cards
 - Shape: `rounded-lg`, square aspect ratio
 - Normal state: `bg-grey` with icon + bold label
-- Highlighted: `bg-orange text-black` for the "and more…" card (label is 14–16px — see the contrast note under the pill button)
-- Why cards: `bg-yellow text-black-light`, `bg-orange text-black`, `bg-purple text-black-light`
+- Highlighted: `bg-orange text-white-pure` for the "and more…" card (see the contrast note under the pill button)
+- Why cards: `bg-yellow text-black-light`, `bg-orange text-white-pure`, `bg-purple text-black-light`
 
 ### Section rhythm
 - Dark sections: `bg-black` or `bg-black-light`, text in `text-grey` / `text-ashgray`
@@ -82,6 +83,8 @@ The brand word "Goode**W**orkers" always renders the "e" in `font-semibold` (Cla
 - Scale: `hover:scale-105` on CTAs (no shadow — see issue #46)
 - Mobile menu: slide + fade `100ms ease-in`
 - Scroll: `scroll-behavior: smooth`
+
+The motion verb is "settle like paper": sheets slide in and settle on `expo.out` (`expo.inOut` for the page curtain, `power3.out` for hovers), and big things move slower than small things. Two signatures carry it: the hero sheet opens like a window as you scroll into it, and a warm lamp glow follows the pointer across the dark ground. The full system, with the ease names, timings and data attributes, is under "Motion" in DESIGN.md.
 
 ---
 

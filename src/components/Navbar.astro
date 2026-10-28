@@ -16,54 +16,60 @@ const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang);
 
 const homeHref = routes.home[lang];
-// Highlight "Contributors" on its index and individual pages, same for Projects.
-const isContributors =
-  getRouteKey(Astro.url.pathname) === 'contributors' ||
-  getContributorSlug(Astro.url.pathname) !== undefined;
-const isProjects =
-  getRouteKey(Astro.url.pathname) === 'projects' ||
-  getProjectSlug(Astro.url.pathname) !== undefined;
+const path = Astro.url.pathname;
+// Contributors and Projects stay lit on their individual pages too.
+const links = [
+  {
+    href: routes.initiatives[lang],
+    label: strings.nav.initiatives,
+    current: getRouteKey(path) === 'initiatives',
+  },
+  {
+    href: routes.contributors[lang],
+    label: strings.nav.contributors,
+    current: getRouteKey(path) === 'contributors' || getContributorSlug(path) !== undefined,
+  },
+  {
+    href: routes.projects[lang],
+    label: strings.nav.projects,
+    current: getRouteKey(path) === 'projects' || getProjectSlug(path) !== undefined,
+  },
+];
 ---
 
 <div class="bg-black sticky inset-x-0 top-0 lg:mt-16 z-50" data-navbar>
   <nav
     class="relative flex justify-between items-center font-inter max-w-screen-2xl mx-auto px-4 md:px-8 pt-2 pb-2 md:pt-4 md:pb-4 text-grey"
   >
-    <a href={homeHref} aria-label={strings.org.homeAriaLabel}>
+    <a href={homeHref} aria-label={strings.org.homeAriaLabel} data-logo>
       <span
         class="inline-block w-[110px] h-[44px] md:w-[160px] md:h-[63px] [&>svg]:w-full [&>svg]:h-full"
         set:html={logoSvg}
       />
     </a>
     <div class="hidden md:flex md:items-center md:space-x-8">
-      <ul class="flex space-x-12 font-bold">
-        <li class="flex items-center">
-          <a
-            href={routes.contributors[lang]}
-            aria-current={isContributors ? 'page' : undefined}
-            class:list={[
-              'transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
-              isContributors ? 'text-orange' : 'text-grey',
-            ]}
-          >
-            {strings.nav.contributors}
-          </a>
-        </li>
-        <li class="flex items-center">
-          <a
-            href={routes.projects[lang]}
-            aria-current={isProjects ? 'page' : undefined}
-            class:list={[
-              'transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
-              isProjects ? 'text-orange' : 'text-grey',
-            ]}
-          >
-            {strings.nav.projects}
-          </a>
-        </li>
+      <ul class="flex items-center space-x-8 font-bold">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                data-roll
+                aria-current={link.current ? 'page' : undefined}
+                class:list={[
+                  'block pb-1 border-b-2 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange',
+                  link.current ? 'text-yellow border-yellow' : 'border-transparent hover:text-orange',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
         <li>
           <a
             href={contactAnchor(lang, 'nav')}
+            data-roll
             class="border-orange border-2 -ml-2 px-3 py-1 rounded-full hover:bg-orange hover:text-black transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
           >
             {strings.nav.contact}
@@ -86,28 +92,23 @@ const isProjects =
       id="mobile-menu"
       class="hidden md:hidden absolute top-0 inset-x-0 z-40 mobile-menu"
       data-menu-panel
+      data-lenis-prevent
     >
       <ul class="bg-black min-h-[100dvh] text-white font-bold text-xl pt-12">
-        <li class="pl-16 pr-4 py-3">
-          <a
-            href={routes.contributors[lang]}
-            class="hover:text-orange block w-full h-full"
-            aria-current={isContributors ? 'page' : undefined}
-            data-menu-link
-          >
-            {strings.nav.contributors}
-          </a>
-        </li>
-        <li class="pl-16 pr-4 py-3">
-          <a
-            href={routes.projects[lang]}
-            class="hover:text-orange block w-full h-full"
-            aria-current={isProjects ? 'page' : undefined}
-            data-menu-link
-          >
-            {strings.nav.projects}
-          </a>
-        </li>
+        {
+          links.map((link) => (
+            <li class="pl-16 pr-4 py-3">
+              <a
+                href={link.href}
+                aria-current={link.current ? 'page' : undefined}
+                class:list={['hover:text-orange block w-full h-full', link.current && 'text-yellow']}
+                data-menu-link
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
         <li class="pl-16 pr-4 py-3">
           <a
             href={contactAnchor(lang, 'nav-mobile')}
@@ -127,7 +128,7 @@ const isProjects =
 
 <style>
   .mobile-menu {
-    transition: opacity 100ms ease-in, transform 100ms ease-in;
+    transition: opacity 100ms ease-out, transform 100ms ease-out;
     transform: translateY(-0.5rem);
     opacity: 0;
   }
@@ -138,18 +139,25 @@ const isProjects =
 </style>
 
 <script>
+  import { startScroll, stopScroll } from '../scripts/motion/engine';
+
+  // Runs for the nav in the page, once per navigation (the router swaps the nav with the page). data-bound: the same
+  // nav can be offered twice (this script's own first call, then astro:page-load; a link to the page you are on).
   function setupNavbar() {
     const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
     const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
     const hamburger = document.querySelector<HTMLElement>('[data-hamburger]');
-    if (!toggle || !panel || !hamburger) return;
+    if (!toggle || !panel || !hamburger || toggle.hasAttribute('data-bound')) return;
+    toggle.setAttribute('data-bound', '');
 
+    const root = document.documentElement;
     const close = () => {
       panel.classList.add('hidden');
       panel.classList.remove('is-open');
       hamburger.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.removeProperty('overflow');
+      root.style.removeProperty('overflow');
+      startScroll();
     };
     const open = () => {
       panel.classList.remove('hidden');
@@ -157,8 +165,11 @@ const isProjects =
       requestAnimationFrame(() => panel.classList.add('is-open'));
       hamburger.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
-      // Stop the page scrolling behind the full-screen overlay.
-      document.body.style.overflow = 'hidden';
+      // Stop the page scrolling behind the full-screen overlay. Lock <html>, never <body>: Lenis clips <html> while it is stopped, and a
+      // <body> with overflow of its own then stops being the viewport's and becomes a scroll container, which unpins the sticky bar
+      // (the menu is inside it) to the top of the page, out of view. Lenis scrolls with scrollTo(), which overflow does not stop: pause it too.
+      root.style.overflow = 'hidden';
+      stopScroll();
     };
 
     toggle.addEventListener('click', () => {
@@ -166,18 +177,21 @@ const isProjects =
       isOpen ? close() : open();
     });
 
-    document.addEventListener('keydown', (event) => {
-      if (event.key !== 'Escape') return;
-      if (toggle.getAttribute('aria-expanded') !== 'true') return;
-      close();
-      toggle.focus();
-    });
-
     panel.querySelectorAll<HTMLAnchorElement>('[data-menu-link]').forEach((a) => {
       a.addEventListener('click', () => close());
     });
   }
 
+  // One Escape handler for the whole session: the nav it closes is replaced on every navigation.
+  document.addEventListener('keydown', (event) => {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    if (event.key !== 'Escape' || toggle?.getAttribute('aria-expanded') !== 'true') return;
+    toggle.click();
+    toggle.focus();
+  });
+
+  // The direct call serves a browser without the View Transitions API, where the router never loads and
+  // astro:page-load never fires (BaseLayout: fallback="none").
   setupNavbar();
   document.addEventListener('astro:page-load', setupNavbar);
 </script>

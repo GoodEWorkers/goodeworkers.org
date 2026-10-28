@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}'],
+  // hover: utilities only apply where the device can hover, so a tap never leaves hover:scale-105 stuck on.
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     extend: {
       fontFamily: {
@@ -15,9 +17,11 @@ export default {
         orange: '#FD5E09',
         yellow: '#FDC959',
         white: '#F8F8F8',
-        // Pure white, reserved for the label on an orange CTA fill. The brand
-        // off-white sits at 2.92:1 on #FD5E09 — just under the 3:1 large-text
-        // floor — where pure white clears it at 3.10:1. See issue #48.
+        // Pure white, for every label and icon on an orange fill (and the labels
+        // on the pantone tile). The brand off-white sits at 2.92:1 on #FD5E09,
+        // just under the 3:1 large-text floor, where pure white clears it at
+        // 3.10:1: a designer decision for the small labels too (review of
+        // 28 Oct 2026). See issue #48.
         'white-pure': '#FFFFFF',
         grey: '#ECECEC',
         black: '#111111',
@@ -29,6 +33,5 @@ export default {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('@headlessui/tailwindcss')({ prefix: 'ui' }),
   ],
 };

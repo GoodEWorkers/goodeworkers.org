@@ -24,6 +24,7 @@ const month = formatContributionMonth(contributor.data.lastContribution, lang);
 <a
   href={contributorPath(lang, contributor.id)}
   aria-label={strings.profileLabel(name)}
+  data-tilt
   class="group block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange"
 >
   <div class="overflow-hidden rounded-xl bg-black">
@@ -35,14 +36,14 @@ const month = formatContributionMonth(contributor.data.lastContribution, lang);
           width={480}
           height={480}
           class:list={[
-            'aspect-square w-full object-cover transition-transform duration-200 ease-in group-hover:scale-105',
+            'aspect-square w-full object-cover transition-transform duration-200 ease-in group-hover:scale-105 group-focus-visible:scale-105',
             avatarColorClass(contributor.data.avatarColor),
           ]}
         />
       ) : (
         <div
           aria-hidden="true"
-          class="aspect-square w-full flex items-center justify-center bg-purple/15 font-clash font-bold text-5xl md:text-6xl text-purple transition-transform duration-200 ease-in group-hover:scale-105"
+          class="aspect-square w-full flex items-center justify-center bg-purple/15 font-clash font-bold text-5xl md:text-6xl text-purple transition-transform duration-200 ease-in group-hover:scale-105 group-focus-visible:scale-105"
         >
           {contributorInitials(contributor)}
         </div>
@@ -50,7 +51,7 @@ const month = formatContributionMonth(contributor.data.lastContribution, lang);
     }
   </div>
   <h2
-    class="mt-4 font-clash font-bold text-xl md:text-2xl leading-tight text-grey transition-colors duration-200 group-hover:text-orange"
+    class="mt-4 font-clash font-bold text-xl md:text-2xl leading-tight text-grey transition-colors duration-200 group-hover:text-orange group-focus-visible:text-orange"
   >
     {name}
   </h2>

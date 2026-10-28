@@ -25,7 +25,8 @@ const MAX_INK_W = W * 0.86;
 const MAX_INK_H = H * 0.74;
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: SCALE });
+// Animations are gated on prefers-reduced-motion; capture the settled frame.
+const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: SCALE, reducedMotion: 'reduce' });
 await page.goto(URL, { waitUntil: 'networkidle' });
 await page.evaluate(() => document.fonts.ready);
 

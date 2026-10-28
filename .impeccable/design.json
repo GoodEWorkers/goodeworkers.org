@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-29T11:13:55+00:00",
+  "generatedAt": "2026-10-06T10:55:36+00:00",
   "title": "Design System: GoodEWorkers",
   "extensions": {
     "colorMeta": {
@@ -158,7 +158,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Page H1s on the dark ground (Inter 500; 36px to 72px, homepage to 74px)."
+        "purpose": "Page H1s on the dark ground (Inter 500). Job-boards H1 36px to 72px; shared split header (values, initiatives) 56px to 96px; homepage hero to 74px."
       },
       "headline": {
         "displayName": "Headline",
@@ -166,7 +166,15 @@
       },
       "title": {
         "displayName": "Title",
-        "purpose": "ClashDisplay 600 names a visitor clicks: board and tool names."
+        "purpose": "ClashDisplay 600 names a visitor clicks in a list: board and tool names."
+      },
+      "value-name": {
+        "displayName": "Value Name",
+        "purpose": "ClashDisplay 600 value name: 36px to 60px (fluid) on the charter tiles, 36px to 40px in the homepage list, 36px to 72px as value-row headings. In the value's ink on the dark ground; tile names take the tile's text colour."
+      },
+      "door-action": {
+        "displayName": "Door Action",
+        "purpose": "ClashDisplay 700 action at the foot of a door card: 24px, 30px from lg, 32px at xl, before the black arrow circle."
       },
       "cta": {
         "displayName": "CTA",
@@ -178,7 +186,7 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Nav, filter pills, field labels, table headers (Inter 700). Note: Inter 500/700 currently render at 400; see The Hollow Bold Rule."
+        "purpose": "Nav, filter pills, field labels, table headers (Inter 700). Inter 500 and 700 render as Regular by design; see The Two-Weight Inter Rule."
       }
     },
     "shadows": [
@@ -210,6 +218,11 @@
         "purpose": "Mobile menu overlay."
       },
       {
+        "name": "nudge",
+        "value": "translate 4px (arrow: down on tiles, right on doors), 200-300ms ease-out",
+        "purpose": "Arrow circle responds inside a hovered tile or door."
+      },
+      {
         "name": "toolbar-stuck",
         "value": "box-shadow 200ms ease-out",
         "purpose": "Stuck toolbar hairline fade."
@@ -218,6 +231,116 @@
         "name": "reduced-motion",
         "value": "transitions 0.01ms, scroll-behavior auto",
         "purpose": "prefers-reduced-motion override in global.css."
+      },
+      {
+        "name": "ease-out",
+        "value": "expo.out",
+        "purpose": "GSAP ease for reveals, split lines and staggered grids. Big things move slower than small ones."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "expo.inOut",
+        "purpose": "GSAP ease for the page curtain (transitions.ts)."
+      },
+      {
+        "name": "ease-soft",
+        "value": "power3.out",
+        "purpose": "Hovers and small settles: card tilt (0.3s), nav hide (0.25s), refiltered job rows (0.4s)."
+      },
+      {
+        "name": "line-reveal",
+        "value": "1.0-1.3s, stagger 0.06-0.1, ease-out (data-split lines: 1.2s, 0.08)",
+        "purpose": "Masked text lines rising into view on scroll (data-split)."
+      },
+      {
+        "name": "clip-reveal",
+        "value": "1.2-1.6s, ease-out, clip-path inset 100% to 0% (data-reveal clip and scale: 1.4s)",
+        "purpose": "Clip-path reveal. The clip is cleared at the end so focus rings are not cut."
+      },
+      {
+        "name": "curtain",
+        "value": "0.8-1.1s, ease-in-out (leave 0.8s, enter 0.9s)",
+        "purpose": "Paper sheet (#curtain, #F8F8F8, 24px top corners) that covers the page between navigations (transitions.ts). No sheet for back and forward, or under reduced motion."
+      },
+      {
+        "name": "hero-window",
+        "value": "clip-path inset, scrubbed, linear to scroll, from clamp(top 90%) to top 35%; closed at 14% of the height from the top, 6% of the width at the sides (capped where the content starts: 32px from lg; 96px from xl, where the hero's row adds 96px of its own and the window stays 32px clear) and 10% at the bottom; open at the sheet's own radius",
+        "purpose": "Signature 1: the hero sheet opens like a window as it scrolls into view."
+      },
+      {
+        "name": "lamp",
+        "value": "radial-gradient 60vmax at --lamp-x / --lamp-y (fallback 50% 40%): rgb(253 190 100 / 0.11) at the centre, rgb(253 94 9 / 0.07) at 30%, rgb(253 94 9 / 0.03) at 52%, transparent at 70%",
+        "purpose": "Signature 2: a warm glow on the #111 ground that follows the pointer (the scroll on touch). An amber core at about 10% alpha, falling off through orange, so the ground still reads #111."
+      },
+      {
+        "name": "nav-hide",
+        "value": "yPercent -100 and opacity 0 over 0.25s, ease-soft",
+        "purpose": "Floating nav hides on scroll down past 80px and returns on scroll up. Off on pages with data-nav-static."
+      },
+      {
+        "name": "title-3d",
+        "value": "translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg) to rest, power2.inOut, stagger 0.02",
+        "purpose": "3D word swing on the section titles (data-title)."
+      },
+      {
+        "name": "card-tilt",
+        "value": "rotate up to 2.5deg, scale 0.97, 0.3s, ease-soft",
+        "purpose": "Pointer tilt on service and Why cards (data-tilt). Tilt only, no highlight. Skipped on touch."
+      },
+      {
+        "name": "letter-roll",
+        "value": "translate 0 to -105% on hover or focus, 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)",
+        "purpose": "Letter roll on the nav text links and Contact pill and the language switcher (data-roll). The footer email has none: its underline is its hover."
+      },
+      {
+        "name": "path-draw",
+        "value": "stroke-dashoffset 1 to 0 on each path.draw[pathLength] in an svg[data-draw], 1.2s expo.out, 0.12s stagger, once when the top reaches 80%",
+        "purpose": "No surface uses svg[data-draw] now (the engine keeps it). The Why arrow keeps its own scrubbed draw (home.ts)."
+      },
+      {
+        "name": "illustration-reveal",
+        "value": "[data-illo-slot] wears data-reveal=\"fade\": opacity 0 to 1 over 1s expo.out, once, when its top reaches 85% of the viewport (at load on the first screen)",
+        "purpose": "An illustration fades in as it comes into view: one generic reveal for every system, nothing animates inside a drawing. The hidden state is CSS gated on html.motion, so with motion off, without JS or when the engine fails, the default set shows whole."
+      },
+      {
+        "name": "illustration-swap",
+        "value": "picker.ts: a swapped drawing fades opacity 0 to 1 over 0.3s power3.out where html.motion is set, at once otherwise",
+        "purpose": "Only the designer's picker (?pick, ?illo=) swaps a drawing; visitors never see it. A short fade, so the choice reads as a change and not a flicker."
+      },
+      {
+        "name": "footer-logo",
+        "value": "svg[data-stagger] on the inline one-line logotype (goodeworkers-line.svg) in the footer band: each of its five paths rises 32 units (more than the lockup is tall, so the svg's own edge masks it), scales up from .96 and fades in, 1s expo.out, 0.06s apart in file order (orange e, Workers, lavender k, Good, star burst last), once the logo's top reaches 80% of the viewport; data-logo on its wrapper turns the star burst 360deg in 6s, linear and repeating, on hover only (none on touch)",
+        "purpose": "The footer closes with the logotype itself, on one line, staggered in, the star spinning on hover: a decorative, aria-hidden finale as wide as the column's content (the logotype's line), about 9:1. Whole without JS and under reduced motion."
+      },
+      {
+        "name": "mark-pop",
+        "value": "scale 0.6 to 1, 0.8s expo.out, 0.2s delay, 0.06s stagger, starts with the nearest reveal or stagger",
+        "purpose": "In use by icon-pop: the hero and Why card icons. The engine reads it for any mark inside a reveal or stagger, so a mark grows in with the item it belongs to."
+      },
+      {
+        "name": "icon-pop",
+        "value": "data-pop on the hero and Why card icons: scale 0.6 to 1, 0.8s expo.out, 0.2s delay, 0.06s stagger, starting with the card stagger",
+        "purpose": "The card icons are filled shapes, so each grows in as its card rises. The only markup that sets data-pop."
+      },
+      {
+        "name": "tile-tilt",
+        "value": "data-tilt on the charter tiles and door cards: rotate up to 2.5deg, scale 0.97, 0.3s, ease-soft; no CSS hover scale on the element",
+        "purpose": "Value tiles and Initiatives door cards tilt toward the pointer. Tilt only, no highlight on hover or focus. Skipped on touch."
+      },
+      {
+        "name": "value-underline",
+        "value": "background-size 0% → 100% (2px line at the bottom), 0.5s ease-out, on hover or focus",
+        "purpose": "Homepage value names: the underline draws in as the name is pointed at or focused."
+      },
+      {
+        "name": "value-band",
+        "value": "two background layers of one gradient in the value's ink, anchored bottom left: a 3px underline always at 100% width, and a band as tall as the text growing 0% → 100% of the width over 0.5s ease-out on hover or focus (background-size, never text-decoration); the text takes the value's on colour over the same time (#111, white on Care's orange); box-decoration-break: clone",
+        "purpose": "The Initiatives values statement, and the open-source link on the values page: each phrase links to its value's row. One painter for the band and the underline, so no seam shows between them at any frame."
+      },
+      {
+        "name": "hash-glide",
+        "value": "same-page #hash link: Astro keeps the history entry, scroll restored, then a Lenis glide to the target (scroll-margin honoured); :target tint #1D1D1D on the row, fading in over 0.7s",
+        "purpose": "A charter tile glides to its value row on the same page, which then shows its tint. Back restores the place without a glide. Skip links stay native. From another page the row fades in place instead of rising."
       }
     ],
     "breakpoints": [
@@ -261,12 +384,20 @@
       "css": ".ds-cta-y{display:flex;flex-direction:column;align-items:center;width:100%;max-width:336px;padding:20px 28px;border-radius:9999px;background:#FDC959;color:#111111;text-decoration:none;transition:transform 150ms ease-in;} .ds-cta-y:hover{transform:scale(1.05);} .ds-cta-y:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-cta-y-small{font-family:Inter, Arial, sans-serif;font-weight:500;font-size:16px;} .ds-cta-y-big{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:36px;line-height:1.1;}"
     },
     {
-      "name": "Nav Contact Pill",
+      "name": "Two-Line Pill",
+      "kind": "button",
+      "refersTo": "button-cta-orange-two-line",
+      "description": "The homepage values pill: orange, a small Inter line (Read) over a ClashDisplay label (our values), both pure white (3.1:1 on orange, a designer decision). Scales to 105% on hover.",
+      "html": "<a class=\"ds-cta-2\" href=\"#\"><span class=\"ds-cta-2-small\">Read</span><span class=\"ds-cta-2-big\">our values</span></a>",
+      "css": ".ds-cta-2{display:flex;flex-direction:column;align-items:center;padding:20px 28px;border-radius:9999px;background:#FD5E09;color:#FFFFFF;text-decoration:none;transition:transform 150ms ease-in;} .ds-cta-2:hover{transform:scale(1.05);} .ds-cta-2:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-cta-2-small{font-family:Inter, Arial, sans-serif;font-weight:500;font-size:16px;} .ds-cta-2-big{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:40px;line-height:1.1;}"
+    },
+    {
+      "name": "Navigation",
       "kind": "nav",
       "refersTo": "nav-contact",
-      "description": "Sticky #111 navbar with the orange-outline Contact pill that fills orange on hover.",
-      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-logo\">GoodEWorkers</span><div class=\"ds-nav-right\"><a class=\"ds-nav-contact\" href=\"#\">Contact</a><span class=\"ds-nav-lang\">EN <span>FR</span></span></div></nav>",
-      "css": ".ds-nav{display:flex;justify-content:space-between;align-items:center;background:#111111;color:#ECECEC;padding:16px 32px;font-family:Inter, Arial, sans-serif;font-weight:700;} .ds-nav-logo{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:22px;color:#FD5E09;} .ds-nav-right{display:flex;align-items:center;gap:32px;} .ds-nav-contact{border:2px solid #FD5E09;border-radius:9999px;padding:4px 12px;color:#ECECEC;text-decoration:none;transition:background-color 200ms ease-in,color 200ms ease-in;} .ds-nav-contact:hover{background:#FD5E09;color:#111111;} .ds-nav-contact:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-nav-lang span{opacity:.6;}"
+      "description": "Sticky #111 navbar: Initiatives text link (orange on hover, yellow with underline when current) and the orange-outline Contact pill.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-logo\">GoodEWorkers</span><div class=\"ds-nav-right\"><a class=\"ds-nav-link\" href=\"#\" aria-current=\"page\">Initiatives</a><a class=\"ds-nav-contact\" href=\"#\">Contact</a><span class=\"ds-nav-lang\">EN <span>FR</span></span></div></nav>",
+      "css": ".ds-nav{display:flex;justify-content:space-between;align-items:center;background:#111111;color:#ECECEC;padding:16px 32px;font-family:Inter, Arial, sans-serif;font-weight:700;} .ds-nav-logo{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:22px;color:#FD5E09;} .ds-nav-right{display:flex;align-items:center;gap:32px;} .ds-nav-link{display:block;padding-bottom:4px;border-bottom:2px solid transparent;color:#ECECEC;text-decoration:none;transition:color 200ms;} .ds-nav-link:hover{color:#FD5E09;} .ds-nav-link[aria-current=page]{color:#FDC959;border-bottom-color:#FDC959;} .ds-nav-link:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-nav-contact{border:2px solid #FD5E09;border-radius:9999px;padding:4px 12px;color:#ECECEC;text-decoration:none;transition:background-color 200ms ease-in,color 200ms ease-in;} .ds-nav-contact:hover{background:#FD5E09;color:#111111;} .ds-nav-contact:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-nav-lang span{opacity:.6;}"
     },
     {
       "name": "Kind Filter Pills",
@@ -288,7 +419,7 @@
       "name": "Light Sheet",
       "kind": "card",
       "refersTo": "panel-light",
-      "description": "The #F8F8F8 working surface, rounded and broken out to the column edges on the #111 ground.",
+      "description": "The #F8F8F8 working surface: a `.sheet`, rounded and broken out to the column edges on the #111 ground, the same width as every dark card and the footer's contact sheet.",
       "html": "<div class=\"ds-ground\"><section class=\"ds-sheet\"><h2 class=\"ds-sheet-title\">All 29 boards</h2><p class=\"ds-sheet-text\">Working content sits on the sheet; statements sit on the ground.</p></section></div>",
       "css": ".ds-ground{background:#111111;padding:32px 0;} .ds-sheet{background:#F8F8F8;color:#111111;border-radius:24px;padding:48px 32px 56px;font-family:Inter, Arial, sans-serif;} .ds-sheet-title{font-weight:500;font-size:36px;line-height:1.25;margin:0;} .ds-sheet-text{margin-top:16px;font-size:16px;line-height:1.6875;color:rgb(17 17 17 / .8);}"
     },
@@ -307,28 +438,78 @@
       "description": "Dense one-line row: ClashDisplay name stretched over the row, visited dims to black/60, kind dot with label, external host.",
       "html": "<table class=\"ds-table\"><thead><tr><th>Board</th><th>Good for</th><th>Kind</th><th>Site</th></tr></thead><tbody><tr class=\"ds-row\"><th scope=\"row\"><a class=\"ds-row-name\" href=\"#\">We Work Remotely</a></th><td>A long-running remote-only board with tech and non-tech roles.</td><td><span class=\"ds-kind\"><span class=\"ds-dot\"></span>Remote-only boards</span></td><td class=\"ds-host\">weworkremotely.com <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4.75 11.25L11.25 4.75M6.25 4.75H11.25V9.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></td></tr></tbody></table>",
       "css": ".ds-table{width:100%;border-collapse:collapse;text-align:left;background:#F8F8F8;color:#111111;font-family:Inter, Arial, sans-serif;} .ds-table thead tr{border-bottom:2px solid #111111;font-size:14px;} .ds-table th,.ds-table td{padding:20px 24px 20px 0;vertical-align:top;} .ds-table thead th{padding:12px 24px 12px 0;font-weight:700;} .ds-row{position:relative;border-bottom:1px solid rgb(17 17 17 / .1);transition:background-color 150ms;} .ds-row:hover{background:#ECECEC;} .ds-row td{font-size:16px;line-height:1.625;} .ds-row-name{font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:20px;color:#111111;text-decoration:none;text-underline-offset:4px;text-decoration-thickness:2px;} .ds-row-name::after{content:'';position:absolute;inset:0;} .ds-row-name:hover{text-decoration-line:underline;} .ds-row-name:visited{color:rgb(17 17 17 / .6);} .ds-row-name:focus-visible{outline:none;} .ds-row-name:focus-visible::after{outline:2px solid #FD5E09;outline-offset:-2px;} .ds-kind{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:rgb(17 17 17 / .7);white-space:nowrap;} .ds-dot{width:10px;height:10px;border-radius:9999px;background:#FDC959;} .ds-host{font-size:14px;color:rgb(17 17 17 / .7);}"
+    },
+    {
+      "name": "Value Tile",
+      "kind": "card",
+      "refersTo": "value-tile-solidarity",
+      "description": "Signature: one value as a colour field link, set in the charter's dark card. ClashDisplay name (fluid), Inter bold tagline, outlined arrow-down circle, illustration (tile context: black ink, paper light and spill) bottom-right, 52% of the tile, in the corner. It fades in. Tilts toward the pointer (data-tilt, tilt only, no CSS scale; the preview shows a fixed lean). Pantone tile shown (pure-white labels). No community row.",
+      "html": "<section class=\"ds-charter\"><div class=\"ds-tiles\"><a class=\"ds-tile\" style=\"background:#FDC959;color:#111111\" href=\"#\"><span class=\"ds-tile-name\">Openness</span><span class=\"ds-tile-tag\">We work in the open.</span><span class=\"ds-tile-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3V13M3.75 8.75L8 13L12.25 8.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tile-art\"></span></a><a class=\"ds-tile\" style=\"background:#6667AB;color:#FFFFFF\" href=\"#\"><span class=\"ds-tile-name\">Solidarity</span><span class=\"ds-tile-tag\">We stand with each other.</span><span class=\"ds-tile-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 3V13M3.75 8.75L8 13L12.25 8.75\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span class=\"ds-tile-art\"></span></a></div></section>",
+      "css": ".ds-charter{background:#1D1D1D;color:#ECECEC;padding:32px 24px;border-radius:16px;} .ds-tiles{display:grid;grid-template-columns:1fr 1fr;gap:20px;} .ds-tile{position:relative;display:flex;flex-direction:column;min-height:22rem;overflow:hidden;border-radius:24px;padding:32px;text-decoration:none;outline:1px solid transparent;transform:perspective(700px) rotateX(1.2deg) rotateY(-1.2deg);transition:transform 300ms cubic-bezier(0.165,0.84,0.44,1);} .ds-tile:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;} .ds-tile-name{position:relative;z-index:1;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:clamp(2.25rem,4.2vw,3.75rem);line-height:1;} .ds-tile-tag{position:relative;z-index:1;margin-top:12px;max-width:14rem;font-family:Inter, Arial, sans-serif;font-weight:700;font-size:18px;line-height:1.375;} .ds-tile-arrow{position:relative;z-index:1;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:2px solid currentColor;border-radius:9999px;transition:transform 200ms ease-out;} .ds-tile:hover .ds-tile-arrow,.ds-tile:focus-visible .ds-tile-arrow{transform:translateY(4px);} .ds-tile-art{position:absolute;right:-4%;bottom:-4%;width:52%;height:55%;border:2px solid #111111;border-radius:40% 40% 0 0;background:#F8F8F8;}"
+    },
+    {
+      "name": "Value Row",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "A value as text on the night ground: a ClashDisplay name in the value's ink, an Inter bold tagline and Ash prose. No stations, dashed lines or hairlines. From lg the value's illustration (night context) sits under the tagline, in a 288x207 box one step up on the night (#1D1D1D, #111 on a targeted row) that clips what spills over its edge. A row a tile links to takes a #1D1D1D card with the charter's own edges that fades in (:target).",
+      "html": "<div class=\"ds-rows\"><article class=\"ds-vrow\"><h3 class=\"ds-vrow-name\" style=\"color:#B3A0CF\">Autonomy</h3><p class=\"ds-vrow-tag\">We trust people to own their work.</p><p class=\"ds-vrow-text\">Prose in Ash, at most 42rem wide.</p></article><article class=\"ds-vrow ds-vrow-target\"><h3 class=\"ds-vrow-name\" style=\"color:#8E8ED0\">Solidarity</h3><p class=\"ds-vrow-tag\">We stand with each other.</p><p class=\"ds-vrow-text\">Prose in Ash, at most 42rem wide.</p></article></div>",
+      "css": ".ds-rows{background:#111111;color:#ECECEC;padding:24px;font-family:Inter, Arial, sans-serif;} .ds-vrow{padding:40px 32px;border-radius:24px;} .ds-vrow-target{background:#1D1D1D;} .ds-vrow-name{margin:0;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:600;font-size:64px;line-height:1;} .ds-vrow-tag{margin:16px 0 0;font-weight:700;font-size:24px;line-height:1.375;} .ds-vrow-text{margin:24px 0 0;max-width:42rem;font-size:16px;line-height:1.6875;color:#E0E0E0;}"
+    },
+    {
+      "name": "Illustration (slot)",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "One illustration per value and one for the Initiatives focus: inline SVG in a slot (data-illo-slot, data-reveal=\"fade\"), in one of seven drawing styles, each drawn five times. A drawing paints with --ink, --light and --spill, and the slot's context sets them: tile (black ink, paper light, paper spill at 60%), night (pale ink, the subject's colour spills) and paper (black ink, the subject's colour as the light, 55% of it as the spill). Flat: no gradient, filter or shadow. aria-hidden. A designer's picker (?pick) swaps the style live (a style whose file is missing is a disabled thumbnail). The preview shows the three grounds with a plain mark.\nStyles (slug: method), the first is the default; round 1's other abstract sets were retired:\n- bands: warped bands parting around a quiet zone (round 1, kept; the one abstract style).\n- pictogram: Swiss pictograms after Aicher and Isotype, parts on one 6-unit module, angles at 0, 45 and 90 degrees.\n- leaded: a leaded window, glass cells between 6-unit cames in three values, a transom across the top.\n- cutout: paper cut-out collage, three papers (dark, tint, light) stacked and scissor-cut, no outlines.\n- halftone: halftone pop, Ben-Day dots on one 45-degree lattice, dot size meaning light.\n- monoline: one line, a single even stroke weight.\n- isoscene: an isometric scene, a flat room on the isometric grid.",
+      "html": "<div class=\"ds-illo-grounds\"><figure class=\"ds-illo ds-illo-tile\"><figcaption>tile</figcaption><span class=\"ds-illo-mark\"></span></figure><figure class=\"ds-illo ds-illo-night\"><figcaption>night</figcaption><span class=\"ds-illo-mark\"></span></figure><figure class=\"ds-illo ds-illo-paper\"><figcaption>paper</figcaption><span class=\"ds-illo-mark\"></span></figure></div>",
+      "css": ".ds-illo-grounds{display:flex;gap:16px;padding:24px;background:#111111;font-family:Inter, Arial, sans-serif;font-size:12px;} .ds-illo{position:relative;isolation:isolate;margin:0;width:160px;height:120px;border-radius:16px;overflow:hidden;} .ds-illo figcaption{position:absolute;left:12px;top:10px;} .ds-illo-mark{position:absolute;left:50%;bottom:16px;width:44px;height:56px;margin-left:-22px;border-radius:8px;border:3px solid #111111;background:#F8F8F8;} .ds-illo-mark::before{content:'';position:absolute;z-index:-1;inset:-12px;border-radius:18px;background:var(--spill);} .ds-illo-tile{background:#B3A0CF;color:#111111;--spill:rgb(248 248 248 / .6);} .ds-illo-night{background:#1D1D1D;color:#ECECEC;--spill:#B3A0CF;} .ds-illo-night .ds-illo-mark{border-color:#ECECEC;} .ds-illo-paper{background:#F8F8F8;color:#111111;--spill:rgb(253 201 89 / .55);} .ds-illo-paper .ds-illo-mark{background:#FDC959;}"
+    },
+    {
+      "name": "Interchange",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "The closing statement on the values page: the H2 at the left, the copy in the right column, and the orange pill below it. No drawn lines. The H2 words split in on view; the pill's label scales with its column from lg.",
+      "html": "<section class=\"ds-ix\"><h2 class=\"ds-ix-title\">Putting our values into <span class=\"ds-circ\">practice</span></h2><p class=\"ds-ix-copy\">Each year, we commit to one to three initiatives. This gives our community a shared focus.</p><a class=\"ds-ix-pill\" href=\"#\">Explore our initiatives</a></section>",
+      "css": ".ds-ix{background:#111111;color:#ECECEC;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:20px;align-items:end;font-family:Inter, Arial, sans-serif;} .ds-ix-title{grid-row:span 2;max-width:40rem;margin:0;font-weight:500;font-size:54px;line-height:1.2;} .ds-circ{position:relative;display:inline-block;} .ds-circ::after{content:'';position:absolute;left:-6px;right:-6px;top:25%;height:62%;border:2px solid #FD5E09;border-radius:9999px;} .ds-ix-copy{margin:0;font-size:16px;line-height:1.6875;color:rgb(224 224 224 / .8);} .ds-ix-pill{justify-self:start;margin-top:32px;padding:20px 48px;border-radius:9999px;background:#FD5E09;color:#FFFFFF;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:36px;line-height:1.1;text-decoration:none;transition:transform 150ms ease-in;} .ds-ix-pill:hover{transform:scale(1.05);} .ds-ix-pill:focus-visible{outline:2px solid #FD5E09;outline-offset:2px;}"
+    },
+    {
+      "name": "Door Card",
+      "kind": "card",
+      "refersTo": "door-card-yellow",
+      "description": "A way in: yellow (organisations) or lavender (contributors) field, echoing the homepage's two path pills. Balanced 22ch question, Inter line, and a ClashDisplay action with a black arrow circle, aligned across the two cards from md (subgrid). The card tilts toward the pointer (data-tilt, tilt only, no CSS scale; the preview shows a fixed lean) and shows its ring when the link has keyboard focus.",
+      "html": "<ul class=\"ds-doors\"><li class=\"ds-door\" style=\"background:#FDC959\"><p class=\"ds-door-q\">Are you a health organisation?</p><p class=\"ds-door-t\">Tell us what you need.</p><a class=\"ds-door-a\" href=\"#\">Write to us<span class=\"ds-door-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 8H13M8.75 3.75L13 8L8.75 12.25\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></a></li><li class=\"ds-door\" style=\"background:#B3A0CF\"><p class=\"ds-door-q\">Want to lend your skills?</p><p class=\"ds-door-t\">Tell us what you can do.</p><a class=\"ds-door-a\" href=\"#\">Offer your help<span class=\"ds-door-arrow\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 8H13M8.75 3.75L13 8L8.75 12.25\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></a></li></ul>",
+      "css": ".ds-doors{display:grid;grid-template-columns:1fr 1fr;gap:20px;list-style:none;margin:0;background:#111111;padding:24px;} .ds-door{position:relative;display:flex;flex-direction:column;min-height:22rem;border-radius:24px;padding:40px;color:#111111;font-family:Inter, Arial, sans-serif;outline:1px solid transparent;transform:perspective(700px) rotateX(1.2deg) rotateY(-1.2deg);transition:transform 300ms cubic-bezier(0.165,0.84,0.44,1);} .ds-door:has(:focus-visible){outline:2px solid #FD5E09;outline-offset:2px;} .ds-door-q{max-width:22ch;margin:0;font-weight:500;font-size:28px;line-height:1.25;text-wrap:balance;} .ds-door-t{margin:16px 0 0;font-size:18px;} .ds-door-a{margin-top:auto;padding-top:40px;display:inline-flex;align-items:center;gap:12px;align-self:flex-start;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:30px;line-height:1.25;color:#111111;text-decoration:none;outline:none;} .ds-door-a::after{content:'';position:absolute;inset:0;border-radius:inherit;} .ds-door-arrow{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:9999px;background:#111111;color:#ECECEC;transition:transform 200ms ease-out;} .ds-door:hover .ds-door-arrow,.ds-door:has(:focus-visible) .ds-door-arrow{transform:translateX(4px);}"
+    },
+    {
+      "name": "404 Card",
+      "kind": "card",
+      "refersTo": "",
+      "description": "The 404 page: a dark card, a `.sheet` like every surface (the column's width, the gutter as its side padding). The numeral is ClashDisplay 700 in orange, 27vw capped at 25rem, bleeding off the card's right and bottom edges (aria-hidden). The words sit on the card's padding. The pill's focus ring is white, as on the thanks page.",
+      "html": "<div class=\"ds-404\"><p class=\"ds-404-num\" aria-hidden=\"true\">404</p><div class=\"ds-404-words\"><h1 class=\"ds-404-title\">Page not found</h1><p class=\"ds-404-text\">Sorry, we couldn't find the page you're looking for.</p><a class=\"ds-404-pill\" href=\"#\">Go back home</a></div></div>",
+      "css": ".ds-404{position:relative;overflow:hidden;background:#1D1D1D;color:#FFFFFF;border-radius:24px;padding:48px 32px;min-height:26rem;font-family:Inter, Arial, sans-serif;} .ds-404-num{position:absolute;right:-0.07em;bottom:-0.25em;margin:0;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:clamp(15rem,27vw,25rem);line-height:1;color:#FD5E09;white-space:nowrap;user-select:none;} .ds-404-words{position:relative;max-width:26rem;} .ds-404-title{margin:0;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:48px;line-height:1.1;} .ds-404-text{margin:24px 0 0;font-size:18px;color:#E0E0E0;} .ds-404-pill{display:inline-block;margin-top:48px;padding:20px 32px;border-radius:9999px;background:#FD5E09;color:#FFFFFF;font-family:ClashDisplay, 'Arial Narrow', Impact, system-ui, sans-serif;font-weight:700;font-size:24px;line-height:1.25;text-decoration:none;} .ds-404-pill:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}"
     }
   ],
   "narrative": {
     "northStar": "The Lit Window at Night",
-    "overview": "The site is a near-black room with one bright, warm sheet laid on it. The dark ground (#111) carries the big statements, and the off-white sheet (#F8F8F8), rounded and pulled out to the column edges, carries the working material: the hero's service grid, the job-board table, the contact form. Colour is warm and used sparingly: orange for the one thing to do, yellow and lavender for the other paths, and a single hand-circled word in orange that marks what the heading is about.\n\nIt feels made by people, not by a template. Photos overlap at offset angles, the card grid is irregular, and the CTAs are fat pills with a heavy geometric label that grow slightly when hovered. Density depends on the ground: statements on the dark ground are centred and roomy, while working content on the light sheet can be dense, down to one line per row, because that is where the visitor gets things done.\n\nThe system is flat. It builds depth from the contrast between the two grounds, from panels overlapping, and from scale on hover. Shadows are not part of it.",
+    "overview": "The site is a near-black room with one bright, warm sheet laid on it. The dark ground (#111) carries the big statements, and the off-white sheet (#F8F8F8), rounded and pulled out to the column edges, carries the working material: the hero's service grid, the job-board table, the contact form. Colour is warm and used sparingly: orange for the one thing to do, yellow and lavender for the other paths, and a single hand-circled word in orange that marks what the heading is about.\n\nIt feels made by people, not by a template. Photos overlap at offset angles, the card grid is irregular, and the CTAs are fat pills with a heavy geometric label that grow slightly when hovered. Density depends on the ground: statements on the dark ground are centred and roomy, while working content on the light sheet can be dense, down to one line per row, because that is where the visitor gets things done.\n\nFour colours also stand for the four values (Openness, Autonomy, Care, Solidarity) and keep that meaning wherever a value appears: the tile fill, the value's name on the dark ground, and the underline under its phrase in the Initiatives statement. The illustrations are a commission of drawing styles, one style drawn five times: flat, geometric, one ink and one spill colour, so the \"made by people\" feeling carries into the pictures as a hand on the construction.\n\nThe system is flat. It builds depth from the contrast between the two grounds, from panels overlapping, and from scale on hover. Shadows are not part of it.",
     "keyCharacteristics": [
       "Two grounds: #111 near-black and the #F8F8F8 rounded sheet, alternating down the page.",
       "One orange ring around one word per heading.",
-      "Warm accents (orange, yellow, lavender) as fills on pills and cards, or as small dots, never as large text fields.",
+      "Accents work as fills (pills, cards, value tiles, door cards), as dots and lines, or as a state (hover, current page). They never set reading text.",
+      "Four value colours with fixed roles: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone.",
+      "An illustration for each value and for the hospital focus, in one of seven drawing styles (default: warped bands): one ink and one spill colour, inline SVG that fades in, swapped live by a designer's picker.",
       "Fat rounded pill CTAs with a ClashDisplay bold label; `hover` scales them to 105%.",
       "Flat surfaces; no resting shadows.",
-      "Inter for reading and UI; ClashDisplay for the brand name, names you click, and CTA labels."
+      "Inter for reading and UI; ClashDisplay for the brand name, names you click, value names, the 404 numeral and heading, and CTA labels."
     ],
     "rules": [
       {
         "name": "The Two Grounds Rule",
-        "body": "Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D insets on dark and #ECECEC cards on light. Don't use a mid-value ground.",
+        "body": "Every surface is either the #111 ground or the #F8F8F8 sheet, with #1D1D1D cards on dark and #ECECEC cards on light. Don't use a mid-value ground.",
         "section": "colors"
       },
       {
         "name": "The Orange Label Rule",
-        "body": "A label on an orange fill is pure white only at large bold sizes (the 30–40px ClashDisplay CTA). Smaller text on orange is black.",
+        "body": "Every label and icon on an orange fill is pure white, at every size: the CTA pills, the two-line pill, the Care tile with its arrow, the hero \"And much more\" card, the Why orange card, and the text on the band of a Care link. Pure white on #FD5E09 is 3.10:1. That passes the 3:1 large-text floor and not the 4.5:1 for small text, and the designer chose it for the smaller text on the cards and pills (14–24px) all the same (review of 28 Oct 2026), so it is recorded as a decision and not as a WCAG pass. Not moved to white yet, because nobody asked: the nav Contact hover and the pills on the contributors' and projects' pages.",
         "section": "colors"
       },
       {
@@ -337,44 +518,55 @@
         "section": "colors"
       },
       {
+        "name": "The Value Colour Rule",
+        "body": "Each value owns one colour, everywhere it appears: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone. The colour fills its tile, sets its name on the dark ground (Solidarity uses its lighter ink), and underlines its phrase in the Initiatives statement. A tile's drawing keeps a black pen and a paper light; on the night ground the value's colour is the light that spills. Never swap or reuse a value colour for a different value. Care's orange tile is a value field, not an action: on a page with the Care tile, the orange pill is still the only orange action.",
+        "section": "colors"
+      },
+      {
         "name": "The Brand Voice Rule",
-        "body": "ClashDisplay appears only for the brand name, CTA pill labels, the footer contact heading, and names a visitor clicks to leave (board and tool names). Headings and UI are set in Inter.",
+        "body": "ClashDisplay appears only for the brand name, CTA pill labels, the footer contact heading, the 404 numeral and heading, value names (on tiles, in the homepage list and as value-row headings), and names or actions a visitor clicks (board and tool names, door-card actions). Other headings, taglines, prose and UI are set in Inter.",
         "section": "typography"
       },
       {
-        "name": "The Hollow Bold Rule",
-        "body": "The system intends Inter at 500 and 700. But `src/styles/global.css` maps the single `Inter-Regular.ttf` to weights 400–700, so every Inter `font-medium` and `font-bold` currently renders at 400. Record and design to the intended weights. Don't retune sizes or colours to make up for the missing weight. This is pre-existing drift, reported to the owner, and not fixed here.",
+        "name": "The Two-Weight Inter Rule",
+        "body": "Inter ships as two static faces in `src/styles/global.css`. Inter-Regular.woff2 is declared over weights 400–700 on purpose, so every Inter `font-medium` and `font-bold` renders as Regular, with no synthetic bold, as the site was approved: the nav, the labels, the ledes and the pills all keep one weight. Inter-Bold.woff2 (a Latin subset, about 28 KB) is declared over 800–900, so only `font-extrabold` and `font-black` reach it. It is opt-in, and it is used for the Why card titles only, which are `font-extrabold`. The 500 and 700 weights in this file are the intended tokens, not what renders. Don't retune sizes or colours to make up for the weight. A new use of the Bold face, or any other change of weight, is a design change, made in the font declaration and in this rule together.",
         "section": "typography"
       },
       {
         "name": "The Shared Column Rule",
-        "body": "Content aligns to the logotype. Break out with `-mx` and re-pad; never pad twice.",
+        "body": "Every surface spans the column width, and its content aligns to the logotype. `.sheet` is the recipe: break out with `-mx-4 md:-mx-8`, re-pad with `px-4 md:px-8`. Nothing is inset, and nothing pads twice. The one exception is the hero's row, which pads again from `xl` (`xl:px-24`) to give its closed window room.",
         "section": "layout"
       },
       {
         "name": "The Flat At Rest Rule",
-        "body": "Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar does. Hover is shown with scale or colour fill.",
+        "body": "Nothing casts a shadow at rest. A shadow may appear only to show a live state, as the stuck toolbar and the floating nav do. Hover is shown with scale (CTAs), colour fill, the pointer tilt on cards, or a small nudge of an arrow or a drawing's light.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do alternate the #111 ground and the #F8F8F8 sheet, and break the sheet out to the column edge with `-mx-4 md:-mx-8 px-4 md:px-8`.",
-      "Do give each view one orange action, and use a pure-white label only on the large CTA pill.",
+      "Do alternate the #111 ground and the #F8F8F8 sheet, and put every surface, paper or dark, on `.sheet` so that it spans the column width with its content on the logotype's line.",
+      "Do give each view one orange action, and set every label and icon on an orange fill in pure white.",
       "Do encircle at most one word per heading, and pick it in the copy.",
       "Do put a text label next to every kind dot.",
-      "Do use a 2px orange outline (or ring) with a 2px offset on every focusable element.",
+      "Do use a 2px orange outline (or ring) with a 2px offset on every focusable element, except the pills on the dark thanks and 404 cards, which take a white outline.",
       "Do keep ClashDisplay for the brand name, CTA labels, the footer contact heading, and names a visitor clicks.",
-      "Do show hover with scale (CTAs) or fill (#ECECEC on the sheet, orange on the nav pill), with transitions of 150–200ms.",
-      "Do keep `prefers-reduced-motion` switching off smooth scroll and transitions."
+      "Do show hover with scale (CTAs), fill (#ECECEC on the sheet, orange on the nav pill) or the pointer tilt (cards), and keep CSS transitions to 150–200ms.",
+      "Do keep `prefers-reduced-motion` switching off smooth scroll and transitions, and keep drawn lines fully drawn and static under it.",
+      "Do give each value its own colour everywhere it appears, and keep the four roles fixed.",
+      "Do set labels on a pantone or an orange fill in pure white, and on every other value fill in #111.",
+      "Do reveal a drawn line with `path.draw[pathLength]` inside an `svg[data-draw]`, and an illustration through its slot (`data-illo-slot`, `data-reveal=\"fade\"`).",
+      "Do change an illustration in its generator, never in the SVG: keep the contract (viewBox, palette, `--ink`, `--light` and `--spill`, under 12 KB, no id), run `scripts/sync-illustrations.mjs`, and look at it on all three grounds."
     ],
     "donts": [
-      "Don't add resting shadows. The only shadow in the system is the state hairline on a stuck toolbar.",
+      "Don't add resting shadows. The only shadows in the system are the state hairlines on a stuck toolbar and the floating nav.",
       "Don't place the logo, or any surface, on a mid-value ground (`BRAND.md`).",
-      "Don't set small text in white on orange. Below large-bold size, labels on orange are black.",
+      "Don't set black text on an orange fill: labels and icons on orange are pure white at every size (3.1:1, a designer decision). The nav Contact hover and the profile pills are not moved yet.",
       "Don't use Tailwind's stock palette (gray-500/600/900, indigo-600) or stock UI recipes. Use the brand tokens and black alpha steps.",
-      "Don't add a second horizontal padding layer inside the shared column.",
-      "Don't use glyph or emoji icons. Icons are inline SVG line icons from `src/assets/icons/`, drawn in `currentColor`.",
-      "Don't add small uppercase labels above headings. The system has no eyebrow or kicker device."
+      "Don't add a second horizontal padding layer inside the shared column, and don't inset a card (`px-6`, `mx-4`, a narrower box). A surface is a `.sheet`. The hero's row (`xl:px-24`) is the one exception.",
+      "Don't use glyph or emoji icons. Icons are inline SVG from `src/assets/icons/`, drawn in `currentColor`: line arrows, and filled shapes on the feature cards.",
+      "Don't add small uppercase labels above headings. The system has no eyebrow or kicker device.",
+      "Don't hotlink or rasterise illustrations, or add a gradient, filter, shadow or id to one. Once the system is chosen the site ships that one for all five subjects; the picker is for choosing, not a feature.",
+      "Don't colour prose or taglines with a value colour. Values show their colour as fills, as the ink of their names, and as underlines."
     ]
   }
 }

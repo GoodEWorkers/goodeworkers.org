@@ -1,0 +1,43 @@
+---
+import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import CircledText from '../JobBoards/CircledText.astro';
+import Rich from '../Common/Rich.astro';
+import { typeset } from '../Common/typeset';
+import { getLangFromPath, routes } from '../../i18n/routes';
+import type { ValuesContent } from '../../i18n/pages';
+
+interface Props {
+  practice: ValuesContent['practice'];
+}
+
+const { practice } = Astro.props;
+const lang = getLangFromPath(Astro.url.pathname);
+---
+
+<!-- The closing statement, set like the page header: the heading at the left edge in two lines, the copy and the pill
+     in the right column (a charter tile wide). From lg the pill's label scales with the screen, so the pill fits that column in
+     both languages. -->
+<section
+  aria-labelledby="practice-title"
+  class="mt-24 md:mt-32 mb-20 md:mb-28 text-grey lg:grid lg:grid-cols-[minmax(0,1fr)_calc((100%-11rem-2.5rem)/2)] xl:grid-cols-[minmax(0,1fr)_calc((100%-14rem-2.5rem)/2)] lg:gap-x-5"
+>
+  <h2
+    id="practice-title"
+    class="max-w-[40rem] lg:row-span-2 text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+    data-split="words"
+  >
+    <CircledText text={practice.title} />
+  </h2>
+  <div
+    class="mt-8 lg:mt-0 lg:pt-2 max-w-[38rem] lg:max-w-none space-y-4 text-base leading-[1.6875] text-ashgray/80 text-pretty [&_strong]:text-white"
+    data-reveal="up"
+    data-delay="0.1"
+  >
+    {practice.paragraphs.map((paragraph) => <p><Rich text={typeset(paragraph, lang)} /></p>)}
+  </div>
+  <BigRoundedLinkBtn
+    bigBtmText={practice.cta}
+    href={routes.initiatives[lang]}
+    class="mt-10 md:mt-12 bg-orange text-white-pure whitespace-nowrap sm:w-fit sm:max-w-none sm:px-12 lg:max-w-full lg:px-8 xl:px-10 max-sm:px-5 [&>span]:text-2xl sm:[&>span]:text-4xl lg:[&>span]:text-[clamp(1.5rem,2.4vw,2.5rem)]"
+  />
+</section>

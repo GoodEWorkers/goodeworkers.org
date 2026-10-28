@@ -1,7 +1,12 @@
 ---
 import '../styles/global.css';
+import { ViewTransitions } from 'astro:transitions';
+import clashDisplay from '../assets/fonts/ClashDisplay-Variable.woff2';
+import interRegular from '../assets/fonts/Inter-Regular.woff2';
+import interBold from '../assets/fonts/Inter-Bold.woff2';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import IllustrationPicker from '../components/IllustrationPicker.astro';
 import {
   SITE,
   absoluteUrl,
@@ -22,10 +27,6 @@ interface Props {
   /** Set on pages that must stay out of the index (404, thank-you pages) —
    *  no canonical, no hreflang. */
   noindex?: boolean;
-  /** Opts the page out of the shared content column, for pages that manage
-   *  their own horizontal rhythm (the full-screen 404). Everything else should
-   *  leave this off — see the column note below. */
-  fullBleed?: boolean;
   /** Page-specific schema.org nodes, appended to the site-wide graph so they
    *  can reference the organization and website by @id. */
   graph?: Record<string, unknown>[];
@@ -38,7 +39,6 @@ const {
   title,
   description,
   noindex = false,
-  fullBleed = false,
   graph = [],
   contact,
 } = Astro.props;
@@ -172,9 +172,21 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang={languages[lang].htmlLang}>
+<html lang={languages[lang].htmlLang} transition:animate="none">
   <head>
     <meta charset="utf-8" />
+    <!-- Before any CSS. The hidden-before-reveal rules in global.css are gated on
+         html.motion, so content stays visible without JS and under reduced motion.
+         Failsafe: if the engine never boots (a stale hashed chunk after a deploy, a blocked
+         request) those rules would keep the page blank. boot() sets data-engine="1"; without it
+         after 4 s, motion is switched off for good (data-engine="off", which boot() then honours). A page whose own
+         chunk failed (home.ts sets data-home) loses motion the same way. The timer is armed once per full load:
+         a chunk that fails on a later client-side navigation is not caught. -->
+    <script is:inline>(function(h){h.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;h.classList.add('motion');setTimeout(function(){if(!h.dataset.engine){h.dataset.engine='off';h.classList.remove('motion')}else if(!h.dataset.home&&document.querySelector('[data-intro]'))h.classList.remove('motion')},4000)})(document.documentElement)</script>
+    <!-- Client-side navigation. The page change is the curtain in motion/transitions.ts, not the browser's
+         cross-fade (transition:animate="none" on <html>). fallback="none": a browser without the View
+         Transitions API keeps plain page loads, and the engine boots on each of them. -->
+    <ViewTransitions fallback="none" />
     <title>{pageTitle}</title>
     <!-- `maximum-scale` / `user-scalable=no` removed: they blocked pinch-zoom on
          Android Chrome and in-app webviews (WCAG 1.4.4). The layout is already
@@ -187,6 +199,16 @@ const structuredData = {
     <!-- body is #111, so without this Android Chrome keeps light browser chrome
          against a near-black page. -->
     <meta name="theme-color" content="#111111" />
+    <!-- ClashDisplay and Inter Regular render in the first viewport of every
+         page. Inter Bold only on the home page (the Why card titles, font-extrabold),
+         so elsewhere its preload goes unused. shortcut: preloaded on every page,
+         scope it to the home page if the 28 KB matters. `crossorigin` is
+         required for font preloads even on the same origin. -->
+    {
+      [clashDisplay, interRegular, interBold].map((href) => (
+        <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+      ))
+    }
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Self-referencing canonical: /index.html also resolves on Netlify, so this
@@ -248,6 +270,8 @@ const structuredData = {
     >
       {strings.nav.skipToContent}
     </a>
+    <!-- The lamp: warm light on the dark ground, painted by global.css and moved by the motion engine. -->
+    <div id="lamp" aria-hidden="true" transition:persist="lamp"></div>
     <Navbar />
     <!--
       The shared content column. Every page sits in the same box as the navbar
@@ -260,15 +284,22 @@ const structuredData = {
         * Do not add a second layer of horizontal padding. A panel with its own
           `px-8` inside this `px-8` pushes its content 32px past the logotype,
           which is the bug #45 reported.
-        * A surface that must span wider than the column (the hero's white
-          panel) breaks out and re-applies the padding — `-mx-4 md:-mx-8
-          px-4 md:px-8` — so the panel bleeds but its content stays on the
-          column. A *card* that sits within the column (the About panel, the
-          legal panel) keeps its own padding and is deliberately inset.
+        * Every surface, paper or dark, is a `.sheet` (global.css): it breaks
+          out of the column and re-applies the padding (`-mx-4 md:-mx-8
+          px-4 md:px-8`), so it is as wide as the footer's contact sheet while
+          its content stays on the logotype's line. Nothing is inset.
     -->
-    <div class:list={[!fullBleed && 'max-w-screen-2xl mx-auto px-4 md:px-8']}>
+    <div class="max-w-screen-2xl mx-auto px-4 md:px-8">
       <slot />
     </div>
     <Footer contact={contact} />
+    <!-- The page-change sheet (motion/transitions.ts). It persists across swaps so it can cover the old page and
+         lift off the new one. -->
+    <div id="curtain" aria-hidden="true" transition:persist="curtain"></div>
+    <script>
+      import '../scripts/motion/index.ts';
+    </script>
+    <!-- The illustration picker: an inert template, and a script that wakes only for ?pick, ?illo= or a stored choice. -->
+    <IllustrationPicker />
   </body>
 </html>
