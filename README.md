@@ -148,7 +148,7 @@ Articles are markdown files in `src/content/articles/`. The filename (minus `.md
 title: "Your article title"
 date: "2025-04-29"
 description: "One-line summary shown in cards and meta description."
-author: "Your name"            # optional
+author: corentin-fournier     # optional, slug of a file in src/content/contributors/
 tags: ["remote", "nonprofit"]  # optional
 draft: false                   # optional, set true to hide from listings
 ---

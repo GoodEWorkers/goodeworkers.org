@@ -1,5 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
+import { routes } from '../../i18n/routes';
+import { contributorName } from '../../components/Contributors/contributors';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LatestArticles from '../../components/Landing/LatestArticles.astro';
 import ShareButtons from '../../components/Articles/ShareButtons.astro';
@@ -15,7 +17,8 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const { title, date, description, author, tags } = entry.data;
+const { title, date, description, tags } = entry.data;
+const author = entry.data.author ? await getEntry(entry.data.author) : undefined;
 const cover = coverUrl(entry, 1600, 900);
 const time = readingTime(entry);
 const formattedDate = date.toLocaleDateString('en-US', {
@@ -63,7 +66,14 @@ const shareUrl = new URL(`/articles/${entry.slug}/`, Astro.site ?? Astro.url).to
           {author && (
             <div class="pb-4">
               <dt class="text-purple text-xs uppercase tracking-wider">writer</dt>
-              <dd class="mt-1 text-grey">{author}</dd>
+              <dd class="mt-1 text-grey">
+                <a
+                  href={`${routes.contributors.en}${author.id}/`}
+                  class="font-bold transition-colors duration-200 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  {contributorName(author)}
+                </a>
+              </dd>
             </div>
           )}
           <div class="py-4">
@@ -226,6 +236,8 @@ const shareUrl = new URL(`/articles/${entry.slug}/`, Astro.site ?? Astro.url).to
     margin: 2.5rem 0;
   }
   .article-prose table {
+    display: block; /* lets wide tables scroll sideways on small screens */
+    overflow-x: auto;
     width: 100%;
     border-collapse: collapse;
     margin: 1.5rem 0;

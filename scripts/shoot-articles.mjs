@@ -11,7 +11,7 @@ const VIEWPORTS = [
 const PAGES = [
   { name: 'home',    path: '/' },
   { name: 'list',    path: '/articles' },
-  { name: 'detail',  path: '/articles/welcome-to-goodeworkers' },
+  { name: 'detail',  path: '/articles/nonprofit-project-management-tools' },
 ];
 
 const browser = await chromium.launch();
