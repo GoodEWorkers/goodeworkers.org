@@ -20,8 +20,9 @@ The picker lists them in this order; the first is the default (`Illustration.ast
 | `leaded` | `v2/leaded` | Leaded window | glass cells between 6-unit cames (lead lines) in three values, a transom across the top |
 | `cutout` | `v2/cutout` | Paper cut-out | three papers (dark, tint, light) stacked and scissor-cut, no outlines |
 | `halftone` | `v2/halftone` | Halftone | Ben-Day dots on one 45-degree lattice, dot size meaning light |
-| `monoline` | `v2/monoline` | One line | a single even stroke weight |
+| `monoline` | `v2/monoline` | One line | a single unbroken 5-unit stroke that never lifts, one `<path>` with `pathLength="1"`, one flat spill behind it; drawn by hand in code |
 | `isoscene` | `v2/isoscene` | Isometric scene | a flat scene on the isometric grid |
+| `brush` | `v2/brush` | Brush ink | one soft round brush, a template outline warped along each stroke's centreline with a seeded breath and drift, over a pulse in the ink; drawn by hand in code |
 
 Retired, no longer copied: round 1's `01-partition`, `03-grid-disorder`, `05-circles`, `06-isometric` and `10-strings`, which had been in
 the picker. Never copied: `02-flow-field`, `04-truchet`, `08-growth` and `09-engraving`, dropped in round 1's art-direction review.

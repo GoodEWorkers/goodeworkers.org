@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" class="illo-monoline illo-openness"><desc>Openness: a window with both shutters open and a page flying out, drawn in one unbroken line. Light falls over the sill.</desc>
+<g class="light"><path fill="var(--spill,#FDC959)" d="M126 238L274 238L330 292L70 292Z"/><path fill="var(--light,#F8F8F8)" d="M120 56L280 56L280 222L120 222Z"/></g>
+<g class="frame"><path fill="none" stroke="var(--ink,#111)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" d="M112 226L48 212L48 66L112 52L112 226L112 48L288 48L288 226L288 52L352 66L352 212L288 226L100 236C116.7 236.7 166.7 240 200 240C233.3 240 278.3 240.3 300 236C321.7 231.7 322.7 225 330 214C337.3 203 343.7 183.7 344 170C344.3 156.3 330.3 145 332 132C333.7 119 354.3 105 354 92C353.7 79 329 64.3 330 54C331 43.7 355 34 360 30C362 35 374.3 53.3 372 60C369.7 66.7 350.3 68.3 346 70"/></g>
+</svg>
