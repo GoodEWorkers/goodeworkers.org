@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 
 // Legal documents live in a per-language folder: legals/<lang>/<slug>.md
 // The folder is the URL segment for French (/fr/...) and is stripped for
@@ -310,8 +310,22 @@ const projects = defineCollection({
     }),
 });
 
+const articles = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    description: z.string(),
+    author: reference('contributors').optional(), // slug of a file in contributors/
+    tags: z.array(z.string()).optional(),
+    cover: z.string().optional(), // absolute URL or a path under public/
+    draft: z.boolean().optional(),
+  }),
+});
+
 export const collections = {
   legals,
+  articles,
   home,
   'job-boards': jobBoards,
   'job-board-list': jobBoardList,

@@ -50,6 +50,7 @@ const en = {
   },
 
   nav: {
+    articles: 'Articles',
     contact: 'Contact',
     contributors: 'Contributors',
     projects: 'Projects',
@@ -203,6 +204,7 @@ const fr: Dictionary = {
   },
 
   nav: {
+    articles: 'Articles',
     contact: 'Contact',
     contributors: 'Contributeurs',
     projects: 'Projets',
