@@ -11,22 +11,21 @@ import { fileURLToPath } from 'node:url';
 const from = process.argv[2] ?? join(homedir(), 'research/goodeworkers-illos');
 const to = fileURLToPath(new URL('../public/illustrations/', import.meta.url));
 
-// The commission's folder, under the research dir -> the style's slug on the site. Round 1 sits at its root (only warped bands stayed),
-// round 2 in v2/. The first is the default (Illustration.astro reads it); the order is the picker's.
+// The commission's folder, under the research dir -> the style's slug on the site: round 1's abstract sets. Round 2's figurative
+// sets (v2/<slug>/) were tried and set aside; their drawings stay in the research dir. The first is the default (Illustration.astro reads it);
+// the order is the picker's.
 const SETS = {
   '07-warped-bands': 'bands',
-  'v2/pictogram': 'pictogram',
-  'v2/leaded': 'leaded',
-  'v2/cutout': 'cutout',
-  'v2/halftone': 'halftone',
-  'v2/monoline': 'monoline',
-  'v2/isoscene': 'isoscene',
-  'v2/brush': 'brush',
+  '10-strings': 'strings',
+  '01-partition': 'partition',
+  '05-circles': 'circles',
+  '03-grid-disorder': 'grid',
+  '06-isometric': 'isometric',
 };
 const [DEFAULT] = Object.values(SETS);
 // The commission's file -> the subject's slug on the site.
 const SUBJECTS = { openness: 'openness', autonomy: 'autonomy', care: 'care', solidarity: 'solidarity', 'health-and-hospitals': 'health' };
-const MAX_BYTES = 12 * 1024; // round 2's contract: under 12 KB and 160 elements, no ids (the page inlines several copies)
+const MAX_BYTES = 12 * 1024; // the contract (round 2's, looser than round 1's 8 KB and 120): under 12 KB and 160 elements, no ids (the page inlines several copies)
 const MAX_ELEMENTS = 160;
 
 const rows = [];

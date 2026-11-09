@@ -5,9 +5,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { arrived, check, close, newPage as makePage, noConsoleErrors, noOverflow, ok, until, vp } from '../lib.mjs';
 
 const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
-const STYLES = ['bands', 'pictogram', 'leaded', 'cutout', 'halftone', 'monoline', 'isoscene', 'brush']; // STYLES in picker.ts: the default is the first
+const STYLES = ['bands', 'strings', 'partition', 'circles', 'grid', 'isometric']; // STYLES in picker.ts: the default is the first
 const drawing = (subject, style) => new URL(`../../../public/illustrations/${subject}/${style}.svg`, import.meta.url);
-// A set the sync has not delivered yet (monoline, isoscene) is a disabled thumbnail in the panel, so no check below may choose it.
+// A set the sync has not delivered yet is a disabled thumbnail in the panel, so no check below may choose it.
 const LANDED = STYLES.filter((style) => SUBJECTS.every((subject) => existsSync(drawing(subject, style))));
 const MISSING = STYLES.filter((style) => !LANDED.includes(style));
 const descOf = (subject, style) => /<desc>([^<]*)<\/desc>/.exec(readFileSync(drawing(subject, style), 'utf8'))[1];
@@ -170,42 +170,42 @@ export async function run({ browser, base }) {
         watch.observe(document.body, { childList: true, subtree: true });
       });
     }, descOf('openness', 'bands'));
-    await page.locator(thumb('openness', 'pictogram')).click();
-    await shows(page, { openness: 'pictogram' });
+    await page.locator(thumb('openness', 'strings')).click();
+    await shows(page, { openness: 'strings' });
     const start = await page.evaluate(() => window.__fade);
     ok(+start < 0.5, `the new drawing started at opacity ${start}, not faded in`);
     const all = await slots(page);
     ok(all.filter((s) => s.subject === 'openness').length === 2, 'openness should have two slots on this page (tile, row)');
     ok(all.every((s) => s.aria === 'true' && s.focusable === 'false' && s.ids === 0), 'a swapped slot lost aria-hidden or focusable=false');
     ok(all.every((s) => s.inline === ''), 'a fade left an inline opacity on a drawing');
-    ok((await pressed(page, 'openness')).join() === 'pictogram' && (await pressed(page, 'care')).join() === 'bands', 'aria-pressed does not follow the choice');
-    ok((await storage(page)) === 'openness:pictogram', `localStorage.illoPick is ${await storage(page)}`);
+    ok((await pressed(page, 'openness')).join() === 'strings' && (await pressed(page, 'care')).join() === 'bands', 'aria-pressed does not follow the choice');
+    ok((await storage(page)) === 'openness:strings', `localStorage.illoPick is ${await storage(page)}`);
     for (const style of LANDED.slice(1)) { // every style of one subject, one after the other
       await page.locator(thumb('care', style)).click();
-      await shows(page, { openness: 'pictogram', care: style });
+      await shows(page, { openness: 'strings', care: style });
     }
   });
 
   await check('picker: "same style everywhere" makes one click set every subject', async () => {
     await page.locator('[data-illo-panel] [data-act="same"]').click();
     ok((await page.locator('[data-illo-panel] [data-act="same"]').getAttribute('aria-checked')) === 'true', 'the switch is not on');
-    await page.locator(thumb('care', 'cutout')).click();
-    await shows(page, Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])));
-    ok((await storage(page)) === 'all:cutout', `localStorage.illoPick is ${await storage(page)}`);
-    for (const s of SUBJECTS) ok((await pressed(page, s)).join() === 'cutout', `${s}: cutout is not the only pressed thumbnail`);
+    await page.locator(thumb('care', 'circles')).click();
+    await shows(page, Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])));
+    ok((await storage(page)) === 'all:circles', `localStorage.illoPick is ${await storage(page)}`);
+    for (const s of SUBJECTS) ok((await pressed(page, s)).join() === 'circles', `${s}: circles is not the only pressed thumbnail`);
     await page.locator('[data-illo-panel] [data-act="same"]').click(); // off again: one click sets one subject
-    await page.locator(thumb('health', 'halftone')).click();
-    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])), health: 'halftone' });
+    await page.locator(thumb('health', 'grid')).click();
+    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), health: 'grid' });
   });
 
   await check('picker: the thumbnails and Escape work from the keyboard', async () => {
-    await page.locator(thumb('autonomy', 'leaded')).focus();
-    ok(await page.evaluate(() => document.activeElement?.dataset.pick === 'autonomy:leaded'), 'a thumbnail does not take focus');
+    await page.locator(thumb('autonomy', 'partition')).focus();
+    ok(await page.evaluate(() => document.activeElement?.dataset.pick === 'autonomy:partition'), 'a thumbnail does not take focus');
     await page.keyboard.press('Enter');
-    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])), health: 'halftone', autonomy: 'leaded' });
+    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), health: 'grid', autonomy: 'partition' });
     await page.keyboard.press('Escape');
     await until(page, () => !document.querySelector('[data-illo-panel]'), 'Escape did not close the panel', 3000);
-    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])), health: 'halftone', autonomy: 'leaded' }); // the choice stays
+    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), health: 'grid', autonomy: 'partition' }); // the choice stays
   });
   await check('picker: no console errors while picking', () => noConsoleErrors(page));
   await close(page);
@@ -215,14 +215,14 @@ export async function run({ browser, base }) {
     const p = await newPage(browser, vp.desktop);
     await visit(p, base, '/values/?pick');
     await panelUp(p);
-    await p.locator(thumb('openness', 'leaded')).click();
-    await shows(p, { openness: 'leaded' });
+    await p.locator(thumb('openness', 'partition')).click();
+    await shows(p, { openness: 'partition' });
     await p.locator('[data-illo-panel] [data-act="close"]').click();
     ok(!(await p.locator(PANEL).count()), 'the panel is still there');
     await visit(p, base, '/values/'); // a full reload: the choice applies, the panel stays shut
-    await shows(p, { openness: 'leaded' });
+    await shows(p, { openness: 'partition' });
     ok(!(await p.locator(PANEL).count()), 'the panel came back without ?pick');
-    ok((await storage(p)) === 'openness:leaded', `localStorage.illoPick is ${await storage(p)}`);
+    ok((await storage(p)) === 'openness:partition', `localStorage.illoPick is ${await storage(p)}`);
     await visit(p, base, '/values/?pick');
     await panelUp(p);
     noConsoleErrors(p);
@@ -231,9 +231,9 @@ export async function run({ browser, base }) {
 
   await check('picker: Reset clears the choice and the storage, redraws the default, and the picker sleeps again', async () => {
     const p = await newPage(browser, vp.desktop);
-    await visit(p, base, '/values/?pick&illo=all:pictogram');
+    await visit(p, base, '/values/?pick&illo=all:strings');
     await panelUp(p);
-    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'pictogram'])));
+    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'strings'])));
     await p.locator('[data-illo-panel] [data-act="reset"]').click();
     await shows(p);
     ok((await storage(p)) === null, `localStorage.illoPick is ${await storage(p)}`);
@@ -248,20 +248,20 @@ export async function run({ browser, base }) {
 
   await check('picker: a style whose file is missing is a disabled thumbnail that cannot be chosen; slots keep their drawing and the rest of the panel works', async () => {
     const p = await newPage(browser, vp.desktop);
-    await p.route('**/illustrations/care/pictogram.svg', (route) => route.fulfill({ status: 404 })); // as if its set had not been synced
-    await visit(p, base, '/values/?pick&illo=care:pictogram'); // a link that asks for it
+    await p.route('**/illustrations/care/strings.svg', (route) => route.fulfill({ status: 404 })); // as if its set had not been synced
+    await visit(p, base, '/values/?pick&illo=care:strings'); // a link that asks for it
     await panelUp(p);
     await thumbsSettled(p);
     const disabled = await p.evaluate(() => [...document.querySelectorAll('[data-illo-panel] button[data-pick]')].filter((b) => b.disabled).map((b) => b.dataset.pick));
-    const want = [...SUBJECTS.flatMap((s) => MISSING.map((style) => `${s}:${style}`)), 'care:pictogram'];
+    const want = [...SUBJECTS.flatMap((s) => MISSING.map((style) => `${s}:${style}`)), 'care:strings'];
     ok(disabled.sort().join() === want.sort().join(), `disabled thumbnails: ${disabled}, expected ${want}`);
     await shows(p); // care's slots keep the drawing they had (the default): nothing is blanked, nothing throws into the page
-    await p.locator(thumb('care', 'leaded')).click();
-    await shows(p, { care: 'leaded' });
-    await p.locator(thumb('care', 'pictogram')).click({ force: true }); // a click on the disabled one is no choice
-    await shows(p, { care: 'leaded' });
-    ok((await storage(p)) === 'care:leaded', `localStorage.illoPick is ${await storage(p)}`);
-    ok((await pressed(p, 'care')).join() === 'leaded', 'aria-pressed does not follow the choice');
+    await p.locator(thumb('care', 'partition')).click();
+    await shows(p, { care: 'partition' });
+    await p.locator(thumb('care', 'strings')).click({ force: true }); // a click on the disabled one is no choice
+    await shows(p, { care: 'partition' });
+    ok((await storage(p)) === 'care:partition', `localStorage.illoPick is ${await storage(p)}`);
+    ok((await pressed(p, 'care')).join() === 'partition', 'aria-pressed does not follow the choice');
     await close(p);
   });
 
@@ -271,39 +271,39 @@ export async function run({ browser, base }) {
     await clipboard(p, true);
     await visit(p, base, '/values/?pick');
     await panelUp(p);
-    await p.locator(thumb('openness', 'pictogram')).click();
-    await p.locator(thumb('care', 'cutout')).click();
-    await shows(p, { openness: 'pictogram', care: 'cutout' });
+    await p.locator(thumb('openness', 'strings')).click();
+    await p.locator(thumb('care', 'circles')).click();
+    await shows(p, { openness: 'strings', care: 'circles' });
     await p.locator('[data-illo-panel] [data-act="copy"]').click();
     const link = await until(p, () => window.__copied, 'nothing was copied');
-    const want = `${base}/values/?illo=openness:pictogram,autonomy:bands,care:cutout,solidarity:bands,health:bands`;
+    const want = `${base}/values/?illo=openness:strings,autonomy:bands,care:circles,solidarity:bands,health:bands`;
     ok(link === want, `copied ${link}`);
     ok((await p.locator('[data-illo-panel] [data-act="copy"]').textContent()).trim() === 'Copied', 'no "Copied" on the button');
     const fresh = await newPage(browser, vp.desktop); // another context: empty storage
     await visit(fresh, base, link.slice(base.length));
-    await shows(fresh, { openness: 'pictogram', care: 'cutout' });
-    ok((await storage(fresh)) === 'openness:pictogram,autonomy:bands,care:cutout,solidarity:bands,health:bands', `the link was not stored: ${await storage(fresh)}`);
+    await shows(fresh, { openness: 'strings', care: 'circles' });
+    ok((await storage(fresh)) === 'openness:strings,autonomy:bands,care:circles,solidarity:bands,health:bands', `the link was not stored: ${await storage(fresh)}`);
     noConsoleErrors(fresh);
     noConsoleErrors(p);
     await close(fresh);
     await close(p);
   });
 
-  await check('picker: ?illo=all:pictogram gives every subject the pictogram set, in a fresh context and on /initiatives/ too', async () => {
+  await check('picker: ?illo=all:strings gives every subject the strings set, in a fresh context and on /initiatives/ too', async () => {
     for (const path of ['/values/', '/initiatives/', '/fr/valeurs/']) {
       const p = await newPage(browser, vp.desktop);
-      await visit(p, base, `${path}?illo=all:pictogram`);
-      await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'pictogram'])));
-      ok((await storage(p)) === 'all:pictogram', `localStorage.illoPick is ${await storage(p)}`);
+      await visit(p, base, `${path}?illo=all:strings`);
+      await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'strings'])));
+      ok((await storage(p)) === 'all:strings', `localStorage.illoPick is ${await storage(p)}`);
       noConsoleErrors(p);
       await close(p);
     }
   });
 
-  await check('picker: a later entry wins (?illo=all:cutout,care:halftone), and unknown names are ignored', async () => {
+  await check('picker: a later entry wins (?illo=all:circles,care:grid), and unknown names are ignored', async () => {
     const p = await newPage(browser, vp.desktop);
-    await visit(p, base, '/values/?illo=all:cutout,care:halftone,health:../../x,nobody:pictogram,openness:toString');
-    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])), care: 'halftone' });
+    await visit(p, base, '/values/?illo=all:circles,care:grid,health:../../x,nobody:strings,openness:toString');
+    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), care: 'grid' });
     noConsoleErrors(p);
     await close(p);
   });
@@ -311,36 +311,36 @@ export async function run({ browser, base }) {
   await check('picker: the Copy link falls back to the link in an input when the clipboard refuses', async () => {
     const p = await newPage(browser, vp.desktop);
     await clipboard(p, false);
-    await visit(p, base, '/initiatives/?pick&illo=health:leaded');
+    await visit(p, base, '/initiatives/?pick&illo=health:partition');
     await panelUp(p);
     ok(await p.locator('[data-illo-panel] [data-link]').isHidden(), 'the input shows before anything was refused');
     await p.locator('[data-illo-panel] [data-act="copy"]').click();
     await until(p, () => !document.querySelector('[data-illo-panel] [data-link]').hidden, 'the link never showed in the input', 3000);
     const value = await p.locator('[data-illo-panel] [data-link]').inputValue();
-    ok(value === `${base}/initiatives/?illo=openness:bands,autonomy:bands,care:bands,solidarity:bands,health:leaded`, `the input holds ${value}`);
+    ok(value === `${base}/initiatives/?illo=openness:bands,autonomy:bands,care:bands,solidarity:bands,health:partition`, `the input holds ${value}`);
     await close(p);
   });
 
   await check('picker: the choice persists in localStorage, and the URL wins over it', async () => {
     const p = await newPage(browser, vp.desktop);
-    await visit(p, base, '/values/?illo=openness:pictogram');
-    await shows(p, { openness: 'pictogram' });
-    ok((await storage(p)) === 'openness:pictogram', `stored ${await storage(p)}`);
+    await visit(p, base, '/values/?illo=openness:strings');
+    await shows(p, { openness: 'strings' });
+    ok((await storage(p)) === 'openness:strings', `stored ${await storage(p)}`);
     await visit(p, base, '/initiatives/'); // no parameter: the stored choice applies, and the panel is up for it
     await shows(p, {}); // /initiatives/ has only the health slot, still the default
     await panelUp(p);
     await visit(p, base, '/values/');
-    await shows(p, { openness: 'pictogram' });
+    await shows(p, { openness: 'strings' });
     await panelUp(p);
-    await visit(p, base, '/values/?illo=all:cutout'); // the URL wins over what is stored, then is stored
-    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])));
-    ok((await storage(p)) === 'all:cutout', `stored ${await storage(p)}`);
-    await p.locator(thumb('care', 'halftone')).click(); // a click replaces a ?illo= left in the address, or a reload would bring it back
-    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])), care: 'halftone' });
+    await visit(p, base, '/values/?illo=all:circles'); // the URL wins over what is stored, then is stored
+    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])));
+    ok((await storage(p)) === 'all:circles', `stored ${await storage(p)}`);
+    await p.locator(thumb('care', 'grid')).click(); // a click replaces a ?illo= left in the address, or a reload would bring it back
+    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), care: 'grid' });
     ok(!(await p.evaluate(() => location.search.includes('illo='))), 'the address still carries the old ?illo=');
     await p.reload({ waitUntil: 'load' });
     await arrived(p, '/values/');
-    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'cutout'])), care: 'halftone' });
+    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), care: 'grid' });
     noConsoleErrors(p);
     await close(p);
   });
@@ -350,15 +350,15 @@ export async function run({ browser, base }) {
     await visit(p, base, '/values/?pick');
     await panelUp(p);
     await p.locator('[data-illo-panel] [data-act="same"]').click();
-    await p.locator(thumb('openness', 'pictogram')).click();
-    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'pictogram'])));
+    await p.locator(thumb('openness', 'strings')).click();
+    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'strings'])));
     await p.evaluate(() => (window.__same = 'still this document'));
     await p.locator('[data-navbar] a[href="/initiatives/"]').first().click();
     await arrived(p, '/initiatives/');
     ok(await p.evaluate(() => window.__same === 'still this document'), 'the page was reloaded, not navigated client-side');
-    await shows(p, { health: 'pictogram' });
+    await shows(p, { health: 'strings' });
     await panelUp(p);
-    ok((await pressed(p, 'health')).join() === 'pictogram' && (await p.locator('[data-illo-panel] [data-act="same"]').getAttribute('aria-checked')) === 'true', 'the panel does not show the choice');
+    ok((await pressed(p, 'health')).join() === 'strings' && (await p.locator('[data-illo-panel] [data-act="same"]').getAttribute('aria-checked')) === 'true', 'the panel does not show the choice');
     noConsoleErrors(p);
     await close(p);
   });
@@ -407,8 +407,8 @@ export async function run({ browser, base }) {
         watch.observe(document.body, { childList: true, subtree: true });
       });
     }, descOf('care', 'bands'));
-    await q.locator(thumb('care', 'leaded')).click();
-    await shows(q, { care: 'leaded' });
+    await q.locator(thumb('care', 'partition')).click();
+    await shows(q, { care: 'partition' });
     const start = await q.evaluate(() => window.__fade);
     ok(start === '1', `the new drawing started at opacity ${start} under reduced motion`);
     noConsoleErrors(q);
@@ -416,7 +416,7 @@ export async function run({ browser, base }) {
   });
 
   await check('picker: JS disabled shows the default set, whatever the address asks for, and no panel', async () => {
-    for (const path of ['/values/', '/values/?pick&illo=all:pictogram', '/initiatives/?pick']) {
+    for (const path of ['/values/', '/values/?pick&illo=all:strings', '/initiatives/?pick']) {
       const p = await newPage(browser, { ...vp.desktop, js: false });
       await visit(p, base, path);
       await shows(p, {}, 1500);

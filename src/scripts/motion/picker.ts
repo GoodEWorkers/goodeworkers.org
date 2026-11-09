@@ -3,7 +3,7 @@
  * that asks for it (?pick, ?illo=...) or a browser that stored a choice (localStorage.illoPick); for everyone else the slots keep
  * the default style they were built with and no panel exists.
  *
- * A choice is a style per subject, written ?illo=openness:pictogram,care:cutout (all:pictogram for every subject; a later entry wins).
+ * A choice is a style per subject, written ?illo=openness:strings,care:grid (all:strings for every subject; a later entry wins).
  * The URL wins over storage and is then stored. Every [data-illo-slot] gets the chosen style's drawing, fetched from
  * /illustrations/<subject>/<style>.svg, and a panel (the template in IllustrationPicker.astro) lets the designer choose, copy the
  * link or reset. Applied again after every client-side navigation: the router swaps the whole body, panel included. A style whose file
@@ -15,16 +15,14 @@ import { ease, motionOn } from './engine';
 
 const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
 // The styles in the order the panel shows them; the first is the default, the one Illustration.astro inlines. Round 1's abstract sets
-// are retired but for bands; the rest are round 2's figurative ones (scripts/sync-illustrations.mjs), and the last two may not have landed.
+// (scripts/sync-illustrations.mjs); round 2's figurative ones were set aside.
 const STYLES: Record<string, string> = {
   bands: 'Warped bands',
-  pictogram: 'Pictogram',
-  leaded: 'Leaded window',
-  cutout: 'Paper cut-out',
-  halftone: 'Halftone',
-  monoline: 'One line',
-  isoscene: 'Isometric scene',
-  brush: 'Brush ink',
+  strings: 'String art',
+  partition: 'Partition',
+  circles: 'Circles',
+  grid: 'Grid and disorder',
+  isometric: 'Isometric',
 };
 const STYLE_IDS = Object.keys(STYLES);
 const DEFAULT = STYLE_IDS[0];
