@@ -13,13 +13,13 @@ The picker lists them in this order; the first is the default (`Illustration.ast
 | slug | research folder | system | parent plates (Book of 100) |
 |---|---|---|---|
 | `bands` | `07-warped-bands` | warped bands, parting around a quiet zone | B045 Warped Bands, B042 Apparitions in Blue |
-| `strings` | `10-strings` | string-art chords: peg i strung to peg k*i+s | B032 String Figures, B099 Clock of Pegs, B014, B038 |
+| `tiles` | `11-tiles` | rounded tiles on one module after the designer's Figma frame (4047-422), one focal tile in the light with a shape cut out, so it never reads as a loading skeleton; drawn by hand in code | none (the designer's frame) |
 | `partition` | `01-partition` | recursive partition in flat colour | B012 Mondrian Misremembered, B011, B019, B092 |
 | `circles` | `05-circles` | circle-packing colonies and dot fields | B021 Stipple Moon, B023, B024, B027, B028 |
 | `grid` | `03-grid-disorder` | a grid with growing disorder, one accent cell | B017 Irregular Census, B067 Repetition with Fatigue |
 | `isometric` | `06-isometric` | identical cubes on one grid with one gap, stacked by whole cubes, lit tops the only accent (revised Nov 2026) | B015 Isometric Allotment, B018, B068, B098 |
 
-Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
+`10-strings` (string art) was in the picker until Nov 2026; `tiles` took its place. Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
 
 Round 2 (figurative: pictogram, leaded window, paper cut-out, halftone, one line, isometric scene, brush ink) was tried in the picker
 and set aside for these; its generators and drawings stay in `v2/<slug>/` in the research folder, out of the sync.
@@ -56,8 +56,8 @@ Classes `.frame`, `.light` and `.idle` may be present; the site animates nothing
 entry wins:
 
 ```
-/values/?illo=openness:strings,care:grid
-/initiatives/?illo=all:strings
+/values/?illo=openness:tiles,care:grid
+/initiatives/?illo=all:tiles
 /values/?illo=all:grid,care:circles
 ```
 

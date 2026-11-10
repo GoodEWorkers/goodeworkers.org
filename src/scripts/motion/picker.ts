@@ -3,7 +3,7 @@
  * that asks for it (?pick, ?illo=...) or a browser that stored a choice (localStorage.illoPick); for everyone else the slots keep
  * the default style they were built with and no panel exists.
  *
- * A choice is a style per subject, written ?illo=openness:strings,care:grid (all:strings for every subject; a later entry wins).
+ * A choice is a style per subject, written ?illo=openness:tiles,care:grid (all:tiles for every subject; a later entry wins).
  * The URL wins over storage and is then stored. Every [data-illo-slot] gets the chosen style's drawing, fetched from
  * /illustrations/<subject>/<style>.svg, and a panel (the template in IllustrationPicker.astro) lets the designer choose, copy the
  * link or reset. Applied again after every client-side navigation: the router swaps the whole body, panel included. A style whose file
@@ -18,7 +18,7 @@ const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
 // (scripts/sync-illustrations.mjs); round 2's figurative ones were set aside.
 const STYLES: Record<string, string> = {
   bands: 'Warped bands',
-  strings: 'String art',
+  tiles: 'Tiles',
   partition: 'Partition',
   circles: 'Circles',
   grid: 'Grid and disorder',
