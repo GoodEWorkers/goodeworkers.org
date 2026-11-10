@@ -17,7 +17,7 @@ The picker lists them in this order; the first is the default (`Illustration.ast
 | `partition` | `01-partition` | recursive partition in flat colour | B012 Mondrian Misremembered, B011, B019, B092 |
 | `circles` | `05-circles` | circle-packing colonies and dot fields | B021 Stipple Moon, B023, B024, B027, B028 |
 | `grid` | `03-grid-disorder` | a grid with growing disorder, one accent cell | B017 Irregular Census, B067 Repetition with Fatigue |
-| `isometric` | `06-isometric` | isometric partitions and terraces | B015 Isometric Allotment, B018, B068, B098 |
+| `isometric` | `06-isometric` | identical cubes on one grid with one gap, stacked by whole cubes, lit tops the only accent (revised Nov 2026) | B015 Isometric Allotment, B018, B068, B098 |
 
 Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
 
