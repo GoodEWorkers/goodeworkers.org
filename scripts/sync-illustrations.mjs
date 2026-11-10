@@ -17,7 +17,7 @@ const to = fileURLToPath(new URL('../public/illustrations/', import.meta.url));
 const SETS = {
   '07-warped-bands': 'bands',
   '11-tiles': 'tiles',
-  '01-partition': 'partition',
+  '12-mosaic': 'mosaic',
   '05-circles': 'circles',
   '03-grid-disorder': 'grid',
   '06-isometric': 'isometric',

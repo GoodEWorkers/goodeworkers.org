@@ -12,6 +12,7 @@
 import { gsap } from 'gsap';
 import grounds from '../../styles/illustrations.css?inline'; // the thumbnails need the grounds' properties on a page with no slot of its own
 import { ease, motionOn } from './engine';
+import { settle } from './live';
 
 const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
 // The styles in the order the panel shows them; the first is the default, the one Illustration.astro inlines. Round 1's abstract sets
@@ -19,13 +20,15 @@ const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
 const STYLES: Record<string, string> = {
   bands: 'Warped bands',
   tiles: 'Tiles',
-  partition: 'Partition',
+  mosaic: 'Living mosaic',
   circles: 'Circles',
   grid: 'Grid and disorder',
   isometric: 'Isometric',
 };
 const STYLE_IDS = Object.keys(STYLES);
 const DEFAULT = STYLE_IDS[0];
+// A subject whose default is not the first style (Illustration.astro has the same map): the Initiatives focus lives.
+const DEFAULTS: Record<string, string> = { health: 'mosaic' };
 const PICK = 'illoPick'; // localStorage: the choice, as the ?illo= value ('' while nothing is chosen); its existence keeps the picker awake
 const CLOSED = 'illoClosed'; // sessionStorage: the panel was closed (?pick brings it back)
 
@@ -57,7 +60,7 @@ let active = false; // the picker has been asked for, and stays on for client-si
 let started = false; // the choice has been read once
 let same = false; // "same style everywhere": a click sets every subject
 
-const styleOf = (subject: string) => choice[subject] ?? DEFAULT;
+const styleOf = (subject: string) => choice[subject] ?? DEFAULTS[subject] ?? DEFAULT;
 const uniform = (c: Choice) => SUBJECTS.every((subject) => c[subject] && c[subject] === c[SUBJECTS[0]]);
 
 function parse(text: string): Choice {
@@ -106,6 +109,7 @@ const paint = () =>
       if (!slot.isConnected || styleOf(subject) !== style) return; // the page or the choice moved on while it loaded
       slot.innerHTML = drawing;
       slot.dataset.illoStyle = style;
+      settle(slot);
       if (motionOn()) gsap.fromTo(slot.firstElementChild, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: ease.soft, clearProps: 'opacity' });
     }),
   ).catch(console.error);
@@ -206,7 +210,10 @@ function mount() {
     const button = thumb.closest<HTMLButtonElement>('[data-pick]')!;
     const [subject, style] = button.dataset.pick!.split(':');
     load(subject, style).then(
-      (drawing) => (thumb.innerHTML = drawing),
+      (drawing) => {
+        thumb.innerHTML = drawing;
+        settle(thumb, { still: true }); // a thumbnail shows the still frame
+      },
       () => Object.assign(button, { disabled: true, title: `${STYLES[style]}: no drawing yet` }),
     );
   }

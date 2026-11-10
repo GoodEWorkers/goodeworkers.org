@@ -14,12 +14,12 @@ The picker lists them in this order; the first is the default (`Illustration.ast
 |---|---|---|---|
 | `bands` | `07-warped-bands` | warped bands, parting around a quiet zone | B045 Warped Bands, B042 Apparitions in Blue |
 | `tiles` | `11-tiles` | rounded tiles on one module after the designer's Figma frame (4047-422), one focal tile in the light with a shape cut out, so it never reads as a loading skeleton; drawn by hand in code | none (the designer's frame) |
-| `partition` | `01-partition` | recursive partition in flat colour | B012 Mondrian Misremembered, B011, B019, B092 |
+| `mosaic` | `12-mosaic` | the tiles mosaics animated after the client's draft (`valeurs-animation.html`): one 8 s SMIL loop per file, still frame at t = 0, paused off screen and under reduced motion by `src/scripts/motion/live.ts`; the default for `health` | none (the client's draft) |
 | `circles` | `05-circles` | circle-packing colonies and dot fields | B021 Stipple Moon, B023, B024, B027, B028 |
 | `grid` | `03-grid-disorder` | a grid with growing disorder, one accent cell | B017 Irregular Census, B067 Repetition with Fatigue |
 | `isometric` | `06-isometric` | identical cubes on one grid with one gap, stacked by whole cubes, lit tops the only accent (revised Nov 2026) | B015 Isometric Allotment, B018, B068, B098 |
 
-`10-strings` (string art) was in the picker until Nov 2026; `tiles` took its place. Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
+`10-strings` (string art) and `01-partition` were in the picker until Nov 2026, replaced by `tiles` and `mosaic`; Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
 
 Round 2 (figurative: pictogram, leaded window, paper cut-out, halftone, one line, isometric scene, brush ink) was tried in the picker
 and set aside for these; its generators and drawings stay in `v2/<slug>/` in the research folder, out of the sync.
@@ -48,7 +48,7 @@ viewBox `0 0 400 300` (`health`: `0 0 800 400`); brand palette only (one ink, at
 filter, gradient, mask, clip path, text, raster, external reference or id. Colours come from custom properties with fallbacks, so one file
 works on all three grounds: `var(--ink, #111111)`, `var(--light, #F8F8F8)`, `var(--spill, <the subject's colour>)`. The slot's context
 sets them (`src/styles/illustrations.css`): `tile` (value colour), `night` (#111 or #1D1D1D) and `paper` (the sheet).
-Classes `.frame`, `.light` and `.idle` may be present; the site animates nothing inside a drawing.
+Classes `.frame`, `.light` and `.idle` may be present; the site animates nothing inside a drawing except the `mosaic` set's own SMIL loop.
 
 ## The picker
 
