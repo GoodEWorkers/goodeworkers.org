@@ -18,11 +18,12 @@ const SETS = {
   '06-isometric': 'isometric',
   '11-tiles': 'tiles',
   '12-mosaic': 'mosaic',
+  '14-icons': 'animals',
 };
 const [DEFAULT] = Object.values(SETS);
 // The commission's file -> the subject's slug on the site.
 const SUBJECTS = { openness: 'openness', autonomy: 'autonomy', care: 'care', solidarity: 'solidarity', 'health-and-hospitals': 'health' };
-const MAX_BYTES = 12 * 1024; // the contract (round 2's, looser than round 1's 8 KB and 120): under 12 KB and 160 elements, no ids (the page inlines several copies)
+const MAX_BYTES = 32 * 1024; // the contract: under 32 KB (nocturne's budget; the other sets stay under 12 KB) and 160 elements, no ids (the page inlines several copies)
 const MAX_ELEMENTS = 160;
 
 const rows = [];

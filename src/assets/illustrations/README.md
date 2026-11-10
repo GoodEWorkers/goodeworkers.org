@@ -1,9 +1,9 @@
 # Illustrations
 
-The site's illustrations are three styles, each drawn five times, once per subject (`openness`, `autonomy`, `care`, `solidarity`, and
+The site's illustrations are four styles, each drawn five times, once per subject (`openness`, `autonomy`, `care`, `solidarity`, and
 `health` for the Initiatives focus): the isometric set the designer chose, rebuilt on one cube module, and two mosaics after her Figma
 frame, one still (`tiles`) and one living (`mosaic`, after the client's draft animation). Every piece comes from a small node script
-(`gen.mjs`) and its `<desc>` says what it shows. The files the site serves are `public/illustrations/<subject>/<style>.svg` (15 of them);
+(`gen.mjs`) and its `<desc>` says what it shows. The files the site serves are `public/illustrations/<subject>/<style>.svg` (20 of them);
 this folder holds only this note. How the slots and the picker work is under Illustrations in `DESIGN.md`.
 
 ## The styles
@@ -15,6 +15,7 @@ The picker lists them in this order; the first is the default (`Illustration.ast
 | `isometric` | `06-isometric` | identical cubes on one grid with one gap, stacked by whole cubes, lit tops the only accent (revised Nov 2026) | B015 Isometric Allotment, B018, B068, B098 |
 | `tiles` | `11-tiles` | rounded tiles on one module after the designer's Figma frame (4047-422), one focal tile in the light with a shape cut out, so it never reads as a loading skeleton; drawn by hand in code | none (the designer's frame) |
 | `mosaic` | `12-mosaic` | the tiles mosaics animated after the client's draft (`valeurs-animation.html`): one 8 s SMIL loop per file, still frame at t = 0, paused off screen and under reduced motion by `src/scripts/motion/live.ts`; the default for `health` | none (the client's draft) |
+| `animals` | `14-icons` | one animal per subject, a single object with no ground, hand-drawn in code in fixed design-system colours: peacock, octopus, elephant and calf, ants with a leaf, axolotl; up to 32 KB a file | none (the client's direction; `BRIEF.md` in the folder) |
 
 `10-strings` (string art) and `01-partition` were in the picker until Nov 2026, replaced by `tiles` and `mosaic`; Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
 

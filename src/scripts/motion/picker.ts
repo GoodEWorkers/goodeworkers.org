@@ -21,6 +21,7 @@ const STYLES: Record<string, string> = {
   isometric: 'Isometric',
   tiles: 'Tiles',
   mosaic: 'Living mosaic',
+  animals: 'Animals',
 };
 const STYLE_IDS = Object.keys(STYLES);
 const DEFAULT = STYLE_IDS[0];

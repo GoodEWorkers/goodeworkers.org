@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { arrived, check, close, newPage as makePage, noConsoleErrors, noOverflow, ok, until, vp } from '../lib.mjs';
 
 const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
-const STYLES = ['isometric', 'tiles', 'mosaic']; // STYLES in picker.ts: the default is the first
+const STYLES = ['isometric', 'tiles', 'mosaic', 'animals']; // STYLES in picker.ts: the default is the first
 const DEFAULTS = { health: 'mosaic' }; // DEFAULTS in picker.ts: a subject whose default is not the first style
 const def = (subject) => DEFAULTS[subject] ?? STYLES[0];
 const drawing = (subject, style) => new URL(`../../../public/illustrations/${subject}/${style}.svg`, import.meta.url);
