@@ -16,7 +16,7 @@ interface Props {
 const { subject, context, class: className } = Astro.props;
 // The default style, and the first of the picker's. From the project root, not import.meta.url: the build bundles this file elsewhere.
 // The Initiatives focus (health) defaults to the living mosaic; picker.ts has the same map in DEFAULTS.
-const style = subject === 'health' ? 'mosaic' : 'bands';
+const style = subject === 'health' ? 'mosaic' : 'isometric';
 const svg = readFileSync(join(process.cwd(), 'public/illustrations', subject, `${style}.svg`), 'utf8').replace(
   /^<svg\b/,
   '<svg aria-hidden="true" focusable="false"',

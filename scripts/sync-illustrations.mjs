@@ -11,16 +11,13 @@ import { fileURLToPath } from 'node:url';
 const from = process.argv[2] ?? join(homedir(), 'research/goodeworkers-illos');
 const to = fileURLToPath(new URL('../public/illustrations/', import.meta.url));
 
-// The commission's folder, under the research dir -> the style's slug on the site: round 1's abstract sets. Round 2's figurative
-// sets (v2/<slug>/) were tried and set aside; their drawings stay in the research dir. The first is the default (Illustration.astro reads it);
-// the order is the picker's.
+// The commission's folder, under the research dir -> the style's slug on the site: the three sets kept in Nov 2026 (isometric, revised on one
+// cube module; tiles, after the designer's Figma frame; the living mosaic). Every other set stays in the research dir, out of the site.
+// The first is the default (Illustration.astro reads it); the order is the picker's.
 const SETS = {
-  '07-warped-bands': 'bands',
+  '06-isometric': 'isometric',
   '11-tiles': 'tiles',
   '12-mosaic': 'mosaic',
-  '05-circles': 'circles',
-  '03-grid-disorder': 'grid',
-  '06-isometric': 'isometric',
 };
 const [DEFAULT] = Object.values(SETS);
 // The commission's file -> the subject's slug on the site.

@@ -1,10 +1,10 @@
 # Illustrations
 
-The site's illustrations are a commission: six generative systems from The Book of 100, each drawn five times, once per subject
-(`openness`, `autonomy`, `care`, `solidarity`, and `health` for the Initiatives focus). Every piece comes from a small node script and a
-seed (the book's rule: structure, then process, then mark), and its `<desc>` holds the recipe: parent plates, parameters, seed.
-Nothing here is drawn by hand. The files the site serves are `public/illustrations/<subject>/<style>.svg` (30 of them); this folder
-holds only this note. How the slots and the picker work is under Illustrations in `DESIGN.md`.
+The site's illustrations are three styles, each drawn five times, once per subject (`openness`, `autonomy`, `care`, `solidarity`, and
+`health` for the Initiatives focus): the isometric set the designer chose, rebuilt on one cube module, and two mosaics after her Figma
+frame, one still (`tiles`) and one living (`mosaic`, after the client's draft animation). Every piece comes from a small node script
+(`gen.mjs`) and its `<desc>` says what it shows. The files the site serves are `public/illustrations/<subject>/<style>.svg` (15 of them);
+this folder holds only this note. How the slots and the picker work is under Illustrations in `DESIGN.md`.
 
 ## The styles
 
@@ -12,19 +12,14 @@ The picker lists them in this order; the first is the default (`Illustration.ast
 
 | slug | research folder | system | parent plates (Book of 100) |
 |---|---|---|---|
-| `bands` | `07-warped-bands` | warped bands, parting around a quiet zone | B045 Warped Bands, B042 Apparitions in Blue |
+| `isometric` | `06-isometric` | identical cubes on one grid with one gap, stacked by whole cubes, lit tops the only accent (revised Nov 2026) | B015 Isometric Allotment, B018, B068, B098 |
 | `tiles` | `11-tiles` | rounded tiles on one module after the designer's Figma frame (4047-422), one focal tile in the light with a shape cut out, so it never reads as a loading skeleton; drawn by hand in code | none (the designer's frame) |
 | `mosaic` | `12-mosaic` | the tiles mosaics animated after the client's draft (`valeurs-animation.html`): one 8 s SMIL loop per file, still frame at t = 0, paused off screen and under reduced motion by `src/scripts/motion/live.ts`; the default for `health` | none (the client's draft) |
-| `circles` | `05-circles` | circle-packing colonies and dot fields | B021 Stipple Moon, B023, B024, B027, B028 |
-| `grid` | `03-grid-disorder` | a grid with growing disorder, one accent cell | B017 Irregular Census, B067 Repetition with Fatigue |
-| `isometric` | `06-isometric` | identical cubes on one grid with one gap, stacked by whole cubes, lit tops the only accent (revised Nov 2026) | B015 Isometric Allotment, B018, B068, B098 |
 
 `10-strings` (string art) and `01-partition` were in the picker until Nov 2026, replaced by `tiles` and `mosaic`; Drawn and dropped in the art-direction review, so never copied: `02-flow-field`, `04-truchet`, `08-growth`, `09-engraving`.
 
 Round 2 (figurative: pictogram, leaded window, paper cut-out, halftone, one line, isometric scene, brush ink) was tried in the picker
 and set aside for these; its generators and drawings stay in `v2/<slug>/` in the research folder, out of the sync.
-`07-warped-bands` sets each path's `pathLength` to its length over the longest in its piece, so that a dash reveal would draw along the
-flow; the site does not use a dash reveal, which makes it harmless.
 
 ## Where the sources are, and how to resync
 
@@ -58,7 +53,7 @@ entry wins:
 ```
 /values/?illo=openness:tiles,care:grid
 /initiatives/?illo=all:tiles
-/values/?illo=all:grid,care:circles
+/values/?illo=all:mosaic,care:tiles
 ```
 
 The URL wins over what the browser stored (`localStorage.illoPick`), and is then stored. The panel's Copy link writes the whole

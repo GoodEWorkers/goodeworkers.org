@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { arrived, check, close, newPage as makePage, noConsoleErrors, noOverflow, ok, until, vp } from '../lib.mjs';
 
 const SUBJECTS = ['openness', 'autonomy', 'care', 'solidarity', 'health'];
-const STYLES = ['bands', 'tiles', 'mosaic', 'circles', 'grid', 'isometric']; // STYLES in picker.ts: the default is the first
+const STYLES = ['isometric', 'tiles', 'mosaic']; // STYLES in picker.ts: the default is the first
 const DEFAULTS = { health: 'mosaic' }; // DEFAULTS in picker.ts: a subject whose default is not the first style
 const def = (subject) => DEFAULTS[subject] ?? STYLES[0];
 const drawing = (subject, style) => new URL(`../../../public/illustrations/${subject}/${style}.svg`, import.meta.url);
@@ -139,7 +139,7 @@ export async function run({ browser, base }) {
     await shows(page);
     const all = await slots(page);
     ok(all.length === 8, `${all.length} slots on /values/, expected 8 (a tile and a row for each value)`);
-    ok(all.every((s) => s.aria === 'true' && s.focusable === 'false' && s.ids === 0 && s.marked === 'bands'), 'a slot lacks aria-hidden, focusable=false, or carries an id');
+    ok(all.every((s) => s.aria === 'true' && s.focusable === 'false' && s.ids === 0 && s.marked === 'isometric'), 'a slot lacks aria-hidden, focusable=false, or carries an id');
     ok(all.every((s) => s.cls.includes(`illo-${s.context}`)), 'a slot lost its context class');
   });
 
@@ -171,7 +171,7 @@ export async function run({ browser, base }) {
         });
         watch.observe(document.body, { childList: true, subtree: true });
       });
-    }, descOf('openness', 'bands'));
+    }, descOf('openness', 'isometric'));
     await page.locator(thumb('openness', 'tiles')).click();
     await shows(page, { openness: 'tiles' });
     const start = await page.evaluate(() => window.__fade);
@@ -180,7 +180,7 @@ export async function run({ browser, base }) {
     ok(all.filter((s) => s.subject === 'openness').length === 2, 'openness should have two slots on this page (tile, row)');
     ok(all.every((s) => s.aria === 'true' && s.focusable === 'false' && s.ids === 0), 'a swapped slot lost aria-hidden or focusable=false');
     ok(all.every((s) => s.inline === ''), 'a fade left an inline opacity on a drawing');
-    ok((await pressed(page, 'openness')).join() === 'tiles' && (await pressed(page, 'care')).join() === 'bands', 'aria-pressed does not follow the choice');
+    ok((await pressed(page, 'openness')).join() === 'tiles' && (await pressed(page, 'care')).join() === 'isometric', 'aria-pressed does not follow the choice');
     ok((await storage(page)) === 'openness:tiles', `localStorage.illoPick is ${await storage(page)}`);
     for (const style of LANDED.slice(1)) { // every style of one subject, one after the other
       await page.locator(thumb('care', style)).click();
@@ -191,23 +191,23 @@ export async function run({ browser, base }) {
   await check('picker: "same style everywhere" makes one click set every subject', async () => {
     await page.locator('[data-illo-panel] [data-act="same"]').click();
     ok((await page.locator('[data-illo-panel] [data-act="same"]').getAttribute('aria-checked')) === 'true', 'the switch is not on');
-    await page.locator(thumb('care', 'circles')).click();
-    await shows(page, Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])));
-    ok((await storage(page)) === 'all:circles', `localStorage.illoPick is ${await storage(page)}`);
-    for (const s of SUBJECTS) ok((await pressed(page, s)).join() === 'circles', `${s}: circles is not the only pressed thumbnail`);
+    await page.locator(thumb('care', 'mosaic')).click();
+    await shows(page, Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])));
+    ok((await storage(page)) === 'all:mosaic', `localStorage.illoPick is ${await storage(page)}`);
+    for (const s of SUBJECTS) ok((await pressed(page, s)).join() === 'mosaic', `${s}: mosaic is not the only pressed thumbnail`);
     await page.locator('[data-illo-panel] [data-act="same"]').click(); // off again: one click sets one subject
-    await page.locator(thumb('health', 'grid')).click();
-    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), health: 'grid' });
+    await page.locator(thumb('health', 'tiles')).click();
+    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])), health: 'tiles' });
   });
 
   await check('picker: the thumbnails and Escape work from the keyboard', async () => {
     await page.locator(thumb('autonomy', 'mosaic')).focus();
     ok(await page.evaluate(() => document.activeElement?.dataset.pick === 'autonomy:mosaic'), 'a thumbnail does not take focus');
     await page.keyboard.press('Enter');
-    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), health: 'grid', autonomy: 'mosaic' });
+    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])), health: 'tiles', autonomy: 'mosaic' });
     await page.keyboard.press('Escape');
     await until(page, () => !document.querySelector('[data-illo-panel]'), 'Escape did not close the panel', 3000);
-    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), health: 'grid', autonomy: 'mosaic' }); // the choice stays
+    await shows(page, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])), health: 'tiles', autonomy: 'mosaic' }); // the choice stays
   });
   await check('picker: no console errors while picking', () => noConsoleErrors(page));
   await close(page);
@@ -274,17 +274,17 @@ export async function run({ browser, base }) {
     await visit(p, base, '/values/?pick');
     await panelUp(p);
     await p.locator(thumb('openness', 'tiles')).click();
-    await p.locator(thumb('care', 'circles')).click();
-    await shows(p, { openness: 'tiles', care: 'circles' });
+    await p.locator(thumb('care', 'mosaic')).click();
+    await shows(p, { openness: 'tiles', care: 'mosaic' });
     await p.locator('[data-illo-panel] [data-act="copy"]').click();
     const link = await until(p, () => window.__copied, 'nothing was copied');
-    const want = `${base}/values/?illo=openness:tiles,autonomy:bands,care:circles,solidarity:bands,health:mosaic`;
+    const want = `${base}/values/?illo=openness:tiles,autonomy:isometric,care:mosaic,solidarity:isometric,health:mosaic`;
     ok(link === want, `copied ${link}`);
     ok((await p.locator('[data-illo-panel] [data-act="copy"]').textContent()).trim() === 'Copied', 'no "Copied" on the button');
     const fresh = await newPage(browser, vp.desktop); // another context: empty storage
     await visit(fresh, base, link.slice(base.length));
-    await shows(fresh, { openness: 'tiles', care: 'circles' });
-    ok((await storage(fresh)) === 'openness:tiles,autonomy:bands,care:circles,solidarity:bands,health:mosaic', `the link was not stored: ${await storage(fresh)}`);
+    await shows(fresh, { openness: 'tiles', care: 'mosaic' });
+    ok((await storage(fresh)) === 'openness:tiles,autonomy:isometric,care:mosaic,solidarity:isometric,health:mosaic', `the link was not stored: ${await storage(fresh)}`);
     noConsoleErrors(fresh);
     noConsoleErrors(p);
     await close(fresh);
@@ -302,10 +302,10 @@ export async function run({ browser, base }) {
     }
   });
 
-  await check('picker: a later entry wins (?illo=all:circles,care:grid), and unknown names are ignored', async () => {
+  await check('picker: a later entry wins (?illo=all:mosaic,care:tiles), and unknown names are ignored', async () => {
     const p = await newPage(browser, vp.desktop);
-    await visit(p, base, '/values/?illo=all:circles,care:grid,health:../../x,nobody:tiles,openness:toString');
-    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), care: 'grid' });
+    await visit(p, base, '/values/?illo=all:mosaic,care:tiles,health:../../x,nobody:tiles,openness:toString');
+    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])), care: 'tiles' });
     noConsoleErrors(p);
     await close(p);
   });
@@ -319,7 +319,7 @@ export async function run({ browser, base }) {
     await p.locator('[data-illo-panel] [data-act="copy"]').click();
     await until(p, () => !document.querySelector('[data-illo-panel] [data-link]').hidden, 'the link never showed in the input', 3000);
     const value = await p.locator('[data-illo-panel] [data-link]').inputValue();
-    ok(value === `${base}/initiatives/?illo=openness:bands,autonomy:bands,care:bands,solidarity:bands,health:mosaic`, `the input holds ${value}`);
+    ok(value === `${base}/initiatives/?illo=openness:isometric,autonomy:isometric,care:isometric,solidarity:isometric,health:mosaic`, `the input holds ${value}`);
     await close(p);
   });
 
@@ -334,15 +334,15 @@ export async function run({ browser, base }) {
     await visit(p, base, '/values/');
     await shows(p, { openness: 'tiles' });
     await panelUp(p);
-    await visit(p, base, '/values/?illo=all:circles'); // the URL wins over what is stored, then is stored
-    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])));
-    ok((await storage(p)) === 'all:circles', `stored ${await storage(p)}`);
-    await p.locator(thumb('care', 'grid')).click(); // a click replaces a ?illo= left in the address, or a reload would bring it back
-    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), care: 'grid' });
+    await visit(p, base, '/values/?illo=all:mosaic'); // the URL wins over what is stored, then is stored
+    await shows(p, Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])));
+    ok((await storage(p)) === 'all:mosaic', `stored ${await storage(p)}`);
+    await p.locator(thumb('care', 'tiles')).click(); // a click replaces a ?illo= left in the address, or a reload would bring it back
+    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])), care: 'tiles' });
     ok(!(await p.evaluate(() => location.search.includes('illo='))), 'the address still carries the old ?illo=');
     await p.reload({ waitUntil: 'load' });
     await arrived(p, '/values/');
-    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'circles'])), care: 'grid' });
+    await shows(p, { ...Object.fromEntries(SUBJECTS.map((s) => [s, 'mosaic'])), care: 'tiles' });
     noConsoleErrors(p);
     await close(p);
   });
@@ -408,7 +408,7 @@ export async function run({ browser, base }) {
         });
         watch.observe(document.body, { childList: true, subtree: true });
       });
-    }, descOf('care', 'bands'));
+    }, descOf('care', 'isometric'));
     await q.locator(thumb('care', 'mosaic')).click();
     await shows(q, { care: 'mosaic' });
     const start = await q.evaluate(() => window.__fade);
