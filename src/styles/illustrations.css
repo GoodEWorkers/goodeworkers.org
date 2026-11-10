@@ -26,6 +26,11 @@
   --spill: color-mix(in srgb, var(--subject) 55%, transparent);
 }
 
+/* A living drawing on paper (the Initiatives heartbeat): thin bars in a 55% tint all but vanish on the sheet, so its tint is stronger. */
+.illo-paper > svg.illo-live {
+  --spill: color-mix(in srgb, var(--subject) 85%, transparent);
+}
+
 /* The subject colours are the value tiles' (openness and health yellow, autonomy lavender, care orange, solidarity periwinkle). */
 [data-illo-slot],
 [data-illo-thumb] {
