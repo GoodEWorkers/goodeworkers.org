@@ -482,7 +482,7 @@ The blog (`/articles/`, English only) follows the same system as the contributor
 - **Index:** a black-light `.sheet` with the encircled heading split by lines (`data-split`), the intro raised 0.15s later (`data-reveal="up"`), and the cards in a `data-stagger` list.
 - **Card** (`ArticleCard.astro`): a `data-tilt` link; the cover zooms to 1.05 over 0.7s inside its rounded mask, the arrow disc turns 45 degrees and goes orange with a pure-white arrow, the title goes yellow; a 2px orange focus ring.
 - **Article page:** no inset, so the title starts on the logotype's line; the title splits by lines, then the standfirst, the facts panel and the cover rise in turn (0.15s, 0.25s, 0.3s). The body text has no reveal: it is for reading.
-- **Latest articles** (homepage, and "Keep reading" under an article): a `.sheet` with a split heading, the pill raised after it and the cards staggered.
+- **Latest articles** (homepage, and "Keep reading" under an article): a `.sheet` with a split heading, a white underlined "See all our articles" link with an arrow (the homepage's "Explore our initiatives" link, not a pill) raised after it, and the cards staggered.
 
 ### Illustrations
 One set, `isometric`, drawn five times, once per subject (Openness, Autonomy, Care, Solidarity and the Initiatives' Health focus): identical cubes on one grid, one gap and one scale across the set; height only by whole stacked cubes, lit tops the only accent (revised for the designer, Nov 2026). Every piece comes from a small node script (`gen.mjs`, outside the repo), and its `<desc>` says what it shows.
