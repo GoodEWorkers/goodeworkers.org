@@ -23,12 +23,13 @@ const fieldClass =
 // where author colours are overridden and the placeholder reappears directly on
 // top of the identically-worded label.
 const labelClass =
-  'absolute left-0 top-1 text-base text-gray-500 cursor-text transition-all ' +
-  'peer-focus:-top-5 peer-focus:text-sm peer-focus:text-gray-600 ' +
+  'absolute left-0 top-1 text-base text-black/60 cursor-text transition-[top,font-size,color] ' +
+  'peer-focus:-top-5 peer-focus:text-sm peer-focus:text-black/70 ' +
   'peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-sm ' +
-  'peer-[:not(:placeholder-shown)]:text-gray-600';
+  'peer-[:not(:placeholder-shown)]:text-black/70';
 ---
 
+<!-- data-astro-reload: Netlify Forms wants a real browser POST and a full load of the thank-you page, not the router's fetch. -->
 <form
   class="flex flex-col md:flex-row md:space-x-20"
   name="contact"
@@ -36,14 +37,15 @@ const labelClass =
   action={thanksAction}
   data-netlify="true"
   data-netlify-honeypot="bot-field"
+  data-astro-reload
 >
   <div class="flex flex-col md:flex-1">
     <input type="hidden" name="form-name" value="contact" />
     <input type="hidden" name="locale" value={lang} />
 
     <!-- Records which CTA the visitor arrived from. Populated by the script at
-         the bottom of this file from the ?from= query parameter; simply stays
-         empty when absent or when JS is unavailable. -->
+         the bottom of this file from the ?from= query parameter or the clicked
+         link's data-from; simply stays empty when absent or without JS. -->
     <input type="hidden" name="source" value="" data-source-field />
 
     <!-- Honeypot. Bots fill every field they find; humans never see this one. -->
@@ -63,6 +65,7 @@ const labelClass =
         placeholder=" "
         autocomplete="name"
         required
+        data-rule
       />
       <label for="name" class={labelClass}>{form.name}</label>
     </div>
@@ -76,6 +79,7 @@ const labelClass =
         placeholder=" "
         autocomplete="email"
         required
+        data-rule
       />
       <label for="email" class={labelClass}>{form.email}</label>
     </div>
@@ -86,14 +90,15 @@ const labelClass =
         name="message"
         id="message"
         placeholder=" "
-        required></textarea>
+        required
+        data-rule></textarea>
       <label for="message" class={`${labelClass} top-5`}>{form.message}</label>
     </div>
 
     <!-- GDPR Art. 13 notice at the point of collection. Replying to an inbound
          enquiry rests on legitimate interest, so a consent checkbox is not
          strictly required — but informing the visitor is. -->
-    <p class="mt-8 text-xs text-gray-600 max-w-prose">
+    <p class="mt-8 text-sm text-black/70 max-w-prose">
       {form.gdprNotice} <a
         href={routes.legal[lang]}
         class="underline">{form.gdprLinkLabel}</a
@@ -124,7 +129,7 @@ const labelClass =
       type="submit"
       class="w-full max-w-[336px] bg-orange text-white-pure px-7 py-5 rounded-full
              flex flex-col items-center hover:scale-105
-             transition-transform ease-in
+             transition-transform ease-out
              focus-visible:outline focus-visible:outline-2
              focus-visible:outline-offset-2 focus-visible:outline-black"
     >
@@ -136,7 +141,7 @@ const labelClass =
     </button>
 
     {form.replyNote && (
-      <p class="mt-4 text-sm text-gray-600 max-w-[336px] text-center md:text-left">
+      <p class="mt-4 text-sm text-black/70 max-w-[336px] text-center md:text-left">
         {form.replyNote}
       </p>
     )}
@@ -147,12 +152,22 @@ const labelClass =
   // Carry the originating CTA through to the submission. Every CTA on the site
   // points at the localized #contact anchor, so without this there is no way
   // to tell them apart.
+  // Idempotent, so the direct call (a browser without the router never fires astro:page-load) and the listener may
+  // both run. Assigns even when empty: Back from ?from=... on the same, unswapped page must clear it.
   function setupSourceField() {
     const field = document.querySelector<HTMLInputElement>('[data-source-field]');
     if (!field) return;
     const from = new URLSearchParams(window.location.search).get('from');
-    if (from) field.value = from.slice(0, 64);
+    field.value = from ? from.slice(0, 64) : '';
   }
+
+  // Same-page CTAs link to #contact and carry the source on the link, so the
+  // page scrolls to the form instead of reloading on a changed query string.
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest('a[data-from]');
+    const field = document.querySelector<HTMLInputElement>('[data-source-field]');
+    if (link instanceof HTMLAnchorElement && field) field.value = link.dataset.from!.slice(0, 64);
+  });
 
   setupSourceField();
   document.addEventListener('astro:page-load', setupSourceField);

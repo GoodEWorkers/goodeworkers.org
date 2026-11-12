@@ -34,6 +34,8 @@ export const routes = {
   home: { en: '/', fr: '/fr/' },
   legal: { en: '/legal-notice/', fr: '/fr/mentions-legales/' },
   jobBoards: { en: '/remote-job-boards/', fr: '/fr/offres-emploi-teletravail/' },
+  values: { en: '/values/', fr: '/fr/valeurs/' },
+  initiatives: { en: '/initiatives/', fr: '/fr/initiatives/' },
   contributors: { en: '/contributors/', fr: '/fr/contributeurs/' },
   projects: { en: '/projects/', fr: '/fr/projets/' },
 } as const satisfies Record<string, Record<Lang, string>>;

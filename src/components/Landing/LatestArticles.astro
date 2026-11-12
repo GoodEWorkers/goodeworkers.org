@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
+import Icon from '../icons/Icon.astro';
 import ArticleCard from '../Articles/ArticleCard.astro';
 
 interface Props {
@@ -26,25 +26,26 @@ const articles = (
 {articles.length > 0 && (
   <section
     id="latest-articles"
-    class="bg-black-light text-grey rounded-3xl px-6 md:px-10 py-12 md:py-16 mb-20 xl:mb-32"
+    class="sheet bg-black-light text-grey py-12 md:py-16 mb-20 xl:mb-32"
   >
     <div
-      class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between max-w-screen-2xl mx-auto"
+      class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between"
     >
-      <h2
-        class="text-3xl sm:text-4xl md:text-5xl font-clash"
-      >
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-clash font-medium" data-split="lines">
         {heading}
       </h2>
-      <BigRoundedLinkBtn
-        upperSmallText="See all our"
-        bigBtmText="articles"
+      <a
         href="/articles/"
-        class="bg-purple text-black w-full md:max-w-[260px]"
-      />
+        data-reveal="up"
+        data-delay="0.15"
+        class="inline-flex items-center gap-2 min-h-11 font-bold underline decoration-2 underline-offset-4 hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform [&_svg]:hover:translate-x-1 [&_svg]:focus-visible:translate-x-1"
+      >
+        See all our articles
+        <Icon name="arrow-right" />
+      </a>
     </div>
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-screen-2xl mx-auto">
-      {articles.map((article) => <ArticleCard article={article} />)}
-    </div>
+    <ul class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-x-8" data-stagger>
+      {articles.map((article) => <li><ArticleCard article={article} /></li>)}
+    </ul>
   </section>
 )}

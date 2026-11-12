@@ -17,23 +17,24 @@ const time = readingTime(article);
 
 <a
   href={`/articles/${article.slug}/`}
+  data-tilt
   class:list={[
-    'group block',
+    'group block rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange',
     className,
   ]}
 >
-  <div class="relative">
+  <div class="relative overflow-hidden rounded-2xl">
     <img
       src={cover}
       alt=""
       loading="lazy"
       width="800"
       height="500"
-      class="w-full aspect-[16/10] object-cover rounded-2xl"
+      class="w-full aspect-[16/10] object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-focus-visible:scale-105"
     />
     <span
       aria-hidden="true"
-      class="absolute top-3 right-3 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white text-black flex items-center justify-center transition-transform duration-200 group-hover:bg-orange group-hover:text-white group-hover:rotate-45"
+      class="absolute top-3 right-3 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white text-black flex items-center justify-center transition duration-300 ease-out group-hover:bg-orange group-hover:text-white-pure group-hover:rotate-45 group-focus-visible:bg-orange group-focus-visible:text-white-pure group-focus-visible:rotate-45"
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path
@@ -46,7 +47,7 @@ const time = readingTime(article);
       </svg>
     </span>
   </div>
-  <h3 class="mt-5 text-lg md:text-xl font-clash font-semibold text-grey leading-tight">
+  <h3 class="mt-5 text-lg md:text-xl font-clash font-semibold text-grey leading-tight transition-colors duration-200 group-hover:text-yellow">
     {title}
   </h3>
   <dl class="mt-4 flex justify-between gap-4 text-sm">

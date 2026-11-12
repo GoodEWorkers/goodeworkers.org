@@ -34,6 +34,7 @@ const gap = variant === 'menu' ? 'gap-6' : 'gap-4';
               href={alternates[code]}
               hreflang={languages[code].htmlLang}
               lang={languages[code].htmlLang}
+              data-roll
               aria-current={isCurrent ? 'true' : undefined}
               title={isCurrent ? languages[code].label : `${strings.langSwitch.switchTo} ${languages[code].label}`}
               class:list={[

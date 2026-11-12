@@ -1,0 +1,125 @@
+---
+// The initiatives page, shared by /initiatives/ and /fr/initiatives/.
+// Copy: src/content/initiatives/<lang>.md.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SplitHeader from '../Common/SplitHeader.astro';
+import CircledText from '../JobBoards/CircledText.astro';
+import Icon from '../icons/Icon.astro';
+import Illustration from '../Illustration.astro';
+import { typeset } from '../Common/typeset';
+import { bandLink, valueStyles } from '../Values/valueStyles';
+import { getLangFromPath, routes } from '../../i18n/routes';
+import { initiativesContent, pageGraph } from '../../i18n/pages';
+
+const lang = getLangFromPath(Astro.url.pathname);
+const content = await initiativesContent(lang);
+const { focus, help } = content;
+const t = (text: string) => typeset(text, lang);
+// The statement's last phrase keeps its last two words together, so a narrow screen never ends on a lone "needs."
+const lastLink = content.valuesLine.map((piece) => !!piece.value).lastIndexOf(true);
+
+// The two ways in echo the homepage's two pills: yellow for organisations,
+// lavender for people who want to help. `from` tags the footer form.
+const doors = help.doors.map((door, index) => ({
+  ...door,
+  fill: index === 0 ? 'bg-yellow' : 'bg-purple',
+  from: index === 0 ? 'initiatives-health' : 'initiatives-skills',
+}));
+---
+
+<BaseLayout
+  title={content.title}
+  description={content.description}
+  graph={pageGraph('initiatives', 'WebPage', content, lang)}
+  contact={{ title: help.formTitle, mailSubject: help.mailSubject }}
+>
+  <main id="main-content" class="selection:bg-yellow selection:text-black">
+    <SplitHeader heading={content.heading}>{t(content.intro)}</SplitHeader>
+
+    <!-- The values, each phrase linked to its row on the values page and underlined in its colour. From lg a short phrase
+         stays on one line (an underline that breaks mid-phrase reads as two links); a long one may not, or the lines around it
+         would be left half empty (in French most of them are long). -->
+    <p
+      class="mt-12 md:mt-20 max-w-5xl text-2xl md:text-3xl font-medium leading-snug md:leading-snug text-grey text-pretty md:text-balance"
+      data-reveal="up"
+      data-delay="0.3"
+    >
+      <span class="text-ashgray">{t(content.valuesLead)}</span>
+      {' '}{
+        content.valuesLine.map((piece, index) =>
+          piece.value ? (
+            <a
+              href={`${routes.values[lang]}#${piece.value}`}
+              class:list={[bandLink, piece.text.length <= 30 && 'lg:whitespace-nowrap']}
+              style={`--c: ${valueStyles[piece.value].ink}; --on: ${valueStyles[piece.value].on}`}
+            >{t(index === lastLink ? piece.text.replace(/ (\S+)$/, '\u00a0$1') : piece.text)}</a>
+          ) : (
+            t(piece.text)
+          )
+        )
+      }
+    </p>
+
+    <!-- The focus sheet, the page's lit window: its heading at the top left, the focus and its text at the bottom left, and
+         the health illustration (a slot, on the paper itself) filling the right column, at the sheet's foot. -->
+    <section
+      aria-labelledby="focus-title"
+      class="sheet mt-14 md:mt-20 pt-8 md:pt-12 pb-8 md:pb-12 bg-white text-black lg:grid lg:grid-cols-[minmax(0,1fr)_calc((100%-11rem-2.5rem)/2)] xl:grid-cols-[minmax(0,1fr)_calc((100%-14rem-2.5rem)/2)] lg:grid-rows-[auto_1fr] lg:gap-x-5"
+      data-reveal="up"
+    >
+      <h2 id="focus-title" class="lg:col-start-1 lg:row-start-1 text-2xl md:text-3xl lg:text-4xl font-medium leading-tight" data-split="lines">{focus.title}</h2>
+      <div class="mt-6 lg:mt-0 lg:col-start-1 lg:row-start-2 lg:self-end">
+        <h3 class="max-w-2xl text-4xl md:text-5xl xl:text-[3.5rem] font-medium leading-[1.1] text-balance" data-reveal="up">
+          {t(focus.name)}
+        </h3>
+        <div class="mt-6 max-w-[34rem] space-y-4 text-base leading-[1.6875] text-black/80 text-pretty">
+          {focus.paragraphs.map((paragraph, i) => <p data-reveal="up" data-delay={(i + 1) * 0.08}>{t(paragraph)}</p>)}
+        </div>
+      </div>
+      <div class="mt-8 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 flex items-end">
+        <Illustration subject="health" context="paper" class="w-full" />
+      </div>
+    </section>
+
+    <section aria-labelledby="help-title" class="mt-24 md:mt-32 mb-20 md:mb-28 text-grey">
+      <h2
+        id="help-title"
+        class="max-w-4xl text-3xl sm:text-4xl md:text-5xl xl:text-[54px] font-medium leading-[1.2] md:leading-tight"
+        data-split="lines"
+      >
+        <CircledText text={help.title} />
+      </h2>
+      <!-- From md the two doors share three rows (the question, its line, the action), so what is written in them lines up
+           across the cards however the questions wrap. -->
+      <ul class="mt-10 md:mt-14 grid md:grid-cols-2 md:grid-rows-[auto_auto_1fr_auto] gap-3 md:gap-x-5 md:gap-y-0" data-stagger>
+        {
+          doors.map((door) => (
+            <li
+              class:list={[
+                'door group relative flex min-h-[18rem] md:min-h-[22rem] flex-col md:grid md:grid-rows-subgrid md:row-span-4 rounded-2xl lg:rounded-3xl p-7 md:p-10 xl:p-12 text-black has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-orange',
+                door.fill,
+              ]}
+              data-tilt
+            >
+              <p class="max-w-[22ch] text-2xl xl:text-[28px] font-medium leading-snug text-balance">{t(door.question)}</p>
+              <p class="mt-4 text-base md:text-lg text-pretty">{t(door.text)}</p>
+              <a
+                href="#contact"
+                data-from={door.from}
+                class="mt-auto pt-10 md:mt-0 md:pt-8 md:row-start-4 md:self-end self-start font-clash font-bold text-2xl lg:text-3xl xl:text-[2rem] leading-tight text-balance outline-none after:absolute after:inset-0 after:rounded-[inherit]"
+              >
+                {t(door.action)}
+                <span
+                  class="ml-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black text-grey align-middle transition-transform duration-200 ease-out group-hover:translate-x-1 group-has-[:focus-visible]:translate-x-1 [&>svg]:h-5 [&>svg]:w-5"
+                  aria-hidden="true"
+                >
+                  <Icon name="arrow-right" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

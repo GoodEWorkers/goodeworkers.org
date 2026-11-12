@@ -2,46 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts - adapted from Guiseppe Amato's code */
+/* Fonts. Every face is a Latin-subset woff2 (Basic Latin, Latin-1, general
+   punctuation, euro), which covers the English and French copy. The three
+   files are preloaded in BaseLayout so they are not discovered on the third
+   hop (HTML -> CSS -> font). */
 @layer base {
-  /*
-    ClashDisplay: the variable face alone covers the whole 200–700 range this
-    site uses, so the six static faces that used to follow have been removed.
-    They were never needed, and the browser preferred the exact-weight statics,
-    pulling several files where one would do.
-  */
+  /* ClashDisplay: the variable face covers the whole 200-700 range. */
   @font-face {
     font-family: 'ClashDisplay';
-    src: url('../assets/fonts/ClashDisplay-Variable.woff2') format('woff2'),
-        url('../assets/fonts/ClashDisplay-Variable.woff') format('woff'),
-        url('../assets/fonts/ClashDisplay-Variable.ttf') format('truetype');
+    src: url('../assets/fonts/ClashDisplay-Variable.woff2') format('woff2');
     font-weight: 200 700;
     font-display: swap;
     font-style: normal;
   }
 
-  /*
-    Inter: `font-display: swap` added.
-
-    Without it the spec default is `auto`, which Chrome implements as a block
-    period of up to 3 seconds — and `.font-inter` wraps the entire page, so all
-    body copy (including both hero CTA labels) rendered invisible until the font
-    arrived.
-
-    STILL TO DO — needs a font toolchain, so it is not done here: this is a
-    309 KB TTF (~136 KB brotli) where a Latin-subset WOFF2 would be ~25–45 KB.
-    Fonts are currently ~90% of page weight. Convert with:
-      pyftsubset Inter-Regular.ttf --flavor=woff2 --layout-features='*' \
-        --unicodes=U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+20AC
-    then swap the src below and add a <link rel="preload"> in BaseLayout so the
-    font is not discovered on the third hop (HTML → CSS → font).
-  */
+  /* Inter: two static faces. Regular is declared over 400-700 by design, so
+     `font-medium`, `font-semibold` and `font-bold` all resolve to it, as the
+     site was approved. The Bold file serves 800-900, for the Why card titles
+     only: use `font-extrabold` to opt in. No weight is ever synthesised. */
   @font-face {
     font-family: 'Inter';
-    src: url('../assets/fonts/Inter-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/Inter-Regular.woff2') format('woff2');
     font-weight: 400 700;
     font-display: swap;
     font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-Bold.woff2') format('woff2');
+    font-weight: 800 900;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  /* Makes "no weight is ever synthesised" true: no browser fakes a bold (or an italic) from Regular. */
+  html {
+    font-synthesis: none;
+  }
+}
+
+/* The sheet: every top-level surface, paper or dark, is one. It spans the column box (the page column's gutters, 16px and 32px
+   from md, are taken back with a negative margin and given again as padding), so every sheet is as wide as the footer's contact
+   sheet and its content starts on the logotype's line. Nothing is inset, and nothing pads twice. The contact sheet sits outside
+   the column, so it is the column's own box (max 1536px, centred, the same gutters) with this radius. */
+@layer components {
+  .sheet {
+    @apply -mx-4 md:-mx-8 px-4 md:px-8 rounded-xl sm:rounded-2xl lg:rounded-3xl;
   }
 }
 
@@ -70,4 +77,155 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Motion engine (src/scripts/motion/engine.ts)
+   --------------------------------------------------------------------------------------------- */
+
+/* Hidden until the engine reveals them. Gated on html.motion, which the inline script in BaseLayout
+   sets only when JS runs and reduced motion is off: no JS, or a visitor who asked for less motion,
+   sees everything. Opacity, not visibility: unrevealed content stays focusable and in the accessibility
+   tree (focusing it scrolls it in, which fires its trigger). The engine takes over with inline opacity. */
+.motion [data-split],
+.motion [data-reveal],
+.motion [data-stagger] > * {
+  opacity: 0;
+}
+
+/* Headings never end on a lone word. Not the homepage H1: SplitText keeps it split for good, and a balanced layout
+   measured before the split is not the one its lines end up in, so after a resize its lines could wrap again inside. */
+h1:not([data-intro]),
+h2 {
+  text-wrap: balance;
+}
+
+/* ClashDisplay's word space is 0.14em, so a label set in it reads "Goback home". Open it to Inter's weight of space where it
+   carries words (semibold names, bold labels). A single word, like the wordmark's letters, has no space to open. */
+.font-clash:is(.font-semibold, .font-bold) {
+  word-spacing: 0.1em;
+}
+
+/* SplitText line masks clip at the line box: give descenders room without moving the layout. */
+.split-line {
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* Lenis owns smooth scrolling when motion is on; the rule at the top stays for the no-JS case.
+   The rest is lenis/dist/lenis.css, minus the autoToggle rule (that option is off). */
+html.motion {
+  scroll-behavior: auto;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* The lamp: warm light on the dark ground. The engine writes --lamp-x / --lamp-y on #lamp itself; with no JS
+   or reduced motion the glow just rests at the fallbacks. An amber heart (11%) that falls off through orange: orange alone, at any
+   strength, dries to brown on #111 and reads as a stain, where amber reads as light. Away from the heart the ground is still #111;
+   on the lit heart ashgray text keeps over 11:1 (80% ashgray over 8:1). */
+#lamp {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    60vmax circle at var(--lamp-x, 50%) var(--lamp-y, 40%),
+    rgb(253 190 100 / 0.11),
+    rgb(253 94 9 / 0.07) 30%,
+    rgb(253 94 9 / 0.03) 52%,
+    transparent 70%
+  );
+}
+
+/* The page-change curtain: a paper sheet that slides up over the page and off the next one (motion/transitions.ts).
+   Parked below the viewport; the router script takes over its transform. Above everything, including the nav. */
+#curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #f8f8f8;
+  border-radius: 24px 24px 0 0;
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+/* After a page change the script focuses <main> (tabindex -1) so focus is not left on the removed link.
+   It is a landing point, not a control: no ring around the whole page. */
+#main-content:focus {
+  outline: none;
+}
+
+/* Nav. The engine adds is-floating once the page has scrolled; the hairline shows that live state. */
+[data-navbar].is-floating {
+  box-shadow: 0 1px 0 rgb(248 248 248 / 0.08);
+}
+/* At the top the lamp shows through the bar; scrolled, the solid ground returns so content passes under it.
+   Gated on html.js, not html.motion: the engine toggles is-floating in every mode that has JS, reduced motion included.
+   Without JS (or once the failsafe has given up on the engine) nothing would add it, so the bar stays solid. */
+.js:not([data-engine='off']) [data-navbar] {
+  transition: background-color 0.25s;
+}
+.js:not([data-engine='off']) [data-navbar]:not(.is-floating) {
+  background-color: transparent;
+}
+
+/* Letter roll. The engine builds [data-roll-clip] > span + span[aria-hidden] inside every [data-roll]. */
+[data-roll-clip] {
+  display: inline-grid;
+  overflow: clip;
+  vertical-align: top;
+}
+[data-roll-clip] > span {
+  grid-area: 1 / 1;
+  transition: translate 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+[data-roll-clip] > span + span {
+  translate: 0 105%;
+  user-select: none; /* the copy below the label: selecting or copying the link would double its text */
+}
+@media (hover: hover) {
+  :is([data-roll], a, button):hover [data-roll-clip] > span {
+    translate: 0 -105%;
+  }
+  :is([data-roll], a, button):hover [data-roll-clip] > span + span {
+    translate: 0 0;
+  }
+}
+:is([data-roll], a, button):focus-visible [data-roll-clip] > span {
+  translate: 0 -105%;
+}
+:is([data-roll], a, button):focus-visible [data-roll-clip] > span + span {
+  translate: 0 0;
+}
+
+/* A tilted card is a layer at an angle, and the compositor does not smooth the edge of such a layer: its straight sides step by a pixel or
+   two. A transparent 1px outline puts that edge in empty pixels, so the card's own painted, anti-aliased edge is what shows. :where() keeps
+   it weaker than the focus-ring utilities on the cards (a forced-colors theme draws it as a hairline, which suits a card with no fill). */
+:where(.motion [data-tilt='']) {
+  outline: 1px solid transparent;
+}
+
+/* Orange selection. Weaker than Tailwind's selection: variants, so the job boards page keeps its yellow. */
+::selection {
+  background: #fd5e09;
+  color: #111111;
 }

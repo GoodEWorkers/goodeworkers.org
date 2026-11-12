@@ -22,7 +22,8 @@ await mkdir('screenshots', { recursive: true });
 const browser = await chromium.launch();
 try {
   for (const vp of VIEWPORTS) {
-    const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
+    // Animations are gated on prefers-reduced-motion; capture the settled frame.
+    const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, reducedMotion: 'reduce' });
     for (const target of [{ base: ORIG, label: 'orig' }, { base: ASTRO, label: 'astro' }]) {
       for (const p of PAGES) {
         const page = await context.newPage();

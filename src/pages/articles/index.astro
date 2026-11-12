@@ -10,27 +10,26 @@ const articles = (
 ---
 
 <BaseLayout
-  title="Articles | GoodEworkers"
-  description="Articles, stories, and insights from the GoodEworkers community on remote work, nonprofits, and digital transformation for good causes."
+  title="Articles | GoodEWorkers"
+  description="Articles, stories, and insights from the GoodEWorkers community on remote work, nonprofits, and digital transformation for good causes."
 >
-  <div class="font-inter px-4 md:px-8 text-grey">
-    <header class="pt-8 md:pt-12 lg:pt-24 text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-7xl font-medium">
-        Our <Encircled text="articles" class="font-bold" />
-      </h1>
-      <p
-        class="mt-8 md:mt-12 px-4 sm:px-16 max-w-screen-md mx-auto text-sm md:text-base leading-snug md:leading-tight"
-      >
-        Stories, insights, and updates from the GoodEworkers community.
-      </p>
-    </header>
-    <main class="max-w-screen-2xl mx-auto mt-12 md:mt-16 pb-20">
+  <!-- A sheet like the contributors and projects indexes: the engine splits the heading, raises the intro and staggers the cards. -->
+  <div class="sheet font-inter text-white bg-black-light my-10">
+    <main id="main-content" class="py-16 md:py-24">
+      <header class="max-w-screen-md mx-auto text-center">
+        <h1 class="font-clash font-bold text-4xl md:text-5xl lg:text-6xl leading-tight" data-split="lines">
+          Our <Encircled text="articles" class="font-bold" />
+        </h1>
+        <p class="mt-6 md:mt-8 text-sm md:text-base text-ashgray leading-relaxed" data-reveal="up" data-delay="0.15">
+          Stories, insights, and updates from the GoodEWorkers community.
+        </p>
+      </header>
       {articles.length === 0 ? (
-        <p class="text-center text-ashgray">No articles yet. Check back soon!</p>
+        <p class="mt-14 text-center text-ashgray" data-reveal="up">No articles yet. Check back soon!</p>
       ) : (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {articles.map((article) => <ArticleCard article={article} />)}
-        </div>
+        <ul class="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-x-8" data-stagger>
+          {articles.map((article) => <li><ArticleCard article={article} /></li>)}
+        </ul>
       )}
     </main>
   </div>

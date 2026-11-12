@@ -50,6 +50,7 @@ const en = {
   },
 
   nav: {
+    initiatives: 'Initiatives',
     articles: 'Articles',
     contact: 'Contact',
     contributors: 'Contributors',
@@ -72,6 +73,8 @@ const en = {
   footer: {
     contactTitle: 'Tell us about your project',
     mailSubject: 'Project enquiry',
+    valuesLink: 'Our values',
+    initiativesLink: 'Our initiatives',
     jobBoardsLink: 'Remote job boards',
     legalLink: 'Legal Notice',
     openSource: 'Our work is open source on',
@@ -204,6 +207,7 @@ const fr: Dictionary = {
   },
 
   nav: {
+    initiatives: 'Initiatives',
     articles: 'Articles',
     contact: 'Contact',
     contributors: 'Contributeurs',
@@ -224,6 +228,8 @@ const fr: Dictionary = {
   footer: {
     contactTitle: 'Parlez-nous de votre projet',
     mailSubject: 'Demande de projet',
+    valuesLink: 'Nos valeurs',
+    initiativesLink: 'Nos initiatives',
     jobBoardsLink: "Offres d'emploi en télétravail",
     legalLink: 'Mentions légales',
     openSource: 'Notre travail est open source sur',

@@ -1,7 +1,7 @@
 ---
 import Icon from '../icons/Icon.astro';
 import BigRoundedLinkBtn from '../Common/BigRoundedLinkBtn.astro';
-import { contactAnchor, getLangFromPath } from '../../i18n/routes';
+import { getLangFromPath } from '../../i18n/routes';
 import { homeContent } from '../../i18n/home';
 
 // Presentation stays here, copy comes from the content file — zipped by index.
@@ -26,28 +26,39 @@ const { hero } = await homeContent(lang);
   <div
     class="flex flex-col mx-4 sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 mt-12 sm:mt-20 sm:justify-center sm:space-x-6 md:space-x-12 relative z-10"
   >
-    <BigRoundedLinkBtn
-      upperSmallText={hero.ctaNonprofitSmall}
-      bigBtmText={hero.ctaNonprofitBig}
-      class="bg-yellow"
-      href={contactAnchor(lang, 'nonprofit')}
-    />
-    <BigRoundedLinkBtn
-      upperSmallText={hero.ctaHelpSmall}
-      bigBtmText={hero.ctaHelpBig}
-      class="bg-purple"
-      href={contactAnchor(lang, 'volunteer')}
-    />
+    {/* The intro moves these wrappers: the pills themselves keep their CSS hover scale. */}
+    <div class="w-full max-w-[336px]" data-intro="cta">
+      <BigRoundedLinkBtn
+        upperSmallText={hero.ctaNonprofitSmall}
+        bigBtmText={hero.ctaNonprofitBig}
+        class="bg-yellow"
+        href="#contact"
+        from="nonprofit"
+      />
+    </div>
+    <div class="w-full max-w-[336px]" data-intro="cta">
+      <BigRoundedLinkBtn
+        upperSmallText={hero.ctaHelpSmall}
+        bigBtmText={hero.ctaHelpBig}
+        class="bg-purple"
+        href="#contact"
+        from="volunteer"
+      />
+    </div>
   </div>
   <div
-    class="bg-white relative -mt-12 -mx-4 md:-mx-8 px-4 md:px-8 pt-20 lg:pt-32 pb-6 md:pb-16 lg:pb-28 rounded-xl sm:rounded-2xl lg:rounded-3xl lg:justify-between"
+    class="sheet bg-white relative -mt-12 pt-20 lg:pt-32 pb-6 md:pb-16 lg:pb-28 lg:justify-between"
+    data-window
   >
-    <div class="flex flex-col lg:flex-row lg:gap-16 xl:gap-24">
+    {/* From xl the row pads again, the hero's one exception to the sheet's single layer of padding: home.ts closes the window 32px short of this room. */}
+    <div class="flex flex-col lg:flex-row lg:gap-16 xl:gap-24 xl:px-24">
       <div class="px-4 sm:px-16 lg:px-0 max-w-screen-md mx-auto lg:mx-0 lg:flex-1">
         <h2
           class="text-3xl leading-tight sm:text-4xl sm:leading-tight lg:text-5xl lg:leading-tight xl:text-[54px] xl:leading-[63px]"
+          data-title
         >
-          <span class="font-clash font-medium">
+          {/* nowrap: the split words are inline-blocks, and a narrow column would break the wordmark between them. */}
+          <span class="font-clash font-medium whitespace-nowrap">
             Good<span class="font-semibold">e</span>Workers
           </span>
           <span class="font-inter font-medium">
@@ -59,6 +70,7 @@ const { hero } = await homeContent(lang);
       </div>
       <div
         class="mt-10 lg:mt-0 grid grid-cols-2 sm:grid-cols-[repeat(6,69px)] md:grid-cols-[repeat(6,74px)] xl:grid-cols-[repeat(6,70px)] w-full max-w-80 sm:max-w-xl lg:max-w-[520px] mx-auto gap-1.5 md:gap-3 xl:gap-5 lg:w-auto lg:mx-0 lg:ml-auto"
+        data-stagger
       >
         {
           hero.cards.map((heroCard, index) => (
@@ -66,15 +78,17 @@ const { hero } = await homeContent(lang);
               class:list={[
                 'aspect-square flex flex-col items-center justify-center rounded-2xl sm:w-36 md:w-40 sm:col-span-2',
                 cardGridPlacement[index],
+                // On the two-column phone grid the odd fifth card would be orphaned: it takes the whole row.
                 index === hero.cards.length - 1
-                  ? 'bg-orange text-black'
+                  ? 'bg-orange text-white-pure max-sm:col-span-2 max-sm:aspect-[2/1]'
                   : 'bg-grey',
               ]}
+              data-tilt
             >
-              <div class="[&>*]:w-5 [&>*]:h-5">
+              <div class="[&>*]:w-5 [&>*]:h-5" data-pop>
                 <Icon name={cardIcons[index]} />
               </div>
-              <p class="mt-4 text-sm md:text-base font-bold whitespace-pre-line text-center">
+              <p class="mt-4 text-base font-bold whitespace-pre-line text-center">
                 {heroCard.title}
               </p>
             </div>

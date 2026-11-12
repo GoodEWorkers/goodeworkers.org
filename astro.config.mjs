@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 import {
@@ -43,7 +42,6 @@ export default defineConfig({
   },
   integrations: [
     tailwind(),
-    react(),
     sitemap({
       // Google uses lastmod as a recrawl-scheduling hint when it is consistent
       // and honest. Deliberately no `priority` or `changefreq` — Google has
