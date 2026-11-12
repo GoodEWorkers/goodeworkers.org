@@ -2,7 +2,7 @@
 // all of itself at load without motion (reduced motion) and without JS.
 import { check, close, newPage, noConsoleErrors, noOverflow, ok, open, pagePaths, pool, scrollThrough, until, vp } from '../lib.mjs';
 
-// What the engine hides until it reveals it (global.css, html.motion). [data-illo-slot] is the illustration picker's slot.
+// What the engine hides until it reveals it (global.css, html.motion). [data-illo-slot] is an illustration's slot.
 const REVEALS = '[data-reveal], [data-split], [data-stagger] > *, [data-illo-slot] svg';
 
 const hidden = (page) =>

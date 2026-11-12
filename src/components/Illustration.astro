@@ -1,6 +1,5 @@
 ---
-// One illustration slot (DESIGN.md, Illustrations). The default style's drawing is inlined here, at build time; the picker
-// (src/scripts/motion/picker.ts) swaps it for another style's, fetched from /illustrations/<subject>/<style>.svg. Decorative.
+// One illustration slot (DESIGN.md, Illustrations): the subject's isometric drawing, inlined here at build time. Decorative.
 // `context` is the ground the slot sits on (illustrations.css): a value tile, the night, or the paper sheet. Size and place the
 // slot with `class`: the drawing fills it. No drawing carries an id: a page shows several copies.
 import { readFileSync } from 'node:fs';
@@ -14,9 +13,8 @@ interface Props {
 }
 
 const { subject, context, class: className } = Astro.props;
-// The default style, and the first of the picker's. From the project root, not import.meta.url: the build bundles this file elsewhere.
-// The Initiatives focus (health) defaults to the living mosaic; picker.ts has the same map in DEFAULTS.
-const style = subject === 'health' ? 'mosaic' : 'isometric';
+// From the project root, not import.meta.url: the build bundles this file elsewhere.
+const style = 'isometric';
 const svg = readFileSync(join(process.cwd(), 'public/illustrations', subject, `${style}.svg`), 'utf8').replace(
   /^<svg\b/,
   '<svg aria-hidden="true" focusable="false"',
@@ -26,7 +24,6 @@ const svg = readFileSync(join(process.cwd(), 'public/illustrations', subject, `$
 <div
   data-illo-slot={subject}
   data-illo-context={context}
-  data-illo-style={style}
   data-reveal="fade"
   class:list={['illo', `illo-${context}`, className]}
   set:html={svg}

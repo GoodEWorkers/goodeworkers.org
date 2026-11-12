@@ -1,5 +1,5 @@
 // Copies the shipped illustration sets from the commission's generators into public/illustrations/<subject>/<style>.svg, where the
-// site (src/components/Illustration.astro) and the picker (src/scripts/motion/picker.ts) read them. Rerun it whenever an illustrator
+// site (src/components/Illustration.astro) reads them. Rerun it whenever an illustrator
 // revises a set or a late one lands: `node scripts/sync-illustrations.mjs [research dir]` (default ~/research/goodeworkers-illos).
 // Nothing is written unless every file passes; the target folder is wiped first, so it always mirrors SETS and SUBJECTS exactly.
 // A set that has no drawings yet is skipped with a warning (the default may not be: the site inlines it at build).
@@ -11,19 +11,15 @@ import { fileURLToPath } from 'node:url';
 const from = process.argv[2] ?? join(homedir(), 'research/goodeworkers-illos');
 const to = fileURLToPath(new URL('../public/illustrations/', import.meta.url));
 
-// The commission's folder, under the research dir -> the style's slug on the site: the three sets kept in Nov 2026 (isometric, revised on one
-// cube module; tiles, after the designer's Figma frame; the living mosaic). Every other set stays in the research dir, out of the site.
-// The first is the default (Illustration.astro reads it); the order is the picker's.
+// The commission's folder, under the research dir -> the style's slug on the site. Only the isometric set ships; the other sets and the
+// picker that chose between them live on the `values-initiatives-motion` branch.
 const SETS = {
   '06-isometric': 'isometric',
-  '11-tiles': 'tiles',
-  '12-mosaic': 'mosaic',
-  '14-icons': 'animals',
 };
 const [DEFAULT] = Object.values(SETS);
 // The commission's file -> the subject's slug on the site.
 const SUBJECTS = { openness: 'openness', autonomy: 'autonomy', care: 'care', solidarity: 'solidarity', 'health-and-hospitals': 'health' };
-const MAX_BYTES = 32 * 1024; // the contract: under 32 KB (nocturne's budget; the other sets stay under 12 KB) and 160 elements, no ids (the page inlines several copies)
+const MAX_BYTES = 12 * 1024; // the contract: under 12 KB and 160 elements, no ids (the page inlines several copies)
 const MAX_ELEMENTS = 160;
 
 const rows = [];

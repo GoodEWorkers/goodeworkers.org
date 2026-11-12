@@ -1,6 +1,6 @@
 /* Illustration slots (src/components/Illustration.astro, DESIGN.md Illustrations). A drawing paints its strokes with --ink, its lit
    parts with --light and its tinted parts with --spill, and carries a default for each (var(--ink, #111111)), so a ground sets only
-   these three. --subject is the subject's own colour, set on the slot (and on the picker's thumbnails); a ground may use it. */
+   these three. --subject is the subject's own colour, set on the slot; a ground may use it. */
 .illo > svg {
   display: block;
   width: 100%;
@@ -27,19 +27,15 @@
 }
 
 /* The subject colours are the value tiles' (openness and health yellow, autonomy lavender, care orange, solidarity periwinkle). */
-[data-illo-slot],
-[data-illo-thumb] {
+[data-illo-slot] {
   --subject: #fdc959;
 }
-[data-illo-slot='autonomy'],
-[data-illo-thumb='autonomy'] {
+[data-illo-slot='autonomy'] {
   --subject: #b3a0cf;
 }
-[data-illo-slot='care'],
-[data-illo-thumb='care'] {
+[data-illo-slot='care'] {
   --subject: #fd5e09;
 }
-[data-illo-slot='solidarity'],
-[data-illo-thumb='solidarity'] {
+[data-illo-slot='solidarity'] {
   --subject: #6667ab;
 }

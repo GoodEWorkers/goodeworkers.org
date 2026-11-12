@@ -303,11 +303,6 @@
         "purpose": "An illustration fades in as it comes into view: one generic reveal for every system, nothing animates inside a drawing. The hidden state is CSS gated on html.motion, so with motion off, without JS or when the engine fails, the default set shows whole."
       },
       {
-        "name": "illustration-swap",
-        "value": "picker.ts: a swapped drawing fades opacity 0 to 1 over 0.3s power3.out where html.motion is set, at once otherwise",
-        "purpose": "Only the designer's picker (?pick, ?illo=) swaps a drawing; visitors never see it. A short fade, so the choice reads as a change and not a flicker."
-      },
-      {
         "name": "footer-logo",
         "value": "svg[data-stagger] on the inline one-line logotype (goodeworkers-line.svg) in the footer band: each of its five paths rises 32 units (more than the lockup is tall, so the svg's own edge masks it), scales up from .96 and fades in, 1s expo.out, 0.06s apart in file order (orange e, Workers, lavender k, Good, star burst last), once the logo's top reaches 80% of the viewport; data-logo on its wrapper turns the star burst 360deg in 6s, linear and repeating, on hover only (none on touch)",
         "purpose": "The footer closes with the logotype itself, on one line, staggered in, the star spinning on hover: a decorative, aria-hidden finale as wide as the column's content (the logotype's line), about 9:1. Whole without JS and under reduced motion."
@@ -459,7 +454,7 @@
       "name": "Illustration (slot)",
       "kind": "custom",
       "refersTo": "",
-      "description": "One illustration per value and one for the Initiatives focus: inline SVG in a slot (data-illo-slot, data-reveal=\"fade\"), in one of three styles (isometric cubes, still tiles, living mosaic), each drawn five times. A drawing paints with --ink, --light and --spill, and the slot's context sets them: tile (black ink, paper light, paper spill at 60%), night (pale ink, the subject's colour spills) and paper (black ink, the subject's colour as the light, 55% of it as the spill). Flat: no gradient, filter or shadow. aria-hidden. A designer's picker (?pick) swaps the style live (a style whose file is missing is a disabled thumbnail). The preview shows the three grounds with a plain mark.\nStyles (slug: method), the first is the default:\n- isometric: identical cubes on one grid, one gap and one scale; height only by whole stacked cubes, lit tops the only accent.\n- tiles: rounded tiles on one module after the designer's Figma frame, one focal tile in the light with a shape cut out.\n- mosaic: the tiles mosaics in motion (SMIL, 8 s loop, after the client's draft); health is the still tile hospital and its default.",
+      "description": "One illustration per value and one for the Initiatives focus: inline SVG in a slot (data-illo-slot, data-reveal=\"fade\"), in one style, isometric cubes, drawn five times. A drawing paints with --ink, --light and --spill, and the slot's context sets them: tile (black ink, paper light, paper spill at 60%), night (pale ink, the subject's colour spills) and paper (black ink, the subject's colour as the light, 55% of it as the spill). Flat: no gradient, filter or shadow. aria-hidden. The preview shows the three grounds with a plain mark.\nStyle: isometric, identical cubes on one grid, one gap and one scale; height only by whole stacked cubes, lit tops the only accent.",
       "html": "<div class=\"ds-illo-grounds\"><figure class=\"ds-illo ds-illo-tile\"><figcaption>tile</figcaption><span class=\"ds-illo-mark\"></span></figure><figure class=\"ds-illo ds-illo-night\"><figcaption>night</figcaption><span class=\"ds-illo-mark\"></span></figure><figure class=\"ds-illo ds-illo-paper\"><figcaption>paper</figcaption><span class=\"ds-illo-mark\"></span></figure></div>",
       "css": ".ds-illo-grounds{display:flex;gap:16px;padding:24px;background:#111111;font-family:Inter, Arial, sans-serif;font-size:12px;} .ds-illo{position:relative;isolation:isolate;margin:0;width:160px;height:120px;border-radius:16px;overflow:hidden;} .ds-illo figcaption{position:absolute;left:12px;top:10px;} .ds-illo-mark{position:absolute;left:50%;bottom:16px;width:44px;height:56px;margin-left:-22px;border-radius:8px;border:3px solid #111111;background:#F8F8F8;} .ds-illo-mark::before{content:'';position:absolute;z-index:-1;inset:-12px;border-radius:18px;background:var(--spill);} .ds-illo-tile{background:#B3A0CF;color:#111111;--spill:rgb(248 248 248 / .6);} .ds-illo-night{background:#1D1D1D;color:#ECECEC;--spill:#B3A0CF;} .ds-illo-night .ds-illo-mark{border-color:#ECECEC;} .ds-illo-paper{background:#F8F8F8;color:#111111;--spill:rgb(253 201 89 / .55);} .ds-illo-paper .ds-illo-mark{background:#FDC959;}"
     },
@@ -496,7 +491,7 @@
       "One orange ring around one word per heading.",
       "Accents work as fills (pills, cards, value tiles, door cards), as dots and lines, or as a state (hover, current page). They never set reading text.",
       "Four value colours with fixed roles: Openness yellow, Autonomy lavender, Care orange, Solidarity pantone.",
-      "An illustration for each value and for the hospital focus, in one of three styles (default: isometric): one ink and one spill colour, inline SVG that fades in, swapped live by a designer's picker.",
+      "An illustration for each value and for the hospital focus, in the isometric cube style: one ink and one spill colour, inline SVG that fades in.",
       "Fat rounded pill CTAs with a ClashDisplay bold label; `hover` scales them to 105%.",
       "Flat surfaces; no resting shadows.",
       "Inter for reading and UI; ClashDisplay for the brand name, names you click, value names, the 404 numeral and heading, and CTA labels."
@@ -565,7 +560,7 @@
       "Don't add a second horizontal padding layer inside the shared column, and don't inset a card (`px-6`, `mx-4`, a narrower box). A surface is a `.sheet`. The hero's row (`xl:px-24`) is the one exception.",
       "Don't use glyph or emoji icons. Icons are inline SVG from `src/assets/icons/`, drawn in `currentColor`: line arrows, and filled shapes on the feature cards.",
       "Don't add small uppercase labels above headings. The system has no eyebrow or kicker device.",
-      "Don't hotlink or rasterise illustrations, or add a gradient, filter, shadow or id to one. Once the system is chosen the site ships that one for all five subjects; the picker is for choosing, not a feature.",
+      "Don't hotlink or rasterise illustrations, or add a gradient, filter, shadow or id to one.",
       "Don't colour prose or taglines with a value colour. Values show their colour as fills, as the ink of their names, and as underlines."
     ]
   }

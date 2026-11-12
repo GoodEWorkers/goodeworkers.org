@@ -6,7 +6,6 @@ import interRegular from '../assets/fonts/Inter-Regular.woff2';
 import interBold from '../assets/fonts/Inter-Bold.woff2';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import IllustrationPicker from '../components/IllustrationPicker.astro';
 import {
   SITE,
   absoluteUrl,
@@ -299,7 +298,5 @@ const structuredData = {
     <script>
       import '../scripts/motion/index.ts';
     </script>
-    <!-- The illustration picker: an inert template, and a script that wakes only for ?pick, ?illo= or a stored choice. -->
-    <IllustrationPicker />
   </body>
 </html>
