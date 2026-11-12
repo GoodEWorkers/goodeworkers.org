@@ -51,6 +51,7 @@ const en = {
 
   nav: {
     initiatives: 'Initiatives',
+    articles: 'Articles',
     contact: 'Contact',
     contributors: 'Contributors',
     projects: 'Projects',
@@ -207,6 +208,7 @@ const fr: Dictionary = {
 
   nav: {
     initiatives: 'Initiatives',
+    articles: 'Articles',
     contact: 'Contact',
     contributors: 'Contributeurs',
     projects: 'Projets',

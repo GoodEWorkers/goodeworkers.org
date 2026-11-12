@@ -45,6 +45,8 @@ check_page "/thanks/"               "200" "GitHub"
 check_page "/remote-job-boards/"    "200" "We Work Remotely"
 check_page "/values/"               "200" "Write it down. Build in the open."
 check_page "/initiatives/"          "200" "Health and hospitals"
+check_page "/articles/"                          "200" "Our"
+check_page "/articles/nonprofit-project-management-tools/"  "200" "Nonprofit Project Management Tools"
 
 # French mirror
 check_page "/fr/"                   "200" "les associations"

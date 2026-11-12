@@ -17,13 +17,15 @@ const strings = t(lang);
 
 const homeHref = routes.home[lang];
 const path = Astro.url.pathname;
-// Contributors and Projects stay lit on their individual pages too.
+// Articles, Contributors and Projects stay lit on their individual pages too.
 const links = [
   {
     href: routes.initiatives[lang],
     label: strings.nav.initiatives,
     current: getRouteKey(path) === 'initiatives',
   },
+  // Articles are English only for now.
+  ...(lang === 'en' ? [{ href: '/articles/', label: strings.nav.articles, current: path.startsWith('/articles/') }] : []),
   {
     href: routes.contributors[lang],
     label: strings.nav.contributors,

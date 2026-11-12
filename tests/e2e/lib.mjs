@@ -64,7 +64,7 @@ export const close = (page) => page.context().close();
 export function pagePaths() {
   const slug = (dir) => readdirSync(new URL(`../../src/content/${dir}/`, import.meta.url)).find((f) => f.endsWith('.yaml')).slice(0, -5);
   const [c, p] = [slug('contributors'), slug('projects')];
-  return [...Object.values(routes).flatMap((r) => Object.values(r)), `/contributors/${c}/`, `/fr/contributeurs/${c}/`, `/projects/${p}/`, `/fr/projets/${p}/`];
+  return [...Object.values(routes).flatMap((r) => Object.values(r)), `/contributors/${c}/`, `/fr/contributeurs/${c}/`, `/projects/${p}/`, `/fr/projets/${p}/`, '/articles/', '/articles/nonprofit-project-management-tools/'];
 }
 
 /** Wait until fn (it runs in the page; `arg` is passed to it) returns something truthy, and return that. */
