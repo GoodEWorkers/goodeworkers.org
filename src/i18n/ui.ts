@@ -147,8 +147,9 @@ const en = {
       completed: 'Completed',
     },
     projectLabel: (name: string) => `See the ${name} project`,
-    projectMetaDescription: (name: string) =>
-      `${name}, a GoodEWorkers project: what it is, why we did it, and who built it.`,
+    /** Prefixed with the title unless the description already names it. */
+    projectMetaDescription: (title: string, description: string) =>
+      description.toLowerCase().includes(title.toLowerCase()) ? description : `${title}: ${description}`,
   },
 
   notFound: {
@@ -303,8 +304,9 @@ const fr: Dictionary = {
       completed: 'Terminé',
     },
     projectLabel: (name: string) => `Voir le projet ${name}`,
-    projectMetaDescription: (name: string) =>
-      `${name}, un projet GoodEWorkers : ce que c'est, pourquoi on l'a fait, et qui l'a construit.`,
+    /** Prefixed with the title unless the description already names it. */
+    projectMetaDescription: (title: string, description: string) =>
+      description.toLowerCase().includes(title.toLowerCase()) ? description : `${title} : ${description}`,
   },
 
   notFound: {

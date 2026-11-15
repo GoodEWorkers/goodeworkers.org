@@ -29,6 +29,10 @@ interface Props {
   /** Page-specific schema.org nodes, appended to the site-wide graph so they
    *  can reference the organization and website by @id. */
   graph?: Record<string, unknown>[];
+  /** Open Graph type; articles pass `article`. */
+  ogType?: 'website' | 'article';
+  /** Absolute URL of a page-specific share image (replaces the site default). */
+  image?: string;
   /** Overrides the footer's contact heading and mail subject on this page. */
   contact?: { title: string; mailSubject: string };
 }
@@ -39,6 +43,8 @@ const {
   description,
   noindex = false,
   graph = [],
+  ogType = 'website',
+  image,
   contact,
 } = Astro.props;
 
@@ -58,7 +64,9 @@ const pageDescription = description ?? meta.description;
 
 const canonical = absoluteUrl(Astro.url.pathname);
 const alternates = getAlternates(Astro.url.pathname);
-const ogImage = `${SITE}/og-image.png`;
+const ogImage = image ?? `${SITE}/og-image.png`;
+// Single-language pages (articles) have nothing to point hreflang at.
+const hasTranslation = Object.keys(alternates).length > 1;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -215,7 +223,7 @@ const structuredData = {
          a 404 has no canonical URL to point at. -->
     {!noindex && <link rel="canonical" href={canonical} />}
     {
-      !noindex && (
+      !noindex && hasTranslation && (
         <>
           {langCodes.map((code) => (
             <link rel="alternate" hreflang={languages[code].htmlLang} href={alternates[code]} />
@@ -226,7 +234,7 @@ const structuredData = {
     }
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
@@ -234,18 +242,26 @@ const structuredData = {
     <meta property="og:locale" content={languages[lang].ogLocale} />
     {
       langCodes
-        .filter((code) => code !== lang)
+        .filter((code) => code !== lang && alternates[code])
         .map((code) => (
           <meta property="og:locale:alternate" content={languages[code].ogLocale} />
         ))
     }
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="GoodEWorkers - Helping nonprofits go remote"
-    />
+    {
+      image ? (
+        <meta property="og:image:alt" content={pageTitle} />
+      ) : (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta
+            property="og:image:alt"
+            content="GoodEWorkers - Helping nonprofits go remote"
+          />
+        </>
+      )
+    }
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
