@@ -110,6 +110,15 @@ export function getLangFromPath(path: string): Lang {
   return (langCodes as string[]).includes(first) ? (first as Lang) : defaultLang;
 }
 
+/**
+ * Noindex page pairs: not in `routes` (the registry of indexable pages that
+ * the sitemap and e2e walk), but still paired for the language switcher.
+ */
+const noindexPairs: Record<Lang, string>[] = [
+  { en: '/thanks/', fr: '/fr/thanks/' },
+  { en: '/404/', fr: '/fr/404/' },
+];
+
 /** Find the route key a path belongs to, in any language. */
 export function getRouteKey(path: string): RouteKey | undefined {
   const normalized = normalizePath(path);
@@ -119,53 +128,35 @@ export function getRouteKey(path: string): RouteKey | undefined {
 }
 
 /**
- * Every language variant of a page, as site-relative paths.
- * Falls back to swapping the locale prefix for pages missing from `routes`.
+ * Every language variant of a page that exists, as site-relative paths.
+ * A page with no translation (e.g. articles, English only) yields only its own
+ * language: callers must not invent the missing URL. Pages must be in `routes`
+ * or be a contributor/project page to count as translated.
  */
-export function getAlternatePaths(path: string): Record<Lang, string> {
+export function getAlternatePaths(path: string): Partial<Record<Lang, string>> {
   const key = getRouteKey(path);
-  if (key) {
-    return Object.fromEntries(
-      langCodes.map((lang) => [lang, normalizePath(routes[key][lang])])
-    ) as Record<Lang, string>;
-  }
+  const build = (fn: (lang: Lang) => string) =>
+    Object.fromEntries(langCodes.map((lang) => [lang, normalizePath(fn(lang))])) as Record<Lang, string>;
+  if (key) return build((lang) => routes[key][lang]);
 
-  // Contributor pages are dynamic and share their slug across languages.
+  const pair = noindexPairs.find((p) => langCodes.some((l) => normalizePath(p[l]) === normalizePath(path)));
+  if (pair) return build((lang) => pair[lang]);
+
+  // Contributor and project pages are dynamic and share their slug across languages.
   const contributorSlug = getContributorSlug(path);
-  if (contributorSlug) {
-    return Object.fromEntries(
-      langCodes.map((lang) => [lang, contributorPath(lang, contributorSlug)])
-    ) as Record<Lang, string>;
-  }
-
-  // Project pages work the same way.
+  if (contributorSlug) return build((lang) => contributorPath(lang, contributorSlug));
   const projectSlug = getProjectSlug(path);
-  if (projectSlug) {
-    return Object.fromEntries(
-      langCodes.map((lang) => [lang, projectPath(lang, projectSlug)])
-    ) as Record<Lang, string>;
-  }
+  if (projectSlug) return build((lang) => projectPath(lang, projectSlug));
 
-  const current = getLangFromPath(path);
-  const bare =
-    current === defaultLang
-      ? normalizePath(path)
-      : normalizePath(normalizePath(path).replace(new RegExp(`^/${current}/`), '/'));
-
-  return Object.fromEntries(
-    langCodes.map((lang) => [
-      lang,
-      lang === defaultLang ? bare : normalizePath(`/${lang}${bare}`),
-    ])
-  ) as Record<Lang, string>;
+  return { [getLangFromPath(path)]: normalizePath(path) };
 }
 
 /** Same as `getAlternatePaths`, as absolute URLs — for hreflang and canonicals. */
-export function getAlternates(path: string): Record<Lang, string> {
+export function getAlternates(path: string): Partial<Record<Lang, string>> {
   const paths = getAlternatePaths(path);
   return Object.fromEntries(
-    langCodes.map((lang) => [lang, absoluteUrl(paths[lang])])
-  ) as Record<Lang, string>;
+    Object.entries(paths).map(([lang, p]) => [lang, absoluteUrl(p)])
+  );
 }
 
 /**

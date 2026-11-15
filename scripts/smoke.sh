@@ -87,6 +87,9 @@ check_page "/fr/contributeurs/r-ichard/" "200" 'rel="canonical" href="https://go
 check_page "/projects/"                            "200" 'hreflang="fr" href="https://goodeworkers.org/fr/projets/"'
 check_page "/projects/goodeworkers-website/"       "200" 'hreflang="fr" href="https://goodeworkers.org/fr/projets/goodeworkers-website/"'
 check_page "/fr/projets/goodeworkers-website/"     "200" 'rel="canonical" href="https://goodeworkers.org/fr/projets/goodeworkers-website/"'
+# Article (English only): BlogPosting data, og:type article, switcher falls back to /fr/
+check_page "/articles/nonprofit-project-management-tools/" "200" '"@type":"BlogPosting"'
+check_page "/articles/nonprofit-project-management-tools/" "200" 'property="og:type" content="article"'
 # Google tricks rows: the search URL is built from `query` and `searchPeriod`
 check_page "/remote-job-boards/"    "200" 'google.com/search?q=%22remote%22+site%3Agreenhouse.io&tbs=qdr%3Ad'
 check_page "/fr/offres-emploi-teletravail/" "200" 'Les quatre, via Google'

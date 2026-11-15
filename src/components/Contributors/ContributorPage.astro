@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContributorProfile from './ContributorProfile.astro';
 import { SITE, absoluteUrl, contributorPath, getLangFromPath } from '../../i18n/routes';
 import { t } from '../../i18n/ui';
+import { metaDescription } from '../../lib/meta';
 import { contributorName, type Contributor } from './contributors';
 
 interface Props {
@@ -14,6 +15,7 @@ const lang = getLangFromPath(Astro.url.pathname);
 const strings = t(lang).contributors;
 const name = contributorName(contributor);
 const role = contributor.data.role[lang];
+const about = contributor.data.about?.[lang];
 const socialUrls = Object.values(contributor.data.socials ?? {}).filter(Boolean);
 
 // One Person node per profile page; slots into BaseLayout's head slot.
@@ -34,7 +36,7 @@ const jsonLd = {
 <BaseLayout
   metaKey="contributors"
   title={`${name} | GoodEWorkers`}
-  description={strings.profileMetaDescription(name, role)}
+  description={about ? metaDescription(about) : strings.profileMetaDescription(name, role)}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <ContributorProfile contributor={contributor} />
